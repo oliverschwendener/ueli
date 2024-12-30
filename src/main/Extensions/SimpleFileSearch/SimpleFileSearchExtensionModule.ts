@@ -1,20 +1,19 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { SimpleFileSearchExtension } from "./SimpleFileSearchExtension";
 
 export class SimpleFileSearchExtensionModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
             extension: new SimpleFileSearchExtension(
-                dependencyRegistry.get("FileSystemUtility"),
-                dependencyRegistry.get("FileImageGenerator"),
-                dependencyRegistry.get("Logger"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("OperatingSystem"),
-                dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("Translator"),
+                moduleRegistry.get("FileSystemUtility"),
+                moduleRegistry.get("FileImageGenerator"),
+                moduleRegistry.get("Logger"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("OperatingSystem"),
+                moduleRegistry.get("SettingsManager"),
+                moduleRegistry.get("Translator"),
             ),
         };
     }

@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 
 export class DockModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const settingsManager = moduleRegistry.get("SettingsManager");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
 
         const setAppIconVisibility = async () => {
             if (settingsManager.getValue("appearance.showAppIconInDock", false)) {

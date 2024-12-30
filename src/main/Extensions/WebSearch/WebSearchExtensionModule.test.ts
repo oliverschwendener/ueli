@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
 import { DuckDuckGoWebSearchEngine } from "./DuckDuckGoWebSearchEngine";
 import { GoogleWebSearchEngine } from "./GoogleWebSearchEngine";
@@ -9,18 +8,18 @@ import { WebSearchExtensionModule } from "./WebSearchExtensionModule";
 describe(WebSearchExtensionModule, () => {
     describe(WebSearchExtensionModule.prototype.bootstrap, () => {
         it("should return the web search extension", () => {
-            const dependencyRegistry: DependencyRegistry<Dependencies> = {
+            const moduleRegistry: UeliModuleRegistry = {
                 get: vi.fn(),
                 register: vi.fn(),
             };
 
-            expect(new WebSearchExtensionModule().bootstrap(dependencyRegistry)).toEqual({
+            expect(new WebSearchExtensionModule().bootstrap(moduleRegistry)).toEqual({
                 extension: new WebSearchExtension(
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("SettingsManager"),
+                    moduleRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("SettingsManager"),
                     [
-                        new DuckDuckGoWebSearchEngine(dependencyRegistry.get("Net")),
-                        new GoogleWebSearchEngine(dependencyRegistry.get("Net")),
+                        new DuckDuckGoWebSearchEngine(moduleRegistry.get("Net")),
+                        new GoogleWebSearchEngine(moduleRegistry.get("Net")),
                     ],
                 ),
             });

@@ -1,6 +1,5 @@
 import type { ActionHandler } from "@Core/ActionHandler";
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
@@ -12,57 +11,57 @@ import { OpenAsAdministrator, WindowsApplicationRepository } from "./Windows";
 import { MacOsApplicationRepository } from "./macOS";
 
 export class ApplicationSearchModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         const settings = new Settings(
             "ApplicationSearch",
-            dependencyRegistry.get("SettingsManager"),
-            dependencyRegistry.get("App"),
-            dependencyRegistry.get("EnvironmentVariableProvider"),
+            moduleRegistry.get("SettingsManager"),
+            moduleRegistry.get("App"),
+            moduleRegistry.get("EnvironmentVariableProvider"),
         );
 
         const applicationRepositories: Record<OperatingSystem, () => ApplicationRepository> = {
             macOS: () =>
                 new MacOsApplicationRepository(
-                    dependencyRegistry.get("CommandlineUtility"),
-                    dependencyRegistry.get("FileImageGenerator"),
-                    dependencyRegistry.get("Logger"),
+                    moduleRegistry.get("CommandlineUtility"),
+                    moduleRegistry.get("FileImageGenerator"),
+                    moduleRegistry.get("Logger"),
                     settings,
-                    dependencyRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("AssetPathResolver"),
                 ),
             Windows: () =>
                 new WindowsApplicationRepository(
-                    dependencyRegistry.get("PowershellUtility"),
+                    moduleRegistry.get("PowershellUtility"),
                     settings,
-                    dependencyRegistry.get("FileImageGenerator"),
-                    dependencyRegistry.get("Logger"),
-                    dependencyRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("FileImageGenerator"),
+                    moduleRegistry.get("Logger"),
+                    moduleRegistry.get("AssetPathResolver"),
                 ),
             Linux: () =>
                 new LinuxApplicationRepository(
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("FileImageGenerator"),
-                    dependencyRegistry.get("IniFileParser"),
-                    dependencyRegistry.get("EnvironmentVariableProvider"),
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("Logger"),
+                    moduleRegistry.get("FileSystemUtility"),
+                    moduleRegistry.get("FileImageGenerator"),
+                    moduleRegistry.get("IniFileParser"),
+                    moduleRegistry.get("EnvironmentVariableProvider"),
+                    moduleRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("Logger"),
                     settings,
                 ),
         };
 
         const actionHandlers: Record<OperatingSystem, () => ActionHandler[]> = {
-            Linux: () => [new LaunchDesktopFileActionHandler(dependencyRegistry.get("CommandlineUtility"))],
+            Linux: () => [new LaunchDesktopFileActionHandler(moduleRegistry.get("CommandlineUtility"))],
             macOS: () => [],
-            Windows: () => [new OpenAsAdministrator(dependencyRegistry.get("PowershellUtility"))],
+            Windows: () => [new OpenAsAdministrator(moduleRegistry.get("PowershellUtility"))],
         };
 
         return {
             extension: new ApplicationSearch(
-                dependencyRegistry.get("OperatingSystem"),
-                applicationRepositories[dependencyRegistry.get("OperatingSystem")](),
+                moduleRegistry.get("OperatingSystem"),
+                applicationRepositories[moduleRegistry.get("OperatingSystem")](),
                 settings,
-                dependencyRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("AssetPathResolver"),
             ),
-            actionHandlers: actionHandlers[dependencyRegistry.get("OperatingSystem")](),
+            actionHandlers: actionHandlers[moduleRegistry.get("OperatingSystem")](),
         };
     }
 }

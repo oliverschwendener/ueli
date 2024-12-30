@@ -1,7 +1,7 @@
 /**
- * Represents a generic dependency registry.
+ * Represents a generic module registry.
  */
-export interface DependencyRegistry<T extends Record<string, unknown>> {
+export interface ModuleRegistry<T extends Record<string, unknown>> {
     /**
      * Registers an instance with the given name.
      * @param name The name to register the instance with, e.g. `"myInstance"`.

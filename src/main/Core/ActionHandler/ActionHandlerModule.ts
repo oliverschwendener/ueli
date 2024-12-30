@@ -1,17 +1,16 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { SearchResultItemAction } from "@common/Core";
 import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
 
 export class ActionHandlerModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const logger = dependencyRegistry.get("Logger");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const eventEmitter = moduleRegistry.get("EventEmitter");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const logger = moduleRegistry.get("Logger");
 
         const actionHandlerRegistry = new ActionHandlerRegistry();
 
-        dependencyRegistry.register("ActionHandlerRegistry", actionHandlerRegistry);
+        moduleRegistry.register("ActionHandlerRegistry", actionHandlerRegistry);
 
         ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
             try {

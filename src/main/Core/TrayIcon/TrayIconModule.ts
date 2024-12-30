@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { ContextMenuBuilder } from "./ContextMenuBuilder";
 import { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
@@ -14,10 +13,10 @@ import { TrayIconManager } from "./TrayIconManager";
 import { resources } from "./resources";
 
 export class TrayIconModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const nativeTheme = dependencyRegistry.get("NativeTheme");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const nativeTheme = moduleRegistry.get("NativeTheme");
+        const assetPathResolver = moduleRegistry.get("AssetPathResolver");
+        const operatingSystem = moduleRegistry.get("OperatingSystem");
 
         const trayIconFilePathResolvers: Record<OperatingSystem, () => TrayIconFilePathResolver> = {
             Linux: () => new LinuxTrayIconFilePathResolver(nativeTheme, assetPathResolver),
@@ -29,9 +28,9 @@ export class TrayIconModule {
             new TrayCreator(),
             trayIconFilePathResolvers[operatingSystem](),
             new ContextMenuTemplateProvider(
-                dependencyRegistry.get("Translator"),
-                dependencyRegistry.get("UeliCommandInvoker"),
-                dependencyRegistry.get("SettingsManager"),
+                moduleRegistry.get("Translator"),
+                moduleRegistry.get("UeliCommandInvoker"),
+                moduleRegistry.get("SettingsManager"),
                 resources,
             ),
             new ContextMenuBuilder(),
@@ -41,7 +40,7 @@ export class TrayIconModule {
 
         nativeTheme.on("updated", () => trayIconManager.updateImage());
 
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
 
         eventSubscriber.subscribe("settingUpdated[general.language]", () => trayIconManager.updateContextMenu());
         eventSubscriber.subscribe("settingUpdated[general.hotkey.enabled]", () => trayIconManager.updateContextMenu());

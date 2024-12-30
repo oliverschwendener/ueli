@@ -1,9 +1,8 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { RandomStringProvider } from "./RandomStringProvider";
 
 export class RandomStringProviderModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register("RandomStringProvider", new RandomStringProvider());
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        moduleRegistry.register("RandomStringProvider", new RandomStringProvider());
     }
 }

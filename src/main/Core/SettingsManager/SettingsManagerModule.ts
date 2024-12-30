@@ -1,15 +1,14 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const settingsReader = dependencyRegistry.get("SettingsReader");
-        const settingsWriter = dependencyRegistry.get("SettingsWriter");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
-        const safeStorageEncryption = dependencyRegistry.get("SafeStorageEncryption");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const settingsReader = moduleRegistry.get("SettingsReader");
+        const settingsWriter = moduleRegistry.get("SettingsWriter");
+        const eventEmitter = moduleRegistry.get("EventEmitter");
+        const safeStorageEncryption = moduleRegistry.get("SafeStorageEncryption");
 
         const settingsManager = new SettingsManager(
             settingsReader,
@@ -18,7 +17,7 @@ export class SettingsManagerModule {
             safeStorageEncryption,
         );
 
-        dependencyRegistry.register("SettingsManager", settingsManager);
+        moduleRegistry.register("SettingsManager", settingsManager);
 
         ipcMain.handle(
             "updateSettingValue",

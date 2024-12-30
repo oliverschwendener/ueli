@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { Base64ConversionModule } from "./Base64Conversion";
@@ -54,12 +53,12 @@ export class ExtensionLoader {
         ];
     }
 
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
-        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const extensionRegistry = moduleRegistry.get("ExtensionRegistry");
+        const actionHandlerRegistry = moduleRegistry.get("ActionHandlerRegistry");
 
         const extensionModules = ExtensionLoader.getAllExtensionModules();
-        const bootstrapResults = extensionModules.map((e) => e.bootstrap(dependencyRegistry));
+        const bootstrapResults = extensionModules.map((e) => e.bootstrap(moduleRegistry));
 
         for (const bootstrapResult of bootstrapResults) {
             extensionRegistry.register(bootstrapResult.extension);

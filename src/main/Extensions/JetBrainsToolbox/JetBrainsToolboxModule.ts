@@ -1,18 +1,17 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { JetBrainsToolboxExtension } from "./JetBrainsToolboxExtension";
 
 export class JetBrainsToolboxModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
             extension: new JetBrainsToolboxExtension(
-                dependencyRegistry.get("OperatingSystem"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("FileSystemUtility"),
-                dependencyRegistry.get("XmlParser"),
-                dependencyRegistry.get("Translator"),
+                moduleRegistry.get("OperatingSystem"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("FileSystemUtility"),
+                moduleRegistry.get("XmlParser"),
+                moduleRegistry.get("Translator"),
             ),
         };
     }

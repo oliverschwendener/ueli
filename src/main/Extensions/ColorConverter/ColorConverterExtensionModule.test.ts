@@ -1,6 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
@@ -15,7 +14,7 @@ describe(ColorConverterExtensionModule, () => {
             const settingsManager = <SettingsManager>{};
             const translator = <Translator>{};
 
-            const dependencyRegistry = <DependencyRegistry<Dependencies>>{
+            const moduleRegistry = <UeliModuleRegistry>{
                 get: vi.fn().mockImplementation((n: string) => {
                     if (n === "AssetPathResolver") {
                         return assetPathResolver;
@@ -30,7 +29,7 @@ describe(ColorConverterExtensionModule, () => {
                 register: () => null,
             };
 
-            expect(new ColorConverterExtensionModule().bootstrap(dependencyRegistry)).toEqual({
+            expect(new ColorConverterExtensionModule().bootstrap(moduleRegistry)).toEqual({
                 extension: new ColorConverterExtension(
                     assetPathResolver,
                     settingsManager,
@@ -39,9 +38,9 @@ describe(ColorConverterExtensionModule, () => {
                 ),
             });
 
-            expect(dependencyRegistry.get).toHaveBeenCalledWith("AssetPathResolver");
-            expect(dependencyRegistry.get).toHaveBeenCalledWith("SettingsManager");
-            expect(dependencyRegistry.get).toHaveBeenCalledWith("Translator");
+            expect(moduleRegistry.get).toHaveBeenCalledWith("AssetPathResolver");
+            expect(moduleRegistry.get).toHaveBeenCalledWith("SettingsManager");
+            expect(moduleRegistry.get).toHaveBeenCalledWith("Translator");
         });
     });
 });

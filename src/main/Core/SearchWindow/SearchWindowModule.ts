@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import { BrowserWindow } from "electron";
@@ -15,18 +14,18 @@ import { BrowserWindowToggler } from "./BrowserWindowToggler";
 export class SearchWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
 
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const appIconFilePathResolver = dependencyRegistry.get("BrowserWindowAppIconFilePathResolver");
-        const backgroundMaterialProvider = dependencyRegistry.get("BrowserWindowBackgroundMaterialProvider");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const nativeTheme = dependencyRegistry.get("NativeTheme");
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const vibrancyProvider = dependencyRegistry.get("BrowserWindowVibrancyProvider");
-        const browserWindowRegistry = dependencyRegistry.get("BrowserWindowRegistry");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const appIconFilePathResolver = moduleRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const backgroundMaterialProvider = moduleRegistry.get("BrowserWindowBackgroundMaterialProvider");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
+        const htmlLoader = moduleRegistry.get("BrowserWindowHtmlLoader");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const nativeTheme = moduleRegistry.get("NativeTheme");
+        const operatingSystem = moduleRegistry.get("OperatingSystem");
+        const settingsManager = moduleRegistry.get("SettingsManager");
+        const vibrancyProvider = moduleRegistry.get("BrowserWindowVibrancyProvider");
+        const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
 
         const defaultBrowserWindowOptions = new DefaultBrowserWindowConstructorOptionsProvider(
             app,

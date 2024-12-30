@@ -1,33 +1,32 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { Terminal } from "@common/Core/Terminal";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { Terminal as TerminalContract } from "./Contract";
 import { TerminalRegistry } from "./TerminalRegistry";
 import { CommandPrompt, Iterm, MacOsTerminal, Powershell, PowershellCore, Wsl } from "./Terminals";
 
 export class TerminalModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const assetPathResolver = moduleRegistry.get("AssetPathResolver");
 
         const terminals: Record<OperatingSystem, () => TerminalContract[]> = {
             Linux: () => [],
             macOS: () => [
-                new MacOsTerminal(dependencyRegistry.get("AppleScriptUtility")),
-                new Iterm(dependencyRegistry.get("AppleScriptUtility")),
+                new MacOsTerminal(moduleRegistry.get("AppleScriptUtility")),
+                new Iterm(moduleRegistry.get("AppleScriptUtility")),
             ],
             Windows: () => [
-                new CommandPrompt(dependencyRegistry.get("CommandlineUtility")),
-                new Powershell(dependencyRegistry.get("CommandlineUtility")),
-                new PowershellCore(dependencyRegistry.get("CommandlineUtility")),
-                new Wsl(dependencyRegistry.get("CommandlineUtility")),
+                new CommandPrompt(moduleRegistry.get("CommandlineUtility")),
+                new Powershell(moduleRegistry.get("CommandlineUtility")),
+                new PowershellCore(moduleRegistry.get("CommandlineUtility")),
+                new Wsl(moduleRegistry.get("CommandlineUtility")),
             ],
         };
 
-        const terminalRegistry = new TerminalRegistry(terminals[dependencyRegistry.get("OperatingSystem")]());
+        const terminalRegistry = new TerminalRegistry(terminals[moduleRegistry.get("OperatingSystem")]());
 
-        dependencyRegistry.register("TerminalRegistry", terminalRegistry);
+        moduleRegistry.register("TerminalRegistry", terminalRegistry);
 
         ipcMain.on(
             "getAvailableTerminals",

@@ -1,6 +1,5 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { Extension } from "@Core/Extension";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionInfo } from "@common/Core";
 import { ExtensionManager } from "./ExtensionManager";
 import { ScanCounter } from "./ScanCounter";
@@ -14,14 +13,14 @@ const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
 });
 
 export class ExtensionManagerModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const browserWindowNotifier = dependencyRegistry.get("BrowserWindowNotifier");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const extensionRegistry = dependencyRegistry.get("ExtensionRegistry");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const logger = dependencyRegistry.get("Logger");
-        const searchIndex = dependencyRegistry.get("SearchIndex");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
+        const extensionRegistry = moduleRegistry.get("ExtensionRegistry");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const logger = moduleRegistry.get("Logger");
+        const searchIndex = moduleRegistry.get("SearchIndex");
+        const settingsManager = moduleRegistry.get("SettingsManager");
 
         const scanCounter = new ScanCounter();
 

@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
@@ -7,33 +6,33 @@ import { HtmlLoader } from "./HtmlLoader";
 import { VibrancyProvider } from "./Vibrancy";
 
 export class BrowserWindowModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const actionHandlerRegistry = moduleRegistry.get("ActionHandlerRegistry");
 
-        dependencyRegistry.register(
+        moduleRegistry.register(
             "BrowserWindowBackgroundMaterialProvider",
-            new BackgroundMaterialProvider(dependencyRegistry.get("SettingsManager")),
+            new BackgroundMaterialProvider(moduleRegistry.get("SettingsManager")),
         );
 
-        dependencyRegistry.register(
+        moduleRegistry.register(
             "BrowserWindowVibrancyProvider",
-            new VibrancyProvider(dependencyRegistry.get("SettingsManager")),
+            new VibrancyProvider(moduleRegistry.get("SettingsManager")),
         );
 
-        dependencyRegistry.register(
+        moduleRegistry.register(
             "BrowserWindowHtmlLoader",
-            new HtmlLoader(dependencyRegistry.get("App"), dependencyRegistry.get("EnvironmentVariableProvider")),
+            new HtmlLoader(moduleRegistry.get("App"), moduleRegistry.get("EnvironmentVariableProvider")),
         );
 
-        dependencyRegistry.register(
+        moduleRegistry.register(
             "BrowserWindowAppIconFilePathResolver",
             new AppIconFilePathResolver(
-                dependencyRegistry.get("NativeTheme"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("OperatingSystem"),
+                moduleRegistry.get("NativeTheme"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("OperatingSystem"),
             ),
         );
 
-        actionHandlerRegistry.register(new NavigateToActionHandler(dependencyRegistry.get("BrowserWindowNotifier")));
+        actionHandlerRegistry.register(new NavigateToActionHandler(moduleRegistry.get("BrowserWindowNotifier")));
     }
 }

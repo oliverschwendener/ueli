@@ -1,15 +1,14 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { CopyToClipboardActionHandler } from "./ActionHandler";
 
 export class ClipboardModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const clipboard = dependencyRegistry.get("Clipboard");
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const clipboard = moduleRegistry.get("Clipboard");
+        const ipcMain = moduleRegistry.get("IpcMain");
 
-        dependencyRegistry
+        moduleRegistry
             .get("ActionHandlerRegistry")
-            .register(new CopyToClipboardActionHandler(clipboard, dependencyRegistry.get("BrowserWindowNotifier")));
+            .register(new CopyToClipboardActionHandler(clipboard, moduleRegistry.get("BrowserWindowNotifier")));
 
         ipcMain.on("copyTextToClipboard", (_, { textToCopy }: { textToCopy: string }) => {
             clipboard.writeText(textToCopy);

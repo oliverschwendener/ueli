@@ -1,20 +1,19 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import { SettingsWindowManager } from "./SettingsWindowManager";
 
 export class SettingsWindowModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const browserWindowAppIconFilePathResolver = dependencyRegistry.get("BrowserWindowAppIconFilePathResolver");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const htmlLoader = dependencyRegistry.get("BrowserWindowHtmlLoader");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const nativeTheme = dependencyRegistry.get("NativeTheme");
-        const translator = dependencyRegistry.get("Translator");
-        const browserWindowNotifier = dependencyRegistry.get("BrowserWindowNotifier");
-        const browserWindowRegistry = dependencyRegistry.get("BrowserWindowRegistry");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const browserWindowAppIconFilePathResolver = moduleRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
+        const htmlLoader = moduleRegistry.get("BrowserWindowHtmlLoader");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const nativeTheme = moduleRegistry.get("NativeTheme");
+        const translator = moduleRegistry.get("Translator");
+        const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
+        const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
+        const eventEmitter = moduleRegistry.get("EventEmitter");
 
         const settingsWindowManager = new SettingsWindowManager(
             browserWindowAppIconFilePathResolver,

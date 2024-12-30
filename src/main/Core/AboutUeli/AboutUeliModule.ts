@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { AboutUeli } from "@common/Core";
 
 export class AboutUeliModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const ipcMain = moduleRegistry.get("IpcMain");
 
         ipcMain.on("getAboutUeli", (event) => {
             event.returnValue = <AboutUeli>{

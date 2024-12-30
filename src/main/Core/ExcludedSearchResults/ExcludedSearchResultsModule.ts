@@ -1,18 +1,17 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { ExcludeFromSearchResultsActionHandler } from "./ActionHandler";
 import { ExcludedSearchResults } from "./ExcludedSearchResults";
 
 export class ExcludedSearchResultsModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
 
         const excludedSearchResults = new ExcludedSearchResults(
-            dependencyRegistry.get("BrowserWindowNotifier"),
-            dependencyRegistry.get("SettingsManager"),
+            moduleRegistry.get("BrowserWindowNotifier"),
+            moduleRegistry.get("SettingsManager"),
         );
 
-        dependencyRegistry
+        moduleRegistry
             .get("ActionHandlerRegistry")
             .register(new ExcludeFromSearchResultsActionHandler(excludedSearchResults));
 

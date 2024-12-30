@@ -1,10 +1,8 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { MittEventSubscriber } from "./MittEventSubscriber";
 
 export class EventSubscriberModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const emitter = dependencyRegistry.get("Emitter");
-        dependencyRegistry.register("EventSubscriber", new MittEventSubscriber(emitter));
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        moduleRegistry.register("EventSubscriber", new MittEventSubscriber(moduleRegistry.get("Emitter")));
     }
 }

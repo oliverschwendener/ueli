@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
@@ -12,7 +11,7 @@ import { WindowsSystemCommandRepository, windowsResources } from "./Windows";
 import { MacOsSystemCommandRepository, macOsResources } from "./macOS";
 
 export class SystemCommandsModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         const resources: Record<OperatingSystem, Resources<Translations>> = {
             Linux: linuxResources,
             macOS: macOsResources,
@@ -21,34 +20,34 @@ export class SystemCommandsModule implements ExtensionModule {
 
         const repositories: Record<OperatingSystem, SystemCommandRepository> = {
             Linux: new LinuxSystemCommandRepository(
-                dependencyRegistry.get("Translator"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("CommandlineUtility"),
+                moduleRegistry.get("Translator"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("CommandlineUtility"),
                 linuxResources,
             ),
             macOS: new MacOsSystemCommandRepository(
-                dependencyRegistry.get("Translator"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("AppleScriptUtility"),
+                moduleRegistry.get("Translator"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("AppleScriptUtility"),
                 macOsResources,
             ),
             Windows: new WindowsSystemCommandRepository(
-                dependencyRegistry.get("Translator"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("CommandlineUtility"),
-                dependencyRegistry.get("PowershellUtility"),
+                moduleRegistry.get("Translator"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("CommandlineUtility"),
+                moduleRegistry.get("PowershellUtility"),
                 windowsResources,
             ),
         };
 
         return {
             extension: new SystemCommands(
-                dependencyRegistry.get("OperatingSystem"),
-                repositories[dependencyRegistry.get("OperatingSystem")],
-                resources[dependencyRegistry.get("OperatingSystem")],
-                dependencyRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("OperatingSystem"),
+                repositories[moduleRegistry.get("OperatingSystem")],
+                resources[moduleRegistry.get("OperatingSystem")],
+                moduleRegistry.get("AssetPathResolver"),
             ),
-            actionHandlers: [new SystemCommandActionHandler(repositories[dependencyRegistry.get("OperatingSystem")])],
+            actionHandlers: [new SystemCommandActionHandler(repositories[moduleRegistry.get("OperatingSystem")])],
         };
     }
 }

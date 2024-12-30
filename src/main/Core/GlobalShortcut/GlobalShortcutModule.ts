@@ -1,14 +1,13 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import { isValidHotkey } from "@common/Core/Hotkey";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 
 export class GlobalShortcutModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const globalShortcut = dependencyRegistry.get("GlobalShortcut");
-        const eventEmitter = dependencyRegistry.get("EventEmitter");
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const logger = dependencyRegistry.get("Logger");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const globalShortcut = moduleRegistry.get("GlobalShortcut");
+        const eventEmitter = moduleRegistry.get("EventEmitter");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
+        const settingsManager = moduleRegistry.get("SettingsManager");
+        const logger = moduleRegistry.get("Logger");
 
         const hotkeyIsEnabled = () => settingsManager.getValue("general.hotkey.enabled", true);
 

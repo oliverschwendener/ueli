@@ -1,24 +1,23 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { AppearanceSwitcher } from "./AppearanceSwitcher";
 import { CustomActionHandler } from "./CustomActionHandler";
 
 export class AppearanceSwitcherModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
             extension: new AppearanceSwitcher(
-                dependencyRegistry.get("OperatingSystem"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("Translator"),
+                moduleRegistry.get("OperatingSystem"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("Translator"),
             ),
             actionHandlers: [
                 new CustomActionHandler(
-                    dependencyRegistry.get("OperatingSystem"),
-                    dependencyRegistry.get("PowershellUtility"),
-                    dependencyRegistry.get("AppleScriptUtility"),
-                    dependencyRegistry.get("NativeTheme"),
+                    moduleRegistry.get("OperatingSystem"),
+                    moduleRegistry.get("PowershellUtility"),
+                    moduleRegistry.get("AppleScriptUtility"),
+                    moduleRegistry.get("NativeTheme"),
                 ),
             ],
         };

@@ -1,9 +1,8 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { IniFileParser } from "./IniFileParser";
 
 export class IniFileParserModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register("IniFileParser", new IniFileParser());
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        moduleRegistry.register("IniFileParser", new IniFileParser());
     }
 }

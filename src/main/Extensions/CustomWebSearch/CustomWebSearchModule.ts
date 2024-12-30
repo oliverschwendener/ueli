@@ -1,16 +1,15 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { CustomWebSearchExtension } from "./CustomWebSearchExtension";
 
 export class CustomWebSearchModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
             extension: new CustomWebSearchExtension(
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("UrlImageGenerator"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("SettingsManager"),
+                moduleRegistry.get("UrlImageGenerator"),
             ),
         };
     }

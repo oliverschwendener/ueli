@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry, UeliModules } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
@@ -16,9 +15,9 @@ describe(CommandlineSwitchModule, () => {
         const appendSwitchMock = vi.fn();
         const app = <App>{ commandLine: { appendSwitch: (s) => appendSwitchMock(s) } };
 
-        const dependencyRegistry = <DependencyRegistry<Dependencies>>{
-            get: (key: keyof Dependencies) => {
-                const result = <Dependencies>{
+        const moduleRegistry = <UeliModuleRegistry>{
+            get: (key: keyof UeliModules) => {
+                const result = <UeliModules>{
                     App: app,
                     OperatingSystem: operatingSystem,
                 };
@@ -27,7 +26,7 @@ describe(CommandlineSwitchModule, () => {
             },
         };
 
-        CommandlineSwitchModule.bootstrap(dependencyRegistry);
+        CommandlineSwitchModule.bootstrap(moduleRegistry);
 
         if (expectAppendingSwitch) {
             expect(appendSwitchMock).toHaveBeenCalledWith("wm-window-animations-disabled");

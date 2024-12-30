@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { SafeStorageEncryption } from "./SafeStorageEncryption";
 
 export class SafeStorageEncryptionModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const safeStorage = dependencyRegistry.get("SafeStorage");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const safeStorage = moduleRegistry.get("SafeStorage");
 
-        dependencyRegistry.register("SafeStorageEncryption", new SafeStorageEncryption(safeStorage));
+        moduleRegistry.register("SafeStorageEncryption", new SafeStorageEncryption(safeStorage));
     }
 }

@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { SettingsFileReader } from "./SettingsFileReader";
 
 export class SettingsReaderModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const settingsFile = dependencyRegistry.get("SettingsFile");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const settingsFile = moduleRegistry.get("SettingsFile");
 
-        dependencyRegistry.register("SettingsReader", new SettingsFileReader(settingsFile.path));
+        moduleRegistry.register("SettingsReader", new SettingsFileReader(settingsFile.path));
     }
 }

@@ -1,6 +1,5 @@
 import type { ActionHandlerRegistry } from "@Core/ActionHandler";
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
 import { CommandlineActionHandler } from "./ActionHandler";
 import { CommandlineUtilityModule } from "./CommandlineUtilityModule";
@@ -14,16 +13,16 @@ describe(CommandlineUtilityModule, () => {
             getById: vi.fn(),
         };
 
-        const dependencyRegistry = <DependencyRegistry<Dependencies>>{
+        const moduleRegistry = <UeliModuleRegistry>{
             get: vi.fn().mockReturnValue(actionHandlerRegistryMock),
             register: vi.fn(),
         };
 
-        CommandlineUtilityModule.bootstrap(dependencyRegistry);
+        CommandlineUtilityModule.bootstrap(moduleRegistry);
 
-        expect(dependencyRegistry.register).toHaveBeenCalledWith("CommandlineUtility", new NodeJsCommandlineUtility());
+        expect(moduleRegistry.register).toHaveBeenCalledWith("CommandlineUtility", new NodeJsCommandlineUtility());
 
-        expect(dependencyRegistry.get).toBeCalledWith("ActionHandlerRegistry");
+        expect(moduleRegistry.get).toBeCalledWith("ActionHandlerRegistry");
         expect(actionHandlerRegistryMock.register).toHaveBeenCalledWith(
             new CommandlineActionHandler(new NodeJsCommandlineUtility()),
         );

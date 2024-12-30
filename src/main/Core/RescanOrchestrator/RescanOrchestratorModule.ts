@@ -1,18 +1,17 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { RescanOrchestrator } from "./RescanOrchestrator";
 
 export class RescanOrchestratorModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): void {
-        const eventSubscriber = dependencyRegistry.get("EventSubscriber");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry): void {
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
         const rescanOrchestrator = new RescanOrchestrator(
-            dependencyRegistry.get("EventEmitter"),
-            dependencyRegistry.get("SettingsManager"),
-            dependencyRegistry.get("TaskScheduler"),
+            moduleRegistry.get("EventEmitter"),
+            moduleRegistry.get("SettingsManager"),
+            moduleRegistry.get("TaskScheduler"),
         );
 
         const automaticRescanIsEnabled = () => {
-            const settingsManager = dependencyRegistry.get("SettingsManager");
+            const settingsManager = moduleRegistry.get("SettingsManager");
             return settingsManager.getValue("searchEngine.automaticRescan", true);
         };
 

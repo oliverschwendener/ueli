@@ -1,12 +1,11 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { LinuxDesktopEnvironmentResolver } from "./LinuxDesktopEnvironmentResolver";
 
 export class LinuxDesktopEnvironmentModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): void {
-        dependencyRegistry.register(
+    public static bootstrap(moduleRegistry: UeliModuleRegistry): void {
+        moduleRegistry.register(
             "LinuxDesktopEnvironmentResolver",
-            new LinuxDesktopEnvironmentResolver(dependencyRegistry.get("EnvironmentVariableProvider")),
+            new LinuxDesktopEnvironmentResolver(moduleRegistry.get("EnvironmentVariableProvider")),
         );
     }
 }

@@ -1,9 +1,8 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { XmlParser } from "./XmlParser";
 
 export class XmlParserModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register("XmlParser", new XmlParser());
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        moduleRegistry.register("XmlParser", new XmlParser());
     }
 }

@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { Translator } from "./Translator";
 
 export class TranslatorModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const settingsManager = dependencyRegistry.get("SettingsManager");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const settingsManager = moduleRegistry.get("SettingsManager");
 
-        dependencyRegistry.register("Translator", new Translator(settingsManager));
+        moduleRegistry.register("Translator", new Translator(settingsManager));
     }
 }

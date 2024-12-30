@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "./ExtensionBootstrapResult";
 
 /**
@@ -8,8 +7,8 @@ import type { ExtensionBootstrapResult } from "./ExtensionBootstrapResult";
 export interface ExtensionModule {
     /**
      * Bootstraps an extension.
-     * @param dependencyRegistry The dependency registry to use for dependency injection.
+     * @param moduleRegistry The module registry to use for module injection.
      * @returns The result of bootstrapping the extension.
      */
-    bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult;
+    bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult;
 }

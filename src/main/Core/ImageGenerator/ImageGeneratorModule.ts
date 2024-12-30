@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { join } from "path";
 import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
@@ -12,28 +11,23 @@ import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./W
 import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
 
 export class ImageGeneratorModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        dependencyRegistry.register(
-            "UrlImageGenerator",
-            new UrlImageGenerator(dependencyRegistry.get("SettingsManager")),
-        );
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        moduleRegistry.register("UrlImageGenerator", new UrlImageGenerator(moduleRegistry.get("SettingsManager")));
 
-        const cacheFolderPath = await ImageGeneratorModule.ensureCacheFolderExists(dependencyRegistry);
+        const cacheFolderPath = await ImageGeneratorModule.ensureCacheFolderExists(moduleRegistry);
 
-        dependencyRegistry.register(
+        moduleRegistry.register(
             "FileImageGenerator",
             new FileImageGenerator([
-                ...ImageGeneratorModule.getOperatingSystemSpecificIconGenerators(cacheFolderPath, dependencyRegistry),
-                new GenericFileIconExtractor(dependencyRegistry.get("App")),
+                ...ImageGeneratorModule.getOperatingSystemSpecificIconGenerators(cacheFolderPath, moduleRegistry),
+                new GenericFileIconExtractor(moduleRegistry.get("App")),
             ]),
         );
     }
 
-    private static async ensureCacheFolderExists(
-        dependencyRegistry: DependencyRegistry<Dependencies>,
-    ): Promise<string> {
-        const app = dependencyRegistry.get("App");
-        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+    private static async ensureCacheFolderExists(moduleRegistry: UeliModuleRegistry): Promise<string> {
+        const app = moduleRegistry.get("App");
+        const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
         const cacheFolderPath = join(app.getPath("userData"), "FileImageImageGenerator");
         await fileSystemUtility.createFolderIfDoesntExist(cacheFolderPath);
         return cacheFolderPath;
@@ -41,11 +35,11 @@ export class ImageGeneratorModule {
 
     private static getOperatingSystemSpecificIconGenerators(
         cacheFolderPath: string,
-        dependencyRegistry: DependencyRegistry<Dependencies>,
+        moduleRegistry: UeliModuleRegistry,
     ): FileIconExtractor[] {
         const cacheFileNameGenerator = new CacheFileNameGenerator();
 
-        const currentDesktopEnvironment = dependencyRegistry.get("LinuxDesktopEnvironmentResolver").resolve();
+        const currentDesktopEnvironment = moduleRegistry.get("LinuxDesktopEnvironmentResolver").resolve();
 
         // To prevent the execution of all icon extractor constructors, we use a function here that is only invoked
         // for the current operating system.
@@ -55,46 +49,46 @@ export class ImageGeneratorModule {
                 ["Cinnamon", "GNOME", "KDE", "MATE", "XFCE", "Pantheon"].includes(currentDesktopEnvironment)
                     ? [
                           new LinuxAppIconExtractor(
-                              dependencyRegistry.get("FileSystemUtility"),
-                              dependencyRegistry.get("CommandlineUtility"),
-                              dependencyRegistry.get("IniFileParser"),
-                              dependencyRegistry.get("Logger"),
+                              moduleRegistry.get("FileSystemUtility"),
+                              moduleRegistry.get("CommandlineUtility"),
+                              moduleRegistry.get("IniFileParser"),
+                              moduleRegistry.get("Logger"),
                               cacheFileNameGenerator,
                               cacheFolderPath,
-                              dependencyRegistry.get("App").getPath("home"),
-                              dependencyRegistry.get("EnvironmentVariableProvider"),
-                              dependencyRegistry.get("LinuxDesktopEnvironmentResolver"),
+                              moduleRegistry.get("App").getPath("home"),
+                              moduleRegistry.get("EnvironmentVariableProvider"),
+                              moduleRegistry.get("LinuxDesktopEnvironmentResolver"),
                           ),
                       ]
                     : [],
             macOS: () => [
                 new MacOsFolderIconExtractor(
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("App"),
+                    moduleRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("FileSystemUtility"),
+                    moduleRegistry.get("App"),
                 ),
                 new MacOsApplicationIconExtractor(
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("CommandlineUtility"),
+                    moduleRegistry.get("FileSystemUtility"),
+                    moduleRegistry.get("CommandlineUtility"),
                     cacheFileNameGenerator,
                     cacheFolderPath,
                 ),
             ],
             Windows: () => [
                 new WindowsFolderIconExtractor(
-                    dependencyRegistry.get("AssetPathResolver"),
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("App"),
+                    moduleRegistry.get("AssetPathResolver"),
+                    moduleRegistry.get("FileSystemUtility"),
+                    moduleRegistry.get("App"),
                 ),
                 new WindowsApplicationIconExtractor(
-                    dependencyRegistry.get("FileSystemUtility"),
-                    dependencyRegistry.get("PowershellUtility"),
+                    moduleRegistry.get("FileSystemUtility"),
+                    moduleRegistry.get("PowershellUtility"),
                     cacheFileNameGenerator,
                     cacheFolderPath,
                 ),
             ],
         };
 
-        return operatingSystemSpecificIconExtractors[dependencyRegistry.get("OperatingSystem")]();
+        return operatingSystemSpecificIconExtractors[moduleRegistry.get("OperatingSystem")]();
     }
 }

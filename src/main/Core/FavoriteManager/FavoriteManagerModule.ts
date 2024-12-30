@@ -1,18 +1,17 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { FavoritesActionHandler } from "./ActionHandler";
 import { FavoriteManager } from "./FavoriteManager";
 
 export class FavoriteManagerModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
 
         const favoriteManager = new FavoriteManager(
-            dependencyRegistry.get("SettingsManager"),
-            dependencyRegistry.get("BrowserWindowNotifier"),
+            moduleRegistry.get("SettingsManager"),
+            moduleRegistry.get("BrowserWindowNotifier"),
         );
 
-        dependencyRegistry.get("ActionHandlerRegistry").register(new FavoritesActionHandler(favoriteManager));
+        moduleRegistry.get("ActionHandlerRegistry").register(new FavoritesActionHandler(favoriteManager));
 
         ipcMain.on("getFavorites", (event) => (event.returnValue = favoriteManager.getAll()));
 

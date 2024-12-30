@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
@@ -10,27 +9,27 @@ import { EverythingFileSearcher } from "./Windows/EverythingFileSearcher";
 import { MdfindFileSearcher } from "./macOS/MdfindFileSearcher";
 
 export class FileSearchModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         const fileSearchers: Record<OperatingSystem, FileSearcher> = {
             Linux: new LinuxFileSearcher(),
-            macOS: new MdfindFileSearcher(dependencyRegistry.get("CommandlineUtility")),
+            macOS: new MdfindFileSearcher(moduleRegistry.get("CommandlineUtility")),
             Windows: new EverythingFileSearcher(
-                dependencyRegistry.get("CommandlineUtility"),
-                dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("Logger"),
+                moduleRegistry.get("CommandlineUtility"),
+                moduleRegistry.get("SettingsManager"),
+                moduleRegistry.get("Logger"),
             ),
         };
 
         return {
             extension: new FileSearch(
-                dependencyRegistry.get("OperatingSystem"),
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("FileSystemUtility"),
-                dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("App"),
-                dependencyRegistry.get("Logger"),
-                dependencyRegistry.get("Translator"),
-                fileSearchers[dependencyRegistry.get("OperatingSystem")],
+                moduleRegistry.get("OperatingSystem"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("FileSystemUtility"),
+                moduleRegistry.get("SettingsManager"),
+                moduleRegistry.get("App"),
+                moduleRegistry.get("Logger"),
+                moduleRegistry.get("Translator"),
+                fileSearchers[moduleRegistry.get("OperatingSystem")],
             ),
         };
     }

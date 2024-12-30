@@ -1,6 +1,5 @@
 import type { OperatingSystem } from "@common/Core";
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OpenExternalOptions } from "electron";
 import { OpenFilePathActionHandler, ShowItemInFileExplorerActionHandler, UrlActionHandler } from "./ActionHandler";
 import {
@@ -11,10 +10,10 @@ import {
 } from "./ActionHandler/CustomWebBrowser";
 
 export class ShellModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const shell = dependencyRegistry.get("Shell");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const actionHandlerRegistry = dependencyRegistry.get("ActionHandlerRegistry");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const shell = moduleRegistry.get("Shell");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const actionHandlerRegistry = moduleRegistry.get("ActionHandlerRegistry");
 
         actionHandlerRegistry.register(new OpenFilePathActionHandler(shell));
         actionHandlerRegistry.register(new ShowItemInFileExplorerActionHandler(shell));
@@ -22,19 +21,19 @@ export class ShellModule {
         const customWebBrowserActionHandlers: Record<OperatingSystem, () => CustomWebBrowserActionHandler> = {
             macOS: () =>
                 new MacOsCustomWebBrowserActionHandler(
-                    dependencyRegistry.get("SettingsManager"),
-                    dependencyRegistry.get("CommandlineUtility"),
+                    moduleRegistry.get("SettingsManager"),
+                    moduleRegistry.get("CommandlineUtility"),
                 ),
             Linux: () => new LinuxCustomWebBrowserActionHandler(),
             Windows: () =>
                 new WindowsCustomWebBrowserActionHandler(
-                    dependencyRegistry.get("PowershellUtility"),
-                    dependencyRegistry.get("SettingsManager"),
+                    moduleRegistry.get("PowershellUtility"),
+                    moduleRegistry.get("SettingsManager"),
                 ),
         };
 
         actionHandlerRegistry.register(
-            new UrlActionHandler(shell, customWebBrowserActionHandlers[dependencyRegistry.get("OperatingSystem")]()),
+            new UrlActionHandler(shell, customWebBrowserActionHandlers[moduleRegistry.get("OperatingSystem")]()),
         );
 
         ipcMain.handle("openExternal", (_, { url, options }: { url: string; options?: OpenExternalOptions }) =>

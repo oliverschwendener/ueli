@@ -1,11 +1,10 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { BrowserWindowNotifier } from "./BrowserWindowNotifier";
 
 export class BrowserWindowNotifierModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const browserWindowNotifier = new BrowserWindowNotifier(dependencyRegistry.get("BrowserWindowRegistry"));
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const browserWindowNotifier = new BrowserWindowNotifier(moduleRegistry.get("BrowserWindowRegistry"));
 
-        dependencyRegistry.register("BrowserWindowNotifier", browserWindowNotifier);
+        moduleRegistry.register("BrowserWindowNotifier", browserWindowNotifier);
     }
 }

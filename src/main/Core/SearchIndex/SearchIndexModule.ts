@@ -1,14 +1,13 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { InMemorySearchIndex } from "./InMemorySearchIndex";
 
 export class SearchIndexModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
 
-        const searchIndex = new InMemorySearchIndex(dependencyRegistry.get("BrowserWindowNotifier"));
+        const searchIndex = new InMemorySearchIndex(moduleRegistry.get("BrowserWindowNotifier"));
 
-        dependencyRegistry.register("SearchIndex", searchIndex);
+        moduleRegistry.register("SearchIndex", searchIndex);
 
         ipcMain.on("extensionDisabled", (_, { extensionId }: { extensionId: string }) =>
             searchIndex.removeSearchResultItems(extensionId),

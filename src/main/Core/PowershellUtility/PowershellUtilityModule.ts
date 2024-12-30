@@ -1,25 +1,24 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { join } from "path";
 import { PowershellActionHandler } from "./ActionHandler";
 import { PowershellUtility } from "./PowershellUtility";
 
 export class PowershellUtilityModule {
-    public static async bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
-        const app = dependencyRegistry.get("App");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
+        const app = moduleRegistry.get("App");
         const powershellScriptFolder = join(app.getPath("userData"), "PowershellUtility");
 
         await fileSystemUtility.createFolderIfDoesntExist(powershellScriptFolder);
 
         const powershellUtility = new PowershellUtility(
             fileSystemUtility,
-            dependencyRegistry.get("CommandlineUtility"),
+            moduleRegistry.get("CommandlineUtility"),
             powershellScriptFolder,
-            dependencyRegistry.get("RandomStringProvider"),
+            moduleRegistry.get("RandomStringProvider"),
         );
 
-        dependencyRegistry.register("PowershellUtility", powershellUtility);
-        dependencyRegistry.get("ActionHandlerRegistry").register(new PowershellActionHandler(powershellUtility));
+        moduleRegistry.register("PowershellUtility", powershellUtility);
+        moduleRegistry.get("ActionHandlerRegistry").register(new PowershellActionHandler(powershellUtility));
     }
 }

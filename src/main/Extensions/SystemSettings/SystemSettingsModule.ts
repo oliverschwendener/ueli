@@ -1,6 +1,5 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
 import type { OperatingSystem } from "@common/Core";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { LinuxSystemSettingRepository } from "./LinuxSystemSettingRepository";
@@ -11,20 +10,20 @@ import { WindowsSystemSettingActionHandler } from "./WindowsSystemSettingActionH
 import { WindowsSystemSettingsRepository } from "./WindowsSystemSettingRepository";
 
 export class SystemSettingsModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         const systemSettingRepositories: Record<OperatingSystem, SystemSettingRepository> = {
             Linux: new LinuxSystemSettingRepository(),
-            macOS: new MacOsSystemSettingRepository(dependencyRegistry.get("AssetPathResolver")),
-            Windows: new WindowsSystemSettingsRepository(dependencyRegistry.get("AssetPathResolver")),
+            macOS: new MacOsSystemSettingRepository(moduleRegistry.get("AssetPathResolver")),
+            Windows: new WindowsSystemSettingsRepository(moduleRegistry.get("AssetPathResolver")),
         };
 
         return {
             extension: new SystemSettingsExtension(
-                dependencyRegistry.get("OperatingSystem"),
-                systemSettingRepositories[dependencyRegistry.get("OperatingSystem")],
-                dependencyRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("OperatingSystem"),
+                systemSettingRepositories[moduleRegistry.get("OperatingSystem")],
+                moduleRegistry.get("AssetPathResolver"),
             ),
-            actionHandlers: [new WindowsSystemSettingActionHandler(dependencyRegistry.get("PowershellUtility"))],
+            actionHandlers: [new WindowsSystemSettingActionHandler(moduleRegistry.get("PowershellUtility"))],
         };
     }
 }

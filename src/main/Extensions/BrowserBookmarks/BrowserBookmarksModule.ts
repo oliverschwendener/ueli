@@ -1,5 +1,4 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { BrowserBookmarks } from "./BrowserBookmarks";
@@ -9,14 +8,14 @@ import { FirefoxBrowserBookmarkRepository } from "./FirefoxBrowserBookmarkReposi
 import { resolveChromiumBookmarksFilePath } from "./resolveChromiumBookmarksFilePath";
 
 export class BrowserBookmarksModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
-        const app = dependencyRegistry.get("App");
-        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
-        const operatingSystem = dependencyRegistry.get("OperatingSystem");
-        const settingsManager = dependencyRegistry.get("SettingsManager");
-        const assetPathResolver = dependencyRegistry.get("AssetPathResolver");
-        const urlImageGenerator = dependencyRegistry.get("UrlImageGenerator");
-        const translator = dependencyRegistry.get("Translator");
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
+        const app = moduleRegistry.get("App");
+        const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
+        const operatingSystem = moduleRegistry.get("OperatingSystem");
+        const settingsManager = moduleRegistry.get("SettingsManager");
+        const assetPathResolver = moduleRegistry.get("AssetPathResolver");
+        const urlImageGenerator = moduleRegistry.get("UrlImageGenerator");
+        const translator = moduleRegistry.get("Translator");
 
         return {
             extension: new BrowserBookmarks(
@@ -26,7 +25,7 @@ export class BrowserBookmarksModule implements ExtensionModule {
                             operatingSystem,
                             app,
                             fileSystemUtility,
-                            dependencyRegistry.get("IniFileParser"),
+                            moduleRegistry.get("IniFileParser"),
                         ),
                     ),
                     Arc: new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>

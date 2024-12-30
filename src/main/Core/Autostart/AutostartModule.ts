@@ -1,15 +1,14 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { DefaultAutostartManager } from "./DefaultAutostartManager";
 import { WindowsStoreAutostartManager } from "./WindowsStoreAutostartManager";
 
 export class AutostartModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const app = dependencyRegistry.get("App");
-        const logger = dependencyRegistry.get("Logger");
-        const ipcMain = dependencyRegistry.get("IpcMain");
-        const shell = dependencyRegistry.get("Shell");
-        const fileSystemUtility = dependencyRegistry.get("FileSystemUtility");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const app = moduleRegistry.get("App");
+        const logger = moduleRegistry.get("Logger");
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const shell = moduleRegistry.get("Shell");
+        const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
 
         const autostartManager = process.windowsStore
             ? new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, logger)

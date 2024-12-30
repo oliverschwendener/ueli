@@ -1,14 +1,13 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
 
 export class OperatingSystemModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const platform = dependencyRegistry.get("Platform");
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const platform = moduleRegistry.get("Platform");
+        const ipcMain = moduleRegistry.get("IpcMain");
 
         const operatingSystem = getOperatingSystemFromPlatform(platform);
-        dependencyRegistry.register("OperatingSystem", operatingSystem);
+        moduleRegistry.register("OperatingSystem", operatingSystem);
 
         ipcMain.on("getOperatingSystem", (event) => (event.returnValue = operatingSystem));
     }

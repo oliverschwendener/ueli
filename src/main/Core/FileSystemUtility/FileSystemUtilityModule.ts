@@ -1,13 +1,12 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
 
 export class FileSystemUtilityModule {
-    public static bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>) {
-        const ipcMain = dependencyRegistry.get("IpcMain");
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
 
         const fileSystemUtility = new NodeJsFileSystemUtility();
-        dependencyRegistry.register("FileSystemUtility", fileSystemUtility);
+        moduleRegistry.register("FileSystemUtility", fileSystemUtility);
 
         ipcMain.on("fileExists", (event, { filePath }: { filePath: string }) => {
             event.returnValue = fileSystemUtility.existsSync(filePath);

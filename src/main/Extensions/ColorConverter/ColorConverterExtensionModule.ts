@@ -1,17 +1,16 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { ColorConverterExtension } from "./ColorConverterExtension";
 import { QixColorConverter } from "./QixColorConverter";
 
 export class ColorConverterExtensionModule implements ExtensionModule {
-    public bootstrap(dependencyRegistry: DependencyRegistry<Dependencies>): ExtensionBootstrapResult {
+    public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
             extension: new ColorConverterExtension(
-                dependencyRegistry.get("AssetPathResolver"),
-                dependencyRegistry.get("SettingsManager"),
-                dependencyRegistry.get("Translator"),
+                moduleRegistry.get("AssetPathResolver"),
+                moduleRegistry.get("SettingsManager"),
+                moduleRegistry.get("Translator"),
                 new QixColorConverter(),
             ),
         };

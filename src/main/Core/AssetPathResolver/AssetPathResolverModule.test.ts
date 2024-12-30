@@ -1,18 +1,17 @@
-import type { Dependencies } from "@Core/Dependencies";
-import type { DependencyRegistry } from "@Core/DependencyRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
 import { AssetPathResolver } from "./AssetPathResolver";
 import { AssetPathResolverModule } from "./AssetPathResolverModule";
 
 describe(AssetPathResolverModule, () => {
     it("should register the AssetPathResolver", () => {
-        const dependencyRegistry = <DependencyRegistry<Dependencies>>{
+        const moduleRegistry = <UeliModuleRegistry>{
             get: vi.fn(),
             register: vi.fn(),
         };
 
-        AssetPathResolverModule.bootstrap(dependencyRegistry);
+        AssetPathResolverModule.bootstrap(moduleRegistry);
 
-        expect(dependencyRegistry.register).toHaveBeenCalledWith("AssetPathResolver", new AssetPathResolver());
+        expect(moduleRegistry.register).toHaveBeenCalledWith("AssetPathResolver", new AssetPathResolver());
     });
 });
