@@ -183,7 +183,7 @@ describe(WindowsStoreAutostartManager, () => {
             });
         });
 
-        it("should remove shortcut file when openAtLogin is false and shorcut file exists", () => {
+        it("should remove shortcut file when openAtLogin is false and shortcut file exists", () => {
             testSetAutostartOptions({
                 openAtLogin: false,
                 shortcutFileExists: true,
@@ -191,7 +191,7 @@ describe(WindowsStoreAutostartManager, () => {
             });
         });
 
-        it("should do nothing when openAtLogin is false and shorcut file does notexists", () => {
+        it("should do nothing when openAtLogin is false and shortcut file does not exist", () => {
             testSetAutostartOptions({
                 openAtLogin: false,
                 shortcutFileExists: false,

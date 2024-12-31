@@ -34,7 +34,7 @@ export const resolveChromiumBookmarksFilePath = ({
                 ),
         },
         "Google Chrome": {
-            Linux: () => "", // not supported,,
+            Linux: () => "", // not supported
             macOS: () => join(app.getPath("appData"), "Google", "Chrome", "Default", "Bookmarks"),
             Windows: () =>
                 join(app.getPath("home"), "AppData", "Local", "Google", "Chrome", "User Data", "Default", "Bookmarks"),

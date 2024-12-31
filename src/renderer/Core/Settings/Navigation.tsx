@@ -17,13 +17,13 @@ export const Navigation = ({ settingsPages }: NavigationProps) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    const [enabledExtensions, setEnabledExtensios] = useState<ExtensionInfo[]>(
+    const [enabledExtensions, setEnabledExtensions] = useState<ExtensionInfo[]>(
         window.ContextBridge.getEnabledExtensions(),
     );
 
     useEffect(() => {
         const extensionToggleEventHandler = () => {
-            setEnabledExtensios(window.ContextBridge.getEnabledExtensions());
+            setEnabledExtensions(window.ContextBridge.getEnabledExtensions());
         };
 
         window.ContextBridge.ipcRenderer.on("extensionEnabled", extensionToggleEventHandler);

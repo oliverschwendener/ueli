@@ -20,7 +20,7 @@ describe(UrlActionHandler, () => {
         expect(openExternalMock).toHaveBeenCalledWith("this is a url");
     });
 
-    it("should open the URL with the custom web browser aciton handler if it's enabled", async () => {
+    it("should open the URL with the custom web browser action handler if it's enabled", async () => {
         const openUrlMock = vi.fn().mockReturnValue(Promise.resolve());
 
         const customWebBrowserActionHandler = <CustomWebBrowserActionHandler>{
