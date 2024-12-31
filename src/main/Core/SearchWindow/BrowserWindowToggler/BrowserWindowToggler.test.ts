@@ -13,7 +13,6 @@ describe(BrowserWindowToggler, () => {
         const isVisibleMock = vi.fn().mockReturnValue(isVisible);
         const minimizeMock = vi.fn();
         const restoreMock = vi.fn();
-        const setBoundsMock = vi.fn();
         const showMock = vi.fn();
         const webContentsSendMock = vi.fn();
 
@@ -25,7 +24,6 @@ describe(BrowserWindowToggler, () => {
             isVisible: () => isVisibleMock(),
             minimize: () => minimizeMock(),
             restore: () => restoreMock(),
-            setBounds: (b) => setBoundsMock(b),
             show: () => showMock(),
             webContents: { send: (c) => webContentsSendMock(c) },
         };
@@ -39,7 +37,6 @@ describe(BrowserWindowToggler, () => {
             isVisibleMock,
             minimizeMock,
             restoreMock,
-            setBoundsMock,
             showMock,
             webContentsSendMock,
         };
