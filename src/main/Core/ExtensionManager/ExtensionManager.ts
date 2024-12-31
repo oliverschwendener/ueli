@@ -1,6 +1,6 @@
 import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
-import type { SearchIndex } from "@Core/SearchIndex";
+import type { Index, SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { createEmptyInstantSearchResult, type InstantSearchResultItems } from "@common/Core";
 import type { ScanCounter } from "./ScanCounter";
@@ -21,12 +21,14 @@ export class ExtensionManager {
             enabledExtensions.map((extension) => extension.getSearchResultItems()),
         );
 
+        const newIndex: Index = {};
+
         for (let i = 0; i < enabledExtensions.length; i++) {
             const promiseResult = promiseResults[i];
             const { id: extensionId } = enabledExtensions[i];
 
             if (promiseResult.status === "fulfilled") {
-                this.searchIndex.addSearchResultItems(extensionId, promiseResult.value);
+                newIndex[extensionId] = promiseResult.value;
             } else {
                 this.logger.error(
                     `Failed to get search result items for extension with id '${extensionId}.` +
@@ -35,6 +37,7 @@ export class ExtensionManager {
             }
         }
 
+        this.searchIndex.set(newIndex);
         this.scanCounter.increment();
     }
 
