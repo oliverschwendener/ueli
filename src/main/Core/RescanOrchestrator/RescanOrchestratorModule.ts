@@ -1,9 +1,11 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
 import { RescanOrchestrator } from "./RescanOrchestrator";
 
 export class RescanOrchestratorModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry): void {
         const eventSubscriber = moduleRegistry.get("EventSubscriber");
+
         const rescanOrchestrator = new RescanOrchestrator(
             moduleRegistry.get("EventEmitter"),
             moduleRegistry.get("SettingsManager"),
@@ -34,9 +36,11 @@ export class RescanOrchestratorModule {
             }
         });
 
-        eventSubscriber.subscribe("ueliCommandInvoked", async () => {
-            rescanOrchestrator.cancel();
-            rescanOrchestrator.scanUntilCancelled();
+        eventSubscriber.subscribe("ueliCommandInvoked", ({ ueliCommand }: UeliCommandInvokedEvent<unknown>) => {
+            if (ueliCommand === "rescanExtensions") {
+                rescanOrchestrator.cancel();
+                rescanOrchestrator.scanUntilCancelled();
+            }
         });
     }
 }

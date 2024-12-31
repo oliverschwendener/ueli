@@ -49,6 +49,7 @@ const contextBridgeImplementation: ContextBridge = {
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),
+    searchIndexCacheFileExists: () => ipcRenderer.sendSync("searchIndexCacheFileExists"),
 };
 
 contextBridge.exposeInMainWorld("ContextBridge", contextBridgeImplementation);

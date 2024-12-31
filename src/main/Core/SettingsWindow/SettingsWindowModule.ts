@@ -42,12 +42,14 @@ export class SettingsWindowModule {
 
         eventSubscriber.subscribe(
             "ueliCommandInvoked",
-            async ({ ueliCommand, argument: { pathname } }: UeliCommandInvokedEvent<{ pathname: string }>) => {
+            async ({ ueliCommand, argument }: UeliCommandInvokedEvent<{ pathname: string }>) => {
                 if (["openAbout", "openExtensions", "openSettings"].includes(ueliCommand)) {
                     const settingsWindow = await settingsWindowManager.getWindow();
 
                     settingsWindow.show();
                     settingsWindow.focus();
+
+                    const { pathname } = argument;
 
                     browserWindowNotifier.notify({
                         browserWindowId: "settings",

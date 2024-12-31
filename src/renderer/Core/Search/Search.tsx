@@ -267,7 +267,7 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                window.ContextBridge.getScanCount() === 0 ? (
+                window.ContextBridge.getScanCount() === 0 && !window.ContextBridge.searchIndexCacheFileExists() ? (
                     <ScanIndicator />
                 ) : (
                     <>

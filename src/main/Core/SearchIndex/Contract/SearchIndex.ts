@@ -1,9 +1,16 @@
 import type { SearchResultItem } from "@common/Core";
+import type { Index } from "./SearchIndexStructure";
 
 /**
  * Offers methods to interact with the search index.
  */
 export interface SearchIndex {
+    /**
+     * Sets the search index. Note that all existing items in the search index will be replaced.
+     * @param index The search index to set.
+     */
+    set(index: Index): void;
+
     /**
      * Gets all search result items in a flat list.
      */
