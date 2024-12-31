@@ -46,7 +46,7 @@ export class ExtensionManagerModule {
         });
 
         ipcMain.on("extensionEnabled", async (_, { extensionId }: { extensionId: string }) => {
-            extensionManager.populateSearchIndexByExtensionId(extensionId);
+            await extensionManager.populateSearchIndexByExtensionId(extensionId);
             browserWindowNotifier.notifyAll({ channel: "extensionEnabled", data: { extensionId } });
         });
 
