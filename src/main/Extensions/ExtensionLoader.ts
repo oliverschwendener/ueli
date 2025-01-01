@@ -12,6 +12,7 @@ import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
 import { SimpleFileSearchExtensionModule } from "./SimpleFileSearch/SimpleFileSearchExtensionModule";
+import { SimpleNotesModule } from "./SimpleNotes";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
 import { TerminalLauncherModule } from "./TerminalLauncher";
@@ -41,6 +42,7 @@ export class ExtensionLoader {
             new FileSearchModule(),
             new JetBrainsToolboxModule(),
             new SimpleFileSearchExtensionModule(),
+            new SimpleNotesModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
             new TerminalLauncherModule(),
