@@ -10,6 +10,7 @@ import { CustomWebSearchSettings } from "./CustomWebSearch";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
+import { SimpleNotes } from "./SimpleNotes";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
 import { VSCodeSettings } from "./VSCode";
@@ -61,6 +62,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         SimpleFileSearch: {
             settings: <SimpleFileSearchSettings />,
+        },
+        SimpleNotes: {
+            extension: <SimpleNotes {...props} />,
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
