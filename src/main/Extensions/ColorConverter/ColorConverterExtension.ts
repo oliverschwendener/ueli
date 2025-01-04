@@ -6,6 +6,7 @@ import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { ColorConverter } from "./ColorConverter";
+import type { ColorPreviewGenerator } from "./ColorPreviewGenerator";
 import type { Settings } from "./Settings";
 
 export class ColorConverterExtension implements Extension {
@@ -32,6 +33,7 @@ export class ColorConverterExtension implements Extension {
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
         private readonly colorConverter: ColorConverter,
+        private readonly colorPreviewGenerator: ColorPreviewGenerator,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -44,12 +46,6 @@ export class ColorConverterExtension implements Extension {
 
     public getSettingDefaultValue(key: keyof Settings) {
         return this.defaultSettings[key];
-    }
-
-    public getImage(): Image {
-        return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "color-converter.png")}`,
-        };
     }
 
     public getI18nResources(): Resources<Translations> {
@@ -78,21 +74,37 @@ export class ColorConverterExtension implements Extension {
             after: this.colorConverter
                 .convertFromString(searchTerm)
                 .filter(({ format }) => this.getEnabledColorFormats().includes(format))
-                .map(({ format, value }) => ({
-                    defaultAction: createCopyToClipboardAction({
-                        textToCopy: value,
-                        description: "Copy color to clipboard",
-                        descriptionTranslation: {
-                            key: "copyColorToClipboard",
-                            namespace: "extension[ColorConverter]",
-                        },
-                    }),
-                    description: t("color", { format }),
-                    id: `color-${value}-${format}`,
-                    image: this.getImage(),
-                    name: value,
-                })),
+                .map(({ format, value }) => {
+                    const hexColor = this.colorConverter.getRgbColor(value);
+
+                    return {
+                        defaultAction: createCopyToClipboardAction({
+                            textToCopy: value,
+                            description: "Copy color to clipboard",
+                            descriptionTranslation: {
+                                key: "copyColorToClipboard",
+                                namespace: "extension[ColorConverter]",
+                            },
+                        }),
+                        description: t("color", { format }),
+                        id: `color-${value}-${format}`,
+                        image: hexColor ? this.getColorImage(hexColor) : this.getImage(),
+                        name: value,
+                    };
+                }),
             before: [],
+        };
+    }
+
+    public getImage(): Image {
+        return {
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "color-converter.png")}`,
+        };
+    }
+
+    private getColorImage(hexColor: string): Image {
+        return {
+            url: this.colorPreviewGenerator.generateImageUrl(hexColor),
         };
     }
 
