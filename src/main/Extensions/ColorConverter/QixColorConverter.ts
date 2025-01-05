@@ -15,6 +15,10 @@ export class QixColorConverter implements ColorConverter {
             : [];
     }
 
+    public getRgbColor(value: string): string | undefined {
+        return this.extractColorFromString(value)?.rgb().string();
+    }
+
     private extractColorFromString(value: string): Color | undefined {
         try {
             return Color(value);

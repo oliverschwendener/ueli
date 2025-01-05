@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { ColorConversionResult } from "./ColorConversionResult";
 import type { ColorConverter } from "./ColorConverter";
 import { ColorConverterExtension } from "./ColorConverterExtension";
+import type { ColorPreviewGenerator } from "./ColorPreviewGenerator";
 
 describe(ColorConverterExtension, () => {
     describe(ColorConverterExtension.prototype.getSearchResultItems, () => {
@@ -14,6 +15,7 @@ describe(ColorConverterExtension, () => {
                 <SettingsManager>{},
                 <Translator>{},
                 <ColorConverter>{},
+                <ColorPreviewGenerator>{},
             ).getSearchResultItems();
             expect(actual).toEqual([]);
         });
@@ -31,6 +33,7 @@ describe(ColorConverterExtension, () => {
                 <SettingsManager>{},
                 <Translator>{},
                 <ColorConverter>{},
+                <ColorPreviewGenerator>{},
             );
 
             expect(colorConverterExtension.getImage()).toEqual({ url: "file://color-converter.png" });
@@ -48,6 +51,7 @@ describe(ColorConverterExtension, () => {
             <SettingsManager>{},
             <Translator>{},
             <ColorConverter>{},
+            <ColorPreviewGenerator>{},
         );
 
         it("should return the default formats when passing 'formats' as key", () =>
@@ -62,6 +66,7 @@ describe(ColorConverterExtension, () => {
                     <SettingsManager>{},
                     <Translator>{},
                     <ColorConverter>{},
+                    <ColorPreviewGenerator>{},
                 ).isSupported(),
             ).toBe(true)),
     );
@@ -90,6 +95,13 @@ describe(ColorConverterExtension, () => {
                     { format: "HSL", value: "hsl(0, 0%, 100%)" },
                     { format: "RGB", value: "rgb(255, 255, 255)" },
                 ]),
+                getRgbColor: vi.fn().mockReturnValue("#FFFFFF"),
+            };
+
+            const generateImageUrlMock = vi.fn().mockReturnValue("file://preview-image.png");
+
+            const colorPreviewGenerator: ColorPreviewGenerator = {
+                generateImageUrl: generateImageUrlMock,
             };
 
             const colorConverterExtension = new ColorConverterExtension(
@@ -97,6 +109,7 @@ describe(ColorConverterExtension, () => {
                 settingsManager,
                 translator,
                 colorConverter,
+                colorPreviewGenerator,
             );
 
             const { before, after } = colorConverterExtension.getInstantSearchResultItems("#fff");
@@ -110,8 +123,8 @@ describe(ColorConverterExtension, () => {
             expect(after.map((a) => a.name)).toEqual(["#FFFFFF", "rgb(255, 255, 255)"]);
 
             expect(after.map(({ image }) => image)).toEqual([
-                { url: "file://color-converter.png" },
-                { url: "file://color-converter.png" },
+                { url: "file://preview-image.png" },
+                { url: "file://preview-image.png" },
             ]);
         });
     });
@@ -125,6 +138,7 @@ describe(ColorConverterExtension, () => {
                         <SettingsManager>{},
                         <Translator>{},
                         <ColorConverter>{},
+                        <ColorPreviewGenerator>{},
                     ).getI18nResources(),
                 ),
             ).toEqual(["en-US", "de-CH"])),
