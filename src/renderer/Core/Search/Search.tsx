@@ -86,6 +86,10 @@ export const Search = ({
                 },
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
+            {
+                listener: () => window.ContextBridge.ipcRenderer.send("rescanExtensionsHotkeyPressed"),
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "F5",
+            },
         ];
 
         for (const eventHandler of eventHandlers) {
