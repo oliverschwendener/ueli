@@ -21,7 +21,7 @@ export class BrowserWindowModule {
 
         moduleRegistry.register(
             "BrowserWindowHtmlLoader",
-            new HtmlLoader(moduleRegistry.get("App"), moduleRegistry.get("EnvironmentVariableProvider")),
+            new HtmlLoader(moduleRegistry.get("EnvironmentVariableProvider")),
         );
 
         moduleRegistry.register(
