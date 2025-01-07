@@ -1,3 +1,4 @@
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier/Contract/BrowserWindowNotifier";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
@@ -34,12 +35,16 @@ describe(ExtensionManager, () => {
         const incrementMock = vi.fn();
         const scanCounter = <ScanCounter>{ increment: () => incrementMock() };
 
+        const notifyAllMock = vi.fn();
+        const browserWindowNotifier = <BrowserWindowNotifier>{ notifyAll: notifyAllMock, notify: () => {} };
+
         const extensionManager = new ExtensionManager(
             extensionRegistry,
             searchIndex,
             <SettingsManager>{},
             <Logger>{},
             scanCounter,
+            browserWindowNotifier,
         );
 
         await extensionManager.populateSearchIndexByExtensionId(extension.id);
@@ -47,6 +52,9 @@ describe(ExtensionManager, () => {
         expect(getExtensionByIdMock).toHaveBeenCalledWith(extension.id);
         expect(addSearchResultItemsMock).toHaveBeenCalledWith(extension.id, searchResultItems);
         expect(incrementMock).toHaveBeenCalledOnce();
+        expect(notifyAllMock).toHaveBeenCalledTimes(2);
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "rescanStarted" });
+        expect(notifyAllMock).toHaveBeenCalledWith({ channel: "rescanFinished" });
     });
 
     it("should get the supported extensions", () => {
@@ -62,6 +70,7 @@ describe(ExtensionManager, () => {
             <SettingsManager>{},
             <Logger>{},
             <ScanCounter>{},
+            <BrowserWindowNotifier>{},
         );
 
         expect(extensionManager.getSupportedExtensions()).toEqual([extension1]);
@@ -82,6 +91,7 @@ describe(ExtensionManager, () => {
             settingsManager,
             <Logger>{},
             <ScanCounter>{},
+            <BrowserWindowNotifier>{},
         );
 
         expect(extensionManager.getEnabledExtensions()).toEqual([extension1]);
@@ -121,6 +131,7 @@ describe(ExtensionManager, () => {
             settingsManager,
             <Logger>{},
             <ScanCounter>{},
+            <BrowserWindowNotifier>{},
         );
 
         const { before, after } = extensionManager.getInstantSearchResultItems("search term");

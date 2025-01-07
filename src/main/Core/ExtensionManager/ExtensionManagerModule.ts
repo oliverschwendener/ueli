@@ -30,6 +30,7 @@ export class ExtensionManagerModule {
             settingsManager,
             logger,
             scanCounter,
+            browserWindowNotifier,
         );
 
         ipcMain.on("getScanCount", (event) => (event.returnValue = scanCounter.getScanCount()));

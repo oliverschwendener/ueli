@@ -1,7 +1,7 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useSetting } from "@Core/Hooks";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Text, tokens, Tooltip } from "@fluentui/react-components";
+import { Button, Spinner, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { PlayCircleRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -165,6 +165,8 @@ export const Search = ({
         },
     ];
 
+    const [rescanRunning, setRescanRunning] = useState(false);
+
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -181,6 +183,9 @@ export const Search = ({
             setAdditionalActionsMenuIsOpen(false);
         };
 
+        const rescanStartedEventHandler = () => setRescanRunning(true);
+        const rescanFinishedEventHandler = () => setRescanRunning(false);
+
         const keyDownEventHandler = (event: KeyboardEvent) => {
             for (const { action, validate } of windowKeyDownEventHandlers) {
                 if (validate(event)) {
@@ -191,10 +196,14 @@ export const Search = ({
 
         window.ContextBridge.ipcRenderer.on("windowFocused", windowFocusedEventHandler);
         window.addEventListener("keydown", keyDownEventHandler);
+        window.ContextBridge.ipcRenderer.on("rescanStarted", rescanStartedEventHandler);
+        window.ContextBridge.ipcRenderer.on("rescanFinished", rescanFinishedEventHandler);
 
         return () => {
             window.ContextBridge.ipcRenderer.off("windowFocused", windowFocusedEventHandler);
             window.removeEventListener("keydown", keyDownEventHandler);
+            window.ContextBridge.ipcRenderer.off("rescanStarted", rescanStartedEventHandler);
+            window.ContextBridge.ipcRenderer.off("rescanFinished", rescanFinishedEventHandler);
         };
     }, []);
 
@@ -313,34 +322,46 @@ export const Search = ({
             }
             footer={
                 <Footer draggable>
-                    <Tooltip
-                        content={
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 8,
-                                    marginTop: showKeyboardShortcuts ? 2 : 0,
-                                }}
-                            >
-                                {t("settings", { ns: "general" })}
-                                {showKeyboardShortcuts && (
-                                    <KeyboardShortcut
-                                        shortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
-                                    />
-                                )}
+                    <div style={{ display: "flex", gap: 20 }}>
+                        <Tooltip
+                            content={
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 8,
+                                        marginTop: showKeyboardShortcuts ? 2 : 0,
+                                    }}
+                                >
+                                    {t("settings", { ns: "general" })}
+                                    {showKeyboardShortcuts && (
+                                        <KeyboardShortcut
+                                            shortcut={
+                                                window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"
+                                            }
+                                        />
+                                    )}
+                                </div>
+                            }
+                            relationship="label"
+                        >
+                            <Button
+                                className="non-draggable-area"
+                                onClick={openSettings}
+                                size="small"
+                                appearance="subtle"
+                                icon={<SettingsRegular fontSize={18} />}
+                            />
+                        </Tooltip>
+                        {rescanRunning && window.ContextBridge.getScanCount() > 0 && (
+                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <Spinner size="extra-tiny" />
+                                <Text size={200} style={{ color: tokens.colorNeutralForeground2 }}>
+                                    {t("rescanning", { ns: "search" })}
+                                </Text>
                             </div>
-                        }
-                        relationship="label"
-                    >
-                        <Button
-                            className="non-draggable-area"
-                            onClick={openSettings}
-                            size="small"
-                            appearance="subtle"
-                            icon={<SettingsRegular fontSize={18} />}
-                        />
-                    </Tooltip>
+                        )}
+                    </div>
 
                     <div style={{ display: "flex", gap: 4 }}>
                         {searchResult.current() ? (

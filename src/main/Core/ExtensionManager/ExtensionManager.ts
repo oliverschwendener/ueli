@@ -1,3 +1,4 @@
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier/Contract/BrowserWindowNotifier";
 import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { Index, SearchIndex } from "@Core/SearchIndex";
@@ -12,41 +13,54 @@ export class ExtensionManager {
         private readonly settingsManager: SettingsManager,
         private readonly logger: Logger,
         private readonly scanCounter: ScanCounter,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {}
 
     public async populateSearchIndex() {
-        const enabledExtensions = this.getEnabledExtensions();
+        try {
+            this.browserWindowNotifier.notifyAll({ channel: "rescanStarted" });
 
-        const promiseResults = await Promise.allSettled(
-            enabledExtensions.map((extension) => extension.getSearchResultItems()),
-        );
+            const enabledExtensions = this.getEnabledExtensions();
 
-        const newIndex: Index = {};
+            const promiseResults = await Promise.allSettled(
+                enabledExtensions.map((extension) => extension.getSearchResultItems()),
+            );
 
-        for (let i = 0; i < enabledExtensions.length; i++) {
-            const promiseResult = promiseResults[i];
-            const { id: extensionId } = enabledExtensions[i];
+            const newIndex: Index = {};
 
-            if (promiseResult.status === "fulfilled") {
-                newIndex[extensionId] = promiseResult.value;
-            } else {
-                this.logger.error(
-                    `Failed to get search result items for extension with id '${extensionId}.` +
-                        `Reason: ${promiseResult.reason}'`,
-                );
+            for (let i = 0; i < enabledExtensions.length; i++) {
+                const promiseResult = promiseResults[i];
+                const { id: extensionId } = enabledExtensions[i];
+
+                if (promiseResult.status === "fulfilled") {
+                    newIndex[extensionId] = promiseResult.value;
+                } else {
+                    this.logger.error(
+                        `Failed to get search result items for extension with id '${extensionId}.` +
+                            `Reason: ${promiseResult.reason}'`,
+                    );
+                }
             }
-        }
 
-        this.searchIndex.set(newIndex);
-        this.scanCounter.increment();
+            this.searchIndex.set(newIndex);
+            this.scanCounter.increment();
+        } finally {
+            this.browserWindowNotifier.notifyAll({ channel: "rescanFinished" });
+        }
     }
 
     public async populateSearchIndexByExtensionId(extensionId: string) {
-        const extension = this.extensionRegistry.getById(extensionId);
-        const searchResultItems = await extension.getSearchResultItems();
-        this.searchIndex.addSearchResultItems(extension.id, searchResultItems);
+        try {
+            this.browserWindowNotifier.notifyAll({ channel: "rescanStarted" });
 
-        this.scanCounter.increment();
+            const extension = this.extensionRegistry.getById(extensionId);
+            const searchResultItems = await extension.getSearchResultItems();
+            this.searchIndex.addSearchResultItems(extension.id, searchResultItems);
+
+            this.scanCounter.increment();
+        } finally {
+            this.browserWindowNotifier.notifyAll({ channel: "rescanFinished" });
+        }
     }
 
     public getSupportedExtensions() {

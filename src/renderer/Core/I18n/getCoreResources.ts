@@ -31,6 +31,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "searchResultGroup.favorites": "Favorites",
                     "searchResultGroup.searchResults": "Search Results",
                     searchBarPlaceholderText: "Type to search...",
+                    rescanning: "Rescanning...",
                 },
                 "de-CH": {
                     noResultsFoundFor: "Keine Suchergebnisse gefunden für",
@@ -39,6 +40,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "searchResultGroup.favorites": "Favoriten",
                     "searchResultGroup.searchResults": "Suchergebnisse",
                     searchBarPlaceholderText: "Suchbegriff eingeben...",
+                    rescanning: "Scanne neu...",
                 },
             },
         },
