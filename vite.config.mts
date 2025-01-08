@@ -28,6 +28,7 @@ export default defineConfig(({ command }) => {
             },
         },
         build: {
+            sourcemap,
             rollupOptions: {
                 input: {
                     search: join(rendererRoot, "search.html"),
