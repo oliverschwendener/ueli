@@ -14,8 +14,8 @@ export class ActionHandlerModule {
 
         ipcMain.handle("invokeAction", async (_, { action }: { action: SearchResultItemAction }) => {
             try {
+                eventEmitter.emitEvent("actionInvocationStarted", { action });
                 await actionHandlerRegistry.getById(action.handlerId).invokeAction(action);
-                eventEmitter.emitEvent("actionInvoked", { action });
             } catch (error) {
                 const errorMessage = `Error while invoking action: ${error}`;
                 logger.error(errorMessage);

@@ -91,7 +91,7 @@ export class SearchWindowModule {
             }
         });
 
-        eventSubscriber.subscribe("actionInvoked", ({ action }: { action: SearchResultItemAction }) => {
+        eventSubscriber.subscribe("actionInvocationStarted", ({ action }: { action: SearchResultItemAction }) => {
             if (shouldHideWindowAfterInvocation(action)) {
                 browserWindowToggler.hide();
             }
