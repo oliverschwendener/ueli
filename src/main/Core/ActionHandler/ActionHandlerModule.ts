@@ -17,17 +17,7 @@ export class ActionHandlerModule {
                 eventEmitter.emitEvent("actionInvocationStarted", { action });
                 await actionHandlerRegistry.getById(action.handlerId).invokeAction(action);
             } catch (error) {
-                const title = `Error while invoking action`;
-
-                const content = [
-                    `Error: ${error}`,
-                    `HandlerId: ${action.handlerId}`,
-                    `Argument: ${action.argument}`,
-                ].join("\n");
-
-                dialog.showErrorBox(title, content);
-
-                return Promise.reject(`${title}: ${content}`);
+                dialog.showErrorBox("Error while invoking action", `Reason: ${error}`);
             }
         });
     }
