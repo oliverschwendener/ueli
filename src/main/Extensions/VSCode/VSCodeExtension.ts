@@ -173,6 +173,7 @@ export class VSCodeExtension implements Extension {
                 handlerId: "Commandline",
                 description: `Open ${fileType} in VSCode`,
                 argument: template.replace("%s", `${commandArg} ${uri}`),
+                hideWindowAfterInvocation: true,
             },
         };
     }
