@@ -4,9 +4,13 @@ import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
 
 export class CommandlineUtilityModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
-        const commandlineUtility = new NodeJsCommandlineUtility();
+        const browserRegistry = moduleRegistry.get("BrowserWindowRegistry");
 
+        const commandlineUtility = new NodeJsCommandlineUtility();
         moduleRegistry.register("CommandlineUtility", commandlineUtility);
-        moduleRegistry.get("ActionHandlerRegistry").register(new CommandlineActionHandler(commandlineUtility));
+
+        moduleRegistry
+            .get("ActionHandlerRegistry")
+            .register(new CommandlineActionHandler(commandlineUtility, browserRegistry));
     }
 }

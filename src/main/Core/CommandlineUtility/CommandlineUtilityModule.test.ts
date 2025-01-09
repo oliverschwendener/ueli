@@ -1,6 +1,7 @@
 import type { ActionHandlerRegistry } from "@Core/ActionHandler";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+import type { BrowserWindowRegistry } from "../BrowserWindowRegistry";
 import { CommandlineActionHandler } from "./ActionHandler";
 import { CommandlineUtilityModule } from "./CommandlineUtilityModule";
 import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";
@@ -13,8 +14,14 @@ describe(CommandlineUtilityModule, () => {
             getById: vi.fn(),
         };
 
+        const browserRegistryMock = {
+            getAll: vi.fn(),
+            getById: vi.fn(),
+            register: vi.fn(),
+        } as unknown as BrowserWindowRegistry;
+
         const moduleRegistry = <UeliModuleRegistry>{
-            get: vi.fn().mockReturnValue(actionHandlerRegistryMock),
+            get: vi.fn().mockReturnValueOnce(browserRegistryMock).mockReturnValueOnce(actionHandlerRegistryMock),
             register: vi.fn(),
         };
 
@@ -22,9 +29,10 @@ describe(CommandlineUtilityModule, () => {
 
         expect(moduleRegistry.register).toHaveBeenCalledWith("CommandlineUtility", new NodeJsCommandlineUtility());
 
-        expect(moduleRegistry.get).toBeCalledWith("ActionHandlerRegistry");
+        expect(moduleRegistry.get).toHaveBeenNthCalledWith(1, "BrowserWindowRegistry");
+        expect(moduleRegistry.get).toHaveBeenNthCalledWith(2, "ActionHandlerRegistry");
         expect(actionHandlerRegistryMock.register).toHaveBeenCalledWith(
-            new CommandlineActionHandler(new NodeJsCommandlineUtility()),
+            new CommandlineActionHandler(new NodeJsCommandlineUtility(), browserRegistryMock),
         );
     });
 });

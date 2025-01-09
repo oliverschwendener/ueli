@@ -1,5 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
+import type { BrowserWindowRegistry } from "../../BrowserWindowRegistry";
 import type { CommandlineUtility } from "../Contract";
 
 /**
@@ -8,7 +9,10 @@ import type { CommandlineUtility } from "../Contract";
 export class CommandlineActionHandler implements ActionHandler {
     public readonly id = "Commandline";
 
-    public constructor(private readonly commandlineUtility: CommandlineUtility) {}
+    public constructor(
+        private readonly commandlineUtility: CommandlineUtility,
+        private readonly browserRegistry: BrowserWindowRegistry,
+    ) {}
 
     /**
      * Executes the given CLI command and waits until it finishes.
@@ -16,6 +20,13 @@ export class CommandlineActionHandler implements ActionHandler {
      * Expects the given action's argument to be a valid CLI command, e.g.: `"ls -la"`.
      */
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        await this.commandlineUtility.executeCommand(action.argument);
+        const searchWindow = this.browserRegistry.getById("search");
+
+        searchWindow?.hide();
+        try {
+            await this.commandlineUtility.executeCommand(action.argument);
+        } catch (err) {
+            searchWindow?.show();
+        }
     }
 }

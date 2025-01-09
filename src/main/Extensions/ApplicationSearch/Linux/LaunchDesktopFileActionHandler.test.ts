@@ -1,14 +1,21 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+import type { BrowserWindowRegistry } from "../../../Core";
 import { LaunchDesktopFileActionHandler } from "./LaunchDesktopFileActionHandler";
+
+const browserRegistryMock = {
+    getById: () => {
+        return { show: vi.fn(), hide: vi.fn() };
+    },
+} as unknown as BrowserWindowRegistry;
 
 describe(LaunchDesktopFileActionHandler, () => {
     it("should call `gio launch` when executing search result item with the argument file name", async () => {
         const executeCommandMock = vi.fn().mockResolvedValue("");
         const commandlineUtility = <CommandlineUtility>{ executeCommand: (path) => executeCommandMock(path) };
 
-        const actionHandler = new LaunchDesktopFileActionHandler(commandlineUtility);
+        const actionHandler = new LaunchDesktopFileActionHandler(commandlineUtility, browserRegistryMock);
 
         await actionHandler.invokeAction(<SearchResultItemAction>{
             argument: "/usr/share/applications/firefox.desktop",
@@ -25,7 +32,7 @@ describe(LaunchDesktopFileActionHandler, () => {
 
         const commandlineUtility = <CommandlineUtility>{ executeCommand: (path) => executeCommandMock(path) };
 
-        const actionHandler = new LaunchDesktopFileActionHandler(commandlineUtility);
+        const actionHandler = new LaunchDesktopFileActionHandler(commandlineUtility, browserRegistryMock);
 
         await expect(
             actionHandler.invokeAction(<SearchResultItemAction>{ argument: "/usr/share/applications/firefox.desktop" }),
