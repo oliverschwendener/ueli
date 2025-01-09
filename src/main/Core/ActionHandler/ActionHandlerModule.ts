@@ -6,7 +6,7 @@ export class ActionHandlerModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
         const eventEmitter = moduleRegistry.get("EventEmitter");
         const ipcMain = moduleRegistry.get("IpcMain");
-        const logger = moduleRegistry.get("Logger");
+        const dialog = moduleRegistry.get("Dialog");
 
         const actionHandlerRegistry = new ActionHandlerRegistry();
 
@@ -17,9 +17,17 @@ export class ActionHandlerModule {
                 eventEmitter.emitEvent("actionInvocationStarted", { action });
                 await actionHandlerRegistry.getById(action.handlerId).invokeAction(action);
             } catch (error) {
-                const errorMessage = `Error while invoking action: ${error}`;
-                logger.error(errorMessage);
-                return Promise.reject(errorMessage);
+                const title = `Error while invoking action`;
+
+                const content = [
+                    `Error: ${error}`,
+                    `HandlerId: ${action.handlerId}`,
+                    `Argument: ${action.argument}`,
+                ].join("\n");
+
+                dialog.showErrorBox(title, content);
+
+                return Promise.reject(`${title}: ${content}`);
             }
         });
     }
