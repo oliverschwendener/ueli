@@ -356,7 +356,7 @@ export const Search = ({
                                 {searchResult.current()?.defaultAction.description}
                             </Button>
                         ) : null}
-                        <Divider vertical />
+                        <Divider appearance="subtle" vertical />
                         <ActionsMenu
                             searchResultItem={searchResult.current()}
                             favorites={favoriteSearchResultItemIds}
