@@ -6,7 +6,6 @@ import { Setting } from "../../Setting";
 import { SettingGroup } from "../../SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { ThemeOption } from "../ThemeOption";
-import { KeyboardShortcuts } from "./KeyboardShortcuts";
 import { SearchBarSettings } from "./SearchBarSettings";
 
 export const Appearance = () => {
@@ -30,7 +29,6 @@ export const Appearance = () => {
     return (
         <SettingGroupList>
             <SearchBarSettings />
-            <KeyboardShortcuts />
             <SettingGroup title="Colors">
                 <Setting
                     label={t("themeName")}

@@ -1,5 +1,4 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { useSetting } from "@Core/Hooks";
 import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
 import {
     Button,
@@ -11,9 +10,11 @@ import {
     Toast,
     ToastTitle,
     Toaster,
+    Tooltip,
     useId,
     useToastController,
 } from "@fluentui/react-components";
+import { MoreVerticalFilled } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
@@ -45,11 +46,6 @@ export const ActionsMenu = ({
 
     const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
-    const { value: showKeyboardShortcuts } = useSetting({
-        key: "appearance.showKeyboardShortcuts",
-        defaultValue: true,
-    });
-
     useEffect(() => {
         const copiedToClipboardHandler = () =>
             dispatchToast(
@@ -71,20 +67,26 @@ export const ActionsMenu = ({
             <Toaster toasterId={toasterId} />
             <Menu open={open} onOpenChange={(_, { open }) => onOpenChange(open)}>
                 <MenuTrigger>
-                    <Button
-                        disabled={!actions.length}
-                        className="non-draggable-area"
-                        size="small"
-                        appearance="subtle"
-                        ref={additionalActionsButtonRef}
-                    >
-                        {t("actions", { ns: "general" })}
-                        {showKeyboardShortcuts && (
-                            <div style={{ paddingLeft: 5 }}>
+                    <Tooltip
+                        withArrow
+                        positioning="above-end"
+                        content={
+                            <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                                {t("actions", { ns: "general" })}
                                 <KeyboardShortcut shortcut={keyboardShortcut} />
                             </div>
-                        )}
-                    </Button>
+                        }
+                        relationship="label"
+                    >
+                        <Button
+                            disabled={!actions.length}
+                            className="non-draggable-area"
+                            size="small"
+                            appearance="subtle"
+                            ref={additionalActionsButtonRef}
+                            icon={<MoreVerticalFilled fontSize={14} />}
+                        />
+                    </Tooltip>
                 </MenuTrigger>
                 <MenuPopover>
                     <MenuList>

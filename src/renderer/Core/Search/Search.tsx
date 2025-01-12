@@ -1,8 +1,8 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useSetting } from "@Core/Hooks";
-import type { SearchResultItem } from "@common/Core";
-import { Button, Text, tokens } from "@fluentui/react-components";
-import { SettingsRegular } from "@fluentui/react-icons";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
+import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { BaseLayout } from "../BaseLayout";
@@ -33,6 +33,8 @@ export const Search = ({
     const { t } = useTranslation("search");
 
     const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
+
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
 
     const {
         searchResult,
@@ -125,11 +127,6 @@ export const Search = ({
         userInput.focus();
     };
 
-    const { value: showKeyboardShortcuts } = useSetting({
-        key: "appearance.showKeyboardShortcuts",
-        defaultValue: true,
-    });
-
     const toggleAdditionalActionsMenu = (open: boolean) => {
         setAdditionalActionsMenuIsOpen(open);
 
@@ -164,6 +161,19 @@ export const Search = ({
             },
         },
     ];
+
+    const keyboardShortcuts: Record<"openSettings" | "openAdditionalActionsMenu", Record<OperatingSystem, string>> = {
+        openSettings: {
+            Windows: "^+,",
+            Linux: "^+,",
+            macOS: "⌘+,",
+        },
+        openAdditionalActionsMenu: {
+            Windows: "^+K",
+            Linux: "^+K",
+            macOS: "⌘+K",
+        },
+    };
 
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
@@ -313,38 +323,40 @@ export const Search = ({
             }
             footer={
                 <Footer draggable>
-                    <Button
-                        className="non-draggable-area"
-                        onClick={openSettings}
-                        size="small"
-                        appearance="subtle"
-                        icon={<SettingsRegular fontSize={14} />}
-                    >
-                        {t("settings", { ns: "general" })}
-                        {showKeyboardShortcuts && (
-                            <div style={{ paddingLeft: 5 }}>
-                                <KeyboardShortcut
-                                    shortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
-                                />
-                            </div>
-                        )}
-                    </Button>
-                    <div>
+                    <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                        <Tooltip
+                            withArrow
+                            positioning="above-start"
+                            content={
+                                <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                                    {t("settings", { ns: "general" })}
+                                    <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"][operatingSystem]} />
+                                </div>
+                            }
+                            relationship="label"
+                        >
+                            <Button
+                                className="non-draggable-area"
+                                onClick={openSettings}
+                                size="small"
+                                appearance="subtle"
+                                icon={<Settings16Regular />}
+                            />
+                        </Tooltip>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                         {searchResult.current() ? (
                             <Button
                                 className="non-draggable-area"
                                 size="small"
                                 appearance="subtle"
                                 onClick={invokeSelectedSearchResultItem}
+                                icon={<ArrowEnterLeftFilled fontSize={14} />}
                             >
                                 {searchResult.current()?.defaultAction.description}
-                                {showKeyboardShortcuts && (
-                                    <div style={{ paddingLeft: 5 }}>
-                                        <KeyboardShortcut shortcut="↵" />
-                                    </div>
-                                )}
                             </Button>
                         ) : null}
+                        <Divider vertical />
                         <ActionsMenu
                             searchResultItem={searchResult.current()}
                             favorites={favoriteSearchResultItemIds}
@@ -352,7 +364,7 @@ export const Search = ({
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}
                             onOpenChange={toggleAdditionalActionsMenu}
-                            keyboardShortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "^+K"}
+                            keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"][operatingSystem]}
                         />
                     </div>
                 </Footer>
