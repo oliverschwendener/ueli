@@ -11,7 +11,7 @@ export const Footer = ({ children, draggable }: FooterProps) => {
             className={draggable ? "draggable-area" : ""}
             style={{
                 flexShrink: 0,
-                padding: 10,
+                padding: 8,
                 gap: 10,
                 boxSizing: "border-box",
                 display: "flex",

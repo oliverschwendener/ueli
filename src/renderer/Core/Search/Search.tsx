@@ -1,8 +1,8 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useSetting } from "@Core/Hooks";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Text, tokens } from "@fluentui/react-components";
-import { SettingsRegular } from "@fluentui/react-icons";
+import { Button, Text, tokens, Tooltip } from "@fluentui/react-components";
+import { PlayCircleRegular, SettingsRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { BaseLayout } from "../BaseLayout";
@@ -313,37 +313,61 @@ export const Search = ({
             }
             footer={
                 <Footer draggable>
-                    <Button
-                        className="non-draggable-area"
-                        onClick={openSettings}
-                        size="small"
-                        appearance="subtle"
-                        icon={<SettingsRegular fontSize={14} />}
-                    >
-                        {t("settings", { ns: "general" })}
-                        {showKeyboardShortcuts && (
-                            <div style={{ paddingLeft: 5 }}>
-                                <KeyboardShortcut
-                                    shortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
-                                />
-                            </div>
-                        )}
-                    </Button>
-                    <div>
-                        {searchResult.current() ? (
-                            <Button
-                                className="non-draggable-area"
-                                size="small"
-                                appearance="subtle"
-                                onClick={invokeSelectedSearchResultItem}
+                    <Tooltip
+                        content={
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8,
+                                    marginTop: showKeyboardShortcuts ? 2 : 0,
+                                }}
                             >
-                                {searchResult.current()?.defaultAction.description}
+                                {t("settings", { ns: "general" })}
                                 {showKeyboardShortcuts && (
-                                    <div style={{ paddingLeft: 5 }}>
-                                        <KeyboardShortcut shortcut="↵" />
-                                    </div>
+                                    <KeyboardShortcut
+                                        shortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+," : "^+,"}
+                                    />
                                 )}
-                            </Button>
+                            </div>
+                        }
+                        relationship="label"
+                    >
+                        <Button
+                            className="non-draggable-area"
+                            onClick={openSettings}
+                            size="small"
+                            appearance="subtle"
+                            icon={<SettingsRegular fontSize={18} />}
+                        />
+                    </Tooltip>
+
+                    <div style={{ display: "flex", gap: 4 }}>
+                        {searchResult.current() ? (
+                            <Tooltip
+                                content={
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 8,
+                                            marginTop: showKeyboardShortcuts ? 2 : 0,
+                                        }}
+                                    >
+                                        {searchResult.current()?.defaultAction.description}
+                                        {showKeyboardShortcuts && <KeyboardShortcut shortcut="↵" />}
+                                    </div>
+                                }
+                                relationship="label"
+                            >
+                                <Button
+                                    className="non-draggable-area"
+                                    size="small"
+                                    appearance="subtle"
+                                    onClick={invokeSelectedSearchResultItem}
+                                    icon={<PlayCircleRegular fontSize={18} />}
+                                />
+                            </Tooltip>
                         ) : null}
                         <ActionsMenu
                             searchResultItem={searchResult.current()}

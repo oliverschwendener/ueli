@@ -11,9 +11,11 @@ import {
     Toast,
     ToastTitle,
     Toaster,
+    Tooltip,
     useId,
     useToastController,
 } from "@fluentui/react-components";
+import { DocumentOnePageRegular } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
@@ -71,20 +73,31 @@ export const ActionsMenu = ({
             <Toaster toasterId={toasterId} />
             <Menu open={open} onOpenChange={(_, { open }) => onOpenChange(open)}>
                 <MenuTrigger>
-                    <Button
-                        disabled={!actions.length}
-                        className="non-draggable-area"
-                        size="small"
-                        appearance="subtle"
-                        ref={additionalActionsButtonRef}
-                    >
-                        {t("actions", { ns: "general" })}
-                        {showKeyboardShortcuts && (
-                            <div style={{ paddingLeft: 5 }}>
-                                <KeyboardShortcut shortcut={keyboardShortcut} />
+                    <Tooltip
+                        content={
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8,
+                                    marginTop: showKeyboardShortcuts ? 2 : 0,
+                                }}
+                            >
+                                {t("actions", { ns: "general" })}
+                                {showKeyboardShortcuts && <KeyboardShortcut shortcut={keyboardShortcut} />}
                             </div>
-                        )}
-                    </Button>
+                        }
+                        relationship="label"
+                    >
+                        <Button
+                            disabled={!actions.length}
+                            className="non-draggable-area"
+                            size="small"
+                            appearance="subtle"
+                            ref={additionalActionsButtonRef}
+                            icon={<DocumentOnePageRegular fontSize={18} />}
+                        />
+                    </Tooltip>
                 </MenuTrigger>
                 <MenuPopover>
                     <MenuList>
