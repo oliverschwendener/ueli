@@ -328,7 +328,7 @@ export const Search = ({
                             withArrow
                             positioning="above-start"
                             content={
-                                <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                     {t("settings", { ns: "general" })}
                                     <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"][operatingSystem]} />
                                 </div>

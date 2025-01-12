@@ -6,7 +6,7 @@ type KeyboardShortcutProps = {
 
 export const KeyboardShortcut = ({ shortcut }: KeyboardShortcutProps) => {
     return (
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2 }}>
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2, paddingTop: 2 }}>
             {shortcut.split("+").map((part) => (
                 <kbd
                     key={`keyboard-shortcut-part-${part}`}

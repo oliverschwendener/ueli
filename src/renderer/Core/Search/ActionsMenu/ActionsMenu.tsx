@@ -71,7 +71,7 @@ export const ActionsMenu = ({
                         withArrow
                         positioning="above-end"
                         content={
-                            <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                 {t("actions", { ns: "general" })}
                                 <KeyboardShortcut shortcut={keyboardShortcut} />
                             </div>
