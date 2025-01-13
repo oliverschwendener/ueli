@@ -118,8 +118,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchBarPlaceholderText: "Placeholder text",
                     searchBarPlaceholderTextReset: "Reset",
                     searchBarShowIcon: "Show search icon",
-                    keyboardShortcuts: "Keyboard Shortcuts",
-                    keyboardShortcutsShow: "Show keyboard shortcuts",
                     themeName: "Theme",
                 },
                 "de-CH": {
@@ -138,8 +136,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     searchBarPlaceholderText: "Platzhaltertext",
                     searchBarPlaceholderTextReset: "Zurücksetzen",
                     searchBarShowIcon: "Suchsymbol anzeigen",
-                    keyboardShortcuts: "Tastenkombinationen",
-                    keyboardShortcutsShow: "Tastenkombinationen anzeigen",
                     themeName: "Farbschema",
                 },
             },
