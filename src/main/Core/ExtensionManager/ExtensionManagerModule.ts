@@ -47,11 +47,11 @@ export class ExtensionManagerModule {
         });
 
         ipcMain.on("getAvailableExtensions", (event) => {
-            event.returnValue = extensionManager.getSupportedExtensions().map((e) => mapExtensionToInfo(e));
+            event.returnValue = extensionManager.getSupportedExtensions().map(mapExtensionToInfo);
         });
 
         ipcMain.on("getEnabledExtensions", (event) => {
-            event.returnValue = extensionManager.getEnabledExtensions().map((e) => mapExtensionToInfo(e));
+            event.returnValue = extensionManager.getEnabledExtensions().map(mapExtensionToInfo);
         });
 
         ipcMain.on("getExtensionAssetFilePath", (event, { extensionId, key }: { extensionId: string; key: string }) => {
