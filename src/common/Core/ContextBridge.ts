@@ -3,6 +3,7 @@ import type { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { InstantSearchResultItems } from "./InstantSearchResultItems";
 import type { OperatingSystem } from "./OperatingSystem";
+import type { RescanStatus } from "./RescanStatus";
 import type { SearchResultItem } from "./SearchResultItem";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 import type { Terminal } from "./Terminal";
@@ -38,9 +39,9 @@ export type ContextBridge = {
     getInstantSearchResultItems: (searchTerm: string) => InstantSearchResultItems;
     getLogs: () => string[];
     getOperatingSystem: () => OperatingSystem;
-    getScanCount: () => number;
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;
+    getRescanStatus: () => RescanStatus;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <Argument, Result>(extensionId: string, searchArguments: Argument) => Promise<Result>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;

@@ -36,7 +36,7 @@ const contextBridgeImplementation: ContextBridge = {
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingValue: (key, defaultValue, isSensitive) =>
         ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
-    getScanCount: () => ipcRenderer.sendSync("getScanCount"),
+    getRescanStatus: () => ipcRenderer.sendSync("getRescanStatus"),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),

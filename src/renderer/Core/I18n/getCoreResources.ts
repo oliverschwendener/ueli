@@ -11,6 +11,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     extensionSettings: "Extension settings",
                     actions: "Actions",
                     copiedToClipboard: "Copied",
+                    rescanning: "Rescanning...",
                 },
                 "de-CH": {
                     settings: "Einstellungen",
@@ -18,6 +19,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     extensionSettings: "Erweiterungseinstellungen",
                     actions: "Aktionen",
                     copiedToClipboard: "Kopiert",
+                    rescanning: "Am scannen...",
                 },
             },
         },
@@ -208,6 +210,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     enabled: "Enabled",
                     rescan: "Rescan",
                     successfulRescan: "Successfully rescanned",
+                    failedRescan: "Failed to rescan. Check logs for more information.",
                     noSettingsAvailable: "No settings available",
                 },
                 "de-CH": {
@@ -217,6 +220,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     enabled: "Aktiviert",
                     rescan: "Neuscan",
                     successfulRescan: "Erfolgreicher Neuscan",
+                    failedRescan: "Fehler beim Neuscannen. Überprüfe die Logs für mehr Informationen.",
                     noSettingsAvailable: "Keine Einstellungen verfügbar",
                 },
             },

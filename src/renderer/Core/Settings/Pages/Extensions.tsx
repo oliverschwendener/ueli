@@ -46,19 +46,31 @@ export const Extensions = () => {
         window.ContextBridge.extensionDisabled(extensionId);
     };
 
+    const attemptRescan = async (extensionId: string): Promise<{ success: boolean }> => {
+        try {
+            await window.ContextBridge.triggerExtensionRescan(extensionId);
+            return { success: true };
+        } catch (error) {
+            return { success: false };
+        }
+    };
+
     const triggerExtensionRescan = async (event: MouseEvent, extensionId: string) => {
         event.preventDefault();
-        await window.ContextBridge.triggerExtensionRescan(extensionId);
+
+        const { success } = await attemptRescan(extensionId);
         const { name, nameTranslation } = window.ContextBridge.getExtension(extensionId);
 
         dispatchToast(
             <Toast>
                 <ToastTitle>
                     {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}:{" "}
-                    {t("successfulRescan", { ns: "settingsExtensions" })}
+                    {success
+                        ? t("successfulRescan", { ns: "settingsExtensions" })
+                        : t("failedRescan", { ns: "settingsExtensions" })}
                 </ToastTitle>
             </Toast>,
-            { intent: "success", position: "bottom" },
+            { intent: success ? "success" : "error", position: "bottom" },
         );
     };
 
