@@ -47,6 +47,7 @@ export class WorkflowExtension implements Extension {
                     description: t("searchResultItemActionDescription"),
                     handlerId: "Workflow",
                     fluentIcon: "OpenRegular",
+                    hideWindowAfterInvocation: true,
                 },
                 description: t("searchResultItemDescription"),
                 id: workflow.id,
