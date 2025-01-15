@@ -35,6 +35,10 @@ describe(ChromiumBrowserBookmarkRepository, () => {
                     new ChromiumBrowserBookmark("bookmark2", "url2", "guid2"),
                     new ChromiumBrowserBookmark("bookmark3", "url3", "guid3"),
                     new ChromiumBrowserBookmark("bookmark4", "url4", "guid4"),
+                    new ChromiumBrowserBookmark("bookmark6", "url6", "guid6"),
+                    new ChromiumBrowserBookmark("bookmark7", "url7", "guid7"),
+                    new ChromiumBrowserBookmark("bookmark8", "url8", "guid8"),
+                    new ChromiumBrowserBookmark("bookmark9", "url9", "guid9"),
                 ],
                 jsonFileContent: JSON.stringify({
                     roots: {
@@ -77,7 +81,46 @@ describe(ChromiumBrowserBookmarkRepository, () => {
                                 },
                             ],
                         },
-                    },
+                        other: {
+                            children: [
+                                {
+                                    children: [],
+                                    guid: "guid6",
+                                    name: "bookmark6",
+                                    type: "url",
+                                    url: "url6",
+                                },
+                                {
+                                    children: [],
+                                    guid: "guid7",
+                                    name: "bookmark7",
+                                    type: "url",
+                                    url: "url7",
+                                },
+                                {
+                                    children: [
+                                        {
+                                            children: [],
+                                            guid: "guid8",
+                                            name: "bookmark8",
+                                            type: "url",
+                                            url: "url8",
+                                        },
+                                        {
+                                            children: [],
+                                            guid: "guid9",
+                                            name: "bookmark9",
+                                            type: "url",
+                                            url: "url9",
+                                        },
+                                    ],
+                                    guid: "guid10",
+                                    name: "bookmark10",
+                                    type: "folder",
+                                },
+                            ],
+                        },
+                    },                    
                 }),
             });
         });
@@ -88,6 +131,23 @@ describe(ChromiumBrowserBookmarkRepository, () => {
                 jsonFileContent: JSON.stringify({
                     roots: {
                         bookmark_bar: {
+                            children: [
+                                {
+                                    children: [],
+                                    guid: "guid1",
+                                    name: "bookmark1",
+                                    type: "url",
+                                },
+                                {
+                                    children: [],
+                                    guid: "guid1",
+                                    name: "bookmark1",
+                                    type: "url",
+                                    url: "",
+                                },
+                            ],
+                        },
+                        other: {
                             children: [
                                 {
                                     children: [],
@@ -115,6 +175,17 @@ describe(ChromiumBrowserBookmarkRepository, () => {
                 jsonFileContent: JSON.stringify({
                     roots: {
                         bookmark_bar: {
+                            children: [
+                                {
+                                    children: [],
+                                    guid: "guid1",
+                                    name: "bookmark1",
+                                    type: "other",
+                                    url: "url1",
+                                },
+                            ],
+                        },
+                        other: {
                             children: [
                                 {
                                     children: [],
