@@ -341,8 +341,12 @@ export const Search = ({
                                 icon={<Settings16Regular />}
                             />
                         </Tooltip>
-                        <Divider appearance="subtle" vertical />
-                        {rescanStatus === "scanning" && <RescanIndicator />}
+                        {rescanStatus === "scanning" && (
+                            <>
+                                <Divider appearance="subtle" vertical />
+                                <RescanIndicator />
+                            </>
+                        )}
                     </div>
                     <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                         {searchResult.current() ? (
