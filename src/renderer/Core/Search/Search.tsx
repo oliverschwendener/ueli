@@ -86,6 +86,17 @@ export const Search = ({
                 },
                 needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
+            {
+                listener: () => {
+                    const action = searchResultItems
+                        .find((i) => i.id === selectedItemId.value)
+                        ?.additionalActions?.find((a) => a.handlerId === "ShowItemInFileExplorer");
+                    if (action) {
+                        invokeAction(action);
+                    }
+                },
+                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "o",
+            },
         ];
 
         for (const eventHandler of eventHandlers) {
