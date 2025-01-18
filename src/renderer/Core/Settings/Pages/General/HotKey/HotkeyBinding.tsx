@@ -17,14 +17,16 @@ export const HotKeyBinding = ({ hotkeyEnabled }: HotkeyBindingProps) => {
 
     const [temporaryHotkey, setTemporaryHotkey] = useState<string>(hotkey);
 
+    const invalidHotkeyBinding = temporaryHotkey.includes("AltGr")
+        ? t("invalidHotkeyBindingAltGr")
+        : t("invalidHotkeyBinding");
+
     return (
         <Setting
             label={t("hotkeyBinding")}
             control={
                 <Field
-                    validationMessage={
-                        isValidHotkey(temporaryHotkey) ? t("validHotkeyBinding") : t("invalidHotkeyBinding")
-                    }
+                    validationMessage={isValidHotkey(temporaryHotkey) ? t("validHotkeyBinding") : invalidHotkeyBinding}
                     validationState={isValidHotkey(temporaryHotkey) ? "success" : "error"}
                 >
                     <Input

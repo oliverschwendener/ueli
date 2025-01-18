@@ -15,7 +15,7 @@ const isValidKeyCode = (keyCode: string): boolean => {
 };
 
 const isValidModifier = (modifier: string): boolean =>
-    /^(Command|Cmd|Control|Ctrl|CommandOrControl|CmdOrCtrl|Alt|Option|AltGr|Shift|Super|Meta)$/.test(modifier);
+    /^(Command|Cmd|Control|Ctrl|CommandOrControl|CmdOrCtrl|Alt|Option|Shift|Super|Meta)$/.test(modifier);
 
 const hasDuplicates = (modifiers: string[]): boolean => modifiers.length !== new Set(modifiers).size;
 
