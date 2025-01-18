@@ -45,7 +45,7 @@ export class WindowsApplication implements Application {
                     handlerId: "WindowsOpenAsAdministrator",
                     keyboardShortcut: "Shift+Enter",
                 },
-                createShowItemInFileExplorerAction({ filePath: this.filePath }),
+                createShowItemInFileExplorerAction({ filePath: this.filePath, keyboardShortcut: "Ctrl+O" }),
                 createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",

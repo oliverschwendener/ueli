@@ -14,5 +14,9 @@ export const getActions = (searchResultItem: SearchResultItem, favorites: string
         createExcludeFromSearchResultsAction(searchResultItem),
     ];
 
-    return [searchResultItem.defaultAction, ...(searchResultItem.additionalActions ?? []), ...defaultAdditionalActions];
+    return [
+        { ...searchResultItem.defaultAction, keyboardShortcut: "Enter" },
+        ...(searchResultItem.additionalActions ?? []),
+        ...defaultAdditionalActions,
+    ];
 };

@@ -12,5 +12,5 @@ export const createAddToFavoritesAction = ({ id }: { id: string }): SearchResult
     },
     handlerId: "Favorites",
     fluentIcon: "StarRegular",
-    keyboardShortcut: "Ctrl+f",
+    keyboardShortcut: "Ctrl+F",
 });

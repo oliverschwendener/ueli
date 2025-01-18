@@ -3,7 +3,13 @@ import type { SearchResultItemAction } from "@common/Core";
 /**
  * Creates an action to show the given file in the default file browser.
  */
-export const createShowItemInFileExplorerAction = ({ filePath }: { filePath: string }): SearchResultItemAction => ({
+export const createShowItemInFileExplorerAction = ({
+    filePath,
+    keyboardShortcut,
+}: {
+    filePath: string;
+    keyboardShortcut?: string;
+}): SearchResultItemAction => ({
     argument: filePath,
     description: "Show in file explorer",
     descriptionTranslation: {
@@ -13,5 +19,5 @@ export const createShowItemInFileExplorerAction = ({ filePath }: { filePath: str
     handlerId: "ShowItemInFileExplorer",
     fluentIcon: "DocumentFolderRegular",
     hideWindowAfterInvocation: true,
-    keyboardShortcut: "Ctrl+o",
+    keyboardShortcut,
 });

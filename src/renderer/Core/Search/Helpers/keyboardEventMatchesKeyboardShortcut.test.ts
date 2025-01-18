@@ -28,6 +28,24 @@ describe(keyboardEventMatchesKeyboardShortcut, () => {
 
         test({
             expected: true,
+            keyboardEvent: <KeyboardEvent>{ key: "n", shiftKey: true },
+            keyboardShortcut: "Shift+N",
+        });
+
+        test({
+            expected: true,
+            keyboardEvent: <KeyboardEvent>{ key: "ArrowUp", altKey: true },
+            keyboardShortcut: "Alt+ArrowUp",
+        });
+
+        test({
+            expected: true,
+            keyboardEvent: <KeyboardEvent>{ key: "Enter", metaKey: true },
+            keyboardShortcut: "Cmd+Enter",
+        });
+
+        test({
+            expected: true,
             keyboardEvent: <KeyboardEvent>{ key: "Enter" },
             keyboardShortcut: "Enter",
         });

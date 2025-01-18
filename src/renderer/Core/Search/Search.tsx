@@ -105,15 +105,6 @@ export const Search = ({
                     };
                 },
             },
-            {
-                check: (keyboardEvent) => ({
-                    shouldInvokeAction: keyboardEvent.key === "Enter",
-                    action: async () => {
-                        searchHistory.add(searchTerm.value);
-                        await invokeSelectedSearchResultItem();
-                    },
-                }),
-            },
         ];
 
         for (const eventHandler of eventHandlers) {

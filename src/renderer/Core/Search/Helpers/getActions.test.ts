@@ -20,7 +20,7 @@ describe(getActions, () => {
         };
 
         expect(getActions(searchResultItem, [])).toEqual(<SearchResultItemAction[]>[
-            { argument: "default action argument", handlerId: "default handler id" },
+            { argument: "default action argument", handlerId: "default handler id", keyboardShortcut: "Enter" },
             { argument: "additional argument", handlerId: "additional handler id" },
             createAddToFavoritesAction({ id: searchResultItem.id }),
             createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
@@ -37,7 +37,7 @@ describe(getActions, () => {
         };
 
         expect(getActions(searchResultItem, ["id1"])).toEqual(<SearchResultItemAction[]>[
-            { argument: "default action argument", handlerId: "default handler id" },
+            { argument: "default action argument", handlerId: "default handler id", keyboardShortcut: "Enter" },
             createRemoveFromFavoritesAction({ id: searchResultItem.id }),
             createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
         ]);

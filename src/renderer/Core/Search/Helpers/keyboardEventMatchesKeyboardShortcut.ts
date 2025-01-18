@@ -7,6 +7,7 @@ export const keyboardEventMatchesKeyboardShortcut = (keyboardEvent: KeyboardEven
     const conditions: (() => boolean)[] = [
         () => keyboardEvent.key.toLowerCase() === key.toLowerCase(),
         () => !!keyboardEvent.ctrlKey === (modifier === "Ctrl"),
+        () => !!keyboardEvent.metaKey === (modifier === "Cmd"),
         () => !!keyboardEvent.shiftKey === (modifier === "Shift"),
         () => !!keyboardEvent.altKey === (modifier === "Alt"),
     ];

@@ -14,7 +14,7 @@ describe(createRemoveFromFavoritesAction, () => {
             },
             handlerId: "Favorites",
             fluentIcon: "StarOffRegular",
-            keyboardShortcut: "Ctrl+f",
+            keyboardShortcut: "Ctrl+F",
         };
 
         expect(actual).toEqual(expected);
