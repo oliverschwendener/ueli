@@ -1,5 +1,5 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { useSetting } from "@Core/Hooks";
+import { useRescanStatus, useSetting } from "@Core/Hooks";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
@@ -10,7 +10,7 @@ import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
-import { ScanIndicator } from "./ScanIndicator";
+import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
 import type { SearchBarAppearance } from "./SearchBarAppearance";
 import type { SearchBarSize } from "./SearchBarSize";
@@ -238,6 +238,8 @@ export const Search = ({
         defaultValue: true,
     });
 
+    const { status: rescanStatus } = useRescanStatus();
+
     return (
         <BaseLayout
             header={
@@ -277,49 +279,45 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                window.ContextBridge.getScanCount() === 0 && !window.ContextBridge.searchIndexCacheFileExists() ? (
-                    <ScanIndicator />
-                ) : (
-                    <>
-                        <ConfirmationDialog
-                            closeDialog={closeConfirmationDialog}
-                            action={confirmationDialog.action.value}
-                        />
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 10,
-                                padding: 10,
-                                boxSizing: "border-box",
-                            }}
-                        >
-                            {Object.keys(searchResult.value)
-                                .filter((group) => searchResult.value[group].length)
-                                .map((group) => (
-                                    <div key={`search-result-group-${group}`}>
-                                        <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
-                                            <Text
-                                                size={200}
-                                                weight="medium"
-                                                style={{ color: tokens.colorNeutralForeground4 }}
-                                            >
-                                                {t(`searchResultGroup.${group}`)}
-                                            </Text>
-                                        </div>
-                                        <SearchResultList
-                                            containerRef={containerRef}
-                                            selectedItemId={selectedItemId.value}
-                                            searchResultItems={searchResult.value[group]}
-                                            searchTerm={searchTerm.value}
-                                            onSearchResultItemClick={handleSearchResultItemClickEvent}
-                                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                                        />
+                <>
+                    <ConfirmationDialog
+                        closeDialog={closeConfirmationDialog}
+                        action={confirmationDialog.action.value}
+                    />
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 10,
+                            padding: 10,
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        {Object.keys(searchResult.value)
+                            .filter((group) => searchResult.value[group].length)
+                            .map((group) => (
+                                <div key={`search-result-group-${group}`}>
+                                    <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
+                                        <Text
+                                            size={200}
+                                            weight="medium"
+                                            style={{ color: tokens.colorNeutralForeground4 }}
+                                        >
+                                            {t(`searchResultGroup.${group}`)}
+                                        </Text>
                                     </div>
-                                ))}
-                        </div>
-                    </>
-                )
+                                    <SearchResultList
+                                        containerRef={containerRef}
+                                        selectedItemId={selectedItemId.value}
+                                        searchResultItems={searchResult.value[group]}
+                                        searchTerm={searchTerm.value}
+                                        onSearchResultItemClick={handleSearchResultItemClickEvent}
+                                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                </>
             }
             footer={
                 <Footer draggable>
@@ -343,6 +341,12 @@ export const Search = ({
                                 icon={<Settings16Regular />}
                             />
                         </Tooltip>
+                        {rescanStatus === "scanning" && (
+                            <>
+                                <Divider appearance="subtle" vertical />
+                                <RescanIndicator />
+                            </>
+                        )}
                     </div>
                     <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                         {searchResult.current() ? (

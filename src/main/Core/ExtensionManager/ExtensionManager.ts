@@ -3,7 +3,6 @@ import type { Logger } from "@Core/Logger";
 import type { Index, SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { createEmptyInstantSearchResult, type InstantSearchResultItems } from "@common/Core";
-import type { ScanCounter } from "./ScanCounter";
 
 export class ExtensionManager {
     public constructor(
@@ -11,7 +10,6 @@ export class ExtensionManager {
         private readonly searchIndex: SearchIndex,
         private readonly settingsManager: SettingsManager,
         private readonly logger: Logger,
-        private readonly scanCounter: ScanCounter,
     ) {}
 
     public async populateSearchIndex() {
@@ -38,15 +36,12 @@ export class ExtensionManager {
         }
 
         this.searchIndex.set(newIndex);
-        this.scanCounter.increment();
     }
 
     public async populateSearchIndexByExtensionId(extensionId: string) {
         const extension = this.extensionRegistry.getById(extensionId);
         const searchResultItems = await extension.getSearchResultItems();
         this.searchIndex.addSearchResultItems(extension.id, searchResultItems);
-
-        this.scanCounter.increment();
     }
 
     public getSupportedExtensions() {

@@ -6,7 +6,6 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import { ExtensionManager } from "./ExtensionManager";
-import type { ScanCounter } from "./ScanCounter";
 
 describe(ExtensionManager, () => {
     it("should populate search index by extension id", async () => {
@@ -31,22 +30,12 @@ describe(ExtensionManager, () => {
                 addSearchResultItemsMock(extensionId, searchResultItems),
         };
 
-        const incrementMock = vi.fn();
-        const scanCounter = <ScanCounter>{ increment: () => incrementMock() };
-
-        const extensionManager = new ExtensionManager(
-            extensionRegistry,
-            searchIndex,
-            <SettingsManager>{},
-            <Logger>{},
-            scanCounter,
-        );
+        const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, <SettingsManager>{}, <Logger>{});
 
         await extensionManager.populateSearchIndexByExtensionId(extension.id);
 
         expect(getExtensionByIdMock).toHaveBeenCalledWith(extension.id);
         expect(addSearchResultItemsMock).toHaveBeenCalledWith(extension.id, searchResultItems);
-        expect(incrementMock).toHaveBeenCalledOnce();
     });
 
     it("should get the supported extensions", () => {
@@ -61,7 +50,6 @@ describe(ExtensionManager, () => {
             <SearchIndex>{},
             <SettingsManager>{},
             <Logger>{},
-            <ScanCounter>{},
         );
 
         expect(extensionManager.getSupportedExtensions()).toEqual([extension1]);
@@ -76,13 +64,7 @@ describe(ExtensionManager, () => {
         const getValueMock = vi.fn().mockReturnValue(["extension1"]);
         const settingsManager = <SettingsManager>{ getValue: (key, defaultValue) => getValueMock(key, defaultValue) };
 
-        const extensionManager = new ExtensionManager(
-            extensionRegistry,
-            <SearchIndex>{},
-            settingsManager,
-            <Logger>{},
-            <ScanCounter>{},
-        );
+        const extensionManager = new ExtensionManager(extensionRegistry, <SearchIndex>{}, settingsManager, <Logger>{});
 
         expect(extensionManager.getEnabledExtensions()).toEqual([extension1]);
     });
@@ -115,13 +97,7 @@ describe(ExtensionManager, () => {
         const getValueMock = vi.fn().mockReturnValue([extension1.id, extension2.id]);
         const settingsManager = <SettingsManager>{ getValue: (key, defaultValue) => getValueMock(key, defaultValue) };
 
-        const extensionManager = new ExtensionManager(
-            extensionRegistry,
-            <SearchIndex>{},
-            settingsManager,
-            <Logger>{},
-            <ScanCounter>{},
-        );
+        const extensionManager = new ExtensionManager(extensionRegistry, <SearchIndex>{}, settingsManager, <Logger>{});
 
         const { before, after } = extensionManager.getInstantSearchResultItems("search term");
 
