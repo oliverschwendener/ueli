@@ -11,7 +11,7 @@ type BookmarkItem = {
     url?: string;
 };
 
-type BookmarksFileContent = { roots: { bookmark_bar: BookmarkItem, other: BookmarkItem } };
+type BookmarksFileContent = { roots: { bookmark_bar: BookmarkItem; other: BookmarkItem } };
 
 export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkRepository {
     public constructor(

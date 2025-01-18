@@ -120,7 +120,7 @@ describe(ChromiumBrowserBookmarkRepository, () => {
                                 },
                             ],
                         },
-                    },                    
+                    },
                 }),
             });
         });
