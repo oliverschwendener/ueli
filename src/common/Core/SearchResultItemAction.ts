@@ -39,4 +39,9 @@ export type SearchResultItemAction = {
      * in the settings is disabled, this option will be ignored.
      */
     hideWindowAfterInvocation?: boolean;
+
+    /**
+     * The keyboard shortcut that can be used to invoke the action.
+     */
+    keyboardShortcut?: string;
 };

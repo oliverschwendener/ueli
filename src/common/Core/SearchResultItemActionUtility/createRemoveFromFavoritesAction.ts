@@ -12,4 +12,5 @@ export const createRemoveFromFavoritesAction = ({ id }: { id: string }): SearchR
     },
     handlerId: "Favorites",
     fluentIcon: "StarOffRegular",
+    keyboardShortcut: "Ctrl+f",
 });

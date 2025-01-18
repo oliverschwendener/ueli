@@ -43,6 +43,7 @@ export class WindowsApplication implements Application {
                     fluentIcon: "ShieldPersonRegular",
                     hideWindowAfterInvocation: true,
                     handlerId: "WindowsOpenAsAdministrator",
+                    keyboardShortcut: "Shift+Enter",
                 },
                 createShowItemInFileExplorerAction({ filePath: this.filePath }),
                 createCopyToClipboardAction({

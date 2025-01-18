@@ -19,24 +19,24 @@ import {
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
 
-export const FluentIcon = ({ icon }: { icon: FluentIconString }) => {
+export const FluentIcon = ({ icon, fontSize }: { fontSize?: number; icon: FluentIconString }) => {
     const icons: Record<FluentIconString, ReactElement> = {
-        AppsAddInRegular: <AppsAddInRegular />,
-        ArrowClockwiseRegular: <ArrowClockwiseRegular />,
-        ArrowSquareUpRightRegular: <ArrowSquareUpRightRegular />,
-        CheckmarkCircleRegular: <CheckmarkCircleRegular />,
-        CopyRegular: <CopyRegular />,
-        DeleteDismissRegular: <DeleteDismissRegular />,
-        DismissCircleRegular: <DismissCircleRegular />,
-        DocumentFolderRegular: <DocumentFolderRegular />,
-        EyeOffRegular: <EyeOffRegular />,
-        OpenRegular: <OpenRegular />,
-        SettingsRegular: <SettingsRegular />,
-        ShieldPersonRegular: <ShieldPersonRegular />,
-        StarOffRegular: <StarOffRegular />,
-        StarRegular: <StarRegular />,
-        ToggleMultipleRegular: <ToggleMultipleRegular />,
-        WindowConsoleRegular: <WindowConsoleRegular />,
+        AppsAddInRegular: <AppsAddInRegular fontSize={fontSize} />,
+        ArrowClockwiseRegular: <ArrowClockwiseRegular fontSize={fontSize} />,
+        ArrowSquareUpRightRegular: <ArrowSquareUpRightRegular fontSize={fontSize} />,
+        CheckmarkCircleRegular: <CheckmarkCircleRegular fontSize={fontSize} />,
+        CopyRegular: <CopyRegular fontSize={fontSize} />,
+        DeleteDismissRegular: <DeleteDismissRegular fontSize={fontSize} />,
+        DismissCircleRegular: <DismissCircleRegular fontSize={fontSize} />,
+        DocumentFolderRegular: <DocumentFolderRegular fontSize={fontSize} />,
+        EyeOffRegular: <EyeOffRegular fontSize={fontSize} />,
+        OpenRegular: <OpenRegular fontSize={fontSize} />,
+        SettingsRegular: <SettingsRegular fontSize={fontSize} />,
+        ShieldPersonRegular: <ShieldPersonRegular fontSize={fontSize} />,
+        StarOffRegular: <StarOffRegular fontSize={fontSize} />,
+        StarRegular: <StarRegular fontSize={fontSize} />,
+        ToggleMultipleRegular: <ToggleMultipleRegular fontSize={fontSize} />,
+        WindowConsoleRegular: <WindowConsoleRegular fontSize={fontSize} />,
     };
 
     return icons[icon] ?? <>Unknown Icon</>;

@@ -7,6 +7,7 @@ import {
     MenuList,
     MenuPopover,
     MenuTrigger,
+    Text,
     Toast,
     ToastTitle,
     Toaster,
@@ -94,13 +95,30 @@ export const ActionsMenu = ({
                             <MenuItem
                                 key={`additional-action-${action.argument}-${action.handlerId}`}
                                 onClick={() => invokeAction(action)}
-                                icon={action.fluentIcon ? <FluentIcon icon={action.fluentIcon} /> : undefined}
+                                icon={
+                                    action.fluentIcon ? (
+                                        <FluentIcon fontSize={16} icon={action.fluentIcon} />
+                                    ) : undefined
+                                }
                             >
-                                {action.descriptionTranslation
-                                    ? t(action.descriptionTranslation.key, {
-                                          ns: action.descriptionTranslation.namespace,
-                                      })
-                                    : action.description}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        gap: 8,
+                                        width: "100%",
+                                    }}
+                                >
+                                    <Text weight="medium" size={200} wrap={false}>
+                                        {action.descriptionTranslation
+                                            ? t(action.descriptionTranslation.key, {
+                                                  ns: action.descriptionTranslation.namespace,
+                                              })
+                                            : action.description}
+                                    </Text>
+                                    {action.keyboardShortcut && <KeyboardShortcut shortcut={action.keyboardShortcut} />}
+                                </div>
                             </MenuItem>
                         ))}
                     </MenuList>

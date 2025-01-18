@@ -13,4 +13,5 @@ export const createShowItemInFileExplorerAction = ({ filePath }: { filePath: str
     handlerId: "ShowItemInFileExplorer",
     fluentIcon: "DocumentFolderRegular",
     hideWindowAfterInvocation: true,
+    keyboardShortcut: "Ctrl+o",
 });

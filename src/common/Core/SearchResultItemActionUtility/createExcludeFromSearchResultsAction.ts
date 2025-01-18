@@ -12,4 +12,5 @@ export const createExcludeFromSearchResultsAction = ({ id }: { id: string }): Se
     },
     handlerId: "excludeFromSearchResults",
     fluentIcon: "EyeOffRegular",
+    keyboardShortcut: "Ctrl+Backspace",
 });

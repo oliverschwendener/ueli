@@ -1,6 +1,6 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useRescanStatus, useSetting } from "@Core/Hooks";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
@@ -9,6 +9,7 @@ import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
+import { getSearchResultItemActionByKeyboardshortcut } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
@@ -55,43 +56,77 @@ export const Search = ({
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const openSettings = () => window.ContextBridge.openSettings();
-
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
-        const eventHandlers: KeyboardEventHandler[] = [
+        const eventHandlers: KeyboardEventHandler<unknown>[] = [
             {
                 listener: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.key === "Escape",
+                    data: null,
+                }),
             },
             {
                 listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.key === "ArrowUp",
+                    data: null,
+                }),
             },
             {
                 listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                    data: null,
+                }),
             },
             {
                 listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.key === "ArrowDown",
+                    data: null,
+                }),
             },
             {
                 listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                    data: null,
+                }),
+            },
+            {
+                listener: async (searchResultItemAction: SearchResultItemAction) => {
+                    await invokeAction(searchResultItemAction);
+                },
+                needsToInvokeListener: (keyboardEvent) => {
+                    const searchResultItemAction = getSearchResultItemActionByKeyboardshortcut(
+                        keyboardEvent,
+                        searchResult.current()?.additionalActions ?? [],
+                    );
+
+                    return {
+                        verificationResult: searchResultItemAction !== undefined,
+                        data: searchResultItemAction,
+                    };
+                },
             },
             {
                 listener: async () => {
                     searchHistory.add(searchTerm.value);
                     await invokeSelectedSearchResultItem();
                 },
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
+                needsToInvokeListener: (keyboardEvent) => ({
+                    verificationResult: keyboardEvent.key === "Enter",
+                    data: null,
+                }),
             },
         ];
 
         for (const eventHandler of eventHandlers) {
-            if (eventHandler.needsToInvokeListener(keyboardEvent)) {
+            const { verificationResult, data } = eventHandler.needsToInvokeListener(keyboardEvent);
+
+            if (verificationResult) {
                 keyboardEvent.preventDefault();
-                eventHandler.listener();
+                eventHandler.listener(data);
             }
         }
     };
@@ -147,7 +182,7 @@ export const Search = ({
                     : event.key === "," && event.ctrlKey,
             action: (event) => {
                 event.preventDefault();
-                openSettings();
+                window.ContextBridge.openSettings();
             },
         },
         {
@@ -335,7 +370,7 @@ export const Search = ({
                         >
                             <Button
                                 className="non-draggable-area"
-                                onClick={openSettings}
+                                onClick={() => window.ContextBridge.openSettings()}
                                 size="small"
                                 appearance="subtle"
                                 icon={<Settings16Regular />}

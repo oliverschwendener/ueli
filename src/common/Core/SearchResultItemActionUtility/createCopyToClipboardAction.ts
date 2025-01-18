@@ -17,4 +17,5 @@ export const createCopyToClipboardAction = ({
     descriptionTranslation,
     handlerId: "copyToClipboard",
     fluentIcon: "CopyRegular",
+    keyboardShortcut: "Ctrl+c",
 });
