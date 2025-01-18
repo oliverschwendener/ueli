@@ -92,7 +92,7 @@ export const Search = ({
                 check: (keyboardEvent) => {
                     const searchResultItemAction = getSearchResultItemActionByKeyboardshortcut(
                         keyboardEvent,
-                        searchResult.current()?.additionalActions ?? [],
+                        searchResult.currentActions(),
                     );
 
                     return {
@@ -396,8 +396,7 @@ export const Search = ({
                         ) : null}
                         <Divider appearance="subtle" vertical />
                         <ActionsMenu
-                            searchResultItem={searchResult.current()}
-                            favorites={favoriteSearchResultItemIds}
+                            actions={searchResult.currentActions()}
                             invokeAction={invokeAction}
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}

@@ -1,5 +1,5 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import { type SearchResultItemAction } from "@common/Core";
 import {
     Button,
     Menu,
@@ -19,11 +19,9 @@ import { MoreVerticalFilled } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
-import { getActions } from "./getActions";
 
 type AdditionalActionsProps = {
-    searchResultItem?: SearchResultItem;
-    favorites: string[];
+    actions: SearchResultItemAction[];
     invokeAction: (action: SearchResultItemAction) => void;
     additionalActionsButtonRef: Ref<HTMLButtonElement>;
     open: boolean;
@@ -32,8 +30,7 @@ type AdditionalActionsProps = {
 };
 
 export const ActionsMenu = ({
-    searchResultItem,
-    favorites,
+    actions,
     invokeAction,
     additionalActionsButtonRef,
     open,
@@ -44,8 +41,6 @@ export const ActionsMenu = ({
 
     const toasterId = useId("copiedToClipboardToasterId");
     const { dispatchToast } = useToastController(toasterId);
-
-    const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
     useEffect(() => {
         const copiedToClipboardHandler = () =>

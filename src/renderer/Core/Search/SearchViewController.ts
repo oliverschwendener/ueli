@@ -2,8 +2,7 @@ import { useSetting } from "@Core/Hooks";
 import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
-import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
-import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
+import { getActions, getNextSearchResultItemId, getPreviousSearchResultItemId } from "./Helpers";
 import { getSearchResult } from "./Helpers/getSearchResult";
 
 type ViewModel = {
@@ -60,6 +59,11 @@ export const useSearchViewController = ({
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         collectSearchResultItems(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
+
+    const getSelectedSearchResultItemActions = (): SearchResultItemAction[] => {
+        const selectedSearchResultItem = getSelectedSearchResultItem();
+        return selectedSearchResultItem ? getActions(selectedSearchResultItem, favoriteSearchResultItemIds) : [];
+    };
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
@@ -130,6 +134,7 @@ export const useSearchViewController = ({
             value: viewModel.searchResult,
             set: setSearchResult,
             current: () => getSelectedSearchResultItem(),
+            currentActions: () => getSelectedSearchResultItemActions(),
         },
         userInput: {
             ref: userInputRef,
