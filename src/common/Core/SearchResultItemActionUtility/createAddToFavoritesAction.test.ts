@@ -14,6 +14,7 @@ describe(createAddToFavoritesAction, () => {
             },
             handlerId: "Favorites",
             fluentIcon: "StarRegular",
+            keyboardShortcut: "Ctrl+f",
         };
 
         expect(actual).toEqual(expected);

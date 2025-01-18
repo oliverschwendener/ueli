@@ -21,6 +21,7 @@ describe(createCopyToClipboardAction, () => {
             },
             fluentIcon: "CopyRegular",
             handlerId: "copyToClipboard",
+            keyboardShortcut: "Ctrl+c",
         };
 
         expect(actual).toEqual(expected);

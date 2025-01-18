@@ -22,6 +22,7 @@ describe(createOpenFileAction, () => {
             handlerId: "OpenFilePath",
             fluentIcon: "OpenRegular",
             hideWindowAfterInvocation: true,
+            keyboardShortcut: "Enter",
         };
 
         expect(actual).toEqual(expected);

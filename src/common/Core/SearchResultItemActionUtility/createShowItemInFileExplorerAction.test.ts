@@ -17,6 +17,7 @@ describe(createShowItemInFileExplorerAction, () => {
             },
             fluentIcon: "DocumentFolderRegular",
             hideWindowAfterInvocation: true,
+            keyboardShortcut: "Ctrl+o",
         };
 
         expect(actual).toEqual(expected);

@@ -14,6 +14,7 @@ describe(createExcludeFromSearchResultsAction, () => {
             },
             fluentIcon: "EyeOffRegular",
             handlerId: "excludeFromSearchResults",
+            keyboardShortcut: "Ctrl+Backspace",
         };
 
         expect(actual).toEqual(expected);

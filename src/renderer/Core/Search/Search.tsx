@@ -1,6 +1,6 @@
 import { KeyboardShortcut } from "@Core/Components";
 import { useRescanStatus, useSetting } from "@Core/Hooks";
-import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
@@ -57,76 +57,72 @@ export const Search = ({
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
-        const eventHandlers: KeyboardEventHandler<unknown>[] = [
+        const eventHandlers: KeyboardEventHandler[] = [
             {
-                listener: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.key === "Escape",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "Escape",
+                    action: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
                 }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.key === "ArrowUp",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowUp",
+                    action: () => selectedItemId.previous(),
                 }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.ctrlKey && keyboardEvent.key === "p",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                    action: () => selectedItemId.previous(),
                 }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.key === "ArrowDown",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowDown",
+                    action: () => selectedItemId.next(),
                 }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.ctrlKey && keyboardEvent.key === "n",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                    action: () => selectedItemId.next(),
                 }),
             },
             {
-                listener: async (searchResultItemAction: SearchResultItemAction) => {
-                    await invokeAction(searchResultItemAction);
-                },
-                needsToInvokeListener: (keyboardEvent) => {
+                check: (keyboardEvent) => {
                     const searchResultItemAction = getSearchResultItemActionByKeyboardshortcut(
                         keyboardEvent,
                         searchResult.current()?.additionalActions ?? [],
                     );
 
                     return {
-                        verificationResult: searchResultItemAction !== undefined,
-                        data: searchResultItemAction,
+                        shouldInvokeAction: searchResultItemAction !== undefined,
+                        action: () => {
+                            if (searchResultItemAction !== undefined) {
+                                invokeAction(searchResultItemAction);
+                            }
+                        },
                     };
                 },
             },
             {
-                listener: async () => {
-                    searchHistory.add(searchTerm.value);
-                    await invokeSelectedSearchResultItem();
-                },
-                needsToInvokeListener: (keyboardEvent) => ({
-                    verificationResult: keyboardEvent.key === "Enter",
-                    data: null,
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "Enter",
+                    action: async () => {
+                        searchHistory.add(searchTerm.value);
+                        await invokeSelectedSearchResultItem();
+                    },
                 }),
             },
         ];
 
         for (const eventHandler of eventHandlers) {
-            const { verificationResult, data } = eventHandler.needsToInvokeListener(keyboardEvent);
+            const { shouldInvokeAction, action } = eventHandler.check(keyboardEvent);
 
-            if (verificationResult) {
+            if (shouldInvokeAction) {
                 keyboardEvent.preventDefault();
-                eventHandler.listener(data);
+                action();
+                break;
             }
         }
     };
@@ -363,7 +359,10 @@ export const Search = ({
                             content={
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                     {t("settings", { ns: "general" })}
-                                    <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"][operatingSystem]} />
+                                    <KeyboardShortcut
+                                        shortcut={keyboardShortcuts["openSettings"][operatingSystem]}
+                                        style={{ paddingTop: 2 }}
+                                    />
                                 </div>
                             }
                             relationship="label"

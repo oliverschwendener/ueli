@@ -74,7 +74,7 @@ export const ActionsMenu = ({
                         content={
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                 {t("actions", { ns: "general" })}
-                                <KeyboardShortcut shortcut={keyboardShortcut} />
+                                <KeyboardShortcut shortcut={keyboardShortcut} style={{ paddingTop: 2 }} />
                             </div>
                         }
                         relationship="label"
