@@ -7,6 +7,7 @@ import { ExcludedItems } from "./ExcludedItems";
 import { Fuzziness } from "./Fuzziness";
 import { MaxResultLength } from "./MaxResultLength";
 import { RescanInterval } from "./RescanInterval";
+import { ManualRescanHotkey } from "./RescanShortcutHint";
 import { SearchEngineId } from "./SearchEngineId";
 
 export const SearchEngine = () => {
@@ -26,6 +27,7 @@ export const SearchEngine = () => {
                     setAutomaticRescanEnabled={setAutomaticRescanEnabled}
                 />
                 <RescanInterval automaticRescanEnabled={automaticRescanEnabled} />
+                <ManualRescanHotkey />
                 <Fuzziness />
                 <MaxResultLength />
             </SettingGroup>
