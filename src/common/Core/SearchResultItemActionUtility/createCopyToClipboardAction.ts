@@ -7,15 +7,17 @@ export const createCopyToClipboardAction = ({
     textToCopy,
     description,
     descriptionTranslation,
+    keyboardShortcut,
 }: {
     textToCopy: string;
     description: string;
     descriptionTranslation?: { key: string; namespace: string };
+    keyboardShortcut?: string;
 }): SearchResultItemAction => ({
     argument: textToCopy,
     description,
     descriptionTranslation,
     handlerId: "copyToClipboard",
     fluentIcon: "CopyRegular",
-    keyboardShortcut: "Ctrl+C",
+    keyboardShortcut,
 });

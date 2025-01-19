@@ -41,6 +41,7 @@ export class MacOsApplication implements Application {
                         key: "copyFilePathToClipboard",
                         namespace: "extension[ApplicationSearch]",
                     },
+                    keyboardShortcut: "Cmd+C",
                 }),
             ],
         };

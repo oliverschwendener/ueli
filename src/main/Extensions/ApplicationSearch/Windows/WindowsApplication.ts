@@ -53,6 +53,7 @@ export class WindowsApplication implements Application {
                         key: "copyFilePathToClipboard",
                         namespace: "extension[ApplicationSearch]",
                     },
+                    keyboardShortcut: "Ctrl+C",
                 }),
             ],
         };
