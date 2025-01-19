@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 describe(createAddToFavoritesAction, () => {
     it("should create an 'add to favorites' action", () => {
-        const actual = createAddToFavoritesAction({ id: "id_1" });
+        const actual = createAddToFavoritesAction({ id: "id_1", keyboardShortcut: "keyboard-shortcut-1" });
 
         const expected = <SearchResultItemAction>{
             argument: JSON.stringify({ action: "Add", id: "id_1" }),
@@ -14,6 +14,7 @@ describe(createAddToFavoritesAction, () => {
             },
             handlerId: "Favorites",
             fluentIcon: "StarRegular",
+            keyboardShortcut: "keyboard-shortcut-1",
         };
 
         expect(actual).toEqual(expected);

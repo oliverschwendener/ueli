@@ -67,8 +67,8 @@ export class ApplicationSearch implements Extension {
             "en-US": {
                 extensionName: "Application Search",
                 searchResultItemDescription: "Application",
-                openApplication: "Open application",
-                openApplicationAsAdministrator: "Open application as administrator",
+                openApplication: "Open",
+                openApplicationAsAdministrator: "Open as admin",
                 copyFilePathToClipboard: "Copy file path to clipboard",
                 advanced: "Advanced",
             },

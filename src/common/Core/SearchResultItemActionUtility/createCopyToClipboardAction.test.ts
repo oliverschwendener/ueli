@@ -10,6 +10,7 @@ describe(createCopyToClipboardAction, () => {
                 key: "translation key",
                 namespace: "translation namespace",
             },
+            keyboardShortcut: "test-keyboard-shortcut",
         });
 
         const expected = <SearchResultItemAction>{
@@ -21,6 +22,7 @@ describe(createCopyToClipboardAction, () => {
             },
             fluentIcon: "CopyRegular",
             handlerId: "copyToClipboard",
+            keyboardShortcut: "test-keyboard-shortcut",
         };
 
         expect(actual).toEqual(expected);

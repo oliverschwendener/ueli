@@ -3,7 +3,13 @@ import type { SearchResultItemAction } from "@common/Core";
 /**
  * Creates an action to remove the given SearchResultItem from the favorites by its ID.
  */
-export const createRemoveFromFavoritesAction = ({ id }: { id: string }): SearchResultItemAction => ({
+export const createRemoveFromFavoritesAction = ({
+    id,
+    keyboardShortcut,
+}: {
+    id: string;
+    keyboardShortcut?: string;
+}): SearchResultItemAction => ({
     argument: JSON.stringify({ action: "Remove", id }),
     description: "Remove from favorites",
     descriptionTranslation: {
@@ -12,4 +18,5 @@ export const createRemoveFromFavoritesAction = ({ id }: { id: string }): SearchR
     },
     handlerId: "Favorites",
     fluentIcon: "StarOffRegular",
+    keyboardShortcut,
 });
