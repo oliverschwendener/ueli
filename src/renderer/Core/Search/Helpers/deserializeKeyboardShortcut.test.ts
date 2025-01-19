@@ -23,13 +23,15 @@ describe(deserializeKeyboardShortcut, () => {
         });
 
         testDeserializeKeyboardShortcut({
-            expected: { modifier: undefined, key: "Enter" },
-            keyboardShortcut: "Enter",
-        });
-
-        testDeserializeKeyboardShortcut({
             expected: { modifier: "Cmd", key: "ArrowRight" },
             keyboardShortcut: "Cmd+ArrowRight",
+        });
+    });
+
+    it("should deserialize keyboard shortcut without modifier", () => {
+        testDeserializeKeyboardShortcut({
+            expected: { modifier: undefined, key: "Enter" },
+            keyboardShortcut: "Enter",
         });
     });
 });
