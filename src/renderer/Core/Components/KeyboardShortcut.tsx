@@ -8,6 +8,7 @@ type KeyboardShortcutProps = {
 
 export const KeyboardShortcut = ({ shortcut, style }: KeyboardShortcutProps) => {
     shortcut = shortcut.replace("Ctrl", "^");
+    shortcut = shortcut.replace("Cmd", "⌘");
     shortcut = shortcut.replace("Shift", "⇧");
     shortcut = shortcut.replace("Alt", "⌥");
     shortcut = shortcut.replace("Enter", "↵");

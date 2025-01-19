@@ -9,6 +9,11 @@ import { describe, expect, it } from "vitest";
 import { getActions } from "./getActions";
 
 describe(getActions, () => {
+    const keyboardShortcuts = {
+        addToFavorites: "Ctrl+F",
+        excludeFromSearchResults: "Ctrl+Backspace",
+    };
+
     it("should include an 'add to favorites' action when favorites don't include the current item", () => {
         const searchResultItem = <SearchResultItem>{
             id: "id1",
@@ -19,11 +24,11 @@ describe(getActions, () => {
             additionalActions: [{ argument: "additional argument", handlerId: "additional handler id" }],
         };
 
-        expect(getActions(searchResultItem, [])).toEqual(<SearchResultItemAction[]>[
+        expect(getActions(searchResultItem, [], keyboardShortcuts)).toEqual(<SearchResultItemAction[]>[
             { argument: "default action argument", handlerId: "default handler id", keyboardShortcut: "Enter" },
             { argument: "additional argument", handlerId: "additional handler id" },
-            createAddToFavoritesAction({ id: searchResultItem.id }),
-            createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
+            createAddToFavoritesAction({ id: searchResultItem.id, keyboardShortcut: "Ctrl+F" }),
+            createExcludeFromSearchResultsAction({ id: searchResultItem.id, keyboardShortcut: "Ctrl+Backspace" }),
         ]);
     });
 
@@ -36,10 +41,10 @@ describe(getActions, () => {
             },
         };
 
-        expect(getActions(searchResultItem, ["id1"])).toEqual(<SearchResultItemAction[]>[
+        expect(getActions(searchResultItem, ["id1"], keyboardShortcuts)).toEqual(<SearchResultItemAction[]>[
             { argument: "default action argument", handlerId: "default handler id", keyboardShortcut: "Enter" },
-            createRemoveFromFavoritesAction({ id: searchResultItem.id }),
-            createExcludeFromSearchResultsAction({ id: searchResultItem.id }),
+            createRemoveFromFavoritesAction({ id: searchResultItem.id, keyboardShortcut: "Ctrl+F" }),
+            createExcludeFromSearchResultsAction({ id: searchResultItem.id, keyboardShortcut: "Ctrl+Backspace" }),
         ]);
     });
 });

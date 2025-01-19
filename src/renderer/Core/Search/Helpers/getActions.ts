@@ -6,12 +6,25 @@ import {
     type SearchResultItemAction,
 } from "@common/Core";
 
-export const getActions = (searchResultItem: SearchResultItem, favorites: string[]): SearchResultItemAction[] => {
+export const getActions = (
+    searchResultItem: SearchResultItem,
+    favorites: string[],
+    keyboardShortcuts: Record<"addToFavorites" | "excludeFromSearchResults", string>,
+): SearchResultItemAction[] => {
     const defaultAdditionalActions = [
         favorites.includes(searchResultItem.id)
-            ? createRemoveFromFavoritesAction({ id: searchResultItem.id })
-            : createAddToFavoritesAction(searchResultItem),
-        createExcludeFromSearchResultsAction(searchResultItem),
+            ? createRemoveFromFavoritesAction({
+                  id: searchResultItem.id,
+                  keyboardShortcut: keyboardShortcuts.addToFavorites,
+              })
+            : createAddToFavoritesAction({
+                  id: searchResultItem.id,
+                  keyboardShortcut: keyboardShortcuts.addToFavorites,
+              }),
+        createExcludeFromSearchResultsAction({
+            id: searchResultItem.id,
+            keyboardShortcut: keyboardShortcuts.excludeFromSearchResults,
+        }),
     ];
 
     return [

@@ -50,6 +50,7 @@ export const Search = ({
         searchResultItems,
         excludedSearchResultItemIds,
         favoriteSearchResultItemIds,
+        operatingSystem,
     });
 
     const searchHistory = useSearchHistoryController();

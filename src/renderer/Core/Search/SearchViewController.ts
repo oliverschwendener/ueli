@@ -1,5 +1,5 @@
 import { useSetting } from "@Core/Hooks";
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
 import { getActions, getNextSearchResultItemId, getPreviousSearchResultItemId } from "./Helpers";
@@ -15,6 +15,7 @@ type SearchViewControllerProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
     favoriteSearchResultItemIds: string[];
+    operatingSystem: OperatingSystem;
 };
 
 const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[]>) => {
@@ -31,12 +32,28 @@ export const useSearchViewController = ({
     searchResultItems,
     excludedSearchResultItemIds,
     favoriteSearchResultItemIds,
+    operatingSystem,
 }: SearchViewControllerProps) => {
     const [viewModel, setViewModel] = useState<ViewModel>({
         searchResult: {},
         searchTerm: "",
         selectedItemId: "",
     });
+
+    const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
+        Linux: {
+            addToFavorites: "Ctrl+F",
+            excludeFromSearchResults: "Ctrl+Backspace",
+        },
+        macOS: {
+            addToFavorites: "Cmd+F",
+            excludeFromSearchResults: "Cmd+Backspace",
+        },
+        Windows: {
+            addToFavorites: "Ctrl+F",
+            excludeFromSearchResults: "Ctrl+Backspace",
+        },
+    };
 
     const userInputRef = useRef<HTMLInputElement>(null);
 
@@ -62,7 +79,9 @@ export const useSearchViewController = ({
 
     const getSelectedSearchResultItemActions = (): SearchResultItemAction[] => {
         const selectedSearchResultItem = getSelectedSearchResultItem();
-        return selectedSearchResultItem ? getActions(selectedSearchResultItem, favoriteSearchResultItemIds) : [];
+        return selectedSearchResultItem
+            ? getActions(selectedSearchResultItem, favoriteSearchResultItemIds, keyboardShortcuts[operatingSystem])
+            : [];
     };
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
