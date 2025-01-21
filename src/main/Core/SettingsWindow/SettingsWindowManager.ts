@@ -65,6 +65,10 @@ export class SettingsWindowManager {
             this.eventEmitter.emitEvent("settingsWindowClosed");
         });
 
+        if (!import.meta.env.DEV) {
+            settingsWindow.removeMenu();
+        }
+
         await this.htmlLoader.loadHtmlFile(settingsWindow, "settings.html");
 
         return settingsWindow;

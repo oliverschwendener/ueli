@@ -53,6 +53,10 @@ export class SearchWindowModule {
 
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
+        if (!import.meta.env.DEV) {
+            searchWindow.removeMenu();
+        }
+
         const browserWindowToggler = new BrowserWindowToggler(
             operatingSystem,
             app,

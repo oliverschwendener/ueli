@@ -24,17 +24,8 @@ export const Settings = () => {
 
         window.ContextBridge.ipcRenderer.on("navigateTo", navigateToEventHandler);
 
-        const keyUpEventHandler = (event: KeyboardEvent) => {
-            if (event.key === "Alt") {
-                event.preventDefault();
-            }
-        };
-
-        window.addEventListener("keyup", keyUpEventHandler);
-
         return () => {
             window.ContextBridge.ipcRenderer.off("navigateTo", navigateToEventHandler);
-            window.removeEventListener("keyup", keyUpEventHandler);
         };
     }, []);
 
