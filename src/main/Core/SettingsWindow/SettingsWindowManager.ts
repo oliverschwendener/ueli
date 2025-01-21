@@ -65,7 +65,7 @@ export class SettingsWindowManager {
             this.eventEmitter.emitEvent("settingsWindowClosed");
         });
 
-        if (!import.meta.env.DEV) {
+        if (this.app.isPackaged) {
             settingsWindow.removeMenu();
         }
 

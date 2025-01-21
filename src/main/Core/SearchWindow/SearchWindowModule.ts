@@ -53,7 +53,7 @@ export class SearchWindowModule {
 
         searchWindow.setVisibleOnAllWorkspaces(settingsManager.getValue("window.visibleOnAllWorkspaces", false));
 
-        if (!import.meta.env.DEV) {
+        if (app.isPackaged) {
             searchWindow.removeMenu();
         }
 
