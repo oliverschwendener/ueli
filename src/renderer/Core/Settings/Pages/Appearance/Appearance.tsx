@@ -34,7 +34,7 @@ export const Appearance = () => {
                     label={t("themeName")}
                     control={
                         <Dropdown
-                            value={themes.find((t) => t)}
+                            value={themeName}
                             onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
                             selectedOptions={[themeName]}
                         >
