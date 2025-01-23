@@ -37,11 +37,11 @@ export const Navigation = ({ settingsPages }: NavigationProps) => {
 
     return (
         <NavDrawer
+            density="small"
             open
             type="inline"
             selectedValue={pathname}
             onNavItemSelect={(_, { value }) => navigate(value)}
-            size="small"
             style={{ height: "100%" }}
         >
             <NavDrawerBody>
