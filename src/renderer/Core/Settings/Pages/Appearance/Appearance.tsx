@@ -17,14 +17,13 @@ export const Appearance = () => {
         key: "appearance.themeName",
         defaultValue: "Fluent UI Web",
     });
-    const themes = [
-        { value: "Microsoft Teams", label: "Microsoft Teams" },
-        { value: "Fluent UI Web", label: "Fluent UI Web" },
-    ];
 
-    const updateTheme = (themeName: string) => {
-        setThemeName(themeName);
-    };
+    const { value: themeSource, updateValue: setThemeSource } = useSetting<string>({
+        key: "appearance.themeSource",
+        defaultValue: "system",
+    });
+
+    const themeSources = ["system", "light", "dark"];
 
     return (
         <SettingGroupList>
@@ -34,13 +33,29 @@ export const Appearance = () => {
                     label={t("themeName")}
                     control={
                         <Dropdown
-                            value={themes.find((t) => t.value === themeName)?.label}
-                            onOptionSelect={(_, { optionValue }) => optionValue && updateTheme(optionValue)}
+                            value={themeName}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
                             selectedOptions={[themeName]}
                         >
                             {availableThemes.map(({ name, accentColors }) => (
                                 <Option key={`theme-option-${name}`} value={name} text={name}>
                                     <ThemeOption themeName={name} accentColors={accentColors} />
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label={t("themeSource")}
+                    control={
+                        <Dropdown
+                            value={t(`themeSource.${themeSource}`)}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeSource(optionValue)}
+                            selectedOptions={[themeSource]}
+                        >
+                            {themeSources.map((c) => (
+                                <Option key={`color-mode-${c}`} value={c}>
+                                    {t(`themeSource.${c}`)}
                                 </Option>
                             ))}
                         </Dropdown>
