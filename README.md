@@ -2,7 +2,7 @@
 
 Ueli is a cross-platform keystroke launcher.
 
-![Screenshot Dark Windows](docs/screenshot-windows-dark.png)
+![Screenshot Dark Windows](docs/example-screenshot.webp)
 
 # Installation
 
