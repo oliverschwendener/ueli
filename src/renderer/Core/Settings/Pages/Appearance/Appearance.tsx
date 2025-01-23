@@ -18,12 +18,12 @@ export const Appearance = () => {
         defaultValue: "Fluent UI Web",
     });
 
-    const { value: colorMode, updateValue: setColorMode } = useSetting<string>({
+    const { value: themeSource, updateValue: setThemeSource } = useSetting<string>({
         key: "appearance.themeSource",
         defaultValue: "system",
     });
 
-    const colorModes = ["system", "light", "dark"];
+    const themeSources = ["system", "light", "dark"];
 
     return (
         <SettingGroupList>
@@ -46,16 +46,16 @@ export const Appearance = () => {
                     }
                 />
                 <Setting
-                    label={t("colorMode")}
+                    label={t("themeSource")}
                     control={
                         <Dropdown
-                            value={t(`colorMode.${colorMode}`)}
-                            onOptionSelect={(_, { optionValue }) => optionValue && setColorMode(optionValue)}
-                            selectedOptions={[colorMode]}
+                            value={t(`themeSource.${themeSource}`)}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeSource(optionValue)}
+                            selectedOptions={[themeSource]}
                         >
-                            {colorModes.map((c) => (
+                            {themeSources.map((c) => (
                                 <Option key={`color-mode-${c}`} value={c}>
-                                    {t(`colorMode.${c}`)}
+                                    {t(`themeSource.${c}`)}
                                 </Option>
                             ))}
                         </Dropdown>
