@@ -19,11 +19,10 @@ export const Appearance = () => {
     });
 
     const { value: colorMode, updateValue: setColorMode } = useSetting<string>({
-        key: "appearance.colorMode",
+        key: "appearance.themeSource",
         defaultValue: "system",
     });
 
-    const themes = ["Microsoft Teams", "Fluent UI Web"];
     const colorModes = ["system", "light", "dark"];
 
     return (
