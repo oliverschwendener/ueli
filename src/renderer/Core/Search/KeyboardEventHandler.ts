@@ -1,6 +1,10 @@
 import type { KeyboardEvent } from "react";
 
+export type KeyboardEventHandlerReturnType = {
+    shouldInvokeAction: boolean;
+    action: () => void;
+};
+
 export type KeyboardEventHandler = {
-    needsToInvokeListener: (keyboardEvent: KeyboardEvent<HTMLElement>) => boolean;
-    listener: () => void;
+    check: (keyboardEvent: KeyboardEvent) => KeyboardEventHandlerReturnType;
 };

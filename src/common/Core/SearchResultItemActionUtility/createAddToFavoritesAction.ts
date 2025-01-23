@@ -3,7 +3,13 @@ import type { SearchResultItemAction } from "@common/Core";
 /**
  * Creates an action to add the given SearchResultItem to the favorites by its ID.
  */
-export const createAddToFavoritesAction = ({ id }: { id: string }): SearchResultItemAction => ({
+export const createAddToFavoritesAction = ({
+    id,
+    keyboardShortcut,
+}: {
+    id: string;
+    keyboardShortcut?: string;
+}): SearchResultItemAction => ({
     argument: JSON.stringify({ action: "Add", id }),
     description: "Add to favorites",
     descriptionTranslation: {
@@ -12,4 +18,5 @@ export const createAddToFavoritesAction = ({ id }: { id: string }): SearchResult
     },
     handlerId: "Favorites",
     fluentIcon: "StarRegular",
+    keyboardShortcut,
 });

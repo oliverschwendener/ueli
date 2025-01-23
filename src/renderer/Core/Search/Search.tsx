@@ -9,6 +9,7 @@ import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
+import { getSearchResultItemActionByKeyboardshortcut } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
 import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
@@ -49,49 +50,71 @@ export const Search = ({
         searchResultItems,
         excludedSearchResultItemIds,
         favoriteSearchResultItemIds,
+        operatingSystem,
     });
 
     const searchHistory = useSearchHistoryController();
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const openSettings = () => window.ContextBridge.openSettings();
-
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
-                listener: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "Escape",
+                    action: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
+                }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowUp",
+                    action: () => selectedItemId.previous(),
+                }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                    action: () => selectedItemId.previous(),
+                }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowDown",
+                    action: () => selectedItemId.next(),
+                }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                    action: () => selectedItemId.next(),
+                }),
             },
             {
-                listener: async () => {
-                    searchHistory.add(searchTerm.value);
-                    await invokeSelectedSearchResultItem();
+                check: (keyboardEvent) => {
+                    const searchResultItemAction = getSearchResultItemActionByKeyboardshortcut(
+                        keyboardEvent,
+                        searchResult.currentActions(),
+                    );
+
+                    return {
+                        shouldInvokeAction: searchResultItemAction !== undefined,
+                        action: () => {
+                            if (searchResultItemAction !== undefined) {
+                                invokeAction(searchResultItemAction);
+                            }
+                        },
+                    };
                 },
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
         ];
 
         for (const eventHandler of eventHandlers) {
-            if (eventHandler.needsToInvokeListener(keyboardEvent)) {
+            const { shouldInvokeAction, action } = eventHandler.check(keyboardEvent);
+
+            if (shouldInvokeAction) {
                 keyboardEvent.preventDefault();
-                eventHandler.listener();
+                action();
+                break;
             }
         }
     };
@@ -147,7 +170,7 @@ export const Search = ({
                     : event.key === "," && event.ctrlKey,
             action: (event) => {
                 event.preventDefault();
-                openSettings();
+                window.ContextBridge.openSettings();
             },
         },
         {
@@ -328,14 +351,17 @@ export const Search = ({
                             content={
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                     {t("settings", { ns: "general" })}
-                                    <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"][operatingSystem]} />
+                                    <KeyboardShortcut
+                                        shortcut={keyboardShortcuts["openSettings"][operatingSystem]}
+                                        style={{ paddingTop: 2 }}
+                                    />
                                 </div>
                             }
                             relationship="label"
                         >
                             <Button
                                 className="non-draggable-area"
-                                onClick={openSettings}
+                                onClick={() => window.ContextBridge.openSettings()}
                                 size="small"
                                 appearance="subtle"
                                 icon={<Settings16Regular />}
@@ -362,8 +388,7 @@ export const Search = ({
                         ) : null}
                         <Divider appearance="subtle" vertical />
                         <ActionsMenu
-                            searchResultItem={searchResult.current()}
-                            favorites={favoriteSearchResultItemIds}
+                            actions={searchResult.currentActions()}
                             invokeAction={invokeAction}
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}

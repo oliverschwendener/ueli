@@ -39,4 +39,12 @@ export type SearchResultItemAction = {
      * in the settings is disabled, this option will be ignored.
      */
     hideWindowAfterInvocation?: boolean;
+
+    /**
+     * The keyboard shortcut that can be used to invoke the action, in the following format: `<KEY>` or `<MODIFIER>+<KEY>`,
+     * for example: `Ctrl+C`, `Shift+ArrowUp` or `Enter`. Currently supported modifiers are: `Ctrl`, `Cmd`, `Shift` and
+     * `Alt`. If the action is the default action this property will be ignored and overwritten with
+     * `Enter`.
+     */
+    keyboardShortcut?: string;
 };

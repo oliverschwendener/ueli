@@ -1,9 +1,8 @@
 import { useSetting } from "@Core/Hooks";
-import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
+import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
-import { getNextSearchResultItemId } from "./Helpers/getNextSearchResultItemId";
-import { getPreviousSearchResultItemId } from "./Helpers/getPreviousSearchResultItemId";
+import { getActions, getNextSearchResultItemId, getPreviousSearchResultItemId } from "./Helpers";
 import { getSearchResult } from "./Helpers/getSearchResult";
 
 type ViewModel = {
@@ -16,6 +15,7 @@ type SearchViewControllerProps = {
     searchResultItems: SearchResultItem[];
     excludedSearchResultItemIds: string[];
     favoriteSearchResultItemIds: string[];
+    operatingSystem: OperatingSystem;
 };
 
 const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[]>) => {
@@ -32,12 +32,28 @@ export const useSearchViewController = ({
     searchResultItems,
     excludedSearchResultItemIds,
     favoriteSearchResultItemIds,
+    operatingSystem,
 }: SearchViewControllerProps) => {
     const [viewModel, setViewModel] = useState<ViewModel>({
         searchResult: {},
         searchTerm: "",
         selectedItemId: "",
     });
+
+    const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
+        Linux: {
+            addToFavorites: "Ctrl+F",
+            excludeFromSearchResults: "Ctrl+Backspace",
+        },
+        macOS: {
+            addToFavorites: "Cmd+F",
+            excludeFromSearchResults: "Cmd+Backspace",
+        },
+        Windows: {
+            addToFavorites: "Ctrl+F",
+            excludeFromSearchResults: "Ctrl+Backspace",
+        },
+    };
 
     const userInputRef = useRef<HTMLInputElement>(null);
 
@@ -60,6 +76,13 @@ export const useSearchViewController = ({
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         collectSearchResultItems(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
+
+    const getSelectedSearchResultItemActions = (): SearchResultItemAction[] => {
+        const selectedSearchResultItem = getSelectedSearchResultItem();
+        return selectedSearchResultItem
+            ? getActions(selectedSearchResultItem, favoriteSearchResultItemIds, keyboardShortcuts[operatingSystem])
+            : [];
+    };
 
     const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
     const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
@@ -130,6 +153,7 @@ export const useSearchViewController = ({
             value: viewModel.searchResult,
             set: setSearchResult,
             current: () => getSelectedSearchResultItem(),
+            currentActions: () => getSelectedSearchResultItemActions(),
         },
         userInput: {
             ref: userInputRef,

@@ -3,7 +3,10 @@ import { describe, expect, it } from "vitest";
 
 describe(createExcludeFromSearchResultsAction, () => {
     it("should create an 'exclude from search results' action", () => {
-        const actual = createExcludeFromSearchResultsAction({ id: "test id" });
+        const actual = createExcludeFromSearchResultsAction({
+            id: "test id",
+            keyboardShortcut: "test-keyboard-shortcut",
+        });
 
         const expected = <SearchResultItemAction>{
             argument: "test id",
@@ -14,6 +17,7 @@ describe(createExcludeFromSearchResultsAction, () => {
             },
             fluentIcon: "EyeOffRegular",
             handlerId: "excludeFromSearchResults",
+            keyboardShortcut: "test-keyboard-shortcut",
         };
 
         expect(actual).toEqual(expected);

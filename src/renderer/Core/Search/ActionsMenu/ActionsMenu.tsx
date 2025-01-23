@@ -1,5 +1,5 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { type SearchResultItem, type SearchResultItemAction } from "@common/Core";
+import { type SearchResultItemAction } from "@common/Core";
 import {
     Button,
     Menu,
@@ -7,6 +7,7 @@ import {
     MenuList,
     MenuPopover,
     MenuTrigger,
+    Text,
     Toast,
     ToastTitle,
     Toaster,
@@ -18,11 +19,9 @@ import { MoreVerticalFilled } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { FluentIcon } from "../FluentIcon";
-import { getActions } from "./getActions";
 
 type AdditionalActionsProps = {
-    searchResultItem?: SearchResultItem;
-    favorites: string[];
+    actions: SearchResultItemAction[];
     invokeAction: (action: SearchResultItemAction) => void;
     additionalActionsButtonRef: Ref<HTMLButtonElement>;
     open: boolean;
@@ -31,8 +30,7 @@ type AdditionalActionsProps = {
 };
 
 export const ActionsMenu = ({
-    searchResultItem,
-    favorites,
+    actions,
     invokeAction,
     additionalActionsButtonRef,
     open,
@@ -43,8 +41,6 @@ export const ActionsMenu = ({
 
     const toasterId = useId("copiedToClipboardToasterId");
     const { dispatchToast } = useToastController(toasterId);
-
-    const actions = searchResultItem ? getActions(searchResultItem, favorites) : [];
 
     useEffect(() => {
         const copiedToClipboardHandler = () =>
@@ -73,7 +69,7 @@ export const ActionsMenu = ({
                         content={
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                 {t("actions", { ns: "general" })}
-                                <KeyboardShortcut shortcut={keyboardShortcut} />
+                                <KeyboardShortcut shortcut={keyboardShortcut} style={{ paddingTop: 2 }} />
                             </div>
                         }
                         relationship="label"
@@ -94,13 +90,30 @@ export const ActionsMenu = ({
                             <MenuItem
                                 key={`additional-action-${action.argument}-${action.handlerId}`}
                                 onClick={() => invokeAction(action)}
-                                icon={action.fluentIcon ? <FluentIcon icon={action.fluentIcon} /> : undefined}
+                                icon={
+                                    action.fluentIcon ? (
+                                        <FluentIcon fontSize={16} icon={action.fluentIcon} />
+                                    ) : undefined
+                                }
                             >
-                                {action.descriptionTranslation
-                                    ? t(action.descriptionTranslation.key, {
-                                          ns: action.descriptionTranslation.namespace,
-                                      })
-                                    : action.description}
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        gap: 8,
+                                        width: "100%",
+                                    }}
+                                >
+                                    <Text weight="medium" size={200} wrap={false}>
+                                        {action.descriptionTranslation
+                                            ? t(action.descriptionTranslation.key, {
+                                                  ns: action.descriptionTranslation.namespace,
+                                              })
+                                            : action.description}
+                                    </Text>
+                                    {action.keyboardShortcut && <KeyboardShortcut shortcut={action.keyboardShortcut} />}
+                                </div>
                             </MenuItem>
                         ))}
                     </MenuList>

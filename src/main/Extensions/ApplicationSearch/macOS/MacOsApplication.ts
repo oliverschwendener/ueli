@@ -33,7 +33,7 @@ export class MacOsApplication implements Application {
                 },
             }),
             additionalActions: [
-                createShowItemInFileExplorerAction({ filePath: this.filePath }),
+                createShowItemInFileExplorerAction({ filePath: this.filePath, keyboardShortcut: "Cmd+O" }),
                 createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",
@@ -41,6 +41,7 @@ export class MacOsApplication implements Application {
                         key: "copyFilePathToClipboard",
                         namespace: "extension[ApplicationSearch]",
                     },
+                    keyboardShortcut: "Cmd+C",
                 }),
             ],
         };
