@@ -10,6 +10,7 @@ describe(createOpenFileAction, () => {
                 key: "test translation key",
                 namespace: "test namespace",
             },
+            keyboardShortcut: "test keyboard shortcut",
         });
 
         const expected = <SearchResultItemAction>{
@@ -22,6 +23,7 @@ describe(createOpenFileAction, () => {
             handlerId: "OpenFilePath",
             fluentIcon: "OpenRegular",
             hideWindowAfterInvocation: true,
+            keyboardShortcut: "test keyboard shortcut",
         };
 
         expect(actual).toEqual(expected);

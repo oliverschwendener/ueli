@@ -43,8 +43,9 @@ export class WindowsApplication implements Application {
                     fluentIcon: "ShieldPersonRegular",
                     hideWindowAfterInvocation: true,
                     handlerId: "WindowsOpenAsAdministrator",
+                    keyboardShortcut: "Shift+Enter",
                 },
-                createShowItemInFileExplorerAction({ filePath: this.filePath }),
+                createShowItemInFileExplorerAction({ filePath: this.filePath, keyboardShortcut: "Ctrl+O" }),
                 createCopyToClipboardAction({
                     textToCopy: this.filePath,
                     description: "Copy file path to clipboard",
@@ -52,6 +53,7 @@ export class WindowsApplication implements Application {
                         key: "copyFilePathToClipboard",
                         namespace: "extension[ApplicationSearch]",
                     },
+                    keyboardShortcut: "Ctrl+C",
                 }),
             ],
         };

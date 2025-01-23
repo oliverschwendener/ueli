@@ -53,6 +53,12 @@ export class SimpleFileSearchExtension implements Extension {
 
         const searchResultItems: SearchResultItem[] = [];
 
+        const keyboardShortcuts: Record<OperatingSystem, Record<"showItemInFileExplorer", string>> = {
+            Linux: { showItemInFileExplorer: "Ctrl+O" },
+            macOS: { showItemInFileExplorer: "Cmd+O" },
+            Windows: { showItemInFileExplorer: "Ctrl+O" },
+        };
+
         for (const folderSettingId of Object.keys(filePathsGroupedByFolderSettingId)) {
             const folderSetting = folderSettings.find(({ id }) => id === folderSettingId);
 
@@ -70,7 +76,12 @@ export class SimpleFileSearchExtension implements Extension {
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
                     }),
-                    additionalActions: [createShowItemInFileExplorerAction({ filePath })],
+                    additionalActions: [
+                        createShowItemInFileExplorerAction({
+                            filePath,
+                            keyboardShortcut: keyboardShortcuts[this.operatingSystem].showItemInFileExplorer,
+                        }),
+                    ],
                 });
             }
         }

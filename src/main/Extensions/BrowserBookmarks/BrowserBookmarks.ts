@@ -54,6 +54,12 @@ export class BrowserBookmarks implements Extension {
         const { t } = this.translator.createT(this.getI18nResources());
         const browsers = this.getCurrentlyConfiguredBrowsers();
 
+        const keyboardShortcuts: Record<OperatingSystem, Record<string, string>> = {
+            Linux: { copyUrlToClipboard: "Ctrl+C" },
+            macOS: { copyUrlToClipboard: "Cmd+C" },
+            Windows: { copyUrlToClipboard: "Ctrl+C" },
+        };
+
         const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser) => {
             return {
                 description: t("searchResultItemDescription", { browserName }),
@@ -71,6 +77,7 @@ export class BrowserBookmarks implements Extension {
                             key: "copyUrlToClipboard",
                             namespace: "extension[BrowserBookmarks]",
                         },
+                        keyboardShortcut: keyboardShortcuts[this.operatingSystem].copyUrlToClipboard,
                     }),
                 ],
             };

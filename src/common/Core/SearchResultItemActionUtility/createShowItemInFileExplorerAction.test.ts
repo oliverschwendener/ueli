@@ -5,6 +5,7 @@ describe(createShowItemInFileExplorerAction, () => {
     it("should create an 'show item in file explorer' action", () => {
         const actual = createShowItemInFileExplorerAction({
             filePath: "this is a file path",
+            keyboardShortcut: "test keyboard shortcut",
         });
 
         const expected = <SearchResultItemAction>{
@@ -17,6 +18,7 @@ describe(createShowItemInFileExplorerAction, () => {
             },
             fluentIcon: "DocumentFolderRegular",
             hideWindowAfterInvocation: true,
+            keyboardShortcut: "test keyboard shortcut",
         };
 
         expect(actual).toEqual(expected);

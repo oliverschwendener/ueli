@@ -1,16 +1,8 @@
 import type { Extension } from "@Core/Extension";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { ExtensionInfo } from "@common/Core";
 import { ExtensionManager } from "./ExtensionManager";
-import { ScanCounter } from "./ScanCounter";
-
-const mapExtensionToInfo = (extension: Extension): ExtensionInfo => ({
-    id: extension.id,
-    name: extension.name,
-    nameTranslation: extension.nameTranslation,
-    image: extension.getImage(),
-    author: extension.author,
-});
+import { RescanStatusManager } from "./RescanStatusManager";
+import { mapExtensionToInfo } from "./mapExtensionToInfo";
 
 export class ExtensionManagerModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
@@ -22,17 +14,11 @@ export class ExtensionManagerModule {
         const searchIndex = moduleRegistry.get("SearchIndex");
         const settingsManager = moduleRegistry.get("SettingsManager");
 
-        const scanCounter = new ScanCounter();
+        const rescanStatusManager = new RescanStatusManager("idle", browserWindowNotifier);
 
-        const extensionManager = new ExtensionManager(
-            extensionRegistry,
-            searchIndex,
-            settingsManager,
-            logger,
-            scanCounter,
-        );
+        const extensionManager = new ExtensionManager(extensionRegistry, searchIndex, settingsManager, logger);
 
-        ipcMain.on("getScanCount", (event) => (event.returnValue = scanCounter.getScanCount()));
+        ipcMain.on("getRescanStatus", (event) => (event.returnValue = rescanStatusManager.get()));
 
         ipcMain.on("getExtensionResources", (event) => {
             event.returnValue = extensionManager.getSupportedExtensions().map((extension) => ({
@@ -46,8 +32,14 @@ export class ExtensionManagerModule {
         });
 
         ipcMain.on("extensionEnabled", async (_, { extensionId }: { extensionId: string }) => {
-            await extensionManager.populateSearchIndexByExtensionId(extensionId);
-            browserWindowNotifier.notifyAll({ channel: "extensionEnabled", data: { extensionId } });
+            rescanStatusManager.change("scanning");
+
+            try {
+                await extensionManager.populateSearchIndexByExtensionId(extensionId);
+                browserWindowNotifier.notifyAll({ channel: "extensionEnabled", data: { extensionId } });
+            } finally {
+                rescanStatusManager.change("idle");
+            }
         });
 
         ipcMain.on("extensionDisabled", async (_, { extensionId }: { extensionId: string }) => {
@@ -91,18 +83,27 @@ export class ExtensionManagerModule {
             },
         );
 
-        ipcMain.handle("triggerExtensionRescan", (_, { extensionId }: { extensionId: string }) =>
-            extensionManager.populateSearchIndexByExtensionId(extensionId),
-        );
+        ipcMain.handle("triggerExtensionRescan", async (_, { extensionId }: { extensionId: string }) => {
+            rescanStatusManager.change("scanning");
 
-        eventSubscriber.subscribe(
-            "RescanOrchestrator:timeElapsed",
-            async () => await extensionManager.populateSearchIndex(),
-        );
+            try {
+                await extensionManager.populateSearchIndexByExtensionId(extensionId);
+            } finally {
+                rescanStatusManager.change("idle");
+            }
+        });
+
+        eventSubscriber.subscribe("RescanOrchestrator:timeElapsed", async () => {
+            rescanStatusManager.change("scanning");
+            await extensionManager.populateSearchIndex();
+            rescanStatusManager.change("idle");
+        });
 
         eventSubscriber.subscribe("settingUpdated", async ({ key }: { key: string }) => {
             const extensionNeedsRescan = (extension: Extension) =>
                 extension.getSettingKeysTriggeringRescan && extension.getSettingKeysTriggeringRescan().includes(key);
+
+            rescanStatusManager.change("scanning");
 
             await Promise.allSettled(
                 extensionManager
@@ -110,6 +111,8 @@ export class ExtensionManagerModule {
                     .filter((extension) => extensionNeedsRescan(extension))
                     .map((extension) => extensionManager.populateSearchIndexByExtensionId(extension.id)),
             );
+
+            rescanStatusManager.change("idle");
         });
     }
 }

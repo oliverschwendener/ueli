@@ -1,16 +1,17 @@
 import { KeyboardShortcut } from "@Core/Components";
-import { useSetting } from "@Core/Hooks";
+import { useRescanStatus, useSetting } from "@Core/Hooks";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
-import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
+import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
+import { getSearchResultItemActionByKeyboardshortcut } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
-import { ScanIndicator } from "./ScanIndicator";
+import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
 import type { SearchBarAppearance } from "./SearchBarAppearance";
 import type { SearchBarSize } from "./SearchBarSize";
@@ -49,49 +50,71 @@ export const Search = ({
         searchResultItems,
         excludedSearchResultItemIds,
         favoriteSearchResultItemIds,
+        operatingSystem,
     });
 
     const searchHistory = useSearchHistoryController();
     const containerRef = useRef<HTMLDivElement>(null);
     const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const openSettings = () => window.ContextBridge.openSettings();
-
     const handleUserInputKeyDownEvent = (keyboardEvent: ReactKeyboardEvent<HTMLElement>) => {
         const eventHandlers: KeyboardEventHandler[] = [
             {
-                listener: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Escape",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "Escape",
+                    action: () => window.ContextBridge.ipcRenderer.send("escapePressed"),
+                }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowUp",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowUp",
+                    action: () => selectedItemId.previous(),
+                }),
             },
             {
-                listener: () => selectedItemId.previous(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "p",
+                    action: () => selectedItemId.previous(),
+                }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "ArrowDown",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "ArrowDown",
+                    action: () => selectedItemId.next(),
+                }),
             },
             {
-                listener: () => selectedItemId.next(),
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.ctrlKey && keyboardEvent.key === "n",
+                    action: () => selectedItemId.next(),
+                }),
             },
             {
-                listener: async () => {
-                    searchHistory.add(searchTerm.value);
-                    await invokeSelectedSearchResultItem();
+                check: (keyboardEvent) => {
+                    const searchResultItemAction = getSearchResultItemActionByKeyboardshortcut(
+                        keyboardEvent,
+                        searchResult.currentActions(),
+                    );
+
+                    return {
+                        shouldInvokeAction: searchResultItemAction !== undefined,
+                        action: () => {
+                            if (searchResultItemAction !== undefined) {
+                                invokeAction(searchResultItemAction);
+                            }
+                        },
+                    };
                 },
-                needsToInvokeListener: (keyboardEvent) => keyboardEvent.key === "Enter",
             },
         ];
 
         for (const eventHandler of eventHandlers) {
-            if (eventHandler.needsToInvokeListener(keyboardEvent)) {
+            const { shouldInvokeAction, action } = eventHandler.check(keyboardEvent);
+
+            if (shouldInvokeAction) {
                 keyboardEvent.preventDefault();
-                eventHandler.listener();
+                action();
+                break;
             }
         }
     };
@@ -147,7 +170,7 @@ export const Search = ({
                     : event.key === "," && event.ctrlKey,
             action: (event) => {
                 event.preventDefault();
-                openSettings();
+                window.ContextBridge.openSettings();
             },
         },
         {
@@ -238,6 +261,8 @@ export const Search = ({
         defaultValue: true,
     });
 
+    const { status: rescanStatus } = useRescanStatus();
+
     return (
         <BaseLayout
             header={
@@ -277,49 +302,45 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                window.ContextBridge.getScanCount() === 0 && !window.ContextBridge.searchIndexCacheFileExists() ? (
-                    <ScanIndicator />
-                ) : (
-                    <>
-                        <ConfirmationDialog
-                            closeDialog={closeConfirmationDialog}
-                            action={confirmationDialog.action.value}
-                        />
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: 10,
-                                padding: 10,
-                                boxSizing: "border-box",
-                            }}
-                        >
-                            {Object.keys(searchResult.value)
-                                .filter((group) => searchResult.value[group].length)
-                                .map((group) => (
-                                    <div key={`search-result-group-${group}`}>
-                                        <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
-                                            <Text
-                                                size={200}
-                                                weight="medium"
-                                                style={{ color: tokens.colorNeutralForeground4 }}
-                                            >
-                                                {t(`searchResultGroup.${group}`)}
-                                            </Text>
-                                        </div>
-                                        <SearchResultList
-                                            containerRef={containerRef}
-                                            selectedItemId={selectedItemId.value}
-                                            searchResultItems={searchResult.value[group]}
-                                            searchTerm={searchTerm.value}
-                                            onSearchResultItemClick={handleSearchResultItemClickEvent}
-                                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                                        />
+                <>
+                    <ConfirmationDialog
+                        closeDialog={closeConfirmationDialog}
+                        action={confirmationDialog.action.value}
+                    />
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 10,
+                            padding: 10,
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        {Object.keys(searchResult.value)
+                            .filter((group) => searchResult.value[group].length)
+                            .map((group) => (
+                                <div key={`search-result-group-${group}`}>
+                                    <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
+                                        <Text
+                                            size={200}
+                                            weight="medium"
+                                            style={{ color: tokens.colorNeutralForeground4 }}
+                                        >
+                                            {t(`searchResultGroup.${group}`)}
+                                        </Text>
                                     </div>
-                                ))}
-                        </div>
-                    </>
-                )
+                                    <SearchResultList
+                                        containerRef={containerRef}
+                                        selectedItemId={selectedItemId.value}
+                                        searchResultItems={searchResult.value[group]}
+                                        searchTerm={searchTerm.value}
+                                        onSearchResultItemClick={handleSearchResultItemClickEvent}
+                                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                    />
+                                </div>
+                            ))}
+                    </div>
+                </>
             }
             footer={
                 <Footer draggable>
@@ -330,19 +351,28 @@ export const Search = ({
                             content={
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
                                     {t("settings", { ns: "general" })}
-                                    <KeyboardShortcut shortcut={keyboardShortcuts["openSettings"][operatingSystem]} />
+                                    <KeyboardShortcut
+                                        shortcut={keyboardShortcuts["openSettings"][operatingSystem]}
+                                        style={{ paddingTop: 2 }}
+                                    />
                                 </div>
                             }
                             relationship="label"
                         >
                             <Button
                                 className="non-draggable-area"
-                                onClick={openSettings}
+                                onClick={() => window.ContextBridge.openSettings()}
                                 size="small"
                                 appearance="subtle"
                                 icon={<Settings16Regular />}
                             />
                         </Tooltip>
+                        {rescanStatus === "scanning" && (
+                            <>
+                                <Divider appearance="subtle" vertical />
+                                <RescanIndicator />
+                            </>
+                        )}
                     </div>
                     <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                         {searchResult.current() ? (
@@ -351,15 +381,16 @@ export const Search = ({
                                 size="small"
                                 appearance="subtle"
                                 onClick={invokeSelectedSearchResultItem}
-                                icon={<ArrowEnterLeftFilled fontSize={14} />}
                             >
-                                {searchResult.current()?.defaultAction.description}
+                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
+                                    {searchResult.current()?.defaultAction.description}
+                                    <KeyboardShortcut shortcut="Enter" />
+                                </div>
                             </Button>
                         ) : null}
                         <Divider appearance="subtle" vertical />
                         <ActionsMenu
-                            searchResultItem={searchResult.current()}
-                            favorites={favoriteSearchResultItemIds}
+                            actions={searchResult.currentActions()}
                             invokeAction={invokeAction}
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}
