@@ -63,7 +63,7 @@
         "color": "^4.2.3",
         "fast-xml-parser": "^4.5.0",
         "fuse.js": "^7.0.0",
-        "fuzzysort": "^3.0.1",
+        "fuzzysort": "^3.1.0",
         "i18next": "^23.8.1",
         "mathjs": "^13.1.1",
         "mitt": "^3.0.1",
