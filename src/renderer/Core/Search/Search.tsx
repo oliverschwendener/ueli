@@ -2,7 +2,7 @@ import { KeyboardShortcut } from "@Core/Components";
 import { useRescanStatus, useSetting } from "@Core/Hooks";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
-import { ArrowEnterLeftFilled, Settings16Regular } from "@fluentui/react-icons";
+import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { BaseLayout } from "../BaseLayout";
@@ -381,9 +381,11 @@ export const Search = ({
                                 size="small"
                                 appearance="subtle"
                                 onClick={invokeSelectedSearchResultItem}
-                                icon={<ArrowEnterLeftFilled fontSize={14} />}
                             >
-                                {searchResult.current()?.defaultAction.description}
+                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
+                                    {searchResult.current()?.defaultAction.description}
+                                    <KeyboardShortcut shortcut="Enter" />
+                                </div>
                             </Button>
                         ) : null}
                         <Divider appearance="subtle" vertical />
