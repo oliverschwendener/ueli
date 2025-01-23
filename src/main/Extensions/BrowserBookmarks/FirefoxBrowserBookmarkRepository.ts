@@ -4,22 +4,33 @@ import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 import type { FirefoxBookmarkFileResolver } from "./FirefoxBookmarkFileResolver";
 import { FirefoxBrowserBookmark } from "./FirefoxBrowserBookmark";
 
+type DatabaseRow = {
+    title: string;
+    guid: string;
+    url: string;
+};
+
 export class FirefoxBrowserBookmarkRepository implements BrowserBookmarkRepository {
     public constructor(private readonly bookmarkFilePathResolver: FirefoxBookmarkFileResolver) {}
 
     public async getAll(): Promise<BrowserBookmark[]> {
-        const rows = new Database(this.bookmarkFilePathResolver.getSqliteFilePath())
-            .prepare(
-                `SELECT
-                    b.title,
-                    b.guid,
-                    p.url
-                FROM moz_bookmarks b
-                    JOIN moz_places p ON b.fk = p.id
-                WHERE b.type = 1`,
-            )
-            .all() as { title: string; guid: string; url: string }[];
+        const database = new Database(this.bookmarkFilePathResolver.getSqliteFilePath(), { readonly: true });
 
-        return rows.map(({ guid, title, url }) => new FirefoxBrowserBookmark(title, url, guid));
+        try {
+            return database
+                .prepare<unknown[], DatabaseRow>(
+                    `SELECT
+                        b.title,
+                        b.guid,
+                        p.url
+                    FROM moz_bookmarks b
+                        JOIN moz_places p ON b.fk = p.id
+                    WHERE b.type = 1`,
+                )
+                .all()
+                .map(({ guid, title, url }) => new FirefoxBrowserBookmark(title, url, guid));
+        } finally {
+            database.close();
+        }
     }
 }
