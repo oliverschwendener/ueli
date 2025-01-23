@@ -17,7 +17,7 @@ export class FirefoxBrowserBookmarkRepository implements BrowserBookmarkReposito
         const database = new Database(this.bookmarkFilePathResolver.getSqliteFilePath(), { readonly: true });
 
         try {
-            const rows = database
+            return database
                 .prepare<unknown[], DatabaseRow>(
                     `SELECT
                         b.title,
@@ -27,9 +27,8 @@ export class FirefoxBrowserBookmarkRepository implements BrowserBookmarkReposito
                         JOIN moz_places p ON b.fk = p.id
                     WHERE b.type = 1`,
                 )
-                .all();
-
-            return rows.map(({ guid, title, url }) => new FirefoxBrowserBookmark(title, url, guid));
+                .all()
+                .map(({ guid, title, url }) => new FirefoxBrowserBookmark(title, url, guid));
         } finally {
             database.close();
         }
