@@ -17,14 +17,14 @@ export const Appearance = () => {
         key: "appearance.themeName",
         defaultValue: "Fluent UI Web",
     });
-    const themes = [
-        { value: "Microsoft Teams", label: "Microsoft Teams" },
-        { value: "Fluent UI Web", label: "Fluent UI Web" },
-    ];
 
-    const updateTheme = (themeName: string) => {
-        setThemeName(themeName);
-    };
+    const { value: colorMode, updateValue: setColorMode } = useSetting<string>({
+        key: "appearance.colorMode",
+        defaultValue: "system",
+    });
+
+    const themes = ["Microsoft Teams", "Fluent UI Web"];
+    const colorModes = ["system", "light", "dark"];
 
     return (
         <SettingGroupList>
@@ -34,13 +34,29 @@ export const Appearance = () => {
                     label={t("themeName")}
                     control={
                         <Dropdown
-                            value={themes.find((t) => t.value === themeName)?.label}
-                            onOptionSelect={(_, { optionValue }) => optionValue && updateTheme(optionValue)}
+                            value={themes.find((t) => t)}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setThemeName(optionValue)}
                             selectedOptions={[themeName]}
                         >
                             {availableThemes.map(({ name, accentColors }) => (
                                 <Option key={`theme-option-${name}`} value={name} text={name}>
                                     <ThemeOption themeName={name} accentColors={accentColors} />
+                                </Option>
+                            ))}
+                        </Dropdown>
+                    }
+                />
+                <Setting
+                    label={t("colorMode")}
+                    control={
+                        <Dropdown
+                            value={t(`colorMode.${colorMode}`)}
+                            onOptionSelect={(_, { optionValue }) => optionValue && setColorMode(optionValue)}
+                            selectedOptions={[colorMode]}
+                        >
+                            {colorModes.map((c) => (
+                                <Option key={`color-mode-${c}`} value={c}>
+                                    {t(`colorMode.${c}`)}
                                 </Option>
                             ))}
                         </Dropdown>

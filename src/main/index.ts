@@ -71,6 +71,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.SettingsReaderModule.bootstrap(moduleRegistry);
     Core.SettingsWriterModule.bootstrap(moduleRegistry);
     Core.SettingsManagerModule.bootstrap(moduleRegistry);
+    Core.NativeThemeModule.bootstrap(moduleRegistry);
     Core.BrowserWindowModule.bootstrap(moduleRegistry);
     Core.ShellModule.bootstrap(moduleRegistry);
     Core.DockModule.bootstrap(moduleRegistry);
