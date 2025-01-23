@@ -1,5 +1,5 @@
 import { useSetting } from "@Core/Hooks";
-import { getAvailableThemes, getAvailableColorModes  } from "@Core/Theme";
+import { getAvailableColorModes, getAvailableThemes } from "@Core/Theme";
 import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../../Setting";
@@ -61,7 +61,11 @@ export const Appearance = () => {
                             selectedOptions={[colorMode]}
                         >
                             {availableColorModes.map((colorMode: string | undefined) => (
-                                <Option key={`color-mode-option-${colorMode}`} value={colorMode} text={t("colorMode." + colorMode)}>
+                                <Option
+                                    key={`color-mode-option-${colorMode}`}
+                                    value={colorMode}
+                                    text={t("colorMode." + colorMode)}
+                                >
                                     {t("colorMode." + colorMode)}
                                 </Option>
                             ))}

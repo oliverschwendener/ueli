@@ -1,8 +1,8 @@
+import { useSetting } from "@Core/Hooks";
 import { type Theme } from "@fluentui/react-theme";
 import { useEffect, useState, type ReactNode } from "react";
 import { ThemeContext } from "./ThemeContext";
 import { getFluentUiTheme } from "./getFluentUiTheme";
-import { useSetting } from "@Core/Hooks";
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const { value: colorMode } = useSetting<string>({
@@ -10,12 +10,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         defaultValue: "system",
     });
 
-    const initialShouldUseDarkColors = 
-    colorMode === "light" 
-        ? false 
-        : colorMode === "dark" 
-            ? true 
-            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialShouldUseDarkColors =
+        colorMode === "light"
+            ? false
+            : colorMode === "dark"
+              ? true
+              : window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     const [fluentUiTheme, setFluentUiTheme] = useState<Theme>(getFluentUiTheme(initialShouldUseDarkColors));
     const [shouldUseDarkColors, setShouldUseDarkColors] = useState<boolean>(initialShouldUseDarkColors);
@@ -27,14 +27,15 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         };
 
         const themeNameChangeListener = () => {
-            const colorMode =  window.ContextBridge.getSettingValue<string>("appearance.colorMode", "system");
-            const shouldUseDark = colorMode === "dark" 
-                ? true 
-                : colorMode === "light" 
-                    ? false 
-                    : window.matchMedia("(prefers-color-scheme: dark)").matches;
-                    console.log(colorMode);
-                    console.log(shouldUseDark);
+            const colorMode = window.ContextBridge.getSettingValue<string>("appearance.colorMode", "system");
+            const shouldUseDark =
+                colorMode === "dark"
+                    ? true
+                    : colorMode === "light"
+                      ? false
+                      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+            console.log(colorMode);
+            console.log(shouldUseDark);
             setFluentUiTheme(getFluentUiTheme(shouldUseDark));
         };
 
