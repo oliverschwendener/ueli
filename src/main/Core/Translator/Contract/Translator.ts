@@ -1,4 +1,5 @@
 import type { Resources, Translations } from "@common/Core/Translator";
+import type { TFunction } from "./TFunction";
 
 /**
  * Offers a method to create a translation function.
@@ -9,7 +10,5 @@ export interface Translator {
      * @param resources The resources for the translations.
      * @returns A translate function
      */
-    createT<T extends Translations>(
-        resources: Resources<T>,
-    ): { t: (key: keyof T, interpolation?: Record<string, string>) => string };
+    createT<T extends Translations>(resources: Resources<T>): { t: TFunction };
 }

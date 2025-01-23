@@ -17,4 +17,17 @@ describe(Translator, () => {
         expect(t("message")).toBe("Hello");
         expect(t("otherMessage")).toBe("otherMessage");
     });
+
+    it("should be able to interpolate", () => {
+        const getValueMock = vi.fn().mockReturnValue("en-US");
+        const settingsManager = <SettingsManager>{ getValue: (v, d) => getValueMock(v, d) };
+
+        const translator = new Translator(settingsManager);
+
+        const { t } = translator.createT({
+            "en-US": { greeting: "Hello {{name}}" },
+        });
+
+        expect(t("greeting", { name: "Darth Vader" })).toBe("Hello Darth Vader");
+    });
 });
