@@ -88,12 +88,12 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return readFileSync(filePath);
     }
 
-    public readTextFileSync(filePath: string): string {
-        return this.readFileSync(filePath).toString();
+    public readTextFileSync(filePath: string, encoding?: BufferEncoding): string {
+        return this.readFileSync(filePath).toString(encoding);
     }
 
-    public async readTextFile(filePath: string): Promise<string> {
-        return (await this.readFile(filePath)).toString();
+    public async readTextFile(filePath: string, encoding?: BufferEncoding): Promise<string> {
+        return (await this.readFile(filePath)).toString(encoding);
     }
 
     public async readDirectory(folderPath: string, recursive?: boolean): Promise<string[]> {

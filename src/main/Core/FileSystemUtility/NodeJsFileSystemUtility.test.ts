@@ -1,4 +1,4 @@
-import { mkdir, rm } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { NodeJsFileSystemUtility } from "./NodeJsFileSystemUtility";
@@ -233,6 +233,18 @@ describe(NodeJsFileSystemUtility, () => {
 
             expect(actual).toBe(content);
         });
+
+        it("should read the contents of a utf-16le encoded file as a string", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "file.txt");
+            const content = "test";
+
+            await writeFile(filePath, content, { encoding: "utf-16le" });
+
+            const actual = await fileSystemUtility.readTextFile(filePath, "utf-16le");
+
+            expect(actual).toBe(content);
+        });
     });
 
     describe(NodeJsFileSystemUtility.prototype.readTextFileSync, () => {
@@ -244,6 +256,16 @@ describe(NodeJsFileSystemUtility, () => {
             await fileSystemUtility.writeTextFile(content, filePath);
 
             expect(fileSystemUtility.readTextFileSync(filePath)).toBe(content);
+        });
+
+        it("should read the contents of a utf-16le encoded file synchronously as a string", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "file.txt");
+            const content = "test";
+
+            await writeFile(filePath, content, { encoding: "utf-16le" });
+
+            expect(fileSystemUtility.readTextFileSync(filePath, "utf-16le")).toBe(content);
         });
     });
 

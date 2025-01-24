@@ -4,8 +4,8 @@ export interface FileSystemUtility {
     pathExists(fileOrFolderPath: string): Promise<boolean>;
     readFileSync(filePath: string): Buffer;
     readFile(filePath: string): Promise<Buffer>;
-    readTextFileSync(filePath: string): string;
-    readTextFile(filePath: string): Promise<string>;
+    readTextFileSync(filePath: string, encoding?: BufferEncoding): string;
+    readTextFile(filePath: string, encoding?: BufferEncoding): Promise<string>;
     readJsonFile<T>(filePath: string): Promise<T>;
     readJsonFileSync<T>(filePath: string): T;
     readDirectory(folderPath: string, recursive?: boolean): Promise<string[]>;

@@ -8,23 +8,27 @@ import { WindowsStoreAutostartManager } from "./WindowsStoreAutostartManager";
 describe(WindowsStoreAutostartManager, () => {
     describe(WindowsStoreAutostartManager.prototype.autostartIsEnabled, () => {
         const testAutostartIsEnabled = ({
-            execPath,
             shortcutFileExists,
             shortcutFileReadError,
             shortcutTarget,
+            shortcutFileContent,
             expected,
         }: {
-            execPath: string;
             shortcutFileExists: boolean;
             shortcutFileReadError?: string;
             shortcutTarget?: string;
+            shortcutFileContent?: string;
             expected: boolean;
         }) => {
             const getPathMock = vi.fn().mockReturnValue("AppData");
             const app = <App>{ getPath: (p) => getPathMock(p) };
 
             const existsSyncMock = vi.fn().mockReturnValue(shortcutFileExists);
-            const fileSystemUtility = <FileSystemUtility>{ existsSync: (p) => existsSyncMock(p) };
+            const readTextFileSync = vi.fn().mockReturnValue(shortcutFileContent);
+            const fileSystemUtility = <FileSystemUtility>{
+                existsSync: (p) => existsSyncMock(p),
+                readTextFileSync: (filePath, encoding) => readTextFileSync(filePath, encoding),
+            };
 
             const readShortcutLinkMock = shortcutFileReadError
                 ? vi.fn().mockImplementationOnce(() => {
@@ -37,11 +41,9 @@ describe(WindowsStoreAutostartManager, () => {
             const logErrorMock = vi.fn();
             const logger = <Logger>{ error: (m) => logErrorMock(m) };
 
-            const process = <NodeJS.Process>{ execPath };
-
-            expect(
-                new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, logger).autostartIsEnabled(),
-            ).toBe(expected);
+            expect(new WindowsStoreAutostartManager(app, shell, fileSystemUtility, logger).autostartIsEnabled()).toBe(
+                expected,
+            );
 
             expect(getPathMock).toHaveBeenCalledOnce();
             expect(getPathMock).toHaveBeenCalledWith("appData");
@@ -71,7 +73,6 @@ describe(WindowsStoreAutostartManager, () => {
             testAutostartIsEnabled({
                 shortcutFileExists: false,
                 expected: false,
-                execPath: "execPath",
             });
         });
 
@@ -80,24 +81,40 @@ describe(WindowsStoreAutostartManager, () => {
                 shortcutFileExists: true,
                 expected: false,
                 shortcutFileReadError: "some error",
-                execPath: "execPath",
             });
         });
 
-        it("should return false when shortcut file exists but target is not current process exec path", () => {
+        it("should return false when shortcut file exists but target is not as desired", () => {
             testAutostartIsEnabled({
                 shortcutFileExists: true,
                 shortcutTarget: "other target",
-                execPath: "execPath",
                 expected: false,
             });
         });
 
-        it("should return true when shortcut file exists and target is same as current process exec path", () => {
+        it("should return false when shortcut file exists and target is empty and shortcut file content does not contain app id", () => {
             testAutostartIsEnabled({
                 shortcutFileExists: true,
-                shortcutTarget: "execPath",
-                execPath: "execPath",
+                shortcutTarget: "",
+                shortcutFileContent: "content without app id",
+                expected: false,
+            });
+        });
+
+        it("should return true when shortcut file exists and target is as desired", () => {
+            testAutostartIsEnabled({
+                shortcutFileExists: true,
+                shortcutTarget: "shell:AppsFolder\\1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli",
+                expected: true,
+            });
+        });
+
+        it("should return true when shortcut file exists and target is empty but shortcut file content contains app id", () => {
+            testAutostartIsEnabled({
+                shortcutFileExists: true,
+                shortcutTarget: "",
+                shortcutFileContent:
+                    "some content with app id 1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli",
                 expected: true,
             });
         });
@@ -130,8 +147,6 @@ describe(WindowsStoreAutostartManager, () => {
                 writeShortcutLink: (path, operation, options) => writeShortcutLinkMock(path, operation, options),
             };
 
-            const process = <NodeJS.Process>{ execPath: "execPath" };
-
             const shortcutFilePath = join(
                 "AppData",
                 "Microsoft",
@@ -142,7 +157,7 @@ describe(WindowsStoreAutostartManager, () => {
                 "Ueli.lnk",
             );
 
-            new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, <Logger>{}).setAutostartOptions(
+            new WindowsStoreAutostartManager(app, shell, fileSystemUtility, <Logger>{}).setAutostartOptions(
                 openAtLogin,
             );
 
@@ -160,7 +175,7 @@ describe(WindowsStoreAutostartManager, () => {
             if (expectedShortcutOperation) {
                 expect(writeShortcutLinkMock).toHaveBeenCalledOnce();
                 expect(writeShortcutLinkMock).toHaveBeenCalledWith(shortcutFilePath, expectedShortcutOperation, {
-                    target: "execPath",
+                    target: "shell:AppsFolder\\1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli",
                 });
             }
         };
