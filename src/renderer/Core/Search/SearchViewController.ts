@@ -43,15 +43,15 @@ export const useSearchViewController = ({
     const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
         Linux: {
             addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Backspace",
+            excludeFromSearchResults: "Ctrl+Delete",
         },
         macOS: {
             addToFavorites: "Cmd+F",
-            excludeFromSearchResults: "Cmd+Backspace",
+            excludeFromSearchResults: "Cmd+Delete",
         },
         Windows: {
             addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Backspace",
+            excludeFromSearchResults: "Ctrl+Delete",
         },
     };
 

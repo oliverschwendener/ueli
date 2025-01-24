@@ -13,6 +13,7 @@ export const KeyboardShortcut = ({ shortcut, style }: KeyboardShortcutProps) => 
     shortcut = shortcut.replace("Alt", "⌥");
     shortcut = shortcut.replace("Enter", "↵");
     shortcut = shortcut.replace("Backspace", "⌫");
+    shortcut = shortcut.replace("Delete", "Del");
 
     return (
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2, ...style }}>
