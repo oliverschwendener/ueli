@@ -250,7 +250,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     excludedItems: "Excluded items",
                     noExcludedItems: "There are no excluded items",
                     removeExcludedItem: "Remove item",
-                    hotkeyForManualRescan: "Hotkey for manual rescan",
+                    keyboardShortcutForManualRescan: "Keyboard shortcut for manual rescan",
                 },
                 "de-CH": {
                     title: "Suchmaschine",
@@ -264,7 +264,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     excludedItems: "Ausgeschlossene Elemente",
                     noExcludedItems: "Es gibt keine ausgeschlossene Elemente",
                     removeExcludedItem: "Element entfernen",
-                    hotkeyForManualRescan: "Hotkey für manuelles neu Scannen",
+                    keyboardShortcutForManualRescan: "Tastatur-Shortcut für manuelles neu Scannen",
                 },
             },
         },

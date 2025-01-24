@@ -2,8 +2,8 @@ import { KeyboardShortcut } from "@Core/Components";
 import { Setting } from "@Core/Settings/Setting";
 import { useTranslation } from "react-i18next";
 
-export const ManualRescanHotkey = () => {
+export const ManualRescanKeyboardShortcut = () => {
     const { t } = useTranslation("settingsSearchEngine");
 
-    return <Setting label={t("hotkeyForManualRescan")} control={<KeyboardShortcut shortcut="F5" />} />;
+    return <Setting label={t("keyboardShortcutForManualRescan")} control={<KeyboardShortcut shortcut="F5" />} />;
 };

@@ -129,7 +129,9 @@ export class SearchWindowModule {
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
-        ipcMain.on("rescanExtensionsHotkeyPressed", () => ueliCommandInvoker.invokeUeliCommand("rescanExtensions"));
+        ipcMain.on("rescanExtensionsKeyboardShortcutPressed", () =>
+            ueliCommandInvoker.invokeUeliCommand("rescanExtensions"),
+        );
 
         app.on("second-instance", (_, argv) => {
             if (argv.includes("--toggle")) {
