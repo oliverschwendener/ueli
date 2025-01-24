@@ -31,7 +31,7 @@ export const Search = ({
     excludedSearchResultItemIds,
     favoriteSearchResultItemIds,
 }: SearchProps) => {
-    const { t } = useTranslation("search");
+    const { t } = useTranslation();
 
     const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState(false);
 
@@ -198,6 +198,16 @@ export const Search = ({
         },
     };
 
+    const currentDefaultActionDescription = () => {
+        const defaultAction = searchResult.current()?.defaultAction;
+
+        if (defaultAction) {
+            return defaultAction.descriptionTranslation
+                ? t(defaultAction.descriptionTranslation.key, { ns: defaultAction.descriptionTranslation.namespace })
+                : defaultAction.description;
+        }
+    };
+
     useEffect(() => {
         const setFocusOnUserInputAndSelectText = () => {
             userInput.focus();
@@ -253,7 +263,7 @@ export const Search = ({
 
     const { value: searchBarPlaceholderText } = useSetting({
         key: "appearance.searchBarPlaceholderText",
-        defaultValue: t("searchBarPlaceholderText"),
+        defaultValue: t("searchBarPlaceholderText", { ns: "search" }),
     });
 
     const { value: searchBarShowSearchIcon } = useSetting({
@@ -326,7 +336,7 @@ export const Search = ({
                                             weight="medium"
                                             style={{ color: tokens.colorNeutralForeground4 }}
                                         >
-                                            {t(`searchResultGroup.${group}`)}
+                                            {t(`searchResultGroup.${group}`, { ns: "search" })}
                                         </Text>
                                     </div>
                                     <SearchResultList
@@ -383,7 +393,7 @@ export const Search = ({
                                 onClick={invokeSelectedSearchResultItem}
                             >
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
-                                    {searchResult.current()?.defaultAction.description}
+                                    {currentDefaultActionDescription()}
                                     <KeyboardShortcut shortcut="Enter" />
                                 </div>
                             </Button>
