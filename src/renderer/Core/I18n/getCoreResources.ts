@@ -77,7 +77,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 "de-CH": {
                     title: "Allgemein",
                     hotkey: "Hotkey",
-                    hotkeyEnabled: "Hotkey enabled",
+                    hotkeyEnabled: "Hotkey aktiviert",
                     hotkeyBinding: "Tastenkombination",
                     validHotkeyBinding: "Gültige Tastenkombination",
                     invalidHotkeyBinding: "Ungültige Tastenkombination",
@@ -230,7 +230,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     enabled: "Aktiviert",
                     rescan: "Neuscan",
                     successfulRescan: "Erfolgreicher Neuscan",
-                    failedRescan: "Fehler beim neu scannen. Überprüfe die Logs für mehr Informationen.",
+                    failedRescan: "Fehler beim neu Scannen. Überprüfe die Logs für mehr Informationen.",
                     noSettingsAvailable: "Keine Einstellungen verfügbar",
                 },
             },
@@ -250,6 +250,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     excludedItems: "Excluded items",
                     noExcludedItems: "There are no excluded items",
                     removeExcludedItem: "Remove item",
+                    keyboardShortcutForManualRescan: "Keyboard shortcut for manual rescan",
                 },
                 "de-CH": {
                     title: "Suchmaschine",
@@ -263,6 +264,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     excludedItems: "Ausgeschlossene Elemente",
                     noExcludedItems: "Es gibt keine ausgeschlossene Elemente",
                     removeExcludedItem: "Element entfernen",
+                    keyboardShortcutForManualRescan: "Tastatur-Shortcut für manuelles neu Scannen",
                 },
             },
         },

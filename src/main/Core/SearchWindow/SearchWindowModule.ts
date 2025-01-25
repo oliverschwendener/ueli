@@ -26,6 +26,7 @@ export class SearchWindowModule {
         const settingsManager = moduleRegistry.get("SettingsManager");
         const vibrancyProvider = moduleRegistry.get("BrowserWindowVibrancyProvider");
         const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
+        const ueliCommandInvoker = moduleRegistry.get("UeliCommandInvoker");
 
         const defaultBrowserWindowOptions = new DefaultBrowserWindowConstructorOptionsProvider(
             app,
@@ -128,6 +129,9 @@ export class SearchWindowModule {
         });
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
+        ipcMain.on("rescanExtensionsKeyboardShortcutPressed", () =>
+            ueliCommandInvoker.invokeUeliCommand("rescanExtensions"),
+        );
 
         app.on("second-instance", (_, argv) => {
             if (argv.includes("--toggle")) {

@@ -106,6 +106,14 @@ export const Search = ({
                     };
                 },
             },
+            {
+                check: (keyboardEvent) => {
+                    return {
+                        shouldInvokeAction: keyboardEvent.key === "F5",
+                        action: () => window.ContextBridge.ipcRenderer.send("rescanExtensionsKeyboardShortcutPressed"),
+                    };
+                },
+            },
         ];
 
         for (const eventHandler of eventHandlers) {

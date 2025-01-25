@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { AutomaticRescan } from "./AutomaticRescan";
 import { ExcludedItems } from "./ExcludedItems";
 import { Fuzziness } from "./Fuzziness";
+import { ManualRescanKeyboardShortcut } from "./ManualRescanKeyboardShortcut";
 import { MaxResultLength } from "./MaxResultLength";
 import { RescanInterval } from "./RescanInterval";
 import { SearchEngineId } from "./SearchEngineId";
@@ -26,6 +27,7 @@ export const SearchEngine = () => {
                     setAutomaticRescanEnabled={setAutomaticRescanEnabled}
                 />
                 <RescanInterval automaticRescanEnabled={automaticRescanEnabled} />
+                <ManualRescanKeyboardShortcut />
                 <Fuzziness />
                 <MaxResultLength />
             </SettingGroup>
