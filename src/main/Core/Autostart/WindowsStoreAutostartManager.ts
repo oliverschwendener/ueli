@@ -33,11 +33,6 @@ export class WindowsStoreAutostartManager implements AutostartManager {
         }
 
         try {
-            const shortcutLink = this.shell.readShortcutLink(shortcutFilePath);
-            if (shortcutLink.target) {
-                return shortcutLink.target === this.shortcutTarget;
-            }
-
             const shortcutFileContent = this.fileSystemUtility.readTextFileSync(shortcutFilePath, "utf-16le");
             return shortcutFileContent.includes(this.appId);
         } catch (error) {

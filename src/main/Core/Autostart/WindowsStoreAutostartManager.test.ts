@@ -10,13 +10,11 @@ describe(WindowsStoreAutostartManager, () => {
         const testAutostartIsEnabled = ({
             shortcutFileExists,
             shortcutFileReadError,
-            shortcutTarget,
             shortcutFileContent,
             expected,
         }: {
             shortcutFileExists: boolean;
             shortcutFileReadError?: string;
-            shortcutTarget?: string;
             shortcutFileContent?: string;
             expected: boolean;
         }) => {
@@ -24,19 +22,17 @@ describe(WindowsStoreAutostartManager, () => {
             const app = <App>{ getPath: (p) => getPathMock(p) };
 
             const existsSyncMock = vi.fn().mockReturnValue(shortcutFileExists);
-            const readTextFileSync = vi.fn().mockReturnValue(shortcutFileContent);
+            const readTextFileSync = shortcutFileReadError
+                ? vi.fn().mockImplementationOnce(() => {
+                      throw new Error(shortcutFileReadError);
+                  })
+                : vi.fn().mockReturnValue(shortcutFileContent);
             const fileSystemUtility = <FileSystemUtility>{
                 existsSync: (p) => existsSyncMock(p),
                 readTextFileSync: (filePath, encoding) => readTextFileSync(filePath, encoding),
             };
 
-            const readShortcutLinkMock = shortcutFileReadError
-                ? vi.fn().mockImplementationOnce(() => {
-                      throw new Error(shortcutFileReadError);
-                  })
-                : vi.fn().mockReturnValue({ target: shortcutTarget });
-
-            const shell = <Shell>{ readShortcutLink: (p) => readShortcutLinkMock(p) };
+            const shell = <Shell>{};
 
             const logErrorMock = vi.fn();
             const logger = <Logger>{ error: (m) => logErrorMock(m) };
@@ -84,35 +80,17 @@ describe(WindowsStoreAutostartManager, () => {
             });
         });
 
-        it("should return false when shortcut file exists but target is not as desired", () => {
+        it("should return false when shortcut file exists and content does not contain app id", () => {
             testAutostartIsEnabled({
                 shortcutFileExists: true,
-                shortcutTarget: "other target",
-                expected: false,
-            });
-        });
-
-        it("should return false when shortcut file exists and target is empty and shortcut file content does not contain app id", () => {
-            testAutostartIsEnabled({
-                shortcutFileExists: true,
-                shortcutTarget: "",
                 shortcutFileContent: "content without app id",
                 expected: false,
             });
         });
 
-        it("should return true when shortcut file exists and target is as desired", () => {
+        it("should return true when shortcut file exists and content contains app id", () => {
             testAutostartIsEnabled({
                 shortcutFileExists: true,
-                shortcutTarget: "shell:AppsFolder\\1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli",
-                expected: true,
-            });
-        });
-
-        it("should return true when shortcut file exists and target is empty but shortcut file content contains app id", () => {
-            testAutostartIsEnabled({
-                shortcutFileExists: true,
-                shortcutTarget: "",
                 shortcutFileContent:
                     "some content with app id 1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli",
                 expected: true,
