@@ -5,10 +5,12 @@ import { join } from "path";
 import type { AutostartManager } from "./AutostartManager";
 
 export class WindowsStoreAutostartManager implements AutostartManager {
+    private readonly appId = "1915OliverSchwendener.Ueli_a397x08q5x7rp!OliverSchwendener.Ueli";
+    private readonly shortcutTarget = `shell:AppsFolder\\${this.appId}`;
+
     public constructor(
         private readonly app: App,
         private readonly shell: Shell,
-        private readonly process: NodeJS.Process,
         private readonly fileSystemUtility: FileSystemUtility,
         private readonly logger: Logger,
     ) {}
@@ -31,8 +33,8 @@ export class WindowsStoreAutostartManager implements AutostartManager {
         }
 
         try {
-            const shortcutLink = this.shell.readShortcutLink(shortcutFilePath);
-            return shortcutLink.target === this.process.execPath;
+            const shortcutFileContent = this.fileSystemUtility.readTextFileSync(shortcutFilePath, "utf-16le");
+            return shortcutFileContent.includes(this.appId);
         } catch (error) {
             this.logger.error(`Failed to read shortcut link "${shortcutFilePath}". Reason: ${error}`);
             return false;
@@ -55,7 +57,7 @@ export class WindowsStoreAutostartManager implements AutostartManager {
         const shortcutFileExists = this.fileSystemUtility.existsSync(shortcutFilePath);
 
         this.shell.writeShortcutLink(shortcutFilePath, shortcutFileExists ? "replace" : "create", {
-            target: this.process.execPath,
+            target: this.shortcutTarget,
         });
     }
 

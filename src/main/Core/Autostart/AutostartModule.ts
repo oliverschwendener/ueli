@@ -11,7 +11,7 @@ export class AutostartModule {
         const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
 
         const autostartManager = process.windowsStore
-            ? new WindowsStoreAutostartManager(app, shell, process, fileSystemUtility, logger)
+            ? new WindowsStoreAutostartManager(app, shell, fileSystemUtility, logger)
             : new DefaultAutostartManager(app, process);
 
         const setAutostartOptions = (openAtLogin: boolean) => {
