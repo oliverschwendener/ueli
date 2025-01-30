@@ -185,17 +185,11 @@ export class VSCodeExtension implements Extension {
     public getSettingDefaultValue(key: keyof Settings) {
         const defaultSettings: Settings = {
             prefix: "vscode",
-            command: "",
+            command: "code %s",
         };
 
-        switch (this.operatingSystem) {
-            case "Windows":
-            case "Linux":
-                defaultSettings.command = "code %s";
-                break;
-            case "macOS":
-                defaultSettings.command = "/usr/local/bin/code %s";
-                break;
+        if (this.operatingSystem === "macOS") {
+            defaultSettings.command = "/usr/local/bin/code %s";
         }
 
         return defaultSettings[key];
