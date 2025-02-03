@@ -12,7 +12,7 @@ import {
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
-import type { UuidGeneratorSetting as Settings, UuidVersion } from "@common/Extensions/UuidGenerator";
+import type { UuidGeneratorSetting as Settings, UuidFormat, UuidVersion } from "@common/Extensions/UuidGenerator";
 import { UuidGenerator } from "./UuidGenerator";
 
 export class UuidGeneratorExtension implements Extension {
@@ -22,10 +22,8 @@ export class UuidGeneratorExtension implements Extension {
     public readonly defaultSettings: Settings = {
         uuidVersion: "v4",
         numberOfUuids: 10,
-        uppercase: false,
-        hyphens: true,
-        braces: false,
-        quotes: false,
+        generatorFormat: { uppercase: false, hyphens: true, braces: false, quotes: false },
+        searchResultFormats: [],
     };
 
     public readonly author = {
@@ -40,40 +38,78 @@ export class UuidGeneratorExtension implements Extension {
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
+        const uuidFormats: UuidFormat[] = this.getSettingValue("searchResultFormats");
+
+        let uuidSearchTerm = searchTerm;
+        if (uuidSearchTerm.toLowerCase().startsWith("uuid") || uuidSearchTerm.toLowerCase().startsWith("guid")) {
+            uuidSearchTerm = uuidSearchTerm.substring(4);
+        }
+
+        uuidSearchTerm = uuidSearchTerm.trim();
+        const possibleUuid = UuidGenerator.reformat(uuidSearchTerm, {
+            uppercase: false,
+            hyphens: true,
+            braces: false,
+            quotes: false,
+        });
+        if (this.validateUuid(possibleUuid)) {
+            return {
+                after: [],
+                before: uuidFormats.map((format, index) => {
+                    const formattedUuid = UuidGenerator.format(possibleUuid, format);
+
+                    return {
+                        name: formattedUuid,
+                        description: "UUID Generator",
+                        descriptionTranslation: {
+                            key: "generatorResult",
+                            namespace: "extension[UuidGenerator]",
+                        },
+                        id: "uuidGenerator:instantResult-" + index,
+                        image: this.getImage(),
+                        defaultAction: createCopyToClipboardAction({
+                            textToCopy: formattedUuid,
+                            description: "Copy UUID to clipboard",
+                            descriptionTranslation: {
+                                key: "copyUuidToClipboard",
+                                namespace: "extension[UuidGenerator]",
+                            },
+                        }),
+                    };
+                }),
+            };
+        }
+
         if (!["uuid", "guid"].includes(searchTerm.toLowerCase())) {
             return createEmptyInstantSearchResult();
         }
 
-        const uuid = this.generateUuid(
-            this.getSettingValue("uuidVersion"),
-            this.getSettingValue("uppercase"),
-            this.getSettingValue("hyphens"),
-            this.getSettingValue("braces"),
-            this.getSettingValue("quotes"),
-        );
+        const generatedUuid = this.generateUuid(this.getSettingValue("uuidVersion"), false, true, false, false);
 
         return {
             after: [],
-            before: [
-                {
-                    name: uuid,
+            before: uuidFormats.map((format, index) => {
+                const formattedUuid = UuidGenerator.reformat(generatedUuid, format);
+
+                return {
+                    name: formattedUuid,
                     description: "UUID Generator",
                     descriptionTranslation: {
                         key: "generatorResult",
                         namespace: "extension[UuidGenerator]",
                     },
-                    id: "uuidGenerator:instantResult",
+                    id: "uuidGenerator:instantResult-" + index,
                     image: this.getImage(),
                     defaultAction: createCopyToClipboardAction({
-                        textToCopy: uuid,
+                        textToCopy: formattedUuid,
                         description: "Copy UUID to clipboard",
                         descriptionTranslation: {
                             key: "copyUuidToClipboard",
                             namespace: "extension[UuidGenerator]",
                         },
                     }),
-                },
-            ],
+                };
+            }),
         };
     }
 
@@ -110,6 +146,10 @@ export class UuidGeneratorExtension implements Extension {
                 hyphens: "Hyphens",
                 braces: "Braces",
                 quotes: "Quotes",
+                defaultGeneratorFormat: "Generator window format",
+                searchResultFormats: "Search result formats",
+                addSearchResultFormat: "Add format",
+                removeSearchResultFormat: "Remove format",
             },
             "de-CH": {
                 copyUuidToClipboard: "UUID in die Zwischenablage kopieren",
@@ -122,6 +162,10 @@ export class UuidGeneratorExtension implements Extension {
                 hyphens: "Bindestriche",
                 braces: "Geschweifte Klammern",
                 quotes: "Anführungszeichen",
+                defaultGeneratorFormat: "Format im Generator-Fenster",
+                searchResultFormats: "Formate der Suchresultate",
+                addSearchResultFormat: "Format hinzufügen",
+                removeSearchResultFormat: "Format entfernen",
             },
         };
     }
@@ -146,10 +190,10 @@ export class UuidGeneratorExtension implements Extension {
             result.push(
                 this.generateUuid(
                     settings.uuidVersion,
-                    settings.uppercase,
-                    settings.hyphens,
-                    settings.braces,
-                    settings.quotes,
+                    settings.generatorFormat.uppercase,
+                    settings.generatorFormat.hyphens,
+                    settings.generatorFormat.braces,
+                    settings.generatorFormat.quotes,
                 ),
             );
         }
@@ -181,7 +225,7 @@ export class UuidGeneratorExtension implements Extension {
             }
         }
 
-        return UuidGenerator.format(uuid, uppercase, hyphens, braces, quotes);
+        return UuidGenerator.format(uuid, { uppercase, hyphens, braces, quotes });
     }
 
     private getSettingValue<T>(key: keyof Settings): T {
@@ -189,5 +233,9 @@ export class UuidGeneratorExtension implements Extension {
             getExtensionSettingKey(this.id, key),
             <T>this.getSettingDefaultValue(key),
         );
+    }
+
+    private validateUuid(uuid: string): boolean {
+        return UuidGenerator.validateUuid(uuid);
     }
 }

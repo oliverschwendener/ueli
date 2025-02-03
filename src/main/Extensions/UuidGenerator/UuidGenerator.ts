@@ -1,3 +1,4 @@
+import type { UuidFormat } from "@common/Extensions/UuidGenerator";
 import { v4 as uuidv4, v6 as uuidv6, v7 as uuidv7, validate as uuidValidate } from "uuid";
 
 export class UuidGenerator {
@@ -13,24 +14,64 @@ export class UuidGenerator {
         return uuidv7();
     }
 
-    public static format(uuid: string, uppercase: boolean, hyphens: boolean, braces: boolean, quotes: boolean): string {
+    public static format(uuid: string, format: UuidFormat): string {
         if (!uuidValidate(uuid)) {
             throw new Error("Invalid UUID");
         }
 
         let formattedUuid = uuid;
-        if (uppercase) {
+        if (format.uppercase) {
             formattedUuid = formattedUuid.toUpperCase();
         }
-        if (!hyphens) {
+        if (!format.hyphens) {
             formattedUuid = formattedUuid.replace(/-/g, "");
         }
-        if (braces) {
+        if (format.braces) {
             formattedUuid = `{${formattedUuid}}`;
         }
-        if (quotes) {
+        if (format.quotes) {
             formattedUuid = `"${formattedUuid}"`;
         }
         return formattedUuid;
+    }
+
+    public static reformat(uuid: string, format: UuidFormat): string {
+        let formattedUuid = uuid.replace(/["{}-]/g, "");
+        if (format.uppercase) {
+            formattedUuid = formattedUuid.toUpperCase();
+        } else {
+            formattedUuid = formattedUuid.toLowerCase();
+        }
+        if (format.hyphens) {
+            const tempUuid = formattedUuid.replace(/-/g, "");
+
+            formattedUuid =
+                tempUuid.substring(0, 8) +
+                "-" +
+                tempUuid.substring(8, 12) +
+                "-" +
+                tempUuid.substring(12, 16) +
+                "-" +
+                tempUuid.substring(16, 20) +
+                "-" +
+                tempUuid.substring(20);
+        } else {
+            formattedUuid = formattedUuid.replace(/-/g, "");
+        }
+        if (format.braces) {
+            formattedUuid = `{${formattedUuid}}`;
+        } else {
+            formattedUuid = formattedUuid.replace(/[{}]/g, "");
+        }
+        if (format.quotes) {
+            formattedUuid = `"${formattedUuid}"`;
+        } else {
+            formattedUuid = formattedUuid.replace(/"/g, "");
+        }
+        return formattedUuid;
+    }
+
+    public static validateUuid(uuid: string): boolean {
+        return uuidValidate(uuid);
     }
 }
