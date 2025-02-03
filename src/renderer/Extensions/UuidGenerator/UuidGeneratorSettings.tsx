@@ -72,7 +72,6 @@ export const UuidGeneratorSettings = () => {
 
     const removeSearchResultFormat = (index: number) => {
         const newSearchResultFormats = searchResultFormats.filter((_, loopIndex) => loopIndex !== index);
-        console.debug(newSearchResultFormats);
         setSearchResultFormats(newSearchResultFormats);
     };
 
@@ -125,24 +124,43 @@ export const UuidGeneratorSettings = () => {
                         />
                     }
                 />
-                <Setting
-                    label={t("uppercase")}
-                    control={
-                        <Checkbox checked={uppercase} onChange={(_, { checked }) => setUppercase(checked === true)} />
-                    }
-                />
-                <Setting
-                    label={t("hyphens")}
-                    control={<Checkbox checked={hyphens} onChange={(_, { checked }) => setHyphens(checked === true)} />}
-                />
-                <Setting
-                    label={t("braces")}
-                    control={<Checkbox checked={braces} onChange={(_, { checked }) => setBraces(checked === true)} />}
-                />
-                <Setting
-                    label={t("quotes")}
-                    control={<Checkbox checked={quotes} onChange={(_, { checked }) => setQuotes(checked === true)} />}
-                />
+                <div style={{ paddingTop: 8 }}>
+                    <Label weight="semibold">{t("defaultGeneratorFormat")}</Label>
+                </div>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHeaderCell>{t("uppercase")}</TableHeaderCell>
+                            <TableHeaderCell>{t("hyphens")}</TableHeaderCell>
+                            <TableHeaderCell>{t("braces")}</TableHeaderCell>
+                            <TableHeaderCell>{t("quotes")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 32 }} />
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow key={"defaultRow"}>
+                            <TableCell>
+                                <Checkbox
+                                    checked={uppercase}
+                                    onChange={(_, { checked }) => setUppercase(checked === true)}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <Checkbox
+                                    checked={hyphens}
+                                    onChange={(_, { checked }) => setHyphens(checked === true)}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <Checkbox checked={braces} onChange={(_, { checked }) => setBraces(checked === true)} />
+                            </TableCell>
+                            <TableCell>
+                                <Checkbox checked={quotes} onChange={(_, { checked }) => setQuotes(checked === true)} />
+                            </TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
                 <div style={{ paddingTop: 8 }}>
                     <Label weight="semibold">{t("searchResultFormats")}</Label>
                 </div>
@@ -153,6 +171,7 @@ export const UuidGeneratorSettings = () => {
                             <TableHeaderCell>{t("hyphens")}</TableHeaderCell>
                             <TableHeaderCell>{t("braces")}</TableHeaderCell>
                             <TableHeaderCell>{t("quotes")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 32 }} />
                         </TableRow>
                     </TableHeader>
                     <TableBody>

@@ -38,6 +38,8 @@ export class UuidGeneratorExtension implements Extension {
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
+        const uuidFormats: UuidFormat[] = this.getSettingValue("searchResultFormats");
+
         let uuidSearchTerm = searchTerm;
         if (uuidSearchTerm.toLowerCase().startsWith("uuid") || uuidSearchTerm.toLowerCase().startsWith("guid")) {
             uuidSearchTerm = uuidSearchTerm.substring(4);
@@ -51,37 +53,30 @@ export class UuidGeneratorExtension implements Extension {
             quotes: false,
         });
         if (this.validateUuid(possibleUuid)) {
-            const formats: UuidFormat[] = this.getSettingValue("searchResultFormats");
-
             return {
                 after: [],
-                before: formats
-                    .filter((format) => {
-                        const formattedUuid = UuidGenerator.format(possibleUuid, format);
-                        return formattedUuid !== uuidSearchTerm;
-                    })
-                    .map((format) => {
-                        const formattedUuid = UuidGenerator.format(possibleUuid, format);
+                before: uuidFormats.map((format, index) => {
+                    const formattedUuid = UuidGenerator.format(possibleUuid, format);
 
-                        return {
-                            name: formattedUuid,
-                            description: "UUID Generator",
+                    return {
+                        name: formattedUuid,
+                        description: "UUID Generator",
+                        descriptionTranslation: {
+                            key: "generatorResult",
+                            namespace: "extension[UuidGenerator]",
+                        },
+                        id: "uuidGenerator:instantResult-" + index,
+                        image: this.getImage(),
+                        defaultAction: createCopyToClipboardAction({
+                            textToCopy: formattedUuid,
+                            description: "Copy UUID to clipboard",
                             descriptionTranslation: {
-                                key: "generatorResult",
+                                key: "copyUuidToClipboard",
                                 namespace: "extension[UuidGenerator]",
                             },
-                            id: "uuidGenerator:instantResult",
-                            image: this.getImage(),
-                            defaultAction: createCopyToClipboardAction({
-                                textToCopy: formattedUuid,
-                                description: "Copy UUID to clipboard",
-                                descriptionTranslation: {
-                                    key: "copyUuidToClipboard",
-                                    namespace: "extension[UuidGenerator]",
-                                },
-                            }),
-                        };
-                    }),
+                        }),
+                    };
+                }),
             };
         }
 
@@ -89,37 +84,32 @@ export class UuidGeneratorExtension implements Extension {
             return createEmptyInstantSearchResult();
         }
 
-        const generatorFormat: UuidFormat = this.getSettingValue("generatorFormat");
-        const uuid = this.generateUuid(
-            this.getSettingValue("uuidVersion"),
-            generatorFormat.uppercase,
-            generatorFormat.hyphens,
-            generatorFormat.braces,
-            generatorFormat.quotes,
-        );
+        const generatedUuid = this.generateUuid(this.getSettingValue("uuidVersion"), false, true, false, false);
 
         return {
             after: [],
-            before: [
-                {
-                    name: uuid,
+            before: uuidFormats.map((format, index) => {
+                const formattedUuid = UuidGenerator.reformat(generatedUuid, format);
+
+                return {
+                    name: formattedUuid,
                     description: "UUID Generator",
                     descriptionTranslation: {
                         key: "generatorResult",
                         namespace: "extension[UuidGenerator]",
                     },
-                    id: "uuidGenerator:instantResult",
+                    id: "uuidGenerator:instantResult-" + index,
                     image: this.getImage(),
                     defaultAction: createCopyToClipboardAction({
-                        textToCopy: uuid,
+                        textToCopy: formattedUuid,
                         description: "Copy UUID to clipboard",
                         descriptionTranslation: {
                             key: "copyUuidToClipboard",
                             namespace: "extension[UuidGenerator]",
                         },
                     }),
-                },
-            ],
+                };
+            }),
         };
     }
 
@@ -156,9 +146,10 @@ export class UuidGeneratorExtension implements Extension {
                 hyphens: "Hyphens",
                 braces: "Braces",
                 quotes: "Quotes",
-                searchResultFormats: "UUID / GUID formats in search results",
-                addSearchResultFormat: "Add UUID / GUID format",
-                removeSearchResultFormat: "Remove UUID / GUID format",
+                defaultGeneratorFormat: "Default generator window format",
+                searchResultFormats: "Search result formats",
+                addSearchResultFormat: "Add format",
+                removeSearchResultFormat: "Remove format",
             },
             "de-CH": {
                 copyUuidToClipboard: "UUID in die Zwischenablage kopieren",
@@ -171,9 +162,10 @@ export class UuidGeneratorExtension implements Extension {
                 hyphens: "Bindestriche",
                 braces: "Geschweifte Klammern",
                 quotes: "Anführungszeichen",
-                searchResultFormats: "UUID / GUID Formate in den Suchresultaten",
-                addSearchResultFormat: "UUID / GUID Format hinzufügen",
-                removeSearchResultFormat: "UUID / GUID Format entfernen",
+                defaultGeneratorFormat: "Standardformat im Generator Fenster",
+                searchResultFormats: "Formate der Suchresultate",
+                addSearchResultFormat: "Format hinzufügen",
+                removeSearchResultFormat: "Format entfernen",
             },
         };
     }
