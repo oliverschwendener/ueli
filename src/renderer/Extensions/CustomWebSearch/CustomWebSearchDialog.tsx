@@ -19,12 +19,15 @@ import { useTranslation } from "react-i18next";
 type CustomWebSearchDialogProps = {
     onSave: (engineSettings: CustomSearchEngineSetting) => void;
     initialEngineSetting: CustomSearchEngineSetting;
+    isAddDialog: boolean;
     isDialogOpen: boolean;
     closeDialog: () => void;
+    existingPrefixes: string[];
 };
 
 const validateCustomSearchEngineSetting = (
     engineSetting: CustomSearchEngineSetting,
+    existingPrefixes?: string[],
 ): Partial<Record<keyof CustomSearchEngineSetting, string>> => {
     const validation: Partial<Record<keyof CustomSearchEngineSetting, string>> = {};
 
@@ -34,6 +37,10 @@ const validateCustomSearchEngineSetting = (
 
     if (!engineSetting.prefix) {
         validation.prefix = "prefixError";
+    }
+
+    if (existingPrefixes && existingPrefixes.indexOf(engineSetting.prefix) >= 0) {
+        validation.prefix = "prefixInUseError";
     }
 
     if (!engineSetting.url || !engineSetting.url.includes("{{query}}")) {
@@ -46,8 +53,10 @@ const validateCustomSearchEngineSetting = (
 export const CustomWebSearchDialog = ({
     initialEngineSetting,
     onSave,
+    isAddDialog,
     isDialogOpen,
     closeDialog,
+    existingPrefixes,
 }: CustomWebSearchDialogProps) => {
     const { t } = useTranslation("extension[CustomWebSearch]");
 
@@ -73,7 +82,7 @@ export const CustomWebSearchDialog = ({
     const setPrefix = (prefix: string) => {
         const newEngineSetting = { ...temporaryCustomSearchEngineSetting, prefix };
         setTemporaryCustomSearchEngineSetting(newEngineSetting);
-        setValidation(validateCustomSearchEngineSetting(newEngineSetting));
+        setValidation(validateCustomSearchEngineSetting(newEngineSetting, existingPrefixes));
     };
     const setEncodeSearchTerm = (encodeSearchTerm: boolean) =>
         setTemporaryCustomSearchEngineSetting({ ...temporaryCustomSearchEngineSetting, encodeSearchTerm });
@@ -90,7 +99,7 @@ export const CustomWebSearchDialog = ({
         >
             <DialogSurface>
                 <DialogBody>
-                    <DialogTitle>{t("addSearchEngine")}</DialogTitle>
+                    <DialogTitle>{isAddDialog ? t("addSearchEngine") : t("editSearchEngine")}</DialogTitle>
                     <DialogContent>
                         <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 10 }}>
                             <Field

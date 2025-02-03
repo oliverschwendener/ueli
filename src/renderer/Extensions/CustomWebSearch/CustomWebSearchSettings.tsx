@@ -122,10 +122,14 @@ export const CustomWebSearchSettings = () => {
                         </Button>
                     </DialogTrigger>
                     <CustomWebSearchDialog
+                        isAddDialog={currentEngineSettings.prefix === ""}
                         isDialogOpen={isDialogOpen}
                         closeDialog={() => setIsDialogOpen(false)}
                         onSave={editCustomSearchEngineSetting}
                         initialEngineSetting={{ ...currentEngineSettings }}
+                        existingPrefixes={customSearchEngineSettings
+                            .filter((setting) => setting.id !== currentEngineSettings.id)
+                            .map((setting) => setting.prefix)}
                     />
                 </div>
             </SettingGroup>
