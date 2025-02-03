@@ -248,5 +248,16 @@ describe(Calculator, () => {
                 }),
             ).toEqual("5035");
         });
+
+        it("should return 5035 when evaluating the expression '5050-15' and a precision of 1", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "5050-15",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 1,
+                }),
+            ).toEqual("5035");
+        });
     });
 });
