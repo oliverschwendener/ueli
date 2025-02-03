@@ -69,12 +69,15 @@ export const Generator = ({
     const generate = async () => {
         try {
             const uuids = await contextBridge.invokeExtension<UuidGeneratorSetting, InvocationResult>(extensionId, {
-                uuidVersion,
-                numberOfUuids,
-                uppercase,
-                hyphens,
-                braces,
-                quotes,
+                uuidVersion: uuidVersion,
+                numberOfUuids: numberOfUuids,
+                generatorFormat: {
+                    uppercase: uppercase,
+                    hyphens: hyphens,
+                    braces: braces,
+                    quotes: quotes,
+                },
+                searchResultFormats: [],
             });
 
             setGeneratedUuids(uuids.join("\n"));
