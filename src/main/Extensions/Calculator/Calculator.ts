@@ -72,14 +72,15 @@ export class Calculator {
             precision = 16;
         }
 
-        const math = create(all, { precision: 64, number: "BigNumber" });
+        const math = create(all, { precision, number: "BigNumber" });
 
-        const calculationResult = String(
+        const result = String(
             math.evaluate(this.normalizeExpression({ expression, decimalSeparator, argumentSeparator })),
-        ).replace(/[,.]/g, (match) => (match === "." ? decimalSeparator : argumentSeparator));
+        );
 
-        const result = Number(calculationResult);
-        return isNaN(result) ? calculationResult : result.toFixed(precision).replace(/(\.0*|(?<=(\..*))0*)$/, "");
+        return result.replace(new RegExp(",|\\.", "g"), (match) =>
+            match === "." ? decimalSeparator : argumentSeparator,
+        );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
