@@ -26,6 +26,7 @@ This extension also allows to format the UUID to several different styles in a f
 ## About this extension
 
 Author: [Christopher Steiner](https://github.com/ChristopherSteiner)
+
 Co-Author: [Marco Senn-Haag](https://github.com/MarcoSennHaag)
 
 Supported operating systems:
