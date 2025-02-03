@@ -1,4 +1,4 @@
-# Custom Web Search Extension
+# UUID / GUID Generator
 
 This extension allows to generate [Universally Unique Identifiers](https://en.wikipedia.org/wiki/Universally_unique_identifier), also known as UUID or GUID.
 This can be done either instantly for a single UUID or through a dedicated UI, where multiple UUIDs can be generated at once.
@@ -20,6 +20,8 @@ This extension also allows to format the UUID to several different styles in a f
 -   **Braces**: Whether the UUID should be wrapped in braces ({})
 -   **Quotes**: Whether the UUID should be wrapped in quotes
 -   **Search result formats**: Several different formats for fast formatting in search results
+
+![Example](example-settings.png)
 
 ## About this extension
 
