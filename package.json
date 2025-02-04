@@ -32,7 +32,7 @@
     "devDependencies": {
         "@eslint/js": "^9.19.0",
         "@types/better-sqlite3": "^7.6.11",
-        "@types/color": "^3.0.6",
+        "@types/color": "^4.2.0",
         "@types/eslint__js": "^8.42.3",
         "@types/node": "^20.8.6",
         "@types/react": "^18.2.48",
