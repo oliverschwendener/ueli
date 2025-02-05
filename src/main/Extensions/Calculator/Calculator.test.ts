@@ -270,5 +270,16 @@ describe(Calculator, () => {
                 }),
             ).toEqual("0.33 km");
         });
+
+        it("should return 33.3333 when evaluating the expression '(100m^2 in m^2)/3' and a precision of 4", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "(100m^2 in m^2)/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("33.3333 m^2");
+        });
     });
 });
