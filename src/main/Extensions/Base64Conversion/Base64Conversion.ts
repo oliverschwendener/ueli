@@ -27,7 +27,7 @@ export class Base64Conversion implements Extension {
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
-        const results: Array<InvocationResult> = [];
+        const results: InvocationResult[] = [];
         if (searchTerm.toLowerCase().startsWith("b64e ") && searchTerm.length > 5) {
             results.push({ action: "encoded", value: Base64Converter.encode(searchTerm.substring(4).trim()) });
         } else if (searchTerm.toLowerCase().startsWith("b64d ") && searchTerm.length > 5) {
