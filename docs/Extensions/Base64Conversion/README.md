@@ -4,7 +4,7 @@ This extension allows you to encode and decode base64 strings. Enter a string on
 
 ![Example](example.png)
 
-This extension also supports instant results when using b64 (encode + decode), b64e (encode) or b64d (decode) prefixes in the search bar.
+This extension also supports instant results when using encode/decode (default: b64), encode (default: b64e) or decode (default: b64d) prefixes in the search bar.
 
 ![Example](example-search.png)
 
