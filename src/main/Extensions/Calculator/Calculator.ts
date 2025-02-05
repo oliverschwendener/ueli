@@ -73,13 +73,34 @@ export class Calculator {
         }
 
         const math = create(all, { precision: 64, number: "BigNumber" });
-
         const calculationResult = String(
             math.evaluate(this.normalizeExpression({ expression, decimalSeparator, argumentSeparator })),
-        ).replace(/[,.]/g, (match) => (match === "." ? decimalSeparator : argumentSeparator));
+        );
 
-        const result = Number(calculationResult);
-        return isNaN(result) ? calculationResult : result.toFixed(precision).replace(/(\.0*|(?<=(\..*))0*)$/, "");
+        let result = calculationResult;
+        try {
+            // Try to extract the number / unit using a regular expression
+            // Group 1: Number including separator
+            // Group 2: Spaces if available
+            // Group 3: Unit if available
+            const resultRegex = /([\d,.]*)(\s*)(\D*)/g;
+            let matches;
+            while ((matches = resultRegex.exec(result)) !== null) {
+                // This is necessary to avoid infinite loops with zero-width matches
+                if (matches.index === resultRegex.lastIndex) {
+                    resultRegex.lastIndex++;
+                }
+
+                // Round the number with precision and put the result together again
+                result = String(math.round(math.bignumber(matches[1]), precision)) + matches[2] + matches[3];
+            }
+        } catch (error) {
+            // If any error occurs, resetting to the calculation result is better than throwing an exception
+            result = calculationResult;
+        }
+
+        result = result.replace(/[,.]/g, (match) => (match === "." ? decimalSeparator : argumentSeparator));
+        return result;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

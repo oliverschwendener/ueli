@@ -259,5 +259,16 @@ describe(Calculator, () => {
                 }),
             ).toEqual("5035");
         });
+
+        it("should return 0.33 when evaluating the expression '(1000m in km)/3' and a precision of 2", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "(1000m in km)/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 2,
+                }),
+            ).toEqual("0.33 km");
+        });
     });
 });
