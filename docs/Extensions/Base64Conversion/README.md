@@ -8,9 +8,19 @@ This extension also supports instant results when using b64 (encode + decode), b
 
 ![Example](example-search.png)
 
+## Settings
+
+- **Encode/Decode Prefix**: Prefix used for encoding and decoding the search text
+- **Encode Prefix**: Prefix used for encoding the search text
+- **Decode Prefix**: Prefix used for decoding the search text
+
+![Example](example-settings.png)
+
 ## About this extension
 
 Author: [Christopher Steiner](https://github.com/ChristopherSteiner)
+
+Co-Author: [Marco Senn-Haag](https://github.com/MarcoSennHaag)
 
 Supported operating systems:
 

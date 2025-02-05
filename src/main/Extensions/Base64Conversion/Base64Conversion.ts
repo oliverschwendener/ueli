@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import {
     createCopyToClipboardAction,
@@ -8,13 +9,21 @@ import {
     type InstantSearchResultItems,
     type SearchResultItem,
 } from "@common/Core";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { InvocationArgument, InvocationResult } from "@common/Extensions/Base64Conversion";
+import type { InvocationArgument, Base64ConversionSetting as Settings } from "@common/Extensions/Base64Conversion";
 import { Base64Converter } from "./Base64Converter";
+import type { InvocationResult } from "./InvocationResult";
 
 export class Base64Conversion implements Extension {
     public readonly id = "Base64Conversion";
     public readonly name = "Base64 Conversion";
+
+    public readonly defaultSettings: Settings = {
+        encodeDecodePrefix: "b64",
+        encodePrefix: "b64e",
+        decodePrefix: "b64d",
+    };
 
     public readonly author = {
         name: "Christopher Steiner",
@@ -24,17 +33,40 @@ export class Base64Conversion implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly translator: Translator,
+        private readonly settingsManager: SettingsManager,
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
-        const results: Array<InvocationResult> = [];
-        if (searchTerm.toLowerCase().startsWith("b64e ") && searchTerm.length > 5) {
-            results.push({ action: "encoded", value: Base64Converter.encode(searchTerm.substring(4).trim()) });
-        } else if (searchTerm.toLowerCase().startsWith("b64d ") && searchTerm.length > 5) {
-            results.push({ action: "decoded", value: Base64Converter.decode(searchTerm.substring(4).trim()) });
-        } else if (searchTerm.toLowerCase().startsWith("b64 ") && searchTerm.length > 4) {
-            results.push({ action: "encoded", value: Base64Converter.encode(searchTerm.substring(3).trim()) });
-            results.push({ action: "decoded", value: Base64Converter.decode(searchTerm.substring(3).trim()) });
+        const encodeDecodePrefix: string = this.getSettingValue("encodeDecodePrefix");
+        const encodePrefix: string = this.getSettingValue("encodePrefix");
+        const decodePrefix: string = this.getSettingValue("decodePrefix");
+
+        const results: InvocationResult[] = [];
+        if (searchTerm.toLowerCase().startsWith(encodePrefix + " ") && searchTerm.length > encodePrefix.length + 1) {
+            results.push({
+                action: "encoded",
+                value: Base64Converter.encode(searchTerm.substring(encodePrefix.length).trim()),
+            });
+        } else if (
+            searchTerm.toLowerCase().startsWith(decodePrefix + " ") &&
+            searchTerm.length > decodePrefix.length + 1
+        ) {
+            results.push({
+                action: "decoded",
+                value: Base64Converter.decode(searchTerm.substring(decodePrefix.length).trim()),
+            });
+        } else if (
+            searchTerm.toLowerCase().startsWith(encodeDecodePrefix + " ") &&
+            searchTerm.length > encodeDecodePrefix.length + 1
+        ) {
+            results.push({
+                action: "encoded",
+                value: Base64Converter.encode(searchTerm.substring(encodeDecodePrefix.length).trim()),
+            });
+            results.push({
+                action: "decoded",
+                value: Base64Converter.decode(searchTerm.substring(encodeDecodePrefix.length).trim()),
+            });
         } else {
             return createEmptyInstantSearchResult();
         }
@@ -90,8 +122,8 @@ export class Base64Conversion implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue() {
-        return undefined;
+    public getSettingDefaultValue(key: keyof Settings) {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {
@@ -112,6 +144,9 @@ export class Base64Conversion implements Extension {
                 decodePlaceHolder: "Enter your string to decode here",
                 encoded: "Encoded",
                 decoded: "Decoded",
+                encodeDecodePrefix: "Prefix used for encode and decode",
+                encodePrefix: "Prefix used for encode",
+                decodePrefix: "Prefix used for decode",
             },
             "de-CH": {
                 extensionName: "Base64 Konvertierung",
@@ -123,7 +158,17 @@ export class Base64Conversion implements Extension {
                 decodePlaceHolder: "Geben Sie Ihren zu dekodierenden Text hier ein",
                 encoded: "Kodiert",
                 decoded: "Dekodiert",
+                encodeDecodePrefix: "Präfix für Kodierung und Dekodierung",
+                encodePrefix: "Präfix für Kodierung",
+                decodePrefix: "Präfix für Dekodierung",
             },
         };
+    }
+
+    private getSettingValue<T>(key: keyof Settings): T {
+        return this.settingsManager.getValue<T>(
+            getExtensionSettingKey(this.id, key),
+            <T>this.getSettingDefaultValue(key),
+        );
     }
 }
