@@ -83,7 +83,7 @@ export class Calculator {
             // Group 1: Number including separator
             // Group 2: Spaces if available
             // Group 3: Unit if available
-            const resultRegex = /([\d,.]*)(\s*)(\D*)/g;
+            const resultRegex = /([\d,.]*)(\s*)(.*)/g;
             let matches;
             while ((matches = resultRegex.exec(result)) !== null) {
                 // This is necessary to avoid infinite loops with zero-width matches
