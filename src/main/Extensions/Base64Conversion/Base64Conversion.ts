@@ -33,8 +33,8 @@ export class Base64Conversion implements Extension {
         } else if (searchTerm.toLowerCase().startsWith("b64d ") && searchTerm.length > 5) {
             results.push({ action: "decoded", value: Base64Converter.decode(searchTerm.substring(4).trim()) });
         } else if (searchTerm.toLowerCase().startsWith("b64 ") && searchTerm.length > 4) {
-            results.push({ action: "encoded", value: Base64Converter.encode(searchTerm.substring(4).trim()) });
-            results.push({ action: "decoded", value: Base64Converter.decode(searchTerm.substring(4).trim()) });
+            results.push({ action: "encoded", value: Base64Converter.encode(searchTerm.substring(3).trim()) });
+            results.push({ action: "decoded", value: Base64Converter.decode(searchTerm.substring(3).trim()) });
         } else {
             return createEmptyInstantSearchResult();
         }
