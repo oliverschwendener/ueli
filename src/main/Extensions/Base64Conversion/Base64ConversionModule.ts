@@ -7,9 +7,9 @@ export class Base64ConversionModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         const assetPathResolver = moduleRegistry.get("AssetPathResolver");
         const translator = moduleRegistry.get("Translator");
-
+        const settingsManager = moduleRegistry.get("SettingsManager");
         return {
-            extension: new Base64Conversion(assetPathResolver, translator),
+            extension: new Base64Conversion(assetPathResolver, translator, settingsManager),
         };
     }
 }
