@@ -122,7 +122,7 @@ export class Base64Conversion implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue(key: keyof Settings) {
+    public getSettingDefaultValue<T extends keyof Settings>(key: T): Settings[T] {
         return this.defaultSettings[key];
     }
 
@@ -165,10 +165,7 @@ export class Base64Conversion implements Extension {
         };
     }
 
-    private getSettingValue<T>(key: keyof Settings): T {
-        return this.settingsManager.getValue<T>(
-            getExtensionSettingKey(this.id, key),
-            <T>this.getSettingDefaultValue(key),
-        );
+    private getSettingValue<T extends keyof Settings>(key: T): Settings[T] {
+        return this.settingsManager.getValue(getExtensionSettingKey(this.id, key), this.getSettingDefaultValue(key));
     }
 }
