@@ -248,5 +248,118 @@ describe(Calculator, () => {
                 }),
             ).toEqual("5035");
         });
+
+        it("should return 5035 when evaluating the expression '5050-15' and a precision of 1", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "5050-15",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 1,
+                }),
+            ).toEqual("5035");
+        });
+
+        it("should return 0.33 when evaluating the expression '(1000m in km)/3' and a precision of 2", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "(1000m in km)/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 2,
+                }),
+            ).toEqual("0.33 km");
+        });
+
+        it("should return 33.3333 when evaluating the expression '(100m^2 in m^2)/3' and a precision of 4", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "(100m^2 in m^2)/3",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("33.3333 m^2");
+        });
+
+        it("should return 96.9 when evaluating 100-pi and a precision of 1", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "100-pi",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 1,
+                }),
+            ).toEqual("96.9");
+        });
+
+        it("should return 96.8584073464 when evaluating 100-pi and a precision of 3", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "100-pi",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 3,
+                }),
+            ).toEqual("96.858");
+        });
+
+        it("should return 96.8584073464 when evaluating 100-pi and a precision of 8", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "100-pi",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 8,
+                }),
+            ).toEqual("96.85840735");
+        });
+
+        it("should be able to do basic evaluation (taken from https://mathjs.org/docs/expressions/parsing.html#evaluate)", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "c = 2.3 + 4.5",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("6.8");
+
+            expect(
+                Calculator.calculate({
+                    expression: "sqrt(3^2 + 4^2)",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("5");
+
+            expect(
+                Calculator.calculate({
+                    expression: "sqrt(-4)",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("2i");
+
+            expect(
+                Calculator.calculate({
+                    expression: "2 inch to cm",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("5.08 cm");
+
+            expect(
+                Calculator.calculate({
+                    expression: "cos(45 deg)",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 4,
+                }),
+            ).toEqual("0.7071");
+        });
     });
 });
