@@ -1,2 +1,2 @@
-export * from "./Base64ConversionSetting";
+export * from "./Base64ConversionSettings";
 export * from "./InvocationArgument";
