@@ -6,8 +6,8 @@ This extension allows you to launch terminals with a given command. Use this pat
 
 ## Settings
 
--   Prefix: the prefix that triggers the terminal launcher.
--   Terminals: the list of terminals that will show up in the search result list.
+- Prefix: the prefix that triggers the terminal launcher.
+- Terminals: the list of terminals that will show up in the search result list.
 
 ## About this extension
 
@@ -15,5 +15,5 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
+- Windows
+- macOS

@@ -6,14 +6,14 @@ Use this pattern to do the conversion: `{amount} {source currency} in|to {target
 
 For example:
 
--   `100 usd in chf`
--   `82 chf to usd`
+- `100 usd in chf`
+- `82 chf to usd`
 
 ![Example](example.png)
 
 ## Settings
 
--   Currencies: the currencies that you want to convert from or to.
+- Currencies: the currencies that you want to convert from or to.
 
 ## About this extension
 
@@ -21,6 +21,6 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
--   Linux
+- Windows
+- macOS
+- Linux

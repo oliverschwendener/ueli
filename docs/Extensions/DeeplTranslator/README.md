@@ -10,9 +10,9 @@ If you don't have a DeepL account, sign up on [DeepL's website](https://www.deep
 
 ## Settings
 
--   API Key: the API key that you created on DeepL's website.
--   Default source language: the source language that is selected by default.
--   Default target language: the target language that is selected by default.
+- API Key: the API key that you created on DeepL's website.
+- Default source language: the source language that is selected by default.
+- Default target language: the target language that is selected by default.
 
 ## About this extension
 
@@ -20,6 +20,6 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
--   Linux
+- Windows
+- macOS
+- Linux

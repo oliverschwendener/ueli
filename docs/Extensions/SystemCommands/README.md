@@ -8,20 +8,20 @@ This extension allows you to search operating system commands. Press enter to in
 
 ### Windows
 
--   Shutdown
--   Restart
--   Sign out
--   Lock
--   Sleep
--   Hibernate
+- Shutdown
+- Restart
+- Sign out
+- Lock
+- Sleep
+- Hibernate
 
 ### macOS
 
--   Shutdown
--   Restart
--   Log out
--   Sleep
--   Lock
+- Shutdown
+- Restart
+- Log out
+- Sleep
+- Lock
 
 ## About this extension
 
@@ -29,5 +29,5 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
+- Windows
+- macOS

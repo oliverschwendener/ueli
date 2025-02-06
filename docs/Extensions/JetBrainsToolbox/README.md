@@ -10,6 +10,6 @@ Author: [Sebastian Comans](https://github.com/scomans)
 
 Supported operating systems:
 
--   Windows
--   macOS
--   Linux
+- Windows
+- macOS
+- Linux

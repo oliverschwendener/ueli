@@ -10,4 +10,4 @@ Author: [Torben Kohlmeier](https://github.com/tkohlmeier)
 
 Supported operating systems:
 
--   Windows
+- Windows

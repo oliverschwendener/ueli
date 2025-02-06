@@ -18,8 +18,8 @@ On macOS you don't have to install any third-party tools. Just make sure the spo
 
 ## Settings
 
--   Max search result items: the maximum number of search result items that are shown. The lower this number the faster the search.
--   (Windows) Everything CLI file path: the file path to the Everything Command-line Interface `es.exe`.
+- Max search result items: the maximum number of search result items that are shown. The lower this number the faster the search.
+- (Windows) Everything CLI file path: the file path to the Everything Command-line Interface `es.exe`.
 
 ## About this extension
 
@@ -27,5 +27,5 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
+- Windows
+- macOS
