@@ -6,7 +6,7 @@ This extension allows you to convert colors into different formats. Enter a colo
 
 ## Settings
 
--   Color formats: the formats that you want to see in the search results.
+- Color formats: the formats that you want to see in the search results.
 
 ## About this extension
 
@@ -14,12 +14,12 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
--   Linux
+- Windows
+- macOS
+- Linux
 
 Supported formats:
 
--   HEX
--   HSL
--   RGB(A)
+- HEX
+- HSL
+- RGB(A)

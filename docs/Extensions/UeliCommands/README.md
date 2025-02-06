@@ -10,5 +10,5 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
+- Windows
+- macOS

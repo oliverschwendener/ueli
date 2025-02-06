@@ -6,11 +6,11 @@ This extension allows you to do simple calculations directly in the search field
 
 ## Settings
 
--   Precision: the number of decimals, to which the result will be rounded.
-    -   When the precision is set to `1` the result of `1/3` will be `0.3`.
-    -   When the precision is set to `8` the result of `1/3` will be `0.33333333`.
--   Decimal separator: the symbol used to indicate the boundary between the whole number part and the fractional part of a decimal number.
--   Argument separator: the symbol used to separate arguments in advanced calcuations.
+- Precision: the number of decimals, to which the result will be rounded.
+    - When the precision is set to `1` the result of `1/3` will be `0.3`.
+    - When the precision is set to `8` the result of `1/3` will be `0.33333333`.
+- Decimal separator: the symbol used to indicate the boundary between the whole number part and the fractional part of a decimal number.
+- Argument separator: the symbol used to separate arguments in advanced calcuations.
 
 ## About this extension
 
@@ -18,6 +18,6 @@ Author: [Oliver Schwendener](https://github.com/oliverschwendener)
 
 Supported operating systems:
 
--   Windows
--   macOS
--   Linux
+- Windows
+- macOS
+- Linux
