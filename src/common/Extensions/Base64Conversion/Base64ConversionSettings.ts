@@ -1,4 +1,4 @@
-export type Base64ConversionSetting = {
+export type Base64ConversionSettings = {
     encodeDecodePrefix: string;
     encodePrefix: string;
     decodePrefix: string;
