@@ -37,9 +37,9 @@ export class Base64Conversion implements Extension {
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
-        const encodeDecodePrefix: string = this.getSettingValue("encodeDecodePrefix");
-        const encodePrefix: string = this.getSettingValue("encodePrefix");
-        const decodePrefix: string = this.getSettingValue("decodePrefix");
+        const encodeDecodePrefix = this.getSettingValue("encodeDecodePrefix");
+        const encodePrefix = this.getSettingValue("encodePrefix");
+        const decodePrefix = this.getSettingValue("decodePrefix");
 
         const results: InvocationResult[] = [];
         if (searchTerm.toLowerCase().startsWith(encodePrefix + " ") && searchTerm.length > encodePrefix.length + 1) {
