@@ -11,7 +11,7 @@ import {
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { InvocationArgument, Base64ConversionSetting as Settings } from "@common/Extensions/Base64Conversion";
+import type { InvocationArgument, Base64ConversionSettings as Settings } from "@common/Extensions/Base64Conversion";
 import { Base64Converter } from "./Base64Converter";
 import type { InvocationResult } from "./InvocationResult";
 
