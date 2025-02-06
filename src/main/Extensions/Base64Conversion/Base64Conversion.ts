@@ -144,9 +144,9 @@ export class Base64Conversion implements Extension {
                 decodePlaceHolder: "Enter your string to decode here",
                 encoded: "Encoded",
                 decoded: "Decoded",
-                encodeDecodePrefix: "Prefix used for encode and decode",
-                encodePrefix: "Prefix used for encode",
-                decodePrefix: "Prefix used for decode",
+                encodeDecodePrefix: "Prefix used for encoding and decoding",
+                encodePrefix: "Prefix used for encoding",
+                decodePrefix: "Prefix used for decoding",
             },
             "de-CH": {
                 extensionName: "Base64 Konvertierung",
