@@ -1,14 +1,29 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
+import {
+    createCopyToClipboardAction,
+    createEmptyInstantSearchResult,
+    createInvokeExtensionAction,
+    type InstantSearchResultItems,
+    type SearchResultItem,
+} from "@common/Core";
+import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { InvocationArgument } from "@common/Extensions/Base64Conversion";
+import type { InvocationArgument, Base64ConversionSettings as Settings } from "@common/Extensions/Base64Conversion";
 import { Base64Converter } from "./Base64Converter";
+import type { InvocationResult } from "./InvocationResult";
 
 export class Base64Conversion implements Extension {
     public readonly id = "Base64Conversion";
     public readonly name = "Base64 Conversion";
+
+    public readonly defaultSettings: Settings = {
+        encodeDecodePrefix: "b64",
+        encodePrefix: "b64e",
+        decodePrefix: "b64d",
+    };
 
     public readonly author = {
         name: "Christopher Steiner",
@@ -18,7 +33,68 @@ export class Base64Conversion implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly translator: Translator,
+        private readonly settingsManager: SettingsManager,
     ) {}
+
+    public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
+        const encodeDecodePrefix = this.getSettingValue("encodeDecodePrefix");
+        const encodePrefix = this.getSettingValue("encodePrefix");
+        const decodePrefix = this.getSettingValue("decodePrefix");
+
+        const results: InvocationResult[] = [];
+        if (searchTerm.toLowerCase().startsWith(encodePrefix + " ") && searchTerm.length > encodePrefix.length + 1) {
+            results.push({
+                action: "encoded",
+                value: Base64Converter.encode(searchTerm.substring(encodePrefix.length).trim()),
+            });
+        } else if (
+            searchTerm.toLowerCase().startsWith(decodePrefix + " ") &&
+            searchTerm.length > decodePrefix.length + 1
+        ) {
+            results.push({
+                action: "decoded",
+                value: Base64Converter.decode(searchTerm.substring(decodePrefix.length).trim()),
+            });
+        } else if (
+            searchTerm.toLowerCase().startsWith(encodeDecodePrefix + " ") &&
+            searchTerm.length > encodeDecodePrefix.length + 1
+        ) {
+            results.push({
+                action: "encoded",
+                value: Base64Converter.encode(searchTerm.substring(encodeDecodePrefix.length).trim()),
+            });
+            results.push({
+                action: "decoded",
+                value: Base64Converter.decode(searchTerm.substring(encodeDecodePrefix.length).trim()),
+            });
+        } else {
+            return createEmptyInstantSearchResult();
+        }
+
+        return {
+            after: [],
+            before: results.map((result, index) => {
+                return {
+                    name: result.value,
+                    description: "Base64 Conversion",
+                    descriptionTranslation: {
+                        key: result.action,
+                        namespace: "extension[Base64Conversion]",
+                    },
+                    id: "base64Conversion:instantResult-" + index,
+                    image: this.getImage(),
+                    defaultAction: createCopyToClipboardAction({
+                        textToCopy: result.value,
+                        description: "Copy result to clipboard",
+                        descriptionTranslation: {
+                            key: "copyToClipboard",
+                            namespace: "extension[Base64Conversion]",
+                        },
+                    }),
+                };
+            }),
+        };
+    }
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
         const { t } = this.translator.createT(this.getI18nResources());
@@ -46,8 +122,8 @@ export class Base64Conversion implements Extension {
         return true;
     }
 
-    public getSettingDefaultValue() {
-        return undefined;
+    public getSettingDefaultValue<T extends keyof Settings>(key: T): Settings[T] {
+        return this.defaultSettings[key];
     }
 
     public getImage(): Image {
@@ -66,6 +142,11 @@ export class Base64Conversion implements Extension {
                 copyToClipboard: "Copy result to clipboard",
                 encodePlaceHolder: "Enter your string to encode here",
                 decodePlaceHolder: "Enter your string to decode here",
+                encoded: "Encoded",
+                decoded: "Decoded",
+                encodeDecodePrefix: "Prefix used for encoding and decoding",
+                encodePrefix: "Prefix used for encoding",
+                decodePrefix: "Prefix used for decoding",
             },
             "de-CH": {
                 extensionName: "Base64 Konvertierung",
@@ -75,7 +156,16 @@ export class Base64Conversion implements Extension {
                 copyToClipboard: "Resultat in Zwischenablage kopieren",
                 encodePlaceHolder: "Geben Sie Ihren zu kodierenden Text hier ein",
                 decodePlaceHolder: "Geben Sie Ihren zu dekodierenden Text hier ein",
+                encoded: "Kodiert",
+                decoded: "Dekodiert",
+                encodeDecodePrefix: "Präfix für Kodierung und Dekodierung",
+                encodePrefix: "Präfix für Kodierung",
+                decodePrefix: "Präfix für Dekodierung",
             },
         };
+    }
+
+    private getSettingValue<T extends keyof Settings>(key: T): Settings[T] {
+        return this.settingsManager.getValue(getExtensionSettingKey(this.id, key), this.getSettingDefaultValue(key));
     }
 }
