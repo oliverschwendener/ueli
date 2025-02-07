@@ -72,6 +72,23 @@ export const CustomWebSearchSettings = () => {
     return (
         <SettingGroupList>
             <SettingGroup title={t("searchEngines")}>
+                <div style={{ marginTop: -32, marginBottom: 8, textAlign: "right" }}>
+                    <DialogTrigger disableButtonEnhancement>
+                        <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
+                            {t("addSearchEngine")}
+                        </Button>
+                    </DialogTrigger>
+                    <CustomWebSearchDialog
+                        isAddDialog={currentEngineSettings.prefix === ""}
+                        isDialogOpen={isDialogOpen}
+                        closeDialog={() => setIsDialogOpen(false)}
+                        onSave={editCustomSearchEngineSetting}
+                        initialEngineSetting={{ ...currentEngineSettings }}
+                        existingPrefixes={customSearchEngineSettings
+                            .filter((setting) => setting.id !== currentEngineSettings.id)
+                            .map((setting) => setting.prefix)}
+                    />
+                </div>
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -115,23 +132,6 @@ export const CustomWebSearchSettings = () => {
                         ))}
                     </TableBody>
                 </Table>
-                <div>
-                    <DialogTrigger disableButtonEnhancement>
-                        <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
-                            {t("addSearchEngine")}
-                        </Button>
-                    </DialogTrigger>
-                    <CustomWebSearchDialog
-                        isAddDialog={currentEngineSettings.prefix === ""}
-                        isDialogOpen={isDialogOpen}
-                        closeDialog={() => setIsDialogOpen(false)}
-                        onSave={editCustomSearchEngineSetting}
-                        initialEngineSetting={{ ...currentEngineSettings }}
-                        existingPrefixes={customSearchEngineSettings
-                            .filter((setting) => setting.id !== currentEngineSettings.id)
-                            .map((setting) => setting.prefix)}
-                    />
-                </div>
             </SettingGroup>
         </SettingGroupList>
     );
