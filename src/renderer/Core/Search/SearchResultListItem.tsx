@@ -99,20 +99,47 @@ export const SearchResultListItem = ({
                     src={getImageUrl({ image: searchResultItem.image, shouldUseDarkColors })}
                 />
             </div>
-            <Text
-                size={300}
+            <div
                 style={{
                     width: "100%",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
-                    display: "flex",
                     alignItems: "center",
                     gap: 5,
                 }}
             >
-                {searchResultItem.name}
-            </Text>
+                <Text
+                    size={300}
+                    style={{
+                        width: "100%",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 5,
+                    }}
+                >
+                    {searchResultItem.name}
+                </Text>
+                {searchResultItem.details && searchResultItem.details.length > 0 ? (
+                    <Text
+                        size={100}
+                        style={{
+                            width: "100%",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 5,
+                        }}
+                    >
+                        {searchResultItem.details}
+                    </Text>
+                ) : undefined}
+            </div>
             <Text size={200} style={{ flexShrink: 0 }}>
                 {searchResultItem.descriptionTranslation
                     ? t(searchResultItem.descriptionTranslation.key, {

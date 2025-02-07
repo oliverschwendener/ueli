@@ -16,6 +16,11 @@ export type SearchResultItem = {
     name: string;
 
     /**
+     * The details of the search result item.
+     */
+    details?: string;
+
+    /**
      * The description of the search result item.
      */
     description: string;
