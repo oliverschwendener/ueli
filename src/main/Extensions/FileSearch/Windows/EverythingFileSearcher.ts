@@ -23,7 +23,7 @@ export class EverythingFileSearcher implements FileSearcher {
             return [];
         }
 
-        const escapedSearchTerm = searchTerm.replace(/([\\&|><^])/g, "^$1");
+        const escapedSearchTerm = EverythingFileSearcher.escapeSearchTerm(searchTerm);
         const stdout = await this.commandlineUtility.executeCommand(
             `cmd /c chcp 65001>nul && "${everythingCliFilePath}" -max-results ${maxSearchResultCount} ${escapedSearchTerm}`,
         );
@@ -32,5 +32,9 @@ export class EverythingFileSearcher implements FileSearcher {
             .split("\n")
             .map((line) => normalize(line).trim())
             .filter((f) => f !== ".");
+    }
+
+    public static escapeSearchTerm(searchTerm: string): string {
+        return searchTerm.replace(/([\\&|><^])/g, "^$1");
     }
 }
