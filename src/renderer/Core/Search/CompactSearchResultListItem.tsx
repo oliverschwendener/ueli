@@ -1,14 +1,13 @@
 import type { SearchResultItem } from "@common/Core";
-import { Text, tokens } from "@fluentui/react-components";
+import { Text } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { SearchResultItemImage } from "./SearchResultItemImage";
 
 type CompactSearchResultListItemProps = {
-    isSelected: boolean;
     searchResultItem: SearchResultItem;
 };
 
-export const CompactSearchResultListItem = ({ isSelected, searchResultItem }: CompactSearchResultListItemProps) => {
+export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchResultListItemProps) => {
     const { t } = useTranslation();
 
     return (
@@ -25,18 +24,6 @@ export const CompactSearchResultListItem = ({ isSelected, searchResultItem }: Co
                 width: "100%",
             }}
         >
-            <div
-                style={{
-                    position: "absolute",
-                    left: 0,
-                    top: "50%",
-                    backgroundColor: isSelected ? tokens.colorBrandForeground1 : "transparent",
-                    height: "45%",
-                    width: 3,
-                    transform: "translateY(-50%)",
-                    borderRadius: tokens.borderRadiusLarge,
-                }}
-            ></div>
             <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={20} />
             <Text
                 size={300}

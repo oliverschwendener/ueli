@@ -3,6 +3,7 @@ import { tokens } from "@fluentui/react-components";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
 import { elementIsVisible } from "./Helpers";
+import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSelectedIndicator";
 
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
@@ -54,7 +55,8 @@ export const SearchResultListItem = ({
                 cursor: "pointer",
             }}
         >
-            <CompactSearchResultListItem isSelected={isSelected} searchResultItem={searchResultItem} />
+            {isSelected && <SearchResultListItemSelectedIndicator />}
+            <CompactSearchResultListItem searchResultItem={searchResultItem} />
         </div>
     );
 };
