@@ -5,13 +5,14 @@ import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
 import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";
 import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSelectedIndicator";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
-    layout: "compact" | "detailed";
+    layout: SearchResultListLayout;
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
 };
@@ -41,7 +42,7 @@ export const SearchResultListItem = ({
         scrollIntoViewIfSelectedAndNotVisible();
     }, [isSelected]);
 
-    const searchResultItemComponent: Record<"compact" | "detailed", () => ReactElement> = {
+    const searchResultItemComponent: Record<SearchResultListLayout, () => ReactElement> = {
         compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} />,
         detailed: () => <DetailedSearchResultListItem searchResultItem={searchResultItem} />,
     };

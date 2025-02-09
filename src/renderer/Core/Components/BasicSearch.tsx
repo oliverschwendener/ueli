@@ -3,6 +3,7 @@ import { Header } from "@Core/Header";
 import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
+import type { SearchResultListLayout } from "@Core/Search/SearchResultListLayout";
 import type { SearchResultItem } from "@common/Core";
 import { Button, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
@@ -15,7 +16,7 @@ type BasicSearchProps = {
     inputPlaceholder?: string;
     debounceDurationInMs?: number;
     showGoBackButton?: boolean;
-    layout?: "compact" | "detailed";
+    searchResultListLayout?: SearchResultListLayout;
 };
 
 export const BasicSearch = ({
@@ -23,7 +24,7 @@ export const BasicSearch = ({
     inputPlaceholder,
     debounceDurationInMs,
     showGoBackButton,
-    layout,
+    searchResultListLayout,
 }: BasicSearchProps) => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -168,7 +169,7 @@ export const BasicSearch = ({
                             searchResultItems={searchResultItems}
                             selectedItemId={selectedItemId}
                             searchTerm={searchTerm}
-                            layout={layout ?? "compact"}
+                            layout={searchResultListLayout ?? "compact"}
                         />
                     </div>
                 )

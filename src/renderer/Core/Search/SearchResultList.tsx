@@ -4,6 +4,7 @@ import type { RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../Hooks";
 import { SearchResultListItem } from "./SearchResultListItem";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListProps = {
     containerRef: RefObject<HTMLDivElement>;
@@ -12,7 +13,7 @@ type SearchResultListProps = {
     searchTerm?: string;
     onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
-    layout: "compact" | "detailed";
+    layout: SearchResultListLayout;
 };
 
 export const SearchResultList = ({
