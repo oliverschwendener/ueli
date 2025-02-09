@@ -2,7 +2,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Input, Tooltip } from "@fluentui/react-components";
+import { Input, Switch, Tooltip } from "@fluentui/react-components";
 import { Info16Regular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
@@ -19,6 +19,11 @@ export const VSCodeSettings = () => {
     const { value: command, updateValue: setCommand } = useExtensionSetting<string>({
         extensionId,
         key: "command",
+    });
+
+    const { value: showPath, updateValue: setShowPath } = useExtensionSetting<boolean>({
+        extensionId,
+        key: "showPath",
     });
 
     return (
@@ -38,6 +43,10 @@ export const VSCodeSettings = () => {
                             <Input value={command} onChange={(_, { value }) => setCommand(value)} />
                         </>
                     }
+                />
+                <Setting
+                    label={t("showPath")}
+                    control={<Switch checked={showPath} onChange={(_, { checked }) => setShowPath(checked)} />}
                 />
             </SettingGroup>
         </SettingGroupList>

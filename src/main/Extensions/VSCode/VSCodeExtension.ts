@@ -17,7 +17,7 @@ import * as Path from "path";
 import * as Url from "url";
 import type { Settings } from "./Settings";
 
-type VscodeRecent = {
+type VSCodeRecentRaw = {
     fileUri?: string;
     folderUri?: string;
     workspace?: {
@@ -25,6 +25,15 @@ type VscodeRecent = {
         configPath: string;
     };
     label?: string;
+};
+
+type VSCodeRecent = {
+    label?: string;
+    path: string;
+    uri: string;
+    fileType: string;
+    commandArg: string;
+    img: Image;
 };
 
 export class VSCodeExtension implements Extension {
@@ -47,7 +56,7 @@ export class VSCodeExtension implements Extension {
         Linux: process.env.HOME + "/.config/Code/User/globalStorage/state.vscdb",
     };
 
-    private recents: SearchResultItem[] = [];
+    private recents: VSCodeRecent[] = [];
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -58,23 +67,23 @@ export class VSCodeExtension implements Extension {
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const searchResults: SearchResultItem[] = [];
+        const recents: VSCodeRecent[] = [];
 
-        for (const recent of this.getRecents()) {
+        for (const recent of this.getRecentsRaw()) {
             try {
-                searchResults.push(await this.getSearchItem(recent));
+                recents.push(await this.getRecent(recent));
             } catch (error) {
                 const uri = this.getUri(recent);
                 this.logger.error(this.id + ": " + uri + " " + error);
             }
         }
 
-        this.recents = searchResults;
+        this.recents = recents;
 
         return [];
     }
 
-    private getRecents(): VscodeRecent[] {
+    private getRecentsRaw(): VSCodeRecentRaw[] {
         const databasePath = this.stateDatabasePaths[this.operatingSystem];
 
         return JSON.parse(
@@ -87,17 +96,29 @@ export class VSCodeExtension implements Extension {
         );
     }
 
-    private getUri = (recent: VscodeRecent) => {
-        if (recent.fileUri) {
-            return recent.fileUri;
+    private async getRecent(recentRaw: VSCodeRecentRaw): Promise<VSCodeRecent> {
+        const uri = this.getUri(recentRaw);
+        return {
+            label: recentRaw.label,
+            uri: uri,
+            fileType: this.getFileType(recentRaw, uri),
+            path: this.getPath(uri),
+            commandArg: this.getCommandArg(recentRaw),
+            img: await this.getImg(recentRaw, uri),
+        };
+    }
+
+    private getUri = (recentRaw: VSCodeRecentRaw) => {
+        if (recentRaw.fileUri) {
+            return recentRaw.fileUri;
         }
 
-        if (recent.folderUri) {
-            return recent.folderUri;
+        if (recentRaw.folderUri) {
+            return recentRaw.folderUri;
         }
 
-        if (recent.workspace) {
-            return recent.workspace.configPath;
+        if (recentRaw.workspace) {
+            return recentRaw.workspace.configPath;
         }
 
         throw new Error("Unknown file type");
@@ -112,14 +133,14 @@ export class VSCodeExtension implements Extension {
         return decodedUri;
     };
 
-    private getFileType(recent: VscodeRecent, uri: string): string {
+    private getFileType(recentRaw: VSCodeRecentRaw, uri: string): string {
         let result;
 
-        if (recent.fileUri) {
+        if (recentRaw.fileUri) {
             result = "File";
-        } else if (recent.folderUri) {
+        } else if (recentRaw.folderUri) {
             result = "Folder";
-        } else if (recent.workspace) {
+        } else if (recentRaw.workspace) {
             result = "Workspace";
         } else {
             throw new Error("Unknown file type");
@@ -128,20 +149,18 @@ export class VSCodeExtension implements Extension {
         return uri.startsWith("file://") ? result : `Remote ${result}`;
     }
 
-    private getCommandArg(recent: VscodeRecent): string {
-        if (recent.fileUri) {
+    private getCommandArg(recentRaw: VSCodeRecentRaw): string {
+        if (recentRaw.fileUri || recentRaw.workspace) {
             return "--file-uri";
-        } else if (recent.folderUri) {
+        } else if (recentRaw.folderUri) {
             return "--folder-uri";
-        } else if (recent.workspace) {
-            return "--file-uri";
         }
 
         throw new Error("Unknown file type");
     }
 
-    private async getImg(recent: VscodeRecent, uri: string): Promise<Image> {
-        if (recent.fileUri) {
+    private async getImg(recentRaw: VSCodeRecentRaw, uri: string): Promise<Image> {
+        if (recentRaw.fileUri) {
             try {
                 return await this.fileImageGenerator.getImage(uri);
             } catch (e) {
@@ -152,40 +171,15 @@ export class VSCodeExtension implements Extension {
         return this.getImage();
     }
 
-    private async getSearchItem(recent: VscodeRecent): Promise<SearchResultItem> {
-        const uri = this.getUri(recent);
-        const fileType = this.getFileType(recent, uri);
-        const commandArg = this.getCommandArg(recent);
-        const img = await this.getImg(recent, uri);
-        const path = this.getPath(uri);
-
-        const template = this.settingsManager.getValue<string>(
-            `extension[${this.id}].command`,
-            this.getSettingDefaultValue("command"),
-        );
-
-        return {
-            id: `vscode-${fileType}-${uri}`,
-            name: recent.label ?? Path.basename(path),
-            description: fileType,
-            image: img,
-            defaultAction: {
-                handlerId: "Commandline",
-                description: `Open ${fileType} in VSCode`,
-                argument: template.replace("%s", `${commandArg} ${uri}`),
-                hideWindowAfterInvocation: true,
-            },
-        };
-    }
-
     public isSupported(): boolean {
         return ["macOS", "Linux", "Windows"].includes(this.operatingSystem);
     }
 
-    public getSettingDefaultValue(key: keyof Settings) {
+    public getSettingDefaultValue<T extends keyof Settings>(key: T): Settings[T] {
         const defaultSettings: Settings = {
             prefix: "vscode",
             command: "code %s",
+            showPath: false,
         };
 
         if (this.operatingSystem === "macOS") {
@@ -217,9 +211,11 @@ export class VSCodeExtension implements Extension {
                 extensionName: "Visual Studio Code",
                 prefix: "Prefix",
                 prefixDescription:
-                    "The prefix to trigger visual studio code. Open recently opened files and projects: <prefix> <command>",
+                    "The prefix to trigger Visual Studio Code. Open recently opened files and projects: <prefix> <command>",
                 command: "Command",
-                commandTooltip: "Use %s where the selected file/project should go it uses the --file/folder-uri switch",
+                commandTooltip:
+                    "Use %s where the selected file/project should be inserted. It uses the --file-uri or --folder-uri switch",
+                showPath: "Show file/folder path",
             },
         };
     }
@@ -229,11 +225,23 @@ export class VSCodeExtension implements Extension {
             return createEmptyInstantSearchResult();
         }
 
+        const template = this.settingsManager.getValue<string>(
+            `extension[${this.id}].command`,
+            this.getSettingDefaultValue("command"),
+        );
+
+        const showPath = this.settingsManager.getValue<boolean>(
+            `extension[${this.id}].showPath`,
+            this.getSettingDefaultValue("showPath"),
+        );
+
+        const searchResultItems = this.recents.map((recent) => this.getSearchResultItem(recent, template, showPath));
+
         searchTerm = searchTerm.replace(this.getPrefix() + " ", "").trim();
 
-        if (searchTerm && searchTerm === "") {
+        if (searchTerm === "") {
             return {
-                after: this.recents,
+                after: searchResultItems,
                 before: [],
             };
         }
@@ -245,7 +253,7 @@ export class VSCodeExtension implements Extension {
         return {
             after: searchFilter(
                 {
-                    searchResultItems: this.recents,
+                    searchResultItems,
                     searchTerm,
                     fuzziness,
                     maxSearchResultItems,
@@ -253,6 +261,21 @@ export class VSCodeExtension implements Extension {
                 searchEngineId,
             ),
             before: [],
+        };
+    }
+
+    private getSearchResultItem(recent: VSCodeRecent, template: string, showPath: boolean): SearchResultItem {
+        return {
+            id: `vscode-${recent.fileType}-${recent.uri}`,
+            name: (recent.label ?? Path.basename(recent.path)) + (showPath ? ` (${recent.path})` : ""),
+            description: recent.fileType,
+            image: recent.img,
+            defaultAction: {
+                handlerId: "Commandline",
+                description: `Open ${recent.fileType} in VSCode`,
+                argument: template.replace("%s", `${recent.commandArg} ${recent.uri}`),
+                hideWindowAfterInvocation: true,
+            },
         };
     }
 
