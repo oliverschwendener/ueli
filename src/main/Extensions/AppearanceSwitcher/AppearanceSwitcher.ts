@@ -30,7 +30,6 @@ export class AppearanceSwitcher implements Extension {
         return [
             {
                 description: t("searchResultItemDescription"),
-                details: "Switch appearance",
                 id: "AppearanceSwitcher:toggle",
                 name: t("searchResultItemName"),
                 image: this.getImage(),
