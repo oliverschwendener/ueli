@@ -1,15 +1,15 @@
 import type { SearchResultItem } from "@common/Core";
-import { Badge, Text } from "@fluentui/react-components";
-import { useTranslation } from "react-i18next";
+import { Text } from "@fluentui/react-components";
+import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
+import type { SearchResultListItemStyleOptions } from "./SearchResultListItemStyleOptions";
 
 type DetailedSearchResultListItemProps = {
     searchResultItem: SearchResultItem;
+    styleOptions: SearchResultListItemStyleOptions;
 };
 
-export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearchResultListItemProps) => {
-    const { t } = useTranslation();
-
+export const DetailedSearchResultListItem = ({ searchResultItem, styleOptions }: DetailedSearchResultListItemProps) => {
     return (
         <div
             style={{
@@ -23,10 +23,12 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 width: "100%",
             }}
         >
-            {/* The left margin makes sure that the icon has the correct space horizontally */}
-            <div style={{ flexShrink: 0, marginLeft: 2 }}>
-                <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={24} />
-            </div>
+            {styleOptions.showIcon && (
+                <div style={{ flexShrink: 0, marginLeft: 2 }}>
+                    <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={24} />
+                </div>
+            )}
+
             <div
                 style={{
                     display: "flex",
@@ -36,7 +38,8 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 }}
             >
                 <Text
-                    weight="semibold"
+                    weight={styleOptions.nameTextWeight}
+                    size={styleOptions.nameTextSize}
                     style={{
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -47,7 +50,7 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 </Text>
                 {searchResultItem.details && (
                     <Text
-                        size={200}
+                        size={styleOptions.detailsTextSize}
                         style={{
                             whiteSpace: "nowrap",
                             overflow: "hidden",
@@ -58,15 +61,14 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                     </Text>
                 )}
             </div>
-            <div style={{ flexShrink: 0, display: "flex" }}>
-                <Badge color="subtle" size="small">
-                    {searchResultItem.descriptionTranslation
-                        ? t(searchResultItem.descriptionTranslation.key, {
-                              ns: searchResultItem.descriptionTranslation.namespace,
-                          })
-                        : searchResultItem.description}
-                </Badge>
-            </div>
+            {styleOptions.showDescription && (
+                <div style={{ flexShrink: 0, display: "flex" }}>
+                    <SearchResultItemDescriptionBadge
+                        color={styleOptions.descriptionColor}
+                        searchResultItem={searchResultItem}
+                    />
+                </div>
+            )}
         </div>
     );
 };

@@ -5,6 +5,7 @@ import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
 import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";
 import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSelectedIndicator";
+import type { SearchResultListItemStyleOptions } from "./SearchResultListItemStyleOptions";
 import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListItemProps = {
@@ -12,9 +13,10 @@ type SearchResultListItemProps = {
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
-    layout: SearchResultListLayout;
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
+    layout: SearchResultListLayout;
+    styleOptions: SearchResultListItemStyleOptions;
 };
 
 export const SearchResultListItem = ({
@@ -25,6 +27,7 @@ export const SearchResultListItem = ({
     searchResultItem,
     scrollBehavior,
     layout,
+    styleOptions,
 }: SearchResultListItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -43,8 +46,10 @@ export const SearchResultListItem = ({
     }, [isSelected]);
 
     const searchResultItemComponent: Record<SearchResultListLayout, () => ReactElement> = {
-        compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} />,
-        detailed: () => <DetailedSearchResultListItem searchResultItem={searchResultItem} />,
+        compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} styleOptions={styleOptions} />,
+        detailed: () => (
+            <DetailedSearchResultListItem searchResultItem={searchResultItem} styleOptions={styleOptions} />
+        ),
     };
 
     return (
@@ -65,7 +70,6 @@ export const SearchResultListItem = ({
             }}
         >
             {isSelected && <SearchResultListItemSelectedIndicator />}
-
             {searchResultItemComponent[layout]()}
         </div>
     );

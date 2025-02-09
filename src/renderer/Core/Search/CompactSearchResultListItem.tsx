@@ -1,15 +1,15 @@
 import type { SearchResultItem } from "@common/Core";
-import { Badge, Text } from "@fluentui/react-components";
-import { useTranslation } from "react-i18next";
+import { Text } from "@fluentui/react-components";
+import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
+import type { SearchResultListItemStyleOptions } from "./SearchResultListItemStyleOptions";
 
 type CompactSearchResultListItemProps = {
     searchResultItem: SearchResultItem;
+    styleOptions: SearchResultListItemStyleOptions;
 };
 
-export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchResultListItemProps) => {
-    const { t } = useTranslation();
-
+export const CompactSearchResultListItem = ({ searchResultItem, styleOptions }: CompactSearchResultListItemProps) => {
     return (
         <div
             style={{
@@ -23,11 +23,15 @@ export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchR
                 width: "100%",
             }}
         >
-            {/* The left margin makes sure that the icon has the correct space horizontally */}
-            <div style={{ flexShrink: 0, marginLeft: 2 }}>
-                <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={20} />
-            </div>
+            {styleOptions.showIcon && (
+                <div style={{ flexShrink: 0, marginLeft: 2 }}>
+                    <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={20} />
+                </div>
+            )}
+
             <Text
+                size={styleOptions.nameTextSize}
+                weight={styleOptions.nameTextWeight}
                 style={{
                     flexGrow: 1,
                     whiteSpace: "nowrap",
@@ -37,15 +41,14 @@ export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchR
             >
                 {searchResultItem.name}
             </Text>
-            <div style={{ flexShrink: 0, display: "flex" }}>
-                <Badge color="subtle" size="small">
-                    {searchResultItem.descriptionTranslation
-                        ? t(searchResultItem.descriptionTranslation.key, {
-                              ns: searchResultItem.descriptionTranslation.namespace,
-                          })
-                        : searchResultItem.description}
-                </Badge>
-            </div>
+            {styleOptions.showDescription && (
+                <div style={{ flexShrink: 0, display: "flex" }}>
+                    <SearchResultItemDescriptionBadge
+                        color={styleOptions.descriptionColor}
+                        searchResultItem={searchResultItem}
+                    />
+                </div>
+            )}
         </div>
     );
 };
