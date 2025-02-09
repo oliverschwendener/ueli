@@ -239,6 +239,13 @@ export class VSCodeExtension implements Extension {
 
         searchTerm = searchTerm.replace(this.getPrefix() + " ", "").trim();
 
+        if (isPath(searchTerm)) {
+            return {
+                after: [this.getFilePathItem(searchTerm)],
+                before: [],
+            };
+        }
+
         if (searchTerm === "") {
             return {
                 after: searchResultItems,
@@ -279,6 +286,21 @@ export class VSCodeExtension implements Extension {
         };
     }
 
+    private getFilePathItem(path: string): SearchResultItem {
+        return {
+            id: `vscode-path`,
+            name: path,
+            description: "file",
+            image: this.getImage(),
+            defaultAction: {
+                handlerId: "Commandline",
+                description: `Open ${path} in VSCode`,
+                argument: path,
+                hideWindowAfterInvocation: true,
+            },
+        };
+    }
+
     private getPrefix(): string {
         return this.settingsManager.getValue<string>(
             `extension[${this.id}].prefix`,
@@ -286,3 +308,11 @@ export class VSCodeExtension implements Extension {
         );
     }
 }
+
+export const isPath = (searchTerm: string | null | undefined) => {
+    if (!searchTerm) {
+        return false;
+    }
+    const windowMatch = searchTerm.match(/[A-Z]:.*/) !== null;
+    return searchTerm.startsWith("/") || searchTerm.startsWith("~") || windowMatch;
+};
