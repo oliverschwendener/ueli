@@ -46,7 +46,7 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                         textOverflow: "ellipsis",
                     }}
                 >
-                    PLACEHOLDER DETAILS
+                    Here go the details of the search resul item
                 </Text>
             </div>
             <div style={{ flexShrink: 0, display: "flex" }}>
