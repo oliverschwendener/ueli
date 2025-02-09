@@ -1,7 +1,8 @@
 import type { SearchResultItem } from "@common/Core";
 import { tokens } from "@fluentui/react-components";
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type ReactElement, type RefObject } from "react";
 import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
+import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";
 import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSelectedIndicator";
 
@@ -10,6 +11,7 @@ type SearchResultListItemProps = {
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
+    layout: "compact" | "detailed";
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
 };
@@ -21,6 +23,7 @@ export const SearchResultListItem = ({
     onDoubleClick,
     searchResultItem,
     scrollBehavior,
+    layout,
 }: SearchResultListItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -37,6 +40,11 @@ export const SearchResultListItem = ({
     useEffect(() => {
         scrollIntoViewIfSelectedAndNotVisible();
     }, [isSelected]);
+
+    const searchResultItemComponent: Record<"compact" | "detailed", () => ReactElement> = {
+        compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} />,
+        detailed: () => <DetailedSearchResultListItem searchResultItem={searchResultItem} />,
+    };
 
     return (
         <div
@@ -56,7 +64,8 @@ export const SearchResultListItem = ({
             }}
         >
             {isSelected && <SearchResultListItemSelectedIndicator />}
-            <CompactSearchResultListItem searchResultItem={searchResultItem} />
+
+            {searchResultItemComponent[layout]()}
         </div>
     );
 };

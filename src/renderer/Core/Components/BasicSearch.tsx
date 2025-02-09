@@ -15,6 +15,7 @@ type BasicSearchProps = {
     inputPlaceholder?: string;
     debounceDurationInMs?: number;
     showGoBackButton?: boolean;
+    layout?: "compact" | "detailed";
 };
 
 export const BasicSearch = ({
@@ -22,6 +23,7 @@ export const BasicSearch = ({
     inputPlaceholder,
     debounceDurationInMs,
     showGoBackButton,
+    layout,
 }: BasicSearchProps) => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -166,6 +168,7 @@ export const BasicSearch = ({
                             searchResultItems={searchResultItems}
                             selectedItemId={selectedItemId}
                             searchTerm={searchTerm}
+                            layout={layout ?? "compact"}
                         />
                     </div>
                 )

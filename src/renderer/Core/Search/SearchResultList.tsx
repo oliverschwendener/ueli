@@ -12,6 +12,7 @@ type SearchResultListProps = {
     searchTerm?: string;
     onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
+    layout: "compact" | "detailed";
 };
 
 export const SearchResultList = ({
@@ -21,6 +22,7 @@ export const SearchResultList = ({
     searchTerm,
     onSearchResultItemClick,
     onSearchResultItemDoubleClick,
+    layout,
 }: SearchResultListProps) => {
     const { t } = useTranslation();
 
@@ -55,6 +57,7 @@ export const SearchResultList = ({
                     onClick={() => onSearchResultItemClick(searchResultItem)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
                     scrollBehavior={scrollBehavior}
+                    layout={layout}
                 />
             ))}
         </div>
