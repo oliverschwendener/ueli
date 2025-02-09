@@ -4,6 +4,7 @@ import type { RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../Hooks";
 import { SearchResultListItem } from "./SearchResultListItem";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListProps = {
     containerRef: RefObject<HTMLDivElement>;
@@ -12,6 +13,7 @@ type SearchResultListProps = {
     searchTerm?: string;
     onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
+    layout: SearchResultListLayout;
 };
 
 export const SearchResultList = ({
@@ -21,6 +23,7 @@ export const SearchResultList = ({
     searchTerm,
     onSearchResultItemClick,
     onSearchResultItemDoubleClick,
+    layout,
 }: SearchResultListProps) => {
     const { t } = useTranslation();
 
@@ -55,6 +58,7 @@ export const SearchResultList = ({
                     onClick={() => onSearchResultItemClick(searchResultItem)}
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
                     scrollBehavior={scrollBehavior}
+                    layout={layout}
                 />
             ))}
         </div>
