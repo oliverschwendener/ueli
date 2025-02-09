@@ -1,16 +1,18 @@
-import { ThemeContext } from "@Core/Theme";
-import { getImageUrl } from "@Core/getImageUrl";
 import type { SearchResultItem } from "@common/Core";
-import { Text, tokens } from "@fluentui/react-components";
-import { useContext, useEffect, useRef, useState, type RefObject } from "react";
-import { useTranslation } from "react-i18next";
+import { tokens } from "@fluentui/react-components";
+import { useEffect, useRef, useState, type ReactElement, type RefObject } from "react";
+import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
+import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";
+import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSelectedIndicator";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListItemProps = {
     containerRef: RefObject<HTMLDivElement>;
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;
+    layout: SearchResultListLayout;
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
 };
@@ -22,10 +24,8 @@ export const SearchResultListItem = ({
     onDoubleClick,
     searchResultItem,
     scrollBehavior,
+    layout,
 }: SearchResultListItemProps) => {
-    const { shouldUseDarkColors } = useContext(ThemeContext);
-    const { t } = useTranslation();
-
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -38,7 +38,14 @@ export const SearchResultListItem = ({
     const selectedBackgroundColor = tokens.colorNeutralBackground1Selected;
     const hoveredBackgroundColor = tokens.colorNeutralBackground1Hover;
 
-    useEffect(scrollIntoViewIfSelectedAndNotVisible, [isSelected]);
+    useEffect(() => {
+        scrollIntoViewIfSelectedAndNotVisible();
+    }, [isSelected]);
+
+    const searchResultItemComponent: Record<SearchResultListLayout, () => ReactElement> = {
+        compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} />,
+        detailed: () => <DetailedSearchResultListItem searchResultItem={searchResultItem} />,
+    };
 
     return (
         <div
@@ -51,75 +58,15 @@ export const SearchResultListItem = ({
             style={{
                 position: "relative",
                 backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,
-                boxSizing: "border-box",
                 color: isSelected ? tokens.colorNeutralForeground1Selected : undefined,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                gap: 10,
-                height: 36,
-                width: "100%",
-                padding: 10,
                 userSelect: "none",
                 borderRadius: tokens.borderRadiusMedium,
                 cursor: "pointer",
             }}
         >
-            <div
-                style={{
-                    position: "absolute",
-                    left: 0,
-                    top: "50%",
-                    backgroundColor: isSelected ? tokens.colorBrandForeground1 : "transparent",
-                    height: "45%",
-                    width: 3,
-                    transform: "translateY(-50%)",
-                    borderRadius: tokens.borderRadiusLarge,
-                }}
-            ></div>
-            <div
-                style={{
-                    alignItems: "center",
-                    display: "flex",
-                    flexDirection: "row",
-                    flexShrink: 0,
-                    justifyContent: "center",
-                    width: 20,
-                    height: 20,
-                }}
-            >
-                <img
-                    alt={searchResultItem.name}
-                    loading="lazy"
-                    style={{
-                        maxHeight: "100%",
-                        maxWidth: "100%",
-                    }}
-                    src={getImageUrl({ image: searchResultItem.image, shouldUseDarkColors })}
-                />
-            </div>
-            <Text
-                size={300}
-                style={{
-                    width: "100%",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 5,
-                }}
-            >
-                {searchResultItem.name}
-            </Text>
-            <Text size={200} style={{ flexShrink: 0 }}>
-                {searchResultItem.descriptionTranslation
-                    ? t(searchResultItem.descriptionTranslation.key, {
-                          ns: searchResultItem.descriptionTranslation.namespace,
-                      })
-                    : searchResultItem.description}
-            </Text>
+            {isSelected && <SearchResultListItemSelectedIndicator />}
+
+            {searchResultItemComponent[layout]()}
         </div>
     );
 };

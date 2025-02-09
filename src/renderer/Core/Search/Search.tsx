@@ -354,6 +354,7 @@ export const Search = ({
                                         searchTerm={searchTerm.value}
                                         onSearchResultItemClick={handleSearchResultItemClickEvent}
                                         onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                        layout="compact"
                                     />
                                 </div>
                             ))}
