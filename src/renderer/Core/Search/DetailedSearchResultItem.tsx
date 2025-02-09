@@ -23,7 +23,8 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 width: "100%",
             }}
         >
-            <div style={{ flexShrink: 0 }}>
+            {/* The left margin makes sure that the icon has the correct space horizontally */}
+            <div style={{ flexShrink: 0, marginLeft: 4 }}>
                 <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={24} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, overflow: "hidden" }}>
