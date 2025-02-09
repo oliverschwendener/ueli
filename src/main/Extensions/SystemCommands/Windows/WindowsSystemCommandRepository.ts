@@ -25,6 +25,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("shutdown"),
                 description: t("searchResultItemDescription"),
+                details: "shutdown -s -t 0",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("shutdown -s -t 0");
@@ -34,6 +35,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("restart"),
                 description: t("searchResultItemDescription"),
+                details: "shutdown -r -t 0",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("shutdown -r -t 0");
@@ -43,6 +45,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("signOut"),
                 description: t("searchResultItemDescription"),
+                details: "shutdown /l",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("shutdown /l");
@@ -52,6 +55,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("lock"),
                 description: t("searchResultItemDescription"),
+                details: "rundll32 user32.dll,LockWorkStation",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("rundll32 user32.dll,LockWorkStation");
@@ -61,6 +65,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("sleep"),
                 description: t("searchResultItemDescription"),
+                details: "Custom Powershell Script",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand(
@@ -72,6 +77,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("hibernate"),
                 description: t("searchResultItemDescription"),
+                details: "shutdown /h",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.commandlineUtility.executeCommand("shutdown /h");
@@ -81,6 +87,7 @@ export class WindowsSystemCommandRepository implements SystemCommandRepository {
             WindowsSystemCommand.create({
                 name: t("emptyTrash"),
                 description: t("searchResultItemDescription"),
+                details: "Powershell: Clear-RecycleBin -Force",
                 image: this.getImage({ fileName: "windows-11-system-command.png" }),
                 invoke: async () => {
                     await this.powershellUtility.executeCommand("Clear-RecycleBin -Force");

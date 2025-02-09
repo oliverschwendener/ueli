@@ -87,6 +87,7 @@ describe(WebSearchExtension, () => {
                 <SearchResultItem>{
                     defaultAction: createOpenUrlSearchResultAction({ url: "mySearchUrl" }),
                     description: "searchEngine1",
+                    details: "mySearchUrl",
                     id: "search-searchEngine1",
                     image: { url: "file://myAssetFilePath" },
                     name: `Search "my search term"`,
@@ -229,6 +230,7 @@ describe(WebSearchExtension, () => {
                     url: "search-url-mySearchTerm-de-CH",
                 }),
                 description: "MyEngine",
+                details: "search-url-mySearchTerm-de-CH",
                 id: `search-MyEngine`,
                 name: `Search "mySearchTerm"`,
                 image: { url: "file://assets/asset.png" },

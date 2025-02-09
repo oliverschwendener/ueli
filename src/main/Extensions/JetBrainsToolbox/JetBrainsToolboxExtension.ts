@@ -176,6 +176,7 @@ export class JetBrainsToolboxExtension implements Extension {
             id: "jetbrains-toolbox-" + path,
             name: recent.name,
             description,
+            details: path,
             image: img,
             defaultAction: {
                 handlerId: "Commandline",

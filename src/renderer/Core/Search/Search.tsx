@@ -18,6 +18,7 @@ import type { SearchBarSize } from "./SearchBarSize";
 import { SearchHistory } from "./SearchHistory";
 import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 import { useSearchViewController } from "./SearchViewController";
 
 type SearchProps = {
@@ -279,6 +280,11 @@ export const Search = ({
         defaultValue: true,
     });
 
+    const { value: layout } = useSetting<SearchResultListLayout>({
+        key: "appearance.searchResultListLayout",
+        defaultValue: "compact",
+    });
+
     const { status: rescanStatus } = useRescanStatus();
 
     return (
@@ -354,7 +360,7 @@ export const Search = ({
                                         searchTerm={searchTerm.value}
                                         onSearchResultItemClick={handleSearchResultItemClickEvent}
                                         onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                                        layout="compact"
+                                        layout={layout}
                                     />
                                 </div>
                             ))}
