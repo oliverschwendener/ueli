@@ -11,6 +11,7 @@ import { DeeplTranslatorModule } from "./DeeplTranslator";
 import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
+import { PasswordGeneratorModule } from "./PasswordGenerator";
 import { SimpleFileSearchExtensionModule } from "./SimpleFileSearch/SimpleFileSearchExtensionModule";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
@@ -40,6 +41,7 @@ export class ExtensionLoader {
             new DeeplTranslatorModule(),
             new FileSearchModule(),
             new JetBrainsToolboxModule(),
+            new PasswordGeneratorModule(),
             new SimpleFileSearchExtensionModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
