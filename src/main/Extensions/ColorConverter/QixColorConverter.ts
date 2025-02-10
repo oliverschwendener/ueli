@@ -6,11 +6,13 @@ export class QixColorConverter implements ColorConverter {
     public convertFromString(value: string): ColorConversionResult[] {
         const color = this.extractColorFromString(value);
 
+        const name = color?.keyword() ?? "";
+
         return color
             ? [
-                  { format: "HEX", value: color.hex() },
-                  { format: "HSL", value: color.hsl().string() },
-                  { format: "RGB", value: color.rgb().string() },
+                  { format: "HEX", value: color.hex(), name },
+                  { format: "HSL", value: color.hsl().string(), name },
+                  { format: "RGB", value: color.rgb().string(), name },
               ]
             : [];
     }

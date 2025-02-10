@@ -21,29 +21,29 @@ describe(QixColorConverter, () => {
 
         it("should be able to parse hex colors", () => {
             expect(new QixColorConverter().convertFromString("#fff")).toEqual(<ColorConversionResult[]>[
-                { format: "HEX", value: "#FFFFFF" },
-                { format: "HSL", value: "hsl(0, 0%, 100%)" },
-                { format: "RGB", value: "rgb(255, 255, 255)" },
+                { format: "HEX", value: "#FFFFFF", name: "white" },
+                { format: "HSL", value: "hsl(0, 0%, 100%)", name: "white" },
+                { format: "RGB", value: "rgb(255, 255, 255)", name: "white" },
             ]);
 
             expect(new QixColorConverter().convertFromString("#ffffff")).toEqual(<ColorConversionResult[]>[
-                { format: "HEX", value: "#FFFFFF" },
-                { format: "HSL", value: "hsl(0, 0%, 100%)" },
-                { format: "RGB", value: "rgb(255, 255, 255)" },
+                { format: "HEX", value: "#FFFFFF", name: "white" },
+                { format: "HSL", value: "hsl(0, 0%, 100%)", name: "white" },
+                { format: "RGB", value: "rgb(255, 255, 255)", name: "white" },
             ]);
         });
 
         it("should be able to parse rgb colors", () => {
             expect(new QixColorConverter().convertFromString("rgb(255,255,255)")).toEqual(<ColorConversionResult[]>[
-                { format: "HEX", value: "#FFFFFF" },
-                { format: "HSL", value: "hsl(0, 0%, 100%)" },
-                { format: "RGB", value: "rgb(255, 255, 255)" },
+                { format: "HEX", value: "#FFFFFF", name: "white" },
+                { format: "HSL", value: "hsl(0, 0%, 100%)", name: "white" },
+                { format: "RGB", value: "rgb(255, 255, 255)", name: "white" },
             ]);
 
             expect(new QixColorConverter().convertFromString("rgba(255,255,255,1)")).toEqual(<ColorConversionResult[]>[
-                { format: "HEX", value: "#FFFFFF" },
-                { format: "HSL", value: "hsl(0, 0%, 100%)" },
-                { format: "RGB", value: "rgb(255, 255, 255)" },
+                { format: "HEX", value: "#FFFFFF", name: "white" },
+                { format: "HSL", value: "hsl(0, 0%, 100%)", name: "white" },
+                { format: "RGB", value: "rgb(255, 255, 255)", name: "white" },
             ]);
         });
     });

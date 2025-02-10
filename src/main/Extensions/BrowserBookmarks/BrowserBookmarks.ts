@@ -60,9 +60,10 @@ export class BrowserBookmarks implements Extension {
             Windows: { copyUrlToClipboard: "Ctrl+C" },
         };
 
-        const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser) => {
+        const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser): SearchResultItem => {
             return {
                 description: t("searchResultItemDescription", { browserName }),
+                details: browserBookmark.getUrl(),
                 defaultAction: createOpenUrlSearchResultAction({
                     url: browserBookmark.getUrl(),
                 }),

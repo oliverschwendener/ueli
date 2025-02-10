@@ -18,6 +18,7 @@ export class WindowsSystemSetting implements SystemSetting {
                 fluentIcon: "OpenRegular",
             },
             description: "System Setting",
+            details: this.settingsUrl,
             id: this.getId(),
             image: {
                 url: `file://${this.imageFilePath}`,
