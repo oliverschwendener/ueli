@@ -58,6 +58,9 @@ export const BasicSearch = ({
         } else if (event.key === "Enter") {
             event.preventDefault();
             await invokeSelectedSearchResultItem();
+        } else if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
         }
     };
 
