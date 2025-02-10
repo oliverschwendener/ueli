@@ -7,6 +7,7 @@ import { SettingGroup } from "../../SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";
 import { ThemeOption } from "../ThemeOption";
 import { SearchBarSettings } from "./SearchBarSettings";
+import { SearchResultListSettings } from "./SearchResultListSettings";
 
 export const Appearance = () => {
     const { t } = useTranslation("settingsAppearance");
@@ -28,6 +29,7 @@ export const Appearance = () => {
     return (
         <SettingGroupList>
             <SearchBarSettings />
+            <SearchResultListSettings />
             <SettingGroup title="Colors">
                 <Setting
                     label={t("themeName")}

@@ -39,6 +39,7 @@ export class CustomWebSearchExtension implements Extension {
         return {
             name: engine.name,
             description: `Search in ${engine.name}`,
+            details: searchUrl,
             id: `${engine.name}:instantResult`,
             image: this.urlImageGenerator.getImage(new URL(searchUrl).origin),
             defaultAction: {

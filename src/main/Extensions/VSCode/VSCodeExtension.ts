@@ -269,6 +269,7 @@ export class VSCodeExtension implements Extension {
             id: `vscode-${recent.fileType}-${recent.uri}`,
             name: (recent.label ?? Path.basename(recent.path)) + (showPath ? ` (${recent.path})` : ""),
             description: recent.fileType,
+            details: recent.path,
             image: recent.img,
             defaultAction: {
                 handlerId: "Commandline",

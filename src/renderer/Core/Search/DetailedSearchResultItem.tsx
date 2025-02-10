@@ -27,7 +27,14 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
             <div style={{ flexShrink: 0, marginLeft: 2 }}>
                 <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={24} />
             </div>
-            <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, overflow: "hidden" }}>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                    overflow: "hidden",
+                }}
+            >
                 <Text
                     weight="semibold"
                     style={{
@@ -38,16 +45,18 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 >
                     {searchResultItem.name}
                 </Text>
-                <Text
-                    size={200}
-                    style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                    }}
-                >
-                    Here go the details of the search resul item
-                </Text>
+                {searchResultItem.details && (
+                    <Text
+                        size={200}
+                        style={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                        }}
+                    >
+                        {searchResultItem.details}
+                    </Text>
+                )}
             </div>
             <div style={{ flexShrink: 0, display: "flex" }}>
                 <Badge color="subtle" size="small">

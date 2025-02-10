@@ -6,22 +6,25 @@ export class MacOsSystemCommand implements SystemCommand {
     public static create({
         name,
         description,
+        details,
         image,
         invoke,
         requiresConfirmation,
     }: {
         name: string;
         description: string;
+        details: string;
         image: Image;
         invoke: () => Promise<void>;
         requiresConfirmation?: boolean;
     }): MacOsSystemCommand {
-        return new MacOsSystemCommand(name, description, image, invoke, requiresConfirmation);
+        return new MacOsSystemCommand(name, description, details, image, invoke, requiresConfirmation);
     }
 
     private constructor(
         private readonly name: string,
         private readonly description: string,
+        private readonly details: string,
         private readonly image: Image,
         public readonly invoke: () => Promise<void>,
         private readonly requiresConfirmation?: boolean,
@@ -41,6 +44,7 @@ export class MacOsSystemCommand implements SystemCommand {
                 hideWindowAfterInvocation: true,
             },
             description: this.description,
+            details: this.details,
             id: this.getId(),
             image: this.image,
             name: this.name,

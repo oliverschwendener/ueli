@@ -13,7 +13,7 @@ import {
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
-import { basename } from "path";
+import { basename, dirname } from "path";
 import type { FileSearcher } from "./FileSearcher";
 import type { Settings } from "./Settings";
 
@@ -121,6 +121,7 @@ export class FileSearch implements Extension {
                     description: `Open ${isDirectory ? "Folder" : "File"}`,
                 }),
                 description: isDirectory ? "Folder" : "File",
+                details: dirname(filePath),
                 id: `file-search-result:${Buffer.from(filePath).toString("base64")}`,
                 image: { url: filePathIconMap[filePath] },
                 name: basename(filePath),
