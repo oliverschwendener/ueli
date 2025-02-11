@@ -45,7 +45,10 @@ describe(PasswordGeneratorExtension, () => {
         const validateSequentialCharacters = (password: string): boolean => {
             let previousCharacter = "";
             for (const character of password) {
-                if (previousCharacter.charCodeAt(0) + 1 === character.charCodeAt(0)) {
+                if (
+                    previousCharacter.charCodeAt(0) + 1 === character.charCodeAt(0) ||
+                    previousCharacter.charCodeAt(0) - 1 === character.charCodeAt(0)
+                ) {
                     return true;
                 }
 

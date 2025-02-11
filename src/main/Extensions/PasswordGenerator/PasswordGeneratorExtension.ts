@@ -160,7 +160,8 @@ export class PasswordGeneratorExtension implements Extension {
 
                 if (
                     noSequentialCharacters === true &&
-                    previousCharacter.charCodeAt(0) + 1 === nextCharacter.charCodeAt(0)
+                    (previousCharacter.charCodeAt(0) + 1 === nextCharacter.charCodeAt(0) ||
+                        previousCharacter.charCodeAt(0) - 1 === nextCharacter.charCodeAt(0))
                 ) {
                     isValid = false;
                 }
