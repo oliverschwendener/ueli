@@ -21,8 +21,7 @@ export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchR
                 width: "100%",
             }}
         >
-            {/* The left margin makes sure that the icon has the correct space horizontally */}
-            <div style={{ flexShrink: 0, marginLeft: 2 }}>
+            <div style={{ flexShrink: 0 }}>
                 <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={20} />
             </div>
             <Text
