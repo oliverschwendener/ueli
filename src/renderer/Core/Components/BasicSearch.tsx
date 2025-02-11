@@ -171,7 +171,6 @@ export const BasicSearch = ({
                             onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
                             searchResultItems={searchResultItems}
                             selectedItemId={selectedItemId}
-                            searchTerm={searchTerm}
                             layout={searchResultListLayout ?? "compact"}
                         />
                     </div>

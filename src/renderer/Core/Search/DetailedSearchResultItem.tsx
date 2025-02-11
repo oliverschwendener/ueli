@@ -1,6 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
-import { Badge, Text } from "@fluentui/react-components";
-import { useTranslation } from "react-i18next";
+import { Text } from "@fluentui/react-components";
+import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
 
 type DetailedSearchResultListItemProps = {
@@ -8,8 +8,6 @@ type DetailedSearchResultListItemProps = {
 };
 
 export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearchResultListItemProps) => {
-    const { t } = useTranslation();
-
     return (
         <div
             style={{
@@ -23,8 +21,7 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 width: "100%",
             }}
         >
-            {/* The left margin makes sure that the icon has the correct space horizontally */}
-            <div style={{ flexShrink: 0, marginLeft: 2 }}>
+            <div style={{ flexShrink: 0 }}>
                 <SearchResultItemImage image={searchResultItem.image} altText={searchResultItem.name} size={24} />
             </div>
             <div
@@ -59,13 +56,7 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                 )}
             </div>
             <div style={{ flexShrink: 0, display: "flex" }}>
-                <Badge color="subtle" size="small">
-                    {searchResultItem.descriptionTranslation
-                        ? t(searchResultItem.descriptionTranslation.key, {
-                              ns: searchResultItem.descriptionTranslation.namespace,
-                          })
-                        : searchResultItem.description}
-                </Badge>
+                <SearchResultItemDescriptionBadge searchResultItem={searchResultItem} />
             </div>
         </div>
     );

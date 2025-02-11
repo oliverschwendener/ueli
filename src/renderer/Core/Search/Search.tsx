@@ -11,6 +11,7 @@ import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { getSearchResultItemActionByKeyboardshortcut } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
+import { NoResultsFound } from "./NoResultsFound";
 import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
 import type { SearchBarAppearance } from "./SearchBarAppearance";
@@ -287,6 +288,11 @@ export const Search = ({
 
     const { status: rescanStatus } = useRescanStatus();
 
+    const totalNumberOfSearchResultItems = Object.keys(searchResult.value).reduce(
+        (previous, group) => previous + searchResult.value[group].length,
+        0,
+    );
+
     return (
         <BaseLayout
             header={
@@ -326,46 +332,49 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                <>
-                    <ConfirmationDialog
-                        closeDialog={closeConfirmationDialog}
-                        action={confirmationDialog.action.value}
-                    />
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 10,
-                            padding: 10,
-                            boxSizing: "border-box",
-                        }}
-                    >
-                        {Object.keys(searchResult.value)
-                            .filter((group) => searchResult.value[group].length)
-                            .map((group) => (
-                                <div key={`search-result-group-${group}`}>
-                                    <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
-                                        <Text
-                                            size={200}
-                                            weight="medium"
-                                            style={{ color: tokens.colorNeutralForeground4 }}
-                                        >
-                                            {t(`searchResultGroup.${group}`, { ns: "search" })}
-                                        </Text>
+                totalNumberOfSearchResultItems === 0 ? (
+                    <NoResultsFound searchTerm={searchTerm.value} />
+                ) : (
+                    <>
+                        <ConfirmationDialog
+                            closeDialog={closeConfirmationDialog}
+                            action={confirmationDialog.action.value}
+                        />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 10,
+                                padding: 10,
+                                boxSizing: "border-box",
+                            }}
+                        >
+                            {Object.keys(searchResult.value)
+                                .filter((group) => searchResult.value[group].length)
+                                .map((group) => (
+                                    <div key={`search-result-group-${group}`}>
+                                        <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
+                                            <Text
+                                                size={200}
+                                                weight="medium"
+                                                style={{ color: tokens.colorNeutralForeground4 }}
+                                            >
+                                                {t(`searchResultGroup.${group}`, { ns: "search" })}
+                                            </Text>
+                                        </div>
+                                        <SearchResultList
+                                            containerRef={containerRef}
+                                            selectedItemId={selectedItemId.value}
+                                            searchResultItems={searchResult.value[group]}
+                                            onSearchResultItemClick={handleSearchResultItemClickEvent}
+                                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                            layout={layout}
+                                        />
                                     </div>
-                                    <SearchResultList
-                                        containerRef={containerRef}
-                                        selectedItemId={selectedItemId.value}
-                                        searchResultItems={searchResult.value[group]}
-                                        searchTerm={searchTerm.value}
-                                        onSearchResultItemClick={handleSearchResultItemClickEvent}
-                                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                                        layout={layout}
-                                    />
-                                </div>
-                            ))}
-                    </div>
-                </>
+                                ))}
+                        </div>
+                    </>
+                )
             }
             footer={
                 <Footer draggable>
