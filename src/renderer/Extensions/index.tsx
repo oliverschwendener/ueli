@@ -9,6 +9,7 @@ import { CurrencyConversionSettings } from "./CurrencyConversion";
 import { CustomWebSearchSettings } from "./CustomWebSearch";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
+import { PasswordGeneratorSettings } from "./PasswordGenerator";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
@@ -59,6 +60,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         FileSearch: {
             extension: <FileSearch {...props} />,
             settings: <FileSearchSettings />,
+        },
+        PasswordGenerator: {
+            settings: <PasswordGeneratorSettings />,
         },
         SimpleFileSearch: {
             settings: <SimpleFileSearchSettings />,
