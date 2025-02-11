@@ -81,7 +81,7 @@ export class PasswordGeneratorExtension implements Extension {
             before: passwords.map((password, index) => {
                 return {
                     name: password,
-                    description: "Password Generator",
+                    description: "Generated password",
                     descriptionTranslation: {
                         key: "generatorResult",
                         namespace: "extension[PasswordGenerator]",
@@ -171,8 +171,8 @@ export class PasswordGeneratorExtension implements Extension {
                 }
             }
 
-            password += nextCharacter;
             previousCharacter = nextCharacter;
+            password += nextCharacter;
         }
 
         return password;
@@ -211,6 +211,7 @@ export class PasswordGeneratorExtension implements Extension {
 
         if (this.getSettingValue("noSimilarCharacters") === true) {
             charset = charset.replace(/[01ilo|]/gi, "");
+            letterCharset = letterCharset.replace(/[01ilo|]*/gi, "");
         }
 
         return { completeCharset: charset, letterCharset: letterCharset };

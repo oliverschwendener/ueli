@@ -29,6 +29,32 @@ describe(PasswordGeneratorExtension, () => {
             return true;
         };
 
+        const validateDuplicateCharacters = (password: string): boolean => {
+            const characterSet = new Set<string>();
+            for (const character of password) {
+                if (characterSet.has(character)) {
+                    return true;
+                }
+
+                characterSet.add(character);
+            }
+
+            return false;
+        };
+
+        const validateSequentialCharacters = (password: string): boolean => {
+            let previousCharacter = "";
+            for (const character of password) {
+                if (previousCharacter.charCodeAt(0) + 1 === character.charCodeAt(0)) {
+                    return true;
+                }
+
+                previousCharacter = character;
+            }
+
+            return false;
+        };
+
         const validatePasswords = (passwords: string[], settings: PasswordGeneratorSettings): boolean => {
             if (passwords.length !== settings.quantity) {
                 return false;
@@ -72,13 +98,11 @@ describe(PasswordGeneratorExtension, () => {
                     return false;
                 }
 
-                if (settings.noDuplicateCharacters === true) {
-                    // TODO
+                if (settings.noDuplicateCharacters === true && validateDuplicateCharacters(password) === true) {
                     return false;
                 }
 
-                if (settings.noSequentialCharacters === true) {
-                    // TODO
+                if (settings.noSequentialCharacters === true && validateSequentialCharacters(password) === true) {
                     return false;
                 }
             });
@@ -90,7 +114,7 @@ describe(PasswordGeneratorExtension, () => {
             [
                 <PasswordGeneratorSettings>{
                     command: "pw",
-                    quantity: 5,
+                    quantity: 100,
                     passwordLength: 24,
                     includeUppercaseCharacters: true,
                     includeLowercaseCharacters: true,
@@ -103,10 +127,101 @@ describe(PasswordGeneratorExtension, () => {
                     noSequentialCharacters: false,
                 },
             ],
+            [
+                <PasswordGeneratorSettings>{
+                    command: "pw",
+                    quantity: 100,
+                    passwordLength: 24,
+                    includeUppercaseCharacters: true,
+                    includeLowercaseCharacters: true,
+                    includeNumbers: true,
+                    includeSymbols: true,
+                    symbols: PasswordGeneratorDefaultSymbols,
+                    beginWithALetter: true,
+                    noSimilarCharacters: true,
+                    noDuplicateCharacters: false,
+                    noSequentialCharacters: false,
+                },
+            ],
+            [
+                <PasswordGeneratorSettings>{
+                    command: "pw",
+                    quantity: 100,
+                    passwordLength: 24,
+                    includeUppercaseCharacters: true,
+                    includeLowercaseCharacters: true,
+                    includeNumbers: true,
+                    includeSymbols: true,
+                    symbols: PasswordGeneratorDefaultSymbols,
+                    beginWithALetter: true,
+                    noSimilarCharacters: false,
+                    noDuplicateCharacters: true,
+                    noSequentialCharacters: false,
+                },
+            ],
+            [
+                <PasswordGeneratorSettings>{
+                    command: "pw",
+                    quantity: 100,
+                    passwordLength: 24,
+                    includeUppercaseCharacters: true,
+                    includeLowercaseCharacters: true,
+                    includeNumbers: true,
+                    includeSymbols: true,
+                    symbols: PasswordGeneratorDefaultSymbols,
+                    beginWithALetter: false,
+                    noSimilarCharacters: false,
+                    noDuplicateCharacters: false,
+                    noSequentialCharacters: true,
+                },
+            ],
+            [
+                <PasswordGeneratorSettings>{
+                    command: "pw",
+                    quantity: 100,
+                    passwordLength: 24,
+                    includeUppercaseCharacters: false,
+                    includeLowercaseCharacters: false,
+                    includeNumbers: false,
+                    includeSymbols: true,
+                    symbols: "+-*/",
+                    beginWithALetter: false,
+                    noSimilarCharacters: false,
+                    noDuplicateCharacters: false,
+                    noSequentialCharacters: false,
+                },
+            ],
         ])("passwords should be valid compared to the settings", (settings) => {
-            const getValueMock = vi.fn().mockReturnValue(settings);
+            const getValueMock = vi.fn().mockImplementation((k) => {
+                switch (k) {
+                    case "extension[PasswordGenerator].command":
+                        return settings.command;
+                    case "extension[PasswordGenerator].quantity":
+                        return settings.quantity;
+                    case "extension[PasswordGenerator].passwordLength":
+                        return settings.passwordLength;
+                    case "extension[PasswordGenerator].includeUppercaseCharacters":
+                        return settings.includeUppercaseCharacters;
+                    case "extension[PasswordGenerator].includeLowercaseCharacters":
+                        return settings.includeLowercaseCharacters;
+                    case "extension[PasswordGenerator].includeNumbers":
+                        return settings.includeNumbers;
+                    case "extension[PasswordGenerator].includeSymbols":
+                        return settings.includeSymbols;
+                    case "extension[PasswordGenerator].symbols":
+                        return settings.symbols;
+                    case "extension[PasswordGenerator].beginWithALetter":
+                        return settings.beginWithALetter;
+                    case "extension[PasswordGenerator].noSimilarCharacters":
+                        return settings.noSimilarCharacters;
+                    case "extension[PasswordGenerator].noDuplicateCharacters":
+                        return settings.noDuplicateCharacters;
+                    case "extension[PasswordGenerator].noSequentialCharacters":
+                        return settings.noSequentialCharacters;
+                }
+            });
             const settingsManager = <SettingsManager>{
-                getValue: (k, d, s) => getValueMock(k, d, s),
+                getValue: (k, d) => getValueMock(k, d),
             };
 
             const passwordGenerator = new PasswordGeneratorExtension(assetPathResolver, settingsManager);
