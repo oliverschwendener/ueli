@@ -151,11 +151,12 @@ export class WebSearchExtension implements Extension {
         locale: string,
         webSearchEngine: WebSearchEngine,
     ): SearchResultItem {
+        const searchUrl = webSearchEngine.getSearchUrl(searchTerm, locale);
+
         return {
-            defaultAction: createOpenUrlSearchResultAction({
-                url: webSearchEngine.getSearchUrl(searchTerm, locale),
-            }),
+            defaultAction: createOpenUrlSearchResultAction({ url: searchUrl }),
             description: webSearchEngine.getName(),
+            details: searchUrl,
             id: `search-${webSearchEngine.getName()}`,
             name: `Search "${searchTerm}"`,
             image: { url: this.getSearchResultImageUrl(webSearchEngine) },

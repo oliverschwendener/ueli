@@ -39,7 +39,7 @@ const validateCustomSearchEngineSetting = (
         validation.prefix = "prefixError";
     }
 
-    if (existingPrefixes && existingPrefixes.indexOf(engineSetting.prefix) >= 0) {
+    if (existingPrefixes && existingPrefixes.indexOf(engineSetting.prefix.trim()) >= 0) {
         validation.prefix = "prefixInUseError";
     }
 
@@ -170,6 +170,8 @@ export const CustomWebSearchDialog = ({
                                     return;
                                 }
                                 closeDialog();
+                                temporaryCustomSearchEngineSetting.prefix =
+                                    temporaryCustomSearchEngineSetting.prefix.trim();
                                 onSave(temporaryCustomSearchEngineSetting);
                             }}
                             appearance="primary"

@@ -26,6 +26,11 @@ export type SearchResultItem = {
     descriptionTranslation?: { key: string; namespace: string };
 
     /**
+     * The details of the search result item.
+     */
+    details?: string;
+
+    /**
      * The image of the search result item. This image will be used in the search result list.
      */
     image: Image;

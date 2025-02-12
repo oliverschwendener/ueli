@@ -58,6 +58,9 @@ export const BasicSearch = ({
         } else if (event.key === "Enter") {
             event.preventDefault();
             await invokeSelectedSearchResultItem();
+        } else if (event.key === "Escape") {
+            event.preventDefault();
+            goBack();
         }
     };
 
@@ -168,7 +171,6 @@ export const BasicSearch = ({
                             onSearchResultItemDoubleClick={(s) => handleSearchResultItemDoubleClickEvent(s)}
                             searchResultItems={searchResultItems}
                             selectedItemId={selectedItemId}
-                            searchTerm={searchTerm}
                             layout={searchResultListLayout ?? "compact"}
                         />
                     </div>
