@@ -15,6 +15,7 @@ This extension also allows to format the UUID to several different styles in a f
 
 - **UUID Version**: The UUID version, either [v4](<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>), [v6](<https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions_1_and_6_(date-time_and_MAC_address)>) or [v7](<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_7_(timestamp_and_random)>)
 - **Number of UUIDs to generate**: The number of UUIDs that will be created, only applies when using the UI of the extension
+- **Validate UUIDs strictly**: Whether the UUID should validate correctly (with version and time info) or if it just needs to be in the correct format and hex characters
 - **Uppercase**: Whether the characters of the UUID should be uppercase
 - **Hyphen**: Whether the UUID should contain hyphens (-)
 - **Braces**: Whether the UUID should be wrapped in braces ({})

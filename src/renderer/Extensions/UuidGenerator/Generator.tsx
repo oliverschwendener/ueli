@@ -44,6 +44,11 @@ export const Generator = ({
         key: "numberOfUuids",
     });
 
+    const { value: validateStrictly } = useExtensionSetting<boolean>({
+        extensionId,
+        key: "validateStrictly",
+    });
+
     const { value: uppercase, updateValue: setUppercase } = useExtensionSetting<boolean>({
         extensionId,
         key: "uppercase",
@@ -71,6 +76,7 @@ export const Generator = ({
             const uuids = await contextBridge.invokeExtension<UuidGeneratorSetting, InvocationResult>(extensionId, {
                 uuidVersion: uuidVersion,
                 numberOfUuids: numberOfUuids,
+                validateStrictly: validateStrictly,
                 generatorFormat: {
                     uppercase: uppercase,
                     hyphens: hyphens,
