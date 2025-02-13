@@ -9,11 +9,8 @@ import {
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type {
-    PasswordGeneratorSettings,
-    PasswordGeneratorSettings as Settings,
-} from "@common/Extensions/PasswordGenerator";
-import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator/PasswordGeneratorDefaultSymbols";
+import type { PasswordGeneratorSettings as Settings } from "@common/Extensions/PasswordGenerator";
+import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
 import { PasswordGenerator } from "./PasswordGenerator";
 
 export class PasswordGeneratorExtension implements Extension {
@@ -147,7 +144,7 @@ export class PasswordGeneratorExtension implements Extension {
     }
 
     private generatePassword(): string {
-        return PasswordGenerator.generatePassword(<PasswordGeneratorSettings>{
+        return PasswordGenerator.generatePassword(<Settings>{
             command: this.getSettingValue("command"),
             quantity: this.getSettingValue("quantity"),
             passwordLength: this.getSettingValue("passwordLength"),
