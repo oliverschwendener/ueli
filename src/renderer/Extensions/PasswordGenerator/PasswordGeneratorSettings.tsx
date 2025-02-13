@@ -132,7 +132,15 @@ export const PasswordGeneratorSettings = () => {
                 <Setting
                     label={t("includeSymbols")}
                     control={
-                        <div>
+                        <div
+                            style={{
+                                flexGrow: 1,
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                                alignItems: "center",
+                            }}
+                        >
                             <Input
                                 style={{ width: 250 }}
                                 value={`${symbols}`}
