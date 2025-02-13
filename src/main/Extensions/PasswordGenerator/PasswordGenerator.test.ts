@@ -1,19 +1,10 @@
 import type { PasswordGeneratorSettings } from "@common/Extensions/PasswordGenerator";
 import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { SettingsManager } from "@Core/SettingsManager";
-import { describe, expect, it, vi } from "vitest";
-import { PasswordGeneratorExtension } from "./PasswordGeneratorExtension";
+import { describe, expect, it } from "vitest";
+import { PasswordGenerator } from "./PasswordGenerator";
 
-describe(PasswordGeneratorExtension, () => {
-    describe(PasswordGeneratorExtension.prototype.getInstantSearchResultItems, () => {
-        const imageFilePath = "/path/to/image";
-        const getExtensionAssetPathMock = vi.fn().mockReturnValue(imageFilePath);
-
-        const assetPathResolver = <AssetPathResolver>{
-            getExtensionAssetPath: (i, f) => getExtensionAssetPathMock(i, f),
-        };
-
+describe(PasswordGenerator, () => {
+    describe(PasswordGenerator.generatePassword, () => {
         const validateSymbols = (password: string, settings: PasswordGeneratorSettings): boolean => {
             const symbolsOnly = password.replace(/abcdefghijklmnopqrstuvwxyz0123456789/gi, "");
             if (settings.includeSymbols === false && symbolsOnly.length > 0) {
@@ -195,43 +186,9 @@ describe(PasswordGeneratorExtension, () => {
                 },
             ],
         ])("passwords should be valid compared to the settings", (settings) => {
-            const getValueMock = vi.fn().mockImplementation((k) => {
-                switch (k) {
-                    case "extension[PasswordGenerator].command":
-                        return settings.command;
-                    case "extension[PasswordGenerator].quantity":
-                        return settings.quantity;
-                    case "extension[PasswordGenerator].passwordLength":
-                        return settings.passwordLength;
-                    case "extension[PasswordGenerator].includeUppercaseCharacters":
-                        return settings.includeUppercaseCharacters;
-                    case "extension[PasswordGenerator].includeLowercaseCharacters":
-                        return settings.includeLowercaseCharacters;
-                    case "extension[PasswordGenerator].includeNumbers":
-                        return settings.includeNumbers;
-                    case "extension[PasswordGenerator].includeSymbols":
-                        return settings.includeSymbols;
-                    case "extension[PasswordGenerator].symbols":
-                        return settings.symbols;
-                    case "extension[PasswordGenerator].beginWithALetter":
-                        return settings.beginWithALetter;
-                    case "extension[PasswordGenerator].noSimilarCharacters":
-                        return settings.noSimilarCharacters;
-                    case "extension[PasswordGenerator].noDuplicateCharacters":
-                        return settings.noDuplicateCharacters;
-                    case "extension[PasswordGenerator].noSequentialCharacters":
-                        return settings.noSequentialCharacters;
-                }
-            });
-            const settingsManager = <SettingsManager>{
-                getValue: (k, d) => getValueMock(k, d),
-            };
-
-            const passwordGenerator = new PasswordGeneratorExtension(assetPathResolver, settingsManager);
-
             expect(
                 validatePasswords(
-                    passwordGenerator.getInstantSearchResultItems(settings.command).before.map((result) => result.name),
+                    Array.from({ length: settings.quantity }, () => PasswordGenerator.generatePassword(settings)),
                     settings,
                 ),
             ).toEqual(true);

@@ -9,8 +9,12 @@ import {
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { PasswordGeneratorSettings as Settings } from "@common/Extensions/PasswordGenerator";
+import type {
+    PasswordGeneratorSettings,
+    PasswordGeneratorSettings as Settings,
+} from "@common/Extensions/PasswordGenerator";
 import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator/PasswordGeneratorDefaultSymbols";
+import { PasswordGenerator } from "./PasswordGenerator";
 
 export class PasswordGeneratorExtension implements Extension {
     public readonly id = "PasswordGenerator";
@@ -29,6 +33,11 @@ export class PasswordGeneratorExtension implements Extension {
         noSimilarCharacters: false,
         noDuplicateCharacters: false,
         noSequentialCharacters: false,
+    };
+
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[PasswordGenerator]",
     };
 
     public readonly author = {
@@ -71,10 +80,7 @@ export class PasswordGeneratorExtension implements Extension {
         }
 
         const quantity = this.getSettingValue("quantity");
-        const passwords: string[] = [];
-        for (let index = 0; index < quantity; index++) {
-            passwords.push(this.generatePassword());
-        }
+        const passwords = Array.from({ length: quantity }, () => this.generatePassword());
 
         return {
             after: [],
@@ -141,80 +147,19 @@ export class PasswordGeneratorExtension implements Extension {
     }
 
     private generatePassword(): string {
-        const passwordLength = this.getSettingValue("passwordLength");
-        const beginWithALetter = this.getSettingValue("beginWithALetter");
-        const noDuplicateCharacters = this.getSettingValue("noDuplicateCharacters");
-        const noSequentialCharacters = this.getSettingValue("noSequentialCharacters");
-        const charset = this.determineCharset();
-
-        let password = "";
-        let previousCharacter = "";
-        for (let index = 0; index < passwordLength; index++) {
-            let nextCharacter = "";
-            let isValid = false;
-            while (isValid === false) {
-                isValid = true;
-                nextCharacter = this.pickCharacter(
-                    index === 0 && beginWithALetter ? charset.letterCharset : charset.completeCharset,
-                );
-
-                if (
-                    noSequentialCharacters === true &&
-                    (previousCharacter.charCodeAt(0) + 1 === nextCharacter.charCodeAt(0) ||
-                        previousCharacter.charCodeAt(0) - 1 === nextCharacter.charCodeAt(0))
-                ) {
-                    isValid = false;
-                }
-
-                if (isValid === true && noDuplicateCharacters === true) {
-                    charset.letterCharset = charset.letterCharset.replace(nextCharacter, "");
-                    charset.completeCharset = charset.completeCharset.replace(nextCharacter, "");
-                }
-            }
-
-            previousCharacter = nextCharacter;
-            password += nextCharacter;
-        }
-
-        return password;
-    }
-
-    private pickCharacter(charset: string) {
-        const randomNumber = Math.floor(Math.random() * (charset.length + 1));
-        return charset.charAt(randomNumber);
-    }
-
-    private determineCharset(): { completeCharset: string; letterCharset: string } {
-        const uppercaseCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const lowercaseCharacters = "abcdefghijklmnopqrstuvwxyz";
-        const numbers = "0123456789";
-        const symbols = this.getSettingValue("symbols");
-
-        let charset: string = "";
-        let letterCharset: string = "";
-        if (this.getSettingValue("includeUppercaseCharacters") === true) {
-            charset += uppercaseCharacters;
-            letterCharset += uppercaseCharacters;
-        }
-
-        if (this.getSettingValue("includeLowercaseCharacters") === true) {
-            charset += lowercaseCharacters;
-            letterCharset += lowercaseCharacters;
-        }
-
-        if (this.getSettingValue("includeNumbers") === true) {
-            charset += numbers;
-        }
-
-        if (this.getSettingValue("includeSymbols") === true) {
-            charset += symbols;
-        }
-
-        if (this.getSettingValue("noSimilarCharacters") === true) {
-            charset = charset.replace(/[01ilo|]/gi, "");
-            letterCharset = letterCharset.replace(/[01ilo|]*/gi, "");
-        }
-
-        return { completeCharset: charset, letterCharset: letterCharset };
+        return PasswordGenerator.generatePassword(<PasswordGeneratorSettings>{
+            command: this.getSettingValue("command"),
+            quantity: this.getSettingValue("quantity"),
+            passwordLength: this.getSettingValue("passwordLength"),
+            includeUppercaseCharacters: this.getSettingValue("includeUppercaseCharacters"),
+            includeLowercaseCharacters: this.getSettingValue("includeLowercaseCharacters"),
+            includeNumbers: this.getSettingValue("includeNumbers"),
+            includeSymbols: this.getSettingValue("includeSymbols"),
+            symbols: this.getSettingValue("symbols"),
+            beginWithALetter: this.getSettingValue("beginWithALetter"),
+            noSimilarCharacters: this.getSettingValue("noSimilarCharacters"),
+            noDuplicateCharacters: this.getSettingValue("noDuplicateCharacters"),
+            noSequentialCharacters: this.getSettingValue("noSequentialCharacters"),
+        });
     }
 }
