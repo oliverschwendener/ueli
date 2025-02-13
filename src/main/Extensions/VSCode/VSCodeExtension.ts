@@ -310,7 +310,8 @@ export class VSCodeExtension implements Extension {
     private getFilePathItem(path: string, template: string, isDir: boolean): SearchResultItem {
         return {
             id: `vscode-filepath-${path}`,
-            name: path,
+            name: Path.basename(path),
+            details: path,
             description: isDir ? "Folder" : "File",
             image: isDir ? this.getImage() : this.getDefaultFileImage(),
             defaultAction: {
