@@ -10,7 +10,7 @@ import {
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { PasswordGeneratorSettings as Settings } from "@common/Extensions/PasswordGenerator";
-import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator/PasswordGeneratorDefaultSymbols";
+import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
 
 export class PasswordGeneratorExtension implements Extension {
     public readonly id = "PasswordGenerator";
