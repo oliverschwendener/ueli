@@ -1,3 +1,4 @@
+import type { DragAndDrop } from "./DragAndDrop";
 import type { Image } from "./Image";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
@@ -45,4 +46,9 @@ export type SearchResultItem = {
      * Additional actions that can be invoked via the additional action menu.
      */
     additionalActions?: SearchResultItemAction[];
+
+    /**
+     * Optional arguments for drag & drop
+     */
+    dragAndDrop?: DragAndDrop;
 };

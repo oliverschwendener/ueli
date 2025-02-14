@@ -54,7 +54,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
                 this.logger.warn(`Failed to generate icon for "${FullName}". Using generic icon instead`);
             }
 
-            return new WindowsApplication(BaseName, FullName, icon ?? this.getGenericAppIcon());
+            return new WindowsApplication(BaseName, FullName, icon ?? this.getGenericAppIcon(), { filePath: FullName });
         });
     }
 

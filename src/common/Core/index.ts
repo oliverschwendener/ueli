@@ -1,6 +1,7 @@
 export * from "./AboutUeli";
 export * from "./ContextBridge";
 export * from "./createEmptyInstantSearchResult";
+export * from "./DragAndDrop";
 export * as Extension from "./Extension";
 export * from "./ExtensionInfo";
 export * from "./FluentIcon";

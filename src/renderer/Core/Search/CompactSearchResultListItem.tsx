@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
+import { DragIndicator } from "./DragIndicator";
 import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
 
@@ -34,7 +35,8 @@ export const CompactSearchResultListItem = ({ searchResultItem }: CompactSearchR
             >
                 {searchResultItem.name}
             </Text>
-            <div style={{ flexShrink: 0, display: "flex" }}>
+            <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 5 }}>
+                {searchResultItem.dragAndDrop && <DragIndicator />}
                 <SearchResultItemDescriptionBadge searchResultItem={searchResultItem} />
             </div>
         </div>

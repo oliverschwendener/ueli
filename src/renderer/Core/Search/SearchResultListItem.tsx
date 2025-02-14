@@ -50,6 +50,13 @@ export const SearchResultListItem = ({
             onDoubleClick={onDoubleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            draggable={!!searchResultItem.dragAndDrop}
+            onDragStart={(event) => {
+                if (searchResultItem.dragAndDrop) {
+                    event.preventDefault();
+                    window.ContextBridge.ipcRenderer.send("dragStarted", searchResultItem.dragAndDrop);
+                }
+            }}
             style={{
                 position: "relative",
                 backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,

@@ -2,6 +2,7 @@ import {
     createCopyToClipboardAction,
     createOpenFileAction,
     createShowItemInFileExplorerAction,
+    type DragAndDrop,
     type SearchResultItem,
 } from "@common/Core";
 import type { Image } from "@common/Core/Image";
@@ -12,6 +13,7 @@ export class WindowsApplication implements Application {
         private readonly name: string,
         private readonly filePath: string,
         private readonly image: Image,
+        private readonly dragAndDrop?: DragAndDrop,
     ) {}
 
     public toSearchResultItem(): SearchResultItem {
@@ -25,6 +27,7 @@ export class WindowsApplication implements Application {
             id: this.getId(),
             name: this.name,
             image: this.image,
+            dragAndDrop: this.dragAndDrop,
             defaultAction: createOpenFileAction({
                 filePath: this.filePath,
                 description: "Open application",
