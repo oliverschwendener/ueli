@@ -171,6 +171,49 @@ describe(NodeJsFileSystemUtility, () => {
         });
     });
 
+    describe(NodeJsFileSystemUtility.prototype.readDirectorySync, () => {
+        it("should return a list of absolute folder and file paths when reading a folder", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const folderPath = join(tempFolderPath, "folder");
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(folderPath, "file2.txt");
+
+            await fileSystemUtility.createFolder(folderPath);
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = fileSystemUtility.readDirectorySync(tempFolderPath, false);
+
+            expect(actual).toEqual([filePath1, folderPath]);
+        });
+
+        it("should return a list of absolute folder and file paths when reading a folder recursively", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const folderPath = join(tempFolderPath, "folder");
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(folderPath, "file2.txt");
+
+            await fileSystemUtility.createFolder(folderPath);
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = fileSystemUtility.readDirectorySync(tempFolderPath, true);
+
+            expect(actual).toEqual([filePath1, folderPath, filePath2]);
+        });
+
+        it("should return an empty array when the given folder path is empty", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const folderPath = join(tempFolderPath, "folder");
+
+            await fileSystemUtility.createFolder(folderPath);
+
+            const actual = fileSystemUtility.readDirectorySync(folderPath);
+
+            expect(actual).toEqual([]);
+        });
+    });
+
     describe(NodeJsFileSystemUtility.prototype.readFile, () => {
         it("should read the contents of a file as a buffer", async () => {
             const fileSystemUtility = new NodeJsFileSystemUtility();

@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
@@ -64,6 +65,7 @@ export class VSCodeExtension implements Extension {
         private readonly logger: Logger,
         private readonly settingsManager: SettingsManager,
         private readonly fileImageGenerator: FileImageGenerator,
+        private readonly fileSystemUtility: FileSystemUtility,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
@@ -235,9 +237,17 @@ export class VSCodeExtension implements Extension {
             this.getSettingDefaultValue("showPath"),
         );
 
-        const searchResultItems = this.recents.map((recent) => this.getSearchResultItem(recent, template, showPath));
-
         searchTerm = searchTerm.replace(this.getPrefix() + " ", "").trim();
+
+        if (!isPath(searchTerm)) {
+            return this.getRecentSearchResults(searchTerm, template, showPath);
+        } else {
+            return this.getFilesystemSearchResults(searchTerm, template);
+        }
+    }
+
+    private getRecentSearchResults(searchTerm: string, template: string, showPath: boolean): InstantSearchResultItems {
+        const searchResultItems = this.recents.map((recent) => this.getSearchResultItem(recent, template, showPath));
 
         if (searchTerm === "") {
             return {
@@ -280,6 +290,39 @@ export class VSCodeExtension implements Extension {
         };
     }
 
+    private instant: SearchResultItem[] = [];
+
+    private getFilesystemSearchResults(searchTerm: string, template: string): InstantSearchResultItems {
+        searchTerm = searchTerm.replace("~", (process.env as Record<string, string>).HOME);
+
+        if (this.fileSystemUtility.isDirectory(searchTerm)) {
+            const entries = this.fileSystemUtility.readDirectorySync(searchTerm, false);
+
+            this.instant = entries.map((e) => this.getFilePathItem(e, template, this.fileSystemUtility.isDirectory(e)));
+        }
+
+        return {
+            after: this.instant,
+            before: [],
+        };
+    }
+
+    private getFilePathItem(path: string, template: string, isDir: boolean): SearchResultItem {
+        return {
+            id: `vscode-filepath-${path}`,
+            name: Path.basename(path),
+            details: path,
+            description: isDir ? "Folder" : "File",
+            image: isDir ? this.getImage() : this.getDefaultFileImage(),
+            defaultAction: {
+                handlerId: "Commandline",
+                description: `Open ${path} in VSCode`,
+                argument: template.replace("%s", path),
+                hideWindowAfterInvocation: true,
+            },
+        };
+    }
+
     private getPrefix(): string {
         return this.settingsManager.getValue<string>(
             `extension[${this.id}].prefix`,
@@ -287,3 +330,11 @@ export class VSCodeExtension implements Extension {
         );
     }
 }
+
+export const isPath = (searchTerm: string | null | undefined) => {
+    if (!searchTerm) {
+        return false;
+    }
+    const windowMatch = searchTerm.match(/[A-Z]:.*/) !== null;
+    return searchTerm.startsWith("/") || searchTerm.startsWith("~") || windowMatch;
+};
