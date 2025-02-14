@@ -9,6 +9,7 @@ export interface FileSystemUtility {
     readJsonFile<T>(filePath: string): Promise<T>;
     readJsonFileSync<T>(filePath: string): T;
     readDirectory(folderPath: string, recursive?: boolean): Promise<string[]>;
+    readDirectorySync(folderPath: string, recursive?: boolean): string[];
     removeFile(filePath: string): Promise<void>;
     removeFileSync(filePath: string): void;
     writeTextFile(data: string, filePath: string): Promise<void>;
