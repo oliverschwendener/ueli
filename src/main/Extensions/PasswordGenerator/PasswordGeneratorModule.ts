@@ -1,18 +1,14 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { VSCodeExtension } from "./VSCodeExtension";
+import { PasswordGeneratorExtension } from "./PasswordGeneratorExtension";
 
-export class VSCodeModule implements ExtensionModule {
+export class PasswordGeneratorModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
         return {
-            extension: new VSCodeExtension(
-                moduleRegistry.get("OperatingSystem"),
+            extension: new PasswordGeneratorExtension(
                 moduleRegistry.get("AssetPathResolver"),
-                moduleRegistry.get("Logger"),
                 moduleRegistry.get("SettingsManager"),
-                moduleRegistry.get("FileImageGenerator"),
-                moduleRegistry.get("FileSystemUtility"),
             ),
         };
     }
