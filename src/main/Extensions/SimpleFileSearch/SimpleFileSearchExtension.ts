@@ -73,7 +73,7 @@ export class SimpleFileSearchExtension implements Extension {
                     description: types[filePath] === "folder" ? t("folder") : t("file"),
                     details: dirname(filePath),
                     image: images[filePath] ?? this.getDefaultIcon(),
-                    dragAndDrop: { filePath: filePath },
+                    dragAndDrop: { filePath },
                     defaultAction: createOpenFileAction({
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),
