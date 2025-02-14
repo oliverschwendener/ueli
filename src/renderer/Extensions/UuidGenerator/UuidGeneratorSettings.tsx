@@ -11,6 +11,7 @@ import {
     Input,
     Label,
     Option,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -38,6 +39,11 @@ export const UuidGeneratorSettings = () => {
     const { value: numberOfUuids, updateValue: setNumberOfUuids } = useExtensionSetting<number>({
         extensionId,
         key: "numberOfUuids",
+    });
+
+    const { value: validateStrictly, updateValue: setValidateStrictly } = useExtensionSetting<boolean>({
+        extensionId,
+        key: "validateStrictly",
     });
 
     const { value: uppercase, updateValue: setUppercase } = useExtensionSetting<boolean>({
@@ -121,6 +127,15 @@ export const UuidGeneratorSettings = () => {
                             value={`${numberOfUuids}`}
                             type="number"
                             onChange={(_, { value }) => value && setNumberOfUuids(Math.abs(Number(value)))}
+                        />
+                    }
+                />
+                <Setting
+                    label={t("validateStrictly")}
+                    control={
+                        <Switch
+                            checked={validateStrictly}
+                            onChange={(_, { checked }) => setValidateStrictly(checked)}
                         />
                     }
                 />

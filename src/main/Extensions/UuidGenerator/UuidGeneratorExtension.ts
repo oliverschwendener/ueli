@@ -12,7 +12,7 @@ import {
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
-import type { UuidGeneratorSetting as Settings, UuidFormat, UuidVersion } from "@common/Extensions/UuidGenerator";
+import type { UuidGeneratorSetting as Settings, UuidVersion } from "@common/Extensions/UuidGenerator";
 import { UuidGenerator } from "./UuidGenerator";
 
 export class UuidGeneratorExtension implements Extension {
@@ -22,6 +22,7 @@ export class UuidGeneratorExtension implements Extension {
     public readonly defaultSettings: Settings = {
         uuidVersion: "v4",
         numberOfUuids: 10,
+        validateStrictly: true,
         generatorFormat: { uppercase: false, hyphens: true, braces: false, quotes: false },
         searchResultFormats: [],
     };
@@ -38,7 +39,8 @@ export class UuidGeneratorExtension implements Extension {
     ) {}
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
-        const uuidFormats: UuidFormat[] = this.getSettingValue("searchResultFormats");
+        const uuidFormats = this.getSettingValue("searchResultFormats");
+        const validateStrictly = this.getSettingValue("validateStrictly");
 
         let uuidSearchTerm = searchTerm;
         if (uuidSearchTerm.toLowerCase().startsWith("uuid") || uuidSearchTerm.toLowerCase().startsWith("guid")) {
@@ -56,7 +58,7 @@ export class UuidGeneratorExtension implements Extension {
             return {
                 after: [],
                 before: uuidFormats.map((format, index) => {
-                    const formattedUuid = UuidGenerator.format(possibleUuid, format);
+                    const formattedUuid = UuidGenerator.format(possibleUuid, format, validateStrictly);
 
                     return {
                         name: formattedUuid,
@@ -142,6 +144,7 @@ export class UuidGeneratorExtension implements Extension {
                 openGeneratorName: "UUID / GUID Generator",
                 uuidVersion: "UUID Version",
                 numberOfUuids: "Number of UUIDs",
+                validateStrictly: "Validate UUIDs strictly",
                 uppercase: "Uppercase",
                 hyphens: "Hyphens",
                 braces: "Braces",
@@ -158,6 +161,7 @@ export class UuidGeneratorExtension implements Extension {
                 generatorResult: "UUID / GUID",
                 uuidVersion: "UUID Version",
                 numberOfUuids: "Anzahl UUIDs",
+                validateStrictly: "UUIDs strikt validieren",
                 uppercase: "Grossbuchstaben",
                 hyphens: "Bindestriche",
                 braces: "Geschweifte Klammern",
@@ -180,8 +184,12 @@ export class UuidGeneratorExtension implements Extension {
         };
     }
 
-    public getSettingDefaultValue(key: keyof Settings) {
+    public getSettingDefaultValue<T extends keyof Settings>(key: T): Settings[T] {
         return this.defaultSettings[key];
+    }
+
+    private getSettingValue<T extends keyof Settings>(key: T): Settings[T] {
+        return this.settingsManager.getValue(getExtensionSettingKey(this.id, key), this.getSettingDefaultValue(key));
     }
 
     public async invoke(settings: Settings): Promise<string[]> {
@@ -225,17 +233,12 @@ export class UuidGeneratorExtension implements Extension {
             }
         }
 
-        return UuidGenerator.format(uuid, { uppercase, hyphens, braces, quotes });
-    }
-
-    private getSettingValue<T>(key: keyof Settings): T {
-        return this.settingsManager.getValue<T>(
-            getExtensionSettingKey(this.id, key),
-            <T>this.getSettingDefaultValue(key),
-        );
+        return UuidGenerator.format(uuid, { uppercase, hyphens, braces, quotes }, true);
     }
 
     private validateUuid(uuid: string): boolean {
-        return UuidGenerator.validateUuid(uuid);
+        return this.getSettingValue("validateStrictly") === true
+            ? UuidGenerator.validateUuidStrictly(uuid)
+            : UuidGenerator.validateUuid(uuid);
     }
 }

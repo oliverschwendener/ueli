@@ -14,8 +14,11 @@ export class UuidGenerator {
         return uuidv7();
     }
 
-    public static format(uuid: string, format: UuidFormat): string {
-        if (!uuidValidate(uuid)) {
+    public static format(uuid: string, format: UuidFormat, validateStrictly: boolean): string {
+        if (
+            (validateStrictly === true && !this.validateUuidStrictly(uuid)) ||
+            (validateStrictly === false && !this.validateUuid(uuid))
+        ) {
             throw new Error("Invalid UUID");
         }
 
@@ -71,7 +74,11 @@ export class UuidGenerator {
         return formattedUuid;
     }
 
-    public static validateUuid(uuid: string): boolean {
+    public static validateUuidStrictly(uuid: string): boolean {
         return uuidValidate(uuid);
+    }
+
+    public static validateUuid(uuid: string): boolean {
+        return /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi.test(uuid);
     }
 }
