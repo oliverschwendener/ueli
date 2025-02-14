@@ -50,7 +50,7 @@ const platformSpecificConfig = {
         linux: {
             icon: "assets/Build/app-icon-dark.png",
             category: "Utility",
-            target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
+            target: [{ target: "AppImage" }, { target: "deb" }, { target: "rpm" }, { target: "zip" }],
         },
     },
 };
