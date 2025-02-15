@@ -2,8 +2,11 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Button, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const FileExtensions = () => {
+    const { t } = useTranslation("extension[ApplicationSearch]");
+
     const [newFileExtension, setNewFileExtension] = useState<string>("");
 
     const { value: fileExtensions, updateValue: setFileExtensions } = useExtensionSetting<string[]>({
@@ -27,7 +30,7 @@ export const FileExtensions = () => {
                     readOnly
                     value={fileExtension}
                     contentAfter={
-                        <Tooltip content="Remove" relationship="label" withArrow>
+                        <Tooltip content={t("remove")} relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"
@@ -40,10 +43,10 @@ export const FileExtensions = () => {
             ))}
             <Input
                 value={newFileExtension}
-                placeholder="Add another file extension"
+                placeholder={t("addFileExtension")}
                 onChange={(_, { value }) => setNewFileExtension(value)}
                 contentAfter={
-                    <Tooltip content="Add" relationship="label" withArrow>
+                    <Tooltip content={t("add")} relationship="label" withArrow>
                         <Button
                             appearance="subtle"
                             size="small"

@@ -71,6 +71,18 @@ export class ApplicationSearch implements Extension {
                 openApplicationAsAdministrator: "Open as admin",
                 copyFilePathToClipboard: "Copy file path to clipboard",
                 advanced: "Advanced",
+
+                // Settings
+                general: "General",
+                folders: "Folders",
+                fileExtensions: "File extensions",
+                folderDoesNotExist: "Folder does not exist",
+                add: "Add",
+                remove: "Remove",
+                addFolder: "Add folder",
+                chooseFolder: "Chooser folder",
+                addFileExtension: "Add file extension",
+                includeAppsFromWindowsStore: "Include apps from Windows Store",
             },
             "de-CH": {
                 extensionName: "Anwendungssuche",
@@ -79,6 +91,18 @@ export class ApplicationSearch implements Extension {
                 openApplicationAsAdministrator: "Anwendung als Administrator starten",
                 copyFilePathToClipboard: "Dateipfad in Zwischenablage kopieren",
                 advanced: "Erweitert",
+
+                // Settings
+                general: "Allgemein",
+                folders: "Ordner",
+                fileExtensions: "Dateierweiterungen",
+                folderDoesNotExist: "Ordner existiert nicht",
+                add: "Hinzufügen",
+                remove: "Entfernen",
+                addFolder: "Ordner hinzufügen",
+                chooseFolder: "Ordner auswählen",
+                addFileExtension: "Dateierweiterung hinzufügen",
+                includeAppsFromWindowsStore: "Apps aus dem Windows Store einbeziehen",
             },
         };
     }
