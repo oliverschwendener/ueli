@@ -1,6 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
-import { DragIndicator } from "./DragIndicator";
 import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
 
@@ -56,8 +55,7 @@ export const DetailedSearchResultListItem = ({ searchResultItem }: DetailedSearc
                     </Text>
                 )}
             </div>
-            <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 5 }}>
-                {searchResultItem.dragAndDrop && <DragIndicator />}
+            <div style={{ flexShrink: 0, display: "flex" }}>
                 <SearchResultItemDescriptionBadge searchResultItem={searchResultItem} />
             </div>
         </div>
