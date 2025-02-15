@@ -1,9 +1,12 @@
 import { useExtensionSetting } from "@Core/Hooks";
-import { Button, Input, Tooltip } from "@fluentui/react-components";
+import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { AddRegular, DismissRegular, FolderRegular } from "@fluentui/react-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Folders = () => {
+    const { t } = useTranslation("extension[ApplicationSearch]");
+
     const { value: folders, updateValue: setFolders } = useExtensionSetting<string[]>({
         extensionId: "ApplicationSearch",
         key: "windowsFolders",
@@ -27,6 +30,8 @@ export const Folders = () => {
         }
     };
 
+    const newFolderExists = window.ContextBridge.fileExists(newFolder);
+
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {folders.map((folder) => (
@@ -34,7 +39,7 @@ export const Folders = () => {
                     readOnly
                     value={folder}
                     contentAfter={
-                        <Tooltip content="Remove" relationship="label" withArrow>
+                        <Tooltip content={t("remove")} relationship="label" withArrow>
                             <Button
                                 size="small"
                                 appearance="subtle"
@@ -45,31 +50,39 @@ export const Folders = () => {
                     }
                 />
             ))}
-            <Input
-                value={newFolder}
-                placeholder="Add another folder"
-                onChange={(_, { value }) => setNewFolder(value)}
-                contentAfter={
-                    <>
-                        <Tooltip content="Choose folder" relationship="label" withArrow>
-                            <Button
-                                appearance="subtle"
-                                size="small"
-                                icon={<FolderRegular />}
-                                onClick={() => chooseFolder()}
-                            />
-                        </Tooltip>
-                        <Tooltip content="Add" relationship="label" withArrow>
-                            <Button
-                                appearance="subtle"
-                                size="small"
-                                icon={<AddRegular />}
-                                onClick={() => addFolder(newFolder)}
-                            />
-                        </Tooltip>
-                    </>
+            <Field
+                validationMessage={
+                    newFolder.length === 0 ? undefined : newFolderExists ? undefined : t("folderDoesNotExist")
                 }
-            />
+                validationState={newFolder.length === 0 ? undefined : newFolderExists ? "success" : "error"}
+            >
+                <Input
+                    value={newFolder}
+                    placeholder={t("addFolder")}
+                    onChange={(_, { value }) => setNewFolder(value)}
+                    contentAfter={
+                        <>
+                            <Tooltip content={t("chooseFolder")} relationship="label" withArrow>
+                                <Button
+                                    appearance="subtle"
+                                    size="small"
+                                    icon={<FolderRegular />}
+                                    onClick={() => chooseFolder()}
+                                />
+                            </Tooltip>
+                            <Tooltip content={t("add")} relationship="label" withArrow>
+                                <Button
+                                    appearance="subtle"
+                                    size="small"
+                                    icon={<AddRegular />}
+                                    disabled={newFolder.length === 0 || !newFolderExists}
+                                    onClick={() => addFolder(newFolder)}
+                                />
+                            </Tooltip>
+                        </>
+                    }
+                />
+            </Field>
         </div>
     );
 };

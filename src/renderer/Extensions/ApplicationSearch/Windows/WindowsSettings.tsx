@@ -3,10 +3,13 @@ import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Switch } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 import { FileExtensions } from "./FileExtensions";
 import { Folders } from "./Folders";
 
 export const WindowsSettings = () => {
+    const { t } = useTranslation("extension[ApplicationSearch]");
+
     const { value: includeWindowsStoreApps, updateValue: setIncludeWindowsStoreApps } = useExtensionSetting<boolean>({
         extensionId: "ApplicationSearch",
         key: "includeWindowsStoreApps",
@@ -14,9 +17,9 @@ export const WindowsSettings = () => {
 
     return (
         <SettingGroupList>
-            <SettingGroup title="General">
+            <SettingGroup title={t("general")}>
                 <Setting
-                    label="Include Apps from Windows Store"
+                    label={t("includeAppsFromWindowsStore")}
                     control={
                         <Switch
                             checked={includeWindowsStoreApps}
@@ -25,10 +28,10 @@ export const WindowsSettings = () => {
                     }
                 />
             </SettingGroup>
-            <SettingGroup title="Folders">
+            <SettingGroup title={t("folders")}>
                 <Folders />
             </SettingGroup>
-            <SettingGroup title="File Extensions">
+            <SettingGroup title={t("fileExtensions")}>
                 <FileExtensions />
             </SettingGroup>
         </SettingGroupList>
