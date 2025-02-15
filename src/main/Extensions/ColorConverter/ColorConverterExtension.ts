@@ -74,7 +74,7 @@ export class ColorConverterExtension implements Extension {
             after: this.colorConverter
                 .convertFromString(searchTerm)
                 .filter(({ format }) => this.getEnabledColorFormats().includes(format))
-                .map(({ format, value }) => {
+                .map(({ format, value, name: details }) => {
                     const hexColor = this.colorConverter.getRgbColor(value);
 
                     return {
@@ -87,6 +87,7 @@ export class ColorConverterExtension implements Extension {
                             },
                         }),
                         description: t("color", { format }),
+                        details,
                         id: `color-${value}-${format}`,
                         image: hexColor ? this.getColorImage(hexColor) : this.getImage(),
                         name: value,

@@ -52,6 +52,20 @@ src/common/Extensions/JetBrainsToolbox @scomans
 src/main/Extensions/JetBrainsToolbox @scomans
 src/renderer/Extensions/JetBrainsToolbox @scomans
 
+# PasswordGenerator
+assets/Extensions/PasswordGenerator @MarcoSennHaag
+docs/Extensions/PasswordGenerator @MarcoSennHaag
+src/common/Extensions/PasswordGenerator @MarcoSennHaag
+src/main/Extensions/PasswordGenerator @MarcoSennHaag
+src/renderer/Extensions/PasswordGenerator @MarcoSennHaag
+
+# UuidGenerator
+assets/Extensions/UuidGenerator @ChristopherSteiner
+docs/Extensions/UuidGenerator @ChristopherSteiner
+src/common/Extensions/UuidGenerator @ChristopherSteiner
+src/main/Extensions/UuidGenerator @ChristopherSteiner
+src/renderer/Extensions/UuidGenerator @ChristopherSteiner
+
 # VSCode
 assets/Extensions/VSCode @IrishBruse
 docs/Extensions/VSCode @IrishBruse

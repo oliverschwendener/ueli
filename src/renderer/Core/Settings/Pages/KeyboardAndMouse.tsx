@@ -1,5 +1,5 @@
 import { useSetting } from "@Core/Hooks";
-import { Dropdown, Option } from "@fluentui/react-components";
+import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../Setting";
 import { SettingGroup } from "../SettingGroup";
@@ -22,6 +22,11 @@ export const KeyboardAndMouse = () => {
         selectSearchResultItem: t("selectSearchResultItem"),
         invokeSearchResultItem: t("invokeSearchResultItem"),
     };
+
+    const { value: dragAndDropEnabled, updateValue: setDragAndDropEnabled } = useSetting({
+        key: "keyboardAndMouse.dragAndDropEnabled",
+        defaultValue: false,
+    });
 
     return (
         <SettingGroupList>
@@ -56,6 +61,17 @@ export const KeyboardAndMouse = () => {
                                 </Option>
                             ))}
                         </Dropdown>
+                    }
+                />
+            </SettingGroup>
+            <SettingGroup title="Other">
+                <Setting
+                    label={t("dragAndDrop")}
+                    control={
+                        <Switch
+                            checked={dragAndDropEnabled}
+                            onChange={(_, { checked }) => setDragAndDropEnabled(checked)}
+                        />
                     }
                 />
             </SettingGroup>

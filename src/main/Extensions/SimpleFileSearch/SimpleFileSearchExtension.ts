@@ -11,7 +11,7 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { basename } from "path";
+import { basename, dirname } from "path";
 
 export class SimpleFileSearchExtension implements Extension {
     public readonly id = "SimpleFileSearch";
@@ -71,7 +71,9 @@ export class SimpleFileSearchExtension implements Extension {
                     id: `simple-file-search-${filePath}`,
                     name: basename(filePath),
                     description: types[filePath] === "folder" ? t("folder") : t("file"),
+                    details: dirname(filePath),
                     image: images[filePath] ?? this.getDefaultIcon(),
+                    dragAndDrop: { filePath },
                     defaultAction: createOpenFileAction({
                         filePath,
                         description: types[filePath] === "folder" ? t("openFolder") : t("openFile"),

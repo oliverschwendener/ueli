@@ -1,7 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
-import { Text } from "@fluentui/react-components";
 import type { RefObject } from "react";
-import { useTranslation } from "react-i18next";
 import { useSetting } from "../Hooks";
 import { SearchResultListItem } from "./SearchResultListItem";
 import type { SearchResultListLayout } from "./SearchResultListLayout";
@@ -10,7 +8,6 @@ type SearchResultListProps = {
     containerRef: RefObject<HTMLDivElement>;
     selectedItemId: string;
     searchResultItems: SearchResultItem[];
-    searchTerm?: string;
     onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;
     onSearchResultItemDoubleClick: (searchResultItem: SearchResultItem) => void;
     layout: SearchResultListLayout;
@@ -20,21 +17,19 @@ export const SearchResultList = ({
     containerRef,
     selectedItemId,
     searchResultItems,
-    searchTerm,
     onSearchResultItemClick,
     onSearchResultItemDoubleClick,
     layout,
 }: SearchResultListProps) => {
-    const { t } = useTranslation();
-
     const { value: scrollBehavior } = useSetting<ScrollBehavior>({
         key: "window.scrollBehavior",
         defaultValue: "smooth",
     });
 
-    const noResultsFoundMessage = searchTerm
-        ? `${t("noResultsFoundFor", { ns: "search" })} "${searchTerm}"`
-        : t("noResultsFound", { ns: "search" });
+    const { value: dragAndDropEnabled } = useSetting<boolean>({
+        key: "keyboardAndMouse.dragAndDropEnabled",
+        defaultValue: false,
+    });
 
     return (
         <div
@@ -44,11 +39,6 @@ export const SearchResultList = ({
                 gap: 5,
             }}
         >
-            {searchTerm?.length && !searchResultItems.length ? (
-                <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Text>{noResultsFoundMessage}</Text>
-                </div>
-            ) : null}
             {searchResultItems.map((searchResultItem) => (
                 <SearchResultListItem
                     containerRef={containerRef}
@@ -59,6 +49,7 @@ export const SearchResultList = ({
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
                     scrollBehavior={scrollBehavior}
                     layout={layout}
+                    dragAndDropEnabled={dragAndDropEnabled}
                 />
             ))}
         </div>

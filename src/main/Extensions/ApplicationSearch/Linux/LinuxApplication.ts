@@ -18,6 +18,8 @@ export class LinuxApplication implements Application {
                 key: "searchResultItemDescription",
                 namespace: "extension[ApplicationSearch]",
             },
+            details: this.filePath,
+            dragAndDrop: { filePath: this.filePath },
             id: this.getId(),
             name: this.name,
             image: this.image,

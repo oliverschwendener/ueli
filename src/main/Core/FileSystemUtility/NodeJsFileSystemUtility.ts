@@ -1,4 +1,4 @@
-import { access, accessSync, existsSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
+import { access, accessSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
 import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
@@ -99,5 +99,10 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
     public async readDirectory(folderPath: string, recursive?: boolean): Promise<string[]> {
         const fileNames = await readdir(folderPath, { recursive });
         return fileNames.map((fileName) => join(folderPath, fileName));
+    }
+
+    public readDirectorySync(folderPath: string, recursive?: boolean): string[] {
+        const fileNames = readdirSync(folderPath, { recursive });
+        return fileNames.map((fileName) => join(folderPath, fileName.toString()));
     }
 }

@@ -23,6 +23,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("shutdown"),
                 description: t("searchResultItemDescription"),
+                details: 'tell app "System Events" to shut down',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-shutdown-on-dark.png",
@@ -36,6 +37,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("restart"),
                 description: t("searchResultItemDescription"),
+                details: 'tell app "System Events" to restart',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-restart-on-dark.png",
@@ -49,6 +51,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("logOut"),
                 description: t("searchResultItemDescription"),
+                details: 'tell application "System Events" to log out',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-logout-on-dark.png",
@@ -62,6 +65,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("sleep"),
                 description: t("searchResultItemDescription"),
+                details: 'tell application "System Events" to sleep',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-sleep-on-dark.png",
@@ -75,6 +79,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("lock"),
                 description: t("searchResultItemDescription"),
+                details: 'tell application "System Events" to keystroke "q" using {control down, command down}',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-lock-on-dark.png",
@@ -90,6 +95,7 @@ export class MacOsSystemCommandRepository implements SystemCommandRepository {
             MacOsSystemCommand.create({
                 name: t("emptyTrash"),
                 description: t("searchResultItemDescription"),
+                details: 'tell application "Finder" to if ((count of items in trash) > 0) then empty trash',
                 image: this.getImage({
                     fileName: "macos-system-command.png",
                     fileNameOnDarkBackground: "macos-lock-on-dark.png",

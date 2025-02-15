@@ -50,6 +50,7 @@ export class WorkflowExtension implements Extension {
                     hideWindowAfterInvocation: true,
                 },
                 description: t("searchResultItemDescription"),
+                details: workflow.actions.map((action) => action.name).join(", "),
                 id: workflow.id,
                 image: this.getImage(),
                 name: workflow.name,

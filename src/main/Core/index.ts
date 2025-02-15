@@ -12,6 +12,7 @@ export * from "./CommandlineUtility";
 export * from "./DateProvider";
 export * from "./Dialog";
 export * from "./Dock";
+export * from "./DragAndDrop";
 export * from "./EnvironmentVariableProvider";
 export * from "./EventEmitter";
 export * from "./EventSubscriber";

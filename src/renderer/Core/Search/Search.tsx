@@ -11,6 +11,7 @@ import { ActionsMenu } from "./ActionsMenu";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { getSearchResultItemActionByKeyboardshortcut } from "./Helpers";
 import type { KeyboardEventHandler } from "./KeyboardEventHandler";
+import { NoResultsFound } from "./NoResultsFound";
 import { RescanIndicator } from "./RescanIndicator";
 import { SearchBar } from "./SearchBar";
 import type { SearchBarAppearance } from "./SearchBarAppearance";
@@ -18,6 +19,7 @@ import type { SearchBarSize } from "./SearchBarSize";
 import { SearchHistory } from "./SearchHistory";
 import { useSearchHistoryController } from "./SearchHistoryController";
 import { SearchResultList } from "./SearchResultList";
+import type { SearchResultListLayout } from "./SearchResultListLayout";
 import { useSearchViewController } from "./SearchViewController";
 
 type SearchProps = {
@@ -191,6 +193,16 @@ export const Search = ({
                 additionalActionsButtonRef.current?.click();
             },
         },
+        {
+            validate: (event) =>
+                window.ContextBridge.getOperatingSystem() === "macOS"
+                    ? event.key === "l" && event.metaKey
+                    : event.key === "l" && event.ctrlKey,
+            action: () => {
+                userInput.focus();
+                userInput.select();
+            },
+        },
     ];
 
     const keyboardShortcuts: Record<"openSettings" | "openAdditionalActionsMenu", Record<OperatingSystem, string>> = {
@@ -279,7 +291,17 @@ export const Search = ({
         defaultValue: true,
     });
 
+    const { value: layout } = useSetting<SearchResultListLayout>({
+        key: "appearance.searchResultListLayout",
+        defaultValue: "compact",
+    });
+
     const { status: rescanStatus } = useRescanStatus();
+
+    const totalNumberOfSearchResultItems = Object.keys(searchResult.value).reduce(
+        (previous, group) => previous + searchResult.value[group].length,
+        0,
+    );
 
     return (
         <BaseLayout
@@ -320,46 +342,49 @@ export const Search = ({
             }
             contentRef={containerRef}
             content={
-                <>
-                    <ConfirmationDialog
-                        closeDialog={closeConfirmationDialog}
-                        action={confirmationDialog.action.value}
-                    />
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 10,
-                            padding: 10,
-                            boxSizing: "border-box",
-                        }}
-                    >
-                        {Object.keys(searchResult.value)
-                            .filter((group) => searchResult.value[group].length)
-                            .map((group) => (
-                                <div key={`search-result-group-${group}`}>
-                                    <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
-                                        <Text
-                                            size={200}
-                                            weight="medium"
-                                            style={{ color: tokens.colorNeutralForeground4 }}
-                                        >
-                                            {t(`searchResultGroup.${group}`, { ns: "search" })}
-                                        </Text>
+                totalNumberOfSearchResultItems === 0 ? (
+                    <NoResultsFound searchTerm={searchTerm.value} />
+                ) : (
+                    <>
+                        <ConfirmationDialog
+                            closeDialog={closeConfirmationDialog}
+                            action={confirmationDialog.action.value}
+                        />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 10,
+                                padding: 10,
+                                boxSizing: "border-box",
+                            }}
+                        >
+                            {Object.keys(searchResult.value)
+                                .filter((group) => searchResult.value[group].length)
+                                .map((group) => (
+                                    <div key={`search-result-group-${group}`}>
+                                        <div style={{ paddingBottom: 5, paddingLeft: 5 }}>
+                                            <Text
+                                                size={200}
+                                                weight="medium"
+                                                style={{ color: tokens.colorNeutralForeground4 }}
+                                            >
+                                                {t(`searchResultGroup.${group}`, { ns: "search" })}
+                                            </Text>
+                                        </div>
+                                        <SearchResultList
+                                            containerRef={containerRef}
+                                            selectedItemId={selectedItemId.value}
+                                            searchResultItems={searchResult.value[group]}
+                                            onSearchResultItemClick={handleSearchResultItemClickEvent}
+                                            onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
+                                            layout={layout}
+                                        />
                                     </div>
-                                    <SearchResultList
-                                        containerRef={containerRef}
-                                        selectedItemId={selectedItemId.value}
-                                        searchResultItems={searchResult.value[group]}
-                                        searchTerm={searchTerm.value}
-                                        onSearchResultItemClick={handleSearchResultItemClickEvent}
-                                        onSearchResultItemDoubleClick={handleSearchResultItemDoubleClickEvent}
-                                        layout="compact"
-                                    />
-                                </div>
-                            ))}
-                    </div>
-                </>
+                                ))}
+                        </div>
+                    </>
+                )
             }
             footer={
                 <Footer draggable>

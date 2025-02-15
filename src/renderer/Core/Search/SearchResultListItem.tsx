@@ -1,6 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import { tokens } from "@fluentui/react-components";
-import { useEffect, useRef, useState, type ReactElement, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
 import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";
@@ -15,6 +15,7 @@ type SearchResultListItemProps = {
     layout: SearchResultListLayout;
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
+    dragAndDropEnabled: boolean;
 };
 
 export const SearchResultListItem = ({
@@ -25,6 +26,7 @@ export const SearchResultListItem = ({
     searchResultItem,
     scrollBehavior,
     layout,
+    dragAndDropEnabled,
 }: SearchResultListItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -42,11 +44,6 @@ export const SearchResultListItem = ({
         scrollIntoViewIfSelectedAndNotVisible();
     }, [isSelected]);
 
-    const searchResultItemComponent: Record<SearchResultListLayout, () => ReactElement> = {
-        compact: () => <CompactSearchResultListItem searchResultItem={searchResultItem} />,
-        detailed: () => <DetailedSearchResultListItem searchResultItem={searchResultItem} />,
-    };
-
     return (
         <div
             ref={ref}
@@ -55,18 +52,24 @@ export const SearchResultListItem = ({
             onDoubleClick={onDoubleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            draggable={dragAndDropEnabled && searchResultItem.dragAndDrop !== undefined}
+            onDragStart={({ preventDefault }) => {
+                if (dragAndDropEnabled && searchResultItem.dragAndDrop) {
+                    preventDefault();
+                    window.ContextBridge.ipcRenderer.send("dragStarted", searchResultItem.dragAndDrop);
+                }
+            }}
             style={{
                 position: "relative",
                 backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,
-                color: isSelected ? tokens.colorNeutralForeground1Selected : undefined,
                 userSelect: "none",
                 borderRadius: tokens.borderRadiusMedium,
                 cursor: "pointer",
             }}
         >
             {isSelected && <SearchResultListItemSelectedIndicator />}
-
-            {searchResultItemComponent[layout]()}
+            {layout === "compact" && <CompactSearchResultListItem searchResultItem={searchResultItem} />}
+            {layout === "detailed" && <DetailedSearchResultListItem searchResultItem={searchResultItem} />}
         </div>
     );
 };

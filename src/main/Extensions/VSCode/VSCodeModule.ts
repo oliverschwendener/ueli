@@ -12,6 +12,7 @@ export class VSCodeModule implements ExtensionModule {
                 moduleRegistry.get("Logger"),
                 moduleRegistry.get("SettingsManager"),
                 moduleRegistry.get("FileImageGenerator"),
+                moduleRegistry.get("FileSystemUtility"),
             ),
         };
     }

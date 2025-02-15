@@ -1,3 +1,4 @@
+import type { DragAndDrop } from "./DragAndDrop";
 import type { Image } from "./Image";
 import type { SearchResultItemAction } from "./SearchResultItemAction";
 
@@ -26,6 +27,11 @@ export type SearchResultItem = {
     descriptionTranslation?: { key: string; namespace: string };
 
     /**
+     * The details of the search result item.
+     */
+    details?: string;
+
+    /**
      * The image of the search result item. This image will be used in the search result list.
      */
     image: Image;
@@ -40,4 +46,9 @@ export type SearchResultItem = {
      * Additional actions that can be invoked via the additional action menu.
      */
     additionalActions?: SearchResultItemAction[];
+
+    /**
+     * Optional arguments for drag and drop. If given, the search result item will be draggable.
+     */
+    dragAndDrop?: DragAndDrop;
 };

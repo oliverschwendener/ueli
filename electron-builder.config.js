@@ -49,7 +49,7 @@ const platformSpecificConfig = {
         ...baseConfig,
         linux: {
             category: "Utility",
-            target: [{ target: "AppImage" }, { target: "deb" }, { target: "zip" }],
+            target: [{ target: "AppImage" }, { target: "deb" }, { target: "rpm" }, { target: "zip" }],
         },
     },
 };

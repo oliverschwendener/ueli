@@ -87,6 +87,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.DialogModule.bootstrap(moduleRegistry);
     Core.TerminalModule.bootstrap(moduleRegistry);
     Core.ExtensionRegistryModule.bootstrap(moduleRegistry);
+    Core.DragAndDropModule.bootstrap(moduleRegistry);
 
     // Extensions
     Extensions.ExtensionLoader.bootstrap(moduleRegistry);
