@@ -193,6 +193,16 @@ export const Search = ({
                 additionalActionsButtonRef.current?.click();
             },
         },
+        {
+            validate: (event) =>
+                window.ContextBridge.getOperatingSystem() === "macOS"
+                    ? event.key === "l" && event.metaKey
+                    : event.key === "l" && event.ctrlKey,
+            action: () => {
+                userInput.focus();
+                userInput.select();
+            },
+        },
     ];
 
     const keyboardShortcuts: Record<"openSettings" | "openAdditionalActionsMenu", Record<OperatingSystem, string>> = {
