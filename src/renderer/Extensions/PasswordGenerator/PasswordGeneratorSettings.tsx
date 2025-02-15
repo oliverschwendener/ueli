@@ -3,7 +3,8 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Button, Input, Switch } from "@fluentui/react-components";
+import { Button, Input, Switch, Tooltip } from "@fluentui/react-components";
+import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
 export const PasswordGeneratorSettings = () => {
@@ -142,18 +143,21 @@ export const PasswordGeneratorSettings = () => {
                             }}
                         >
                             <Input
-                                style={{ width: 250 }}
+                                style={{ width: 300 }}
                                 value={`${symbols}`}
                                 type="text"
                                 onChange={(_, { value }) => value && setSymbols(value)}
+                                contentAfter={
+                                    <Tooltip content={t("resetSymbols")} relationship="label" withArrow>
+                                        <Button
+                                            size="small"
+                                            appearance="subtle"
+                                            icon={<ArrowCounterclockwiseRegular fontSize={14} />}
+                                            onClick={() => setSymbols(PasswordGeneratorDefaultSymbols)}
+                                        />
+                                    </Tooltip>
+                                }
                             />
-                            <Button
-                                appearance="secondary"
-                                style={{ marginLeft: 8, width: 50 }}
-                                onClick={() => setSymbols(PasswordGeneratorDefaultSymbols)}
-                            >
-                                {t("resetSymbols")}
-                            </Button>
                             <Switch
                                 checked={includeSymbols}
                                 onChange={(_, { checked }) => setIncludeSymbols(checked)}
