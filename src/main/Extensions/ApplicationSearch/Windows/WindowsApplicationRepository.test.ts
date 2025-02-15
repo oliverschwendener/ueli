@@ -85,8 +85,8 @@ describe(WindowsApplicationRepository, () => {
         it("should return manually installed apps and windows store apps when 'include apps from windows store is enabled'", async () =>
             await testGetApplications({
                 expected: [
-                    new WindowsApplication("App1", "PathToApp1", { url: "PathToIcon1" }),
-                    new WindowsApplication("App2", "PathToApp2", { url: "file://path" }),
+                    new WindowsApplication("App1", "PathToApp1", { url: "PathToIcon1" }, { filePath: "PathToApp1" }),
+                    new WindowsApplication("App2", "PathToApp2", { url: "file://path" }, { filePath: "PathToApp2" }),
                     new WindowsApplication("WindowsStoreApp1", "shell:AppsFolder\\1234", {
                         url: "data:image/png;base64,Logo1",
                     }),
@@ -100,8 +100,8 @@ describe(WindowsApplicationRepository, () => {
         it("should return only manually installed apps and when 'include apps from windows store is disabled'", async () =>
             await testGetApplications({
                 expected: [
-                    new WindowsApplication("App1", "PathToApp1", { url: "PathToIcon1" }),
-                    new WindowsApplication("App2", "PathToApp2", { url: "file://path" }),
+                    new WindowsApplication("App1", "PathToApp1", { url: "PathToIcon1" }, { filePath: "PathToApp1" }),
+                    new WindowsApplication("App2", "PathToApp2", { url: "file://path" }, { filePath: "PathToApp2" }),
                 ],
                 includeWindowsStoreApps: false,
             }));

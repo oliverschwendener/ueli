@@ -167,6 +167,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     doubleClickBehavior: "Double click behavior",
                     selectSearchResultItem: "Select search result item",
                     invokeSearchResultItem: "Invoke search result item",
+                    dragAndDrop: "Drag & Drop",
                 },
                 "de-CH": {
                     title: "Tastatur & Maus",
@@ -174,6 +175,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     doubleClickBehavior: "Doppelklick-Verhalten",
                     selectSearchResultItem: "Suchergebniss anwählen",
                     invokeSearchResultItem: "Suchergebniss ausführen",
+                    dragAndDrop: "Drag & Drop",
                 },
             },
         },

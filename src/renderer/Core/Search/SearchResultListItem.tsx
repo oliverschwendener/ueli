@@ -15,6 +15,7 @@ type SearchResultListItemProps = {
     layout: SearchResultListLayout;
     searchResultItem: SearchResultItem;
     scrollBehavior: ScrollBehavior;
+    dragAndDropEnabled: boolean;
 };
 
 export const SearchResultListItem = ({
@@ -25,6 +26,7 @@ export const SearchResultListItem = ({
     searchResultItem,
     scrollBehavior,
     layout,
+    dragAndDropEnabled,
 }: SearchResultListItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -50,6 +52,13 @@ export const SearchResultListItem = ({
             onDoubleClick={onDoubleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            draggable={dragAndDropEnabled && searchResultItem.dragAndDrop !== undefined}
+            onDragStart={({ preventDefault }) => {
+                if (dragAndDropEnabled && searchResultItem.dragAndDrop) {
+                    preventDefault();
+                    window.ContextBridge.ipcRenderer.send("dragStarted", searchResultItem.dragAndDrop);
+                }
+            }}
             style={{
                 position: "relative",
                 backgroundColor: isSelected ? selectedBackgroundColor : isHovered ? hoveredBackgroundColor : undefined,

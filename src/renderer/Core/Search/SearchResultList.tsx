@@ -26,6 +26,11 @@ export const SearchResultList = ({
         defaultValue: "smooth",
     });
 
+    const { value: dragAndDropEnabled } = useSetting<boolean>({
+        key: "keyboardAndMouse.dragAndDropEnabled",
+        defaultValue: false,
+    });
+
     return (
         <div
             style={{
@@ -44,6 +49,7 @@ export const SearchResultList = ({
                     onDoubleClick={() => onSearchResultItemDoubleClick(searchResultItem)}
                     scrollBehavior={scrollBehavior}
                     layout={layout}
+                    dragAndDropEnabled={dragAndDropEnabled}
                 />
             ))}
         </div>

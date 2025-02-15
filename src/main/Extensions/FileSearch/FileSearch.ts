@@ -122,6 +122,7 @@ export class FileSearch implements Extension {
                 }),
                 description: isDirectory ? "Folder" : "File",
                 details: dirname(filePath),
+                dragAndDrop: { filePath },
                 id: `file-search-result:${Buffer.from(filePath).toString("base64")}`,
                 image: { url: filePathIconMap[filePath] },
                 name: basename(filePath),
