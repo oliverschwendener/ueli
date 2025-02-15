@@ -48,7 +48,7 @@ export type SearchResultItem = {
     additionalActions?: SearchResultItemAction[];
 
     /**
-     * Optional arguments for drag & drop
+     * Optional arguments for drag and drop. If given, the search result item will be draggable.
      */
     dragAndDrop?: DragAndDrop;
 };
