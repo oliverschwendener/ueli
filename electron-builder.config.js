@@ -48,6 +48,7 @@ const platformSpecificConfig = {
     linux: {
         ...baseConfig,
         linux: {
+            icon: "build/icons/",
             category: "Utility",
             target: [{ target: "AppImage" }, { target: "deb" }, { target: "rpm" }, { target: "zip" }],
         },
