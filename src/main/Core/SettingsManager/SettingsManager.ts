@@ -15,6 +15,14 @@ export class SettingsManager implements SettingsManagerInterface {
         private readonly safeStorageEncryption: SafeStorageEncryption,
     ) {
         this.settings = this.settingsReader.readSettings();
+
+        const isSharedConfigEnabled = this.getValue<boolean>("general.sharedConfiguration.enabled", false);
+        if (isSharedConfigEnabled === true) {
+            const sharedConfigurationFilePath = this.getValue<string>("general.sharedConfiguration.filePath", "");
+            if (sharedConfigurationFilePath.length > 0) {
+                this.settings = this.settingsReader.readSettingsFromPath(sharedConfigurationFilePath);
+            }
+        }
     }
 
     public getValue<T>(key: string, defaultValue: T, isSensitive?: boolean): T {
@@ -33,6 +41,15 @@ export class SettingsManager implements SettingsManagerInterface {
         await this.saveChanges();
     }
 
+    public async importSettings(filePath: string): Promise<void> {
+        const importSettings = this.settingsReader.readSettingsFromPath(filePath);
+        this.settingsWriter.writeSettings(importSettings);
+    }
+
+    public async exportSettings(filePath: string): Promise<void> {
+        this.settingsWriter.writeSettingsToPath(this.settings, filePath);
+    }
+
     public async resetAllSettings(): Promise<void> {
         for (const key of Object.keys(this.settings)) {
             delete this.settings[key];
@@ -42,7 +59,22 @@ export class SettingsManager implements SettingsManagerInterface {
     }
 
     private async saveChanges(): Promise<void> {
-        await this.settingsWriter.writeSettings(this.settings);
+        const isSharedConfigEnabled = this.getValue<boolean>("general.sharedConfiguration.enabled", false);
+        if (isSharedConfigEnabled === true) {
+            const sharedConfigurationFilePath = this.getValue<string>("general.sharedConfiguration.filePath", "");
+            if (sharedConfigurationFilePath.length > 0) {
+                delete this.settings["general.sharedConfiguration.enabled"];
+                delete this.settings["general.sharedConfiguration.filePath"];
+                this.settingsWriter.writeSettingsToPath(this.settings, sharedConfigurationFilePath);
+
+                await this.settingsWriter.writeSettings({
+                    "general.sharedConfiguration.enabled": true,
+                    "general.sharedConfiguration.filePath": sharedConfigurationFilePath,
+                });
+            }
+        } else {
+            await this.settingsWriter.writeSettings(this.settings);
+        }
     }
 
     private encryptValue<T>(plainText: T): T {

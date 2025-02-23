@@ -1,4 +1,11 @@
-import type { IpcRenderer, OpenDialogOptions, OpenDialogReturnValue, OpenExternalOptions } from "electron";
+import type {
+    IpcRenderer,
+    OpenDialogOptions,
+    OpenDialogReturnValue,
+    OpenExternalOptions,
+    SaveDialogOptions,
+    SaveDialogReturnValue,
+} from "electron";
 import type { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { InstantSearchResultItems } from "./InstantSearchResultItems";
@@ -22,6 +29,7 @@ export type ContextBridge = {
     autostartIsEnabled: () => boolean;
     autostartSettingsChanged: (autostartIsEnabled: boolean) => void;
     copyTextToClipboard: (textToCopy: string) => void;
+    exportSettings: (filePath: string) => Promise<void>;
     extensionDisabled: (extensionId: string) => void;
     extensionEnabled: (extensionId: string) => void;
     fileExists: (filePath: string) => boolean;
@@ -42,6 +50,7 @@ export type ContextBridge = {
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;
     getRescanStatus: () => RescanStatus;
+    importSettings: (filePath: string) => Promise<void>;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;
     invokeExtension: <Argument, Result>(extensionId: string, searchArguments: Argument) => Promise<Result>;
     openExternal: (url: string, options?: OpenExternalOptions) => Promise<void>;
@@ -51,6 +60,7 @@ export type ContextBridge = {
     resetAllSettings: () => Promise<void>;
     searchIndexCacheFileExists: () => boolean;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
+    showSaveDialog: (options: SaveDialogOptions) => Promise<SaveDialogReturnValue>;
     triggerExtensionRescan: (extensionId: string) => Promise<void>;
     updateSettingValue: <Value>(key: string, value: Value, isSensitive?: boolean) => Promise<void>;
 };
