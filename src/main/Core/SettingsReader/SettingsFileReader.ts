@@ -6,8 +6,12 @@ export class SettingsFileReader implements SettingsReader {
     public constructor(private readonly settingsFilePath: string) {}
 
     public readSettings(): Settings {
+        return this.readSettingsFromPath(this.settingsFilePath);
+    }
+
+    public readSettingsFromPath(filePath: string): Settings {
         try {
-            return JSON.parse(readFileSync(this.settingsFilePath, "utf-8"));
+            return JSON.parse(readFileSync(filePath, "utf-8"));
         } catch (error) {
             return {};
         }

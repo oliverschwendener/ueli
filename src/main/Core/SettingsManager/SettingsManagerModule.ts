@@ -41,5 +41,18 @@ export class SettingsManagerModule {
             app.relaunch();
             app.exit();
         });
+
+        ipcMain.handle("exportSettings", async (_, { filePath }) => {
+            await settingsManager.exportSettings(filePath);
+        });
+
+        ipcMain.handle("importSettings", async (_, { filePath }) => {
+            await settingsManager.importSettings(filePath);
+
+            // Because it's the easiest way to reset all settings to their default values in all places, we simply
+            // restart the app.
+            app.relaunch();
+            app.exit();
+        });
     }
 }

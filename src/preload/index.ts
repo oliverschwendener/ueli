@@ -12,6 +12,7 @@ const contextBridgeImplementation: ContextBridge = {
     autostartSettingsChanged: (autostartIsEnabled) =>
         ipcRenderer.send("autostartSettingsChanged", { autostartIsEnabled }),
     copyTextToClipboard: (textToCopy) => ipcRenderer.send("copyTextToClipboard", { textToCopy }),
+    exportSettings: (filePath) => ipcRenderer.invoke("exportSettings", { filePath }),
     extensionDisabled: (extensionId) => ipcRenderer.send("extensionDisabled", { extensionId }),
     extensionEnabled: (extensionId) => ipcRenderer.send("extensionEnabled", { extensionId }),
     fileExists: (filePath: string) => ipcRenderer.sendSync("fileExists", { filePath }),
@@ -37,6 +38,7 @@ const contextBridgeImplementation: ContextBridge = {
     getSettingValue: (key, defaultValue, isSensitive) =>
         ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
     getRescanStatus: () => ipcRenderer.sendSync("getRescanStatus"),
+    importSettings: (filePath) => ipcRenderer.invoke("importSettings", { filePath }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
     invokeExtension: (extensionId, argument) => ipcRenderer.invoke("invokeExtension", { extensionId, argument }),
     openExternal: (url, options) => ipcRenderer.invoke("openExternal", { url, options }),
@@ -46,6 +48,7 @@ const contextBridgeImplementation: ContextBridge = {
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
+    showSaveDialog: (options) => ipcRenderer.invoke("showSaveDialog", { options }),
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),

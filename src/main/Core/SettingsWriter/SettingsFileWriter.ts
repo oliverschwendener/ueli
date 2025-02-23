@@ -6,9 +6,13 @@ export class SettingsFileWriter implements SettingsWriter {
     public constructor(private readonly settingsFilePath: string) {}
 
     public writeSettings(settings: Settings): Promise<void> {
+        return this.writeSettingsToPath(settings, this.settingsFilePath);
+    }
+
+    public writeSettingsToPath(settings: Settings, filePath: string): Promise<void> {
         return new Promise((resolve, reject) => {
             writeFile(
-                this.settingsFilePath,
+                filePath,
                 JSON.stringify(SettingsFileWriter.sortSettingsAlphabetically(settings), null, 4),
                 "utf-8",
                 (error) => (error ? reject(error) : resolve()),
