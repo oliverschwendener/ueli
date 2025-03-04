@@ -1,13 +1,13 @@
 import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { useTranslation } from "react-i18next";
-import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
+import { Configuration } from "./Configuration";
 import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";
 import { HotkeySettings } from "./HotKey";
 import { Language } from "./Language";
 import { SearchHistory } from "./SearchHistory";
-import { SharedConfiguration } from "./SharedConfiguration";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
@@ -29,8 +29,8 @@ export const General = () => {
                 <UrlImageGenerator />
             </SettingGroup>
             {operatingSystem !== "Linux" && <CustomWebBrowser />}
-            <SettingGroup title={t("sharedConfiguration")}>
-                <SharedConfiguration />
+            <SettingGroup title={t("configuration")}>
+                <Configuration />
             </SettingGroup>
         </SettingGroupList>
     );
