@@ -16,16 +16,16 @@ export const General = () => {
 
     return (
         <SettingGroupList>
-            <SettingGroup title="General">
+            <SettingGroup title={t("general")}>
                 <Language />
                 <Autostart />
                 {operatingSystem === "macOS" && <DockSettings />}
             </SettingGroup>
             <HotkeySettings />
-            <SettingGroup title="Search History">
+            <SettingGroup title={t("searchHistory")}>
                 <SearchHistory />
             </SettingGroup>
-            <SettingGroup title="Icons">
+            <SettingGroup title={t("icons")}>
                 <UrlImageGenerator />
             </SettingGroup>
             {operatingSystem !== "Linux" && <CustomWebBrowser />}
