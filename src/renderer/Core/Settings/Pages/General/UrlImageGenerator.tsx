@@ -1,8 +1,11 @@
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Dropdown, Option } from "@fluentui/react-components";
+import { useTranslation } from "react-i18next";
 
 export const UrlImageGenerator = () => {
+    const { t } = useTranslation("settingsGeneral");
+
     const faviconApiProviders = ["Google", "Favicone"];
 
     const { value: faviconApiProvider, updateValue: setFaviconApiProvider } = useSetting<string>({
@@ -12,8 +15,8 @@ export const UrlImageGenerator = () => {
 
     return (
         <Setting
-            label="Favicon API"
-            description="This API is used to generate icons for URLs"
+            label={t("faviconApi")}
+            description={t("faviconApiDescription")}
             control={
                 <Dropdown
                     value={faviconApiProvider}
