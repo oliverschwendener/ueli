@@ -3,13 +3,14 @@ import { Button } from "@fluentui/react-components";
 import { ArrowExportRegular, ArrowImportRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
-export const Configuration = () => {
+export const ImportExport = () => {
     const { t } = useTranslation("settingsGeneral");
 
     const importConfiguration = async () => {
         const { canceled, filePaths } = await window.ContextBridge.showOpenDialog({
             defaultPath: "ueli9.settings.json",
             properties: ["openFile"],
+            filters: [{ name: "JSON", extensions: ["json"] }],
         });
 
         if (!canceled && filePaths.length) {
@@ -30,20 +31,16 @@ export const Configuration = () => {
 
     return (
         <Setting
-            label={t("configurationActions")}
+            label={t("importExportDescription")}
             control={
-                <>
+                <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
                     <Button onClick={() => importConfiguration()} icon={<ArrowImportRegular />}>
                         {t("importConfiguration")}
                     </Button>
-                    <Button
-                        style={{ marginLeft: 8 }}
-                        onClick={() => exportConfiguration()}
-                        icon={<ArrowExportRegular />}
-                    >
+                    <Button onClick={() => exportConfiguration()} icon={<ArrowExportRegular />}>
                         {t("exportConfiguration")}
                     </Button>
-                </>
+                </div>
             }
         />
     );
