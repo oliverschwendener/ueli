@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OpenDialogOptions } from "electron";
+import type { OpenDialogOptions, SaveDialogOptions } from "electron";
 
 export class DialogModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
@@ -8,6 +8,10 @@ export class DialogModule {
 
         ipcMain.handle("showOpenDialog", (_, { options }: { options: OpenDialogOptions }) =>
             dialog.showOpenDialog(options),
+        );
+
+        ipcMain.handle("showSaveDialog", (_, { options }: { options: SaveDialogOptions }) =>
+            dialog.showSaveDialog(options),
         );
     }
 }

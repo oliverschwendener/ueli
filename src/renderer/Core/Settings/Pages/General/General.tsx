@@ -1,10 +1,11 @@
 import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { useTranslation } from "react-i18next";
-import { SettingGroupList } from "../../SettingGroupList";
 import { Autostart } from "./Autostart";
 import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";
 import { HotkeySettings } from "./HotKey";
+import { ImportExport } from "./ImportExport";
 import { Language } from "./Language";
 import { SearchHistory } from "./SearchHistory";
 import { UrlImageGenerator } from "./UrlImageGenerator";
@@ -28,6 +29,9 @@ export const General = () => {
                 <UrlImageGenerator />
             </SettingGroup>
             {operatingSystem !== "Linux" && <CustomWebBrowser />}
+            <SettingGroup title={t("importExport")}>
+                <ImportExport />
+            </SettingGroup>
         </SettingGroupList>
     );
 };

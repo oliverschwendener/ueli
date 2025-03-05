@@ -33,6 +33,15 @@ export class SettingsManager implements SettingsManagerInterface {
         await this.saveChanges();
     }
 
+    public async importSettings(filePath: string): Promise<void> {
+        const importSettings = this.settingsReader.readSettingsFromPath(filePath);
+        this.settingsWriter.writeSettings(importSettings);
+    }
+
+    public async exportSettings(filePath: string): Promise<void> {
+        this.settingsWriter.writeSettingsToPath(this.settings, filePath);
+    }
+
     public async resetAllSettings(): Promise<void> {
         for (const key of Object.keys(this.settings)) {
             delete this.settings[key];

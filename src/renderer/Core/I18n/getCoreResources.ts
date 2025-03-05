@@ -78,6 +78,10 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customWebBrowserExecutableFilePathSelectFile: "Select file",
                     customWebBrowserCommandlineArguments: "Commandline arguments",
                     customWebBrowserName: "Browser Name",
+                    importExport: "Import / Export",
+                    importExportDescription: "Import or export all settings from or to a JSON file",
+                    importConfiguration: "Import",
+                    exportConfiguration: "Export",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -110,6 +114,11 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customWebBrowserExecutableFilePathSelectFile: "Datei auswählen",
                     customWebBrowserCommandlineArguments: "Kommandozeilen-Argumente",
                     customWebBrowserName: "Browser-Name",
+                    importExport: "Import / Export",
+                    importExportDescription:
+                        "Importiere oder exportiere alle Einstellungen von oder in eine JSON-Datei",
+                    importConfiguration: "Import",
+                    exportConfiguration: "Export",
                 },
             },
         },
