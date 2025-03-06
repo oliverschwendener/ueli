@@ -2,6 +2,7 @@ import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { useTranslation } from "react-i18next";
 import { Autostart } from "./Autostart";
+import { CustomSettingsFilePath } from "./CustomSettingsFilePath";
 import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";
 import { HotkeySettings } from "./HotKey";
@@ -31,6 +32,7 @@ export const General = () => {
             {operatingSystem !== "Linux" && <CustomWebBrowser />}
             <SettingGroup title={t("importExport")}>
                 <ImportExport />
+                <CustomSettingsFilePath />
             </SettingGroup>
         </SettingGroupList>
     );

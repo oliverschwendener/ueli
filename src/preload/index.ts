@@ -47,6 +47,8 @@ const contextBridgeImplementation: ContextBridge = {
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
+    restartApp: () => ipcRenderer.send("restartApp"),
+    setCustomSettingsFilePath: (filePath: string) => ipcRenderer.invoke("setCustomSettingsFilePath", { filePath }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     showSaveDialog: (options) => ipcRenderer.invoke("showSaveDialog", { options }),
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
