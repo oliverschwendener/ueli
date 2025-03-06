@@ -1,12 +1,12 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import { join } from "path";
+import { SettingsFilePathResolver } from "./SettingsFilePathResolver";
 
 export class SettingsFileModule {
-    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
-        const app = moduleRegistry.get("App");
+    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const settingsFilePathResolver = new SettingsFilePathResolver(moduleRegistry.get("App"));
 
         moduleRegistry.register("SettingsFile", {
-            path: join(app.getPath("userData"), "ueli9.settings.json"),
+            path: await settingsFilePathResolver.resolve(),
         });
     }
 }
