@@ -1,3 +1,3 @@
 export interface SettingsFilePathSource {
-    getSettingsFilePath(): string | null;
+    getSettingsFilePath(): string | undefined;
 }
