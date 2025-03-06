@@ -1,12 +1,16 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+import { DefaultSettingsFilePathSource } from "./DefaultSettingsFilePathSource";
 import { SettingsFilePathResolver } from "./SettingsFilePathResolver";
 
 export class SettingsFileModule {
-    public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
-        const settingsFilePathResolver = new SettingsFilePathResolver(moduleRegistry.get("App"));
+    public static bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const settingsFilePathResolver = new SettingsFilePathResolver([
+            // TODO: add more sources
+            new DefaultSettingsFilePathSource(moduleRegistry.get("App")),
+        ]);
 
         moduleRegistry.register("SettingsFile", {
-            path: await settingsFilePathResolver.resolve(),
+            path: settingsFilePathResolver.resolve(),
         });
     }
 }

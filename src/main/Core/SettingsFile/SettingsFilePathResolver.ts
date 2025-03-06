@@ -1,16 +1,17 @@
-import type { App } from "electron";
-import { join } from "path";
+import type { SettingsFilePathSource } from "./SettingsFilePathSource";
 
 export class SettingsFilePathResolver {
-    public constructor(private readonly app: App) {}
+    public constructor(private readonly sources: SettingsFilePathSource[]) {}
 
-    public async resolve(): Promise<string> {
-        // TODO add option to get custom file path from env variable or command line argument
+    public resolve(): string {
+        for (const source of this.sources) {
+            const settingsFilePath = source.getSettingsFilePath();
 
-        return this.getDefaultSettingsFilePath();
-    }
+            if (settingsFilePath) {
+                return settingsFilePath;
+            }
+        }
 
-    private getDefaultSettingsFilePath(): string {
-        return join(this.app.getPath("userData"), "ueli9.settings.json");
+        throw new Error("Could not resolve settings file path");
     }
 }

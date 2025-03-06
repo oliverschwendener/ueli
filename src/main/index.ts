@@ -67,7 +67,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.AppleScriptUtilityModule.bootstrap(moduleRegistry);
     Core.FileSystemUtilityModule.bootstrap(moduleRegistry);
     await Core.PowershellUtilityModule.bootstrap(moduleRegistry);
-    await Core.SettingsFileModule.bootstrap(moduleRegistry);
+    Core.SettingsFileModule.bootstrap(moduleRegistry);
     Core.SettingsReaderModule.bootstrap(moduleRegistry);
     Core.SettingsWriterModule.bootstrap(moduleRegistry);
     Core.SettingsManagerModule.bootstrap(moduleRegistry);
