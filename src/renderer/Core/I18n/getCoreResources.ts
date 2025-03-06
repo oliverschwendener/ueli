@@ -80,8 +80,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customWebBrowserName: "Browser Name",
                     importExport: "Import / Export",
                     importExportDescription: "Import or export all settings from or to a JSON file",
-                    importConfiguration: "Import",
-                    exportConfiguration: "Export",
+                    importSettings: "Import",
+                    exportSettings: "Export",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -117,8 +117,8 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     importExport: "Import / Export",
                     importExportDescription:
                         "Importiere oder exportiere alle Einstellungen von oder in eine JSON-Datei",
-                    importConfiguration: "Import",
-                    exportConfiguration: "Export",
+                    importSettings: "Import",
+                    exportSettings: "Export",
                 },
             },
         },

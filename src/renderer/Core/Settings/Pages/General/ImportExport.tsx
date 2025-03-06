@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 export const ImportExport = () => {
     const { t } = useTranslation("settingsGeneral");
 
-    const importConfiguration = async () => {
+    const importSettings = async () => {
         const { canceled, filePaths } = await window.ContextBridge.showOpenDialog({
             defaultPath: "ueli9.settings.json",
             properties: ["openFile"],
@@ -18,7 +18,7 @@ export const ImportExport = () => {
         }
     };
 
-    const exportConfiguration = async () => {
+    const exportSettings = async () => {
         const { canceled, filePath } = await window.ContextBridge.showSaveDialog({
             defaultPath: "ueli9.settings.json",
             properties: ["showOverwriteConfirmation"],
@@ -34,11 +34,11 @@ export const ImportExport = () => {
             label={t("importExportDescription")}
             control={
                 <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
-                    <Button onClick={() => importConfiguration()} icon={<ArrowImportRegular />}>
-                        {t("importConfiguration")}
+                    <Button onClick={() => importSettings()} icon={<ArrowImportRegular />}>
+                        {t("importSettings")}
                     </Button>
-                    <Button onClick={() => exportConfiguration()} icon={<ArrowExportRegular />}>
-                        {t("exportConfiguration")}
+                    <Button onClick={() => exportSettings()} icon={<ArrowExportRegular />}>
+                        {t("exportSettings")}
                     </Button>
                 </div>
             }
