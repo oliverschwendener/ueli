@@ -49,6 +49,7 @@ export type ContextBridge = {
     getOperatingSystem: () => OperatingSystem;
     getSearchResultItems: () => SearchResultItem[];
     getSettingValue: <Value>(key: string, defaultValue: Value, isSensitive?: boolean) => Value;
+    getSettingsFilePath: () => string;
     getRescanStatus: () => RescanStatus;
     importSettings: (filePath: string) => Promise<void>;
     invokeAction: (action: SearchResultItemAction) => Promise<void>;

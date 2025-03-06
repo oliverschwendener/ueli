@@ -37,6 +37,7 @@ const contextBridgeImplementation: ContextBridge = {
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingValue: (key, defaultValue, isSensitive) =>
         ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
+    getSettingsFilePath: () => ipcRenderer.sendSync("getSettingsFilePath"),
     getRescanStatus: () => ipcRenderer.sendSync("getRescanStatus"),
     importSettings: (filePath) => ipcRenderer.invoke("importSettings", { filePath }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),

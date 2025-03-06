@@ -7,29 +7,27 @@ export class SettingsFileModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
         const app = moduleRegistry.get("App");
         const ipcMain = moduleRegistry.get("IpcMain");
+        const logger = moduleRegistry.get("Logger");
 
         const configFileSettingsFilePathSource = new ConfigFileSettingsFilePathSource(
             app,
             moduleRegistry.get("FileSystemUtility"),
         );
 
+        const settingsFilePathResolver = new SettingsFilePathResolver([
+            configFileSettingsFilePathSource,
+            new DefaultSettingsFilePathSource(app),
+        ]);
+
         ipcMain.handle("setCustomSettingsFilePath", async (_, { filePath }: { filePath: string }) => {
-            // TODO: write new file path to config file
-            console.log(filePath);
+            await configFileSettingsFilePathSource.writeFilePathToConfigFile(filePath);
         });
 
-        // TODO: move this event handler to another module?
-        ipcMain.on("restartApp", () => {
-            app.relaunch();
-            app.exit();
+        ipcMain.on("getSettingsFilePath", (event) => {
+            event.returnValue = settingsFilePathResolver.resolve();
         });
 
-        const defaultSettingsFilePathSource = new DefaultSettingsFilePathSource(app);
-
-        const settingsFilePathResolver = new SettingsFilePathResolver(
-            [configFileSettingsFilePathSource, defaultSettingsFilePathSource],
-            moduleRegistry.get("Logger"),
-        );
+        logger.info(`Reading settings from file: ${settingsFilePathResolver.resolve()}`);
 
         moduleRegistry.register("SettingsFile", {
             path: settingsFilePathResolver.resolve(),

@@ -1,6 +1,7 @@
 export * from "./AboutUeli";
 export * from "./ActionHandler";
 export * from "./AppleScriptUtility";
+export * from "./AppModule";
 export * from "./AssetPathResolver";
 export * from "./Autostart";
 export * from "./BrowserWindow";

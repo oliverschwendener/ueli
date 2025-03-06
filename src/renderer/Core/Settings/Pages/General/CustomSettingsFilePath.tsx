@@ -32,6 +32,7 @@ export const CustomSettingsFilePath = () => {
     return (
         <Setting
             label="Set custom settings file path" // TODO: add translation
+            description={`Current settings file: ${window.ContextBridge.getSettingsFilePath()}`}
             control={
                 <>
                     <Dialog open={dialogIsOpen} onOpenChange={(_, { open }) => setDialogIsOpen(open)}>
@@ -54,6 +55,7 @@ export const CustomSettingsFilePath = () => {
                         </DialogSurface>
                     </Dialog>
                     <Button onClick={() => setCustomSettingsFilePath()}>Select file</Button>
+                    {/* TODO: add option to reset to default */}
                 </>
             }
         />
