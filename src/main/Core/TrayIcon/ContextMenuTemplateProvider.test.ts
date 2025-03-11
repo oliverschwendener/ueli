@@ -27,9 +27,7 @@ describe(ContextMenuTemplateProvider, () => {
 
             const expected: MenuItemConstructorOptions[] = [
                 { label: "translation[trayIcon.contextMenu.show]", click: () => null },
-                { label: "translation[trayIcon.contextMenu.settings]", click: () => null },
-                { label: "translation[trayIcon.contextMenu.about]", click: () => null },
-                { label: "translation[trayIcon.contextMenu.quit]", click: () => null },
+                { type: "separator" },
                 {
                     label: "translation[trayIcon.contextMenu.hotkey]",
                     click: () => null,
@@ -37,6 +35,10 @@ describe(ContextMenuTemplateProvider, () => {
                     type: "checkbox",
                     toolTip: "translation[trayIcon.contextMenu.hotkey.tooltip]",
                 },
+                { label: "translation[trayIcon.contextMenu.settings]", click: () => null },
+                { label: "translation[trayIcon.contextMenu.about]", click: () => null },
+                { type: "separator" },
+                { label: "translation[trayIcon.contextMenu.quit]", click: () => null },
             ];
 
             expect(createTMock).toHaveBeenCalledWith(resources);
