@@ -234,8 +234,8 @@ export class JetBrainsToolboxExtension implements Extension {
                 openWith: "{{project}} mit {{toolName}} öffnen",
             },
             "ja-JP": {
-                extensionName: "Jetbrainsツールボックス",
-                project: "Project",
+                extensionName: "JetBrains Toolbox",
+                project: "{{tool}} プロジェクト",
                 openWith: "{{project}}を{{toolName}}で開く",
             },
         };
