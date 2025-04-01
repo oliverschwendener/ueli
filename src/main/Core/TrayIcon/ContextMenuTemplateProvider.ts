@@ -24,16 +24,7 @@ export class ContextMenuTemplateProvider {
                 click: () => this.ueliCommandInvoker.invokeUeliCommand("show"),
             },
             {
-                label: t("trayIcon.contextMenu.settings"),
-                click: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
-            },
-            {
-                label: t("trayIcon.contextMenu.about"),
-                click: () => this.ueliCommandInvoker.invokeUeliCommand("openAbout"),
-            },
-            {
-                label: t("trayIcon.contextMenu.quit"),
-                click: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
+                type: "separator",
             },
             {
                 label: t("trayIcon.contextMenu.hotkey"),
@@ -44,6 +35,21 @@ export class ContextMenuTemplateProvider {
                     hotkeyEnabled
                         ? this.ueliCommandInvoker.invokeUeliCommand("disableHotkey")
                         : this.ueliCommandInvoker.invokeUeliCommand("enableHotkey"),
+            },
+            {
+                label: t("trayIcon.contextMenu.settings"),
+                click: () => this.ueliCommandInvoker.invokeUeliCommand("openSettings"),
+            },
+            {
+                label: t("trayIcon.contextMenu.about"),
+                click: () => this.ueliCommandInvoker.invokeUeliCommand("openAbout"),
+            },
+            {
+                type: "separator",
+            },
+            {
+                label: t("trayIcon.contextMenu.quit"),
+                click: () => this.ueliCommandInvoker.invokeUeliCommand("quit"),
             },
         ];
     }
