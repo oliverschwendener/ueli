@@ -19,6 +19,11 @@ export class Base64Conversion implements Extension {
     public readonly id = "Base64Conversion";
     public readonly name = "Base64 Conversion";
 
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[Base64Conversion]",
+    };
+
     public readonly defaultSettings: Settings = {
         encodeDecodePrefix: "b64",
         encodePrefix: "b64e",
