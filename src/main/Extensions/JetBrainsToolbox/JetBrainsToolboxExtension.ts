@@ -170,7 +170,7 @@ export class JetBrainsToolboxExtension implements Extension {
         const { t } = this.translator.createT(this.getI18nResources());
         const img = await this.getProjectImage(recent);
         const path = recent.path;
-        const description = `${recent.toolName} ${t("project")}`;
+        const description = t("project", { tool: recent.toolName });
 
         return {
             id: "jetbrains-toolbox-" + path,
@@ -224,13 +224,13 @@ export class JetBrainsToolboxExtension implements Extension {
     public getI18nResources() {
         return {
             "en-US": {
-                extensionName: "Jetbrains Toolbox",
-                project: "Project",
+                extensionName: "JetBrains Toolbox",
+                project: "{{tool}} Project",
                 openWith: "Open {{project}} with {{toolName}}",
             },
             "de-CH": {
-                extensionName: "Jetbrains Toolbox",
-                project: "Projekt",
+                extensionName: "JetBrains Toolbox",
+                project: "{{tool}} Projekt",
                 openWith: "{{project}} mit {{toolName}} öffnen",
             },
         };
