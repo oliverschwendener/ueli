@@ -64,6 +64,13 @@ export class ColorConverterExtension implements Extension {
                 copyColorToClipboard: "Farbe in die Zwischenablage kopieren",
                 extensionName: "Farbkonverter",
             },
+            "ja-JP": {
+                formats: "フォーマット",
+                selectAColorFormat: "色コードを選択",
+                color: "{{ format }} Color",
+                copyColorToClipboard: "色コードをクリップボードにコピー",
+                extensionName: "色コード変換",
+            },
         };
     }
 

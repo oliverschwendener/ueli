@@ -32,4 +32,14 @@ export const macOsResources: Resources<MacOsTranslations> = {
         lock: "Sperren",
         emptyTrash: "Papierkorb leeren",
     },
+    "ja-JP": {
+        extensionName: "システムコマンド",
+        searchResultItemDescription: "システムコマンド",
+        shutdown: "シャットダウン",
+        restart: "再起動...",
+        logOut: "ログアウト",
+        sleep: "スリープ",
+        lock: "画面ロック",
+        emptyTrash: "ゴミ箱を空にする",
+    },
 };

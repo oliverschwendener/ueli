@@ -84,6 +84,16 @@ export class TerminalLauncherExtension implements Extension {
                 defaultActionDescription: "Befehl in {{terminalId}} ausführen",
                 searchResultItemDescription: "In {{terminalId}} öffnen",
             },
+            "ja-JP": {
+                extensionName: "ターミナル起動",
+                prefix: "接頭辞",
+                prefixDescription:
+                    "ターミナル起動のトリガとなる接頭辞です。次のパターンで使用します： <prefix> <command>",
+                terminals: "ターミナル",
+                selectTerminals: "ターミナルを選択",
+                defaultActionDescription: "{{terminalId}}の起動コマンド",
+                searchResultItemDescription: "{{terminalId}}を起動",
+            },
         };
     }
 

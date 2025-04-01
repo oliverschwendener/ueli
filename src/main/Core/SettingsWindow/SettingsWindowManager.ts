@@ -31,6 +31,7 @@ export class SettingsWindowManager {
         const { t } = this.translator.createT({
             "en-US": { settingsWindowTitle: "Settings" },
             "de-CH": { settingsWindowTitle: "Einstellungen" },
+            "ja-JP": { settingsWindowTitle: "設定" },
         });
 
         return t("settingsWindowTitle");

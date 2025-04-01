@@ -173,6 +173,17 @@ export class UeliCommandExtension implements Extension {
                 disableHotkey: "Tastenkombination deaktivieren",
                 enableHotkey: "Tastenkombination aktivieren",
             },
+            "ja-JP": {
+                extensionName: "Ueliコマンド",
+                description: "Ueliコマンド",
+                openSettings: "Ueli設定を開く | Open Ueli settings",
+                openExtensions: "Ueli拡張機能を開く | Browse Ueli extensions",
+                centerWindow: "入力パネルを中央に移動 | Center Ueli window",
+                quitUeli: "Ueliを終了 | Quit Ueli",
+                rescanExtensions: "拡張機能を再読み込み | Rescan extensions",
+                disableHotkey: "ホットキーを無効にする | Disable hotkey",
+                enableHotkey: "ホットキーを有効にする | Enable hotkey",
+            },
         };
     }
 }

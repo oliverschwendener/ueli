@@ -35,4 +35,15 @@ export const windowsResources: Resources<WindowsTranslations> = {
         searchResultItemDescription: "Systembefehl",
         emptyTrash: "Paperkorb leeren",
     },
+    "ja-JP": {
+        extensionName: "システムコマンド",
+        shutdown: "シャットダウン",
+        restart: "再起動",
+        signOut: "サインアウト",
+        lock: "画面ロック",
+        sleep: "スリープ",
+        hibernate: "ハイバネーション",
+        searchResultItemDescription: "システムコマンド",
+        emptyTrash: "ゴミ箱を空にする",
+    },
 };
