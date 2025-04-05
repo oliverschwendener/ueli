@@ -132,6 +132,14 @@ export class CurrencyConversion implements Extension {
                 copyToClipboard: "In Zwischenablage kopieren",
                 currencyConversion: "Währungsumrechnung",
             },
+            "ja-JP": {
+                extensionName: "通貨変換",
+                currencies: "通貨単位",
+                defaultTargetCurrency: "既定の通貨",
+                selectCurrencies: "通貨を選択",
+                copyToClipboard: "クリップボードにコピー",
+                currencyConversion: "通貨変換",
+            },
         };
     }
 

@@ -143,6 +143,28 @@ export class CustomWebSearchExtension implements Extension {
                 remove: "Löschen",
                 cancel: "Abbrechen",
             },
+            "ja-JP": {
+                extensionName: "カスタムウェブ検索",
+                addSearchEngine: "検索エンジンを追加",
+                editSearchEngine: "検索エンジンの設定を編集",
+                searchEngines: "検索エンジン",
+                url: "URL",
+                prefix: "接頭辞",
+                prefixTooltip: "検索のトリガとなる接頭辞です",
+                prefixError: "接頭辞は必須です",
+                prefixInUseError: "この接頭辞は重複しています。別のものにしてください",
+                name: "名前",
+                nameError: "名前は必須です",
+                searchEngineUrl: "URLテンプレート",
+                searchEngineUrlTooltip: "`{{query}}`をURLの検索単語に該当する位置へ置いてください",
+                searchEngineUrlError: "URLテンプレートは`{{query}}`を含んでいる必要があります",
+                encodeSearchTerm: "検索単語をエンコード",
+                encodeSearchTermTooltip: "検索エンジンに渡す前に単語をURLエンコードします",
+                edit: "編集",
+                save: "保存",
+                remove: "削除",
+                cancel: "キャンセル",
+            },
         };
     }
 }

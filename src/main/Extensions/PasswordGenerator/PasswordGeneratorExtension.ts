@@ -140,6 +140,23 @@ export class PasswordGeneratorExtension implements Extension {
                 generatorResult: "Generiertes Passwort",
                 copyPasswordToClipboard: "Passwort in die Zwischenablage kopieren",
             },
+            "ja-JP": {
+                extensionName: "パスワード生成",
+                command: "パスワードを生成するコマンド",
+                quantity: "生成するパスワードの数量",
+                passwordLength: "文字列長",
+                includeUppercaseCharacters: "英大文字を含む",
+                includeLowercaseCharacters: "英小文字を含む",
+                includeNumbers: "数字を含む",
+                includeSymbols: "記号を含む",
+                beginWithALetter: "先頭は文字から",
+                noSimilarCharacters: "似ている英数字は使わない(例：i, l, 1, L, o, 0, O, ...)",
+                noDuplicateCharacters: "重複する文字は使わない",
+                noSequentialCharacters: "単純な並びの文字は使わない(例：abc, 123, ...)",
+                resetSymbols: "リセット",
+                generatorResult: "パスワードを生成",
+                copyPasswordToClipboard: "パスワードをクリップボードにコピー",
+            },
         };
     }
 

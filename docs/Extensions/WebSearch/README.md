@@ -7,7 +7,7 @@ This extension allows you to search the web with Google or DuckDuckGo. Search fo
 ## Settings
 
 - Search Engine: the search engine to use.
-- Locale: the location in which you want to search (currently only en-US and de-CH are supported).
+- Locale: the location in which you want to search (currently only en-US, de-CH and ja-JP are supported).
 - Show instant search result: wether to show a search result in the main search view for the current search term.
 
 ## About this extension

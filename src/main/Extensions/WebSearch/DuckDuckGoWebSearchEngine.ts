@@ -40,6 +40,7 @@ export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
         const map: Record<string, string> = {
             "en-US": "us-en",
             "de-CH": "ch-de",
+            "ja-JP": "jp-jp",
         };
 
         return map[locale] ?? map["en-US"];

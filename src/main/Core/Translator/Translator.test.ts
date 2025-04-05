@@ -12,6 +12,7 @@ describe(Translator, () => {
         const { t } = translator.createT({
             "en-US": { message: "Hello" },
             "de-CH": { message: "Hoi", otherMessage: "Es anders hoi" },
+            "ja-JP": { message: "ようこそ" },
         });
 
         expect(t("message")).toBe("Hello");

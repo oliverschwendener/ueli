@@ -100,6 +100,13 @@ export class FileSearch implements Extension {
                 maxSearchResults: "Maximale Suchergebnisse",
                 searchResultItemName: "Dateien suchen",
             },
+            "ja-JP": {
+                extensionName: "ファイル検索",
+                esFilePath: "すべてCLIのファイルパスにする",
+                fileDoesNotExist: "ファイルが見付かりません",
+                maxSearchResults: "検索上限数",
+                searchResultItemName: "ファイル検索 | Search files",
+            },
         };
     }
 

@@ -168,6 +168,18 @@ export class BrowserBookmarks implements Extension {
                 copyUrlToClipboard: "URL in Zwischenablage kopieren",
                 searchResultItemDescription: "{{browserName}} Lesezeichen",
             },
+            "ja-JP": {
+                extensionName: "ブラウザブックマーク",
+                "searchResultStyle.nameOnly": "名前のみ",
+                "searchResultStyle.urlOnly": "URLのみ",
+                "searchResultStyle.nameAndUrl": "名前とURL",
+                selectBrowsers: "ブラウザを選択",
+                iconType: "アイコン",
+                "iconType.favicon": "Favicon",
+                "iconType.browserIcon": "ブラウザのアイコン",
+                copyUrlToClipboard: "クリップボードからURLをコピー",
+                searchResultItemDescription: "{{browserName}} ブックマーク | {{browserName}} Bookmark",
+            },
         };
     }
 

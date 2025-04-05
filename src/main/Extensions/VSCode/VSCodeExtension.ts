@@ -219,6 +219,16 @@ export class VSCodeExtension implements Extension {
                     "Use %s where the selected file/project should be inserted. It uses the --file-uri or --folder-uri switch",
                 showPath: "Show file/folder path",
             },
+            "ja-JP": {
+                extensionName: "Visual Studio Code",
+                prefix: "接頭辞",
+                prefixDescription:
+                    "Visual Studio Code起動のトリガとなる接頭辞です。次のパターンで使用します： <prefix> <command>",
+                command: "コマンド",
+                commandTooltip:
+                    "%s が開きたいファイル/プロジェクトに置換されます。これは起動スイッチの --file-uri もしくは --folder-uri で使用されます",
+                showPath: "Show file/folder path",
+            },
         };
     }
 

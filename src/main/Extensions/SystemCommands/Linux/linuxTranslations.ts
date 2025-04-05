@@ -17,4 +17,9 @@ export const linuxResources: Resources<LinuxTranslations> = {
         searchResultItemDescription: "Systembefehl",
         emptyTrash: "Papierkorb leeren",
     },
+    "ja-JP": {
+        extensionName: "システムコマンド",
+        searchResultItemDescription: "システムコマンド",
+        emptyTrash: "ゴミ箱を空にする",
+    },
 };

@@ -78,6 +78,12 @@ export class AppearanceSwitcher implements Extension {
                 searchResultItemName: "System-Farbschema umschalten",
                 searchResultItemActionDescription: "System-Farbschema umschalten",
             },
+            "ja-JP": {
+                extensionName: "OSアピアランス切り替え",
+                searchResultItemDescription: "システム",
+                searchResultItemName: "アピアランス切り替え | Toggle System Appearance",
+                searchResultItemActionDescription: "OSのダークモード/ライトモードを切り替えます",
+            },
         };
     }
 }

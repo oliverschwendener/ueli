@@ -143,6 +143,12 @@ export class WebSearchExtension implements Extension {
                 locale: "Sprachregion",
                 showInstantSearchResult: "Sofortiges Suchergebnis anzeigen",
             },
+            "ja-JP": {
+                extensionName: "ウェブ検索",
+                searchEngine: "検索エンジン",
+                locale: "言語",
+                showInstantSearchResult: "検索結果を表示",
+            },
         };
     }
 

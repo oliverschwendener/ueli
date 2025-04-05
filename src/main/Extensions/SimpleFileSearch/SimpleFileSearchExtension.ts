@@ -216,6 +216,27 @@ export class SimpleFileSearchExtension implements Extension {
                 "searchFor.folders": "Ordner",
                 "searchFor.filesAndFolders": "Dateien und Ordner",
             },
+            "ja-JP": {
+                extensionName: "簡易ファイル検索",
+                file: "ファイル",
+                folder: "フォルダ",
+                openFile: "ファイルを開く",
+                openFolder: "フォルダを開く",
+                folders: "複数フォルダ",
+                path: "パス",
+                recursive: "再帰的",
+                add: "追加",
+                addFolder: "フォルダを追加",
+                remove: "削除",
+                chooseFolder: "フォルダを選択",
+                validFolderPath: "有効なフォルダパス",
+                invalidFolderPath: "このフォルダは存在していないように見えます",
+                cancel: "キャンセル",
+                searchFor: "検索対象",
+                "searchFor.files": "ファイル",
+                "searchFor.folders": "フォルダ",
+                "searchFor.filesAndFolders": "ファイルとフォルダ",
+            },
         };
     }
 

@@ -245,9 +245,9 @@ describe(WebSearchExtension, () => {
         ]);
     });
 
-    it("should support en-US and de-CH locales", () => {
+    it("should support en-US, de-CH and ja-JP locales", () => {
         expect(
             Object.keys(new WebSearchExtension(<AssetPathResolver>{}, <SettingsManager>{}, []).getI18nResources()),
-        ).toEqual(["en-US", "de-CH"]);
+        ).toEqual(["en-US", "de-CH", "ja-JP"]);
     });
 });
