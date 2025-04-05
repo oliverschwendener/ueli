@@ -27,6 +27,11 @@ export class UuidGeneratorExtension implements Extension {
         searchResultFormats: [],
     };
 
+    public readonly nameTranslation = {
+        key: "extensionName",
+        namespace: "extension[UuidGenerator]",
+    };
+
     public readonly author = {
         name: "Christopher Steiner",
         githubUserName: "ChristopherSteiner",
