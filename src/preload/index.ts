@@ -37,6 +37,7 @@ const contextBridgeImplementation: ContextBridge = {
     getSearchResultItems: () => ipcRenderer.sendSync("getSearchResultItems"),
     getSettingValue: (key, defaultValue, isSensitive) =>
         ipcRenderer.sendSync("getSettingValue", { key, defaultValue, isSensitive }),
+    getSettingsFilePath: () => ipcRenderer.sendSync("getSettingsFilePath"),
     getRescanStatus: () => ipcRenderer.sendSync("getRescanStatus"),
     importSettings: (filePath) => ipcRenderer.invoke("importSettings", { filePath }),
     invokeAction: (action) => ipcRenderer.invoke("invokeAction", { action }),
@@ -47,6 +48,8 @@ const contextBridgeImplementation: ContextBridge = {
         ipcRenderer.invoke("removeExcludedSearchResultItem", { itemId }),
     removeFavorite: (id) => ipcRenderer.invoke("removeFavorite", { id }),
     resetAllSettings: () => ipcRenderer.invoke("resetAllSettings"),
+    restartApp: () => ipcRenderer.send("restartApp"),
+    setCustomSettingsFilePath: (filePath: string) => ipcRenderer.invoke("setCustomSettingsFilePath", { filePath }),
     showOpenDialog: (options) => ipcRenderer.invoke("showOpenDialog", { options }),
     showSaveDialog: (options) => ipcRenderer.invoke("showSaveDialog", { options }),
     triggerExtensionRescan: (extensionId) => ipcRenderer.invoke("triggerExtensionRescan", { extensionId }),
