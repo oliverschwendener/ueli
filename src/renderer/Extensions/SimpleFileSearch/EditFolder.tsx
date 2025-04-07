@@ -117,7 +117,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                             </Field>
 
                             <div style={{ display: "flex", flexDirection: "column" }}>
-                                <label id="searchFor">Search for</label>
+                                <label id="searchFor">{t("searchFor")}</label>
                                 <Dropdown
                                     id="searchFor"
                                     value={t(`searchFor.${temporaryFolderSetting.searchFor}`)}
@@ -126,9 +126,9 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
                                         setSearchFor(optionValue as FolderSetting["searchFor"])
                                     }
                                 >
-                                    <Option value="files">Files</Option>
-                                    <Option value="folders">Folders</Option>
-                                    <Option value="filesAndFolders">Files and Folders</Option>
+                                    <Option value="files">{t("searchFor.files")}</Option>
+                                    <Option value="folders">{t("searchFor.folders")}</Option>
+                                    <Option value="filesAndFolders">{t("searchFor.filesAndFolders")}</Option>
                                 </Dropdown>
                             </div>
 
