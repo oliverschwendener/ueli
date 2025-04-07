@@ -56,9 +56,9 @@
         "vitest": "^3.0.9"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.60.1",
-        "@fluentui/react-icons": "^2.0.279",
-        "@fluentui/react-nav-preview": "^0.13.0",
+        "@fluentui/react-components": "^9.61.6",
+        "@fluentui/react-icons": "^2.0.294",
+        "@fluentui/react-nav-preview": "^0.13.5",
         "better-sqlite3": "^11.8.1",
         "color": "^4.2.3",
         "fast-xml-parser": "^4.5.0",
