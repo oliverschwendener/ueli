@@ -25,7 +25,7 @@ export class CustomSettingsFilePathResolver {
     public async writeFilePathToConfigFile(filePath: string) {
         const config = this.getConfig();
         config.settingsFilePath = filePath;
-        this.fileSystemUtility.writeJsonFile(config, this.configFilePath);
+        await this.fileSystemUtility.writeJsonFile(config, this.configFilePath);
     }
 
     public async remove() {

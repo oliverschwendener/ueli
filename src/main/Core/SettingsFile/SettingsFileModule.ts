@@ -19,8 +19,8 @@ export class SettingsFileModule {
             customSettingsFilePathResolver.remove();
         });
 
-        ipcMain.handle("setCustomSettingsFilePath", (_, { filePath }: { filePath: string }) => {
-            customSettingsFilePathResolver.writeFilePathToConfigFile(filePath);
+        ipcMain.handle("setCustomSettingsFilePath", async (_, { filePath }: { filePath: string }) => {
+            await customSettingsFilePathResolver.writeFilePathToConfigFile(filePath);
         });
 
         ipcMain.on("getCustomSettingsFilePath", (event) => {
