@@ -8,6 +8,7 @@ import { HotkeySettings } from "./HotKey";
 import { ImportExport } from "./ImportExport";
 import { Language } from "./Language";
 import { SearchHistory } from "./SearchHistory";
+import { SetCustomSettingsFilePath } from "./SetCustomSettingsFilePath";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
@@ -31,6 +32,9 @@ export const General = () => {
             {operatingSystem !== "Linux" && <CustomWebBrowser />}
             <SettingGroup title={t("importExport")}>
                 <ImportExport />
+            </SettingGroup>
+            <SettingGroup title={t("customSettingsFilePath")}>
+                <SetCustomSettingsFilePath />
             </SettingGroup>
         </SettingGroupList>
     );

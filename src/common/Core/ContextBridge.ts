@@ -24,6 +24,8 @@ export type ContextBridge = {
         on: IpcRenderer["on"];
         off: IpcRenderer["off"];
         send: IpcRenderer["send"];
+        sendSync: IpcRenderer["sendSync"];
+        invoke: IpcRenderer["invoke"];
     };
 
     autostartIsEnabled: () => boolean;
@@ -58,6 +60,7 @@ export type ContextBridge = {
     removeExcludedSearchResultItem: (itemId: string) => Promise<void>;
     removeFavorite: (id: string) => Promise<void>;
     resetAllSettings: () => Promise<void>;
+    restartApp: () => void;
     searchIndexCacheFileExists: () => boolean;
     showOpenDialog: (options: OpenDialogOptions) => Promise<OpenDialogReturnValue>;
     showSaveDialog: (options: SaveDialogOptions) => Promise<SaveDialogReturnValue>;

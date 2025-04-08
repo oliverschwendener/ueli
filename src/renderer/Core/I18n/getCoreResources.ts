@@ -82,6 +82,20 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     importExportDescription: "Import or export all settings from or to a JSON file",
                     importSettings: "Import",
                     exportSettings: "Export",
+                    customSettingsFilePath: "Custom settings file path",
+                    setCustomSettingsFilePath: "Set custom settings file path",
+                    selectFile: "Select file",
+                    customSettingsFilePathDialogTitle: "A custom settings file path has been set",
+                    customSettingsFilePathDialogDescription:
+                        "To make the custom settings file path take effect, you need to restart Ueli. Do you want to restart now?",
+                    restartNow: "Yes, restart now",
+                    no: "No",
+                    remove: "Remove",
+                    customSettingsFileValidationDialogTitle:
+                        "The selected file doesn't seem to be a valid settings file",
+                    customSettingsFileValidationDialogDescription:
+                        "Make sure that the selected file exists and contains valid JSON.",
+                    close: "Close",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -119,6 +133,20 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                         "Importiere oder exportiere alle Einstellungen von oder in eine JSON-Datei",
                     importSettings: "Import",
                     exportSettings: "Export",
+                    customSettingsFilePath: "Benutzerdefinierter Einstellungsdateipfad",
+                    setCustomSettingsFilePath: "Benutzerdefinierten Einstellungsdateipfad festlegen",
+                    selectFile: "Datei auswählen",
+                    customSettingsFilePathDialogTitle: "Ein benutzerdefinierter Einstellungsdateipfad wurde festgelegt",
+                    customSettingsFilePathDialogDescription:
+                        "Um den benutzerdefinierten Einstellungsdateipfad wirksam zu machen, musst du Ueli neu starten. Willst du jetzt neu starten?",
+                    restartNow: "Ja, jetzt neu starten",
+                    no: "Nein",
+                    remove: "Entfernen",
+                    customSettingsFileValidationDialogTitle:
+                        "Die ausgewählte Datei scheint keine gültige Einstellungsdatei zu sein",
+                    customSettingsFileValidationDialogDescription:
+                        "Stelle sicher, dass die ausgewählte Datei existiert und gültiges JSON enthält.",
+                    close: "Schliessen",
                 },
             },
         },

@@ -44,6 +44,7 @@ if (!app.requestSingleInstanceLock()) {
     moduleRegistry.register("SystemPreferences", systemPreferences);
 
     // Core Modules
+    Core.App.bootstrap(moduleRegistry);
     Core.OperatingSystemModule.bootstrap(moduleRegistry);
     Core.CommandlineSwitchModule.bootstrap(moduleRegistry);
     Core.TaskSchedulerModule.bootstrap(moduleRegistry);
