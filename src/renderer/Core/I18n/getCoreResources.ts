@@ -129,7 +129,7 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     importSettings: "Import",
                     exportSettings: "Export",
                     customSettingsFilePath: "Benutzerdefinierter Einstellungsdateipfad",
-                    setCustomSettingsFilePath: "Benutzerdefiniere Einstellungsdateipfad festlegen",
+                    setCustomSettingsFilePath: "Benutzerdefinierter Einstellungsdateipfad festlegen",
                     selectFile: "Datei auswählen",
                     customSettingsFilePathDialogTitle: "Ein benutzerdefinierter Einstellungsdateipfad wurde festgelegt",
                     customSettingsFilePathDialogDescription:
