@@ -8,7 +8,7 @@ import { HotkeySettings } from "./HotKey";
 import { ImportExport } from "./ImportExport";
 import { Language } from "./Language";
 import { SearchHistory } from "./SearchHistory";
-import { SetCustomSettingFilePath } from "./SetCustomSettingFilePath";
+import { SetCustomSettingsFilePath } from "./SetCustomSettingsFilePath";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
@@ -34,7 +34,7 @@ export const General = () => {
                 <ImportExport />
             </SettingGroup>
             <SettingGroup title={t("customSettingsFilePath")}>
-                <SetCustomSettingFilePath />
+                <SetCustomSettingsFilePath />
             </SettingGroup>
         </SettingGroupList>
     );

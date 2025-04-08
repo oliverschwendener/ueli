@@ -14,10 +14,11 @@ import { DismissRegular, DocumentRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export const SetCustomSettingFilePath = () => {
+export const SetCustomSettingsFilePath = () => {
     const { t } = useTranslation("settingsGeneral");
 
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
+    const [validationDialogIsOpen, setValidationDialogIsOpen] = useState(false);
 
     const [customSettingsFilePath, setCustomSettingsFilePath] = useState<string | undefined>(
         window.ContextBridge.ipcRenderer.sendSync("getCustomSettingsFilePath"),
@@ -39,6 +40,13 @@ export const SetCustomSettingFilePath = () => {
     };
 
     const selectCustomSettingsFilePath = async (filePath: string) => {
+        const isValid: boolean = window.ContextBridge.ipcRenderer.sendSync("isValidSettingsFile", { filePath });
+
+        if (!isValid) {
+            setValidationDialogIsOpen(true);
+            return;
+        }
+
         await window.ContextBridge.ipcRenderer.invoke("setCustomSettingsFilePath", { filePath });
         setCustomSettingsFilePath(filePath);
         setDialogIsOpen(true);
@@ -61,7 +69,7 @@ export const SetCustomSettingFilePath = () => {
                             icon={<DocumentRegular />}
                         />
                     </Tooltip>
-                    <Dialog modalType="alert" open={dialogIsOpen} onOpenChange={(_, { open }) => setDialogIsOpen(open)}>
+                    <Dialog open={dialogIsOpen} onOpenChange={(_, { open }) => setDialogIsOpen(open)}>
                         <DialogSurface>
                             <DialogBody>
                                 <DialogTitle>{t("customSettingsFilePathDialogTitle")}</DialogTitle>
@@ -72,6 +80,22 @@ export const SetCustomSettingFilePath = () => {
                                     </Button>
                                     <DialogTrigger disableButtonEnhancement>
                                         <Button appearance="secondary">{t("no")}</Button>
+                                    </DialogTrigger>
+                                </DialogActions>
+                            </DialogBody>
+                        </DialogSurface>
+                    </Dialog>
+                    <Dialog
+                        open={validationDialogIsOpen}
+                        onOpenChange={(_, { open }) => setValidationDialogIsOpen(open)}
+                    >
+                        <DialogSurface>
+                            <DialogBody>
+                                <DialogTitle>{t("customSettingsFileValidationDialogTitle")}</DialogTitle>
+                                <DialogContent>{t("customSettingsFileValidationDialogDescription")}</DialogContent>
+                                <DialogActions>
+                                    <DialogTrigger disableButtonEnhancement>
+                                        <Button appearance="secondary">{t("close")}</Button>
                                     </DialogTrigger>
                                 </DialogActions>
                             </DialogBody>

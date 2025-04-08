@@ -91,6 +91,11 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     restartNow: "Yes, restart now",
                     no: "No",
                     remove: "Remove",
+                    customSettingsFileValidationDialogTitle:
+                        "The selected file doesn't seem to be a valid settings file",
+                    customSettingsFileValidationDialogDescription:
+                        "Make sure that the selected file exists and contains valid JSON.",
+                    close: "Close",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -137,6 +142,11 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     restartNow: "Ja, jetzt neu starten",
                     no: "Nein",
                     remove: "Entfernen",
+                    customSettingsFileValidationDialogTitle:
+                        "Die ausgewählte Datei scheint keine gültige Einstellungsdatei zu sein",
+                    customSettingsFileValidationDialogDescription:
+                        "Stelle sicher, dass die ausgewählte Datei existiert und gültiges JSON enthält.",
+                    close: "Schliessen",
                 },
             },
         },

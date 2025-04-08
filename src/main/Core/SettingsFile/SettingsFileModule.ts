@@ -1,10 +1,15 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { CustomSettingsFilePathResolver, DefaultSettingsFilePathResolver } from "./Resolver";
+import { CustomSettingsFilePathValidator } from "./Resolver/CustomSettingsFilePathValidator";
 
 export class SettingsFileModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
         const customSettingsFilePathResolver = new CustomSettingsFilePathResolver(
             moduleRegistry.get("App"),
+            moduleRegistry.get("FileSystemUtility"),
+        );
+
+        const customSettingsFilePathValidator = new CustomSettingsFilePathValidator(
             moduleRegistry.get("FileSystemUtility"),
         );
 
@@ -25,6 +30,10 @@ export class SettingsFileModule {
 
         ipcMain.on("getCustomSettingsFilePath", (event) => {
             event.returnValue = customSettingsFilePathResolver.resolve();
+        });
+
+        ipcMain.on("isValidSettingsFile", (event, { filePath }: { filePath: string }) => {
+            event.returnValue = customSettingsFilePathValidator.validate(filePath);
         });
 
         const logger = moduleRegistry.get("Logger");
