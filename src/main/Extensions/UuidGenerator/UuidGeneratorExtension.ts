@@ -176,6 +176,25 @@ export class UuidGeneratorExtension implements Extension {
                 addSearchResultFormat: "Format hinzufügen",
                 removeSearchResultFormat: "Format entfernen",
             },
+            "ja-JP": {
+                copyUuidToClipboard: "UUIDをクリップボードにコピー",
+                copyUuidsToClipboard: "複数UUIDをクリップボードにコピー",
+                extensionName: "UUID/GUIDを生成",
+                generatorResult: "UUID/GUID",
+                openGeneratorDescription: "複数UUID/GUIDを生成",
+                openGeneratorName: "UUID/GUIDを生成 | UUID / GUID Generator",
+                uuidVersion: "UUIDバージョン",
+                numberOfUuids: "生成するUUIDの数",
+                validateStrictly: "UUIDの構造を検証する",
+                uppercase: "大文字に変換",
+                hyphens: "ハイフンで区切る",
+                braces: "括弧で囲む",
+                quotes: "引用符で囲む",
+                defaultGeneratorFormat: "生成する書式の設定",
+                searchResultFormats: "検索",
+                addSearchResultFormat: "書式を追加",
+                removeSearchResultFormat: "書式を削除",
+            },
         };
     }
 

@@ -27,6 +27,7 @@ export const WebSearchSettings = () => {
     const locales = [
         { locale: "en-US", label: "English (US)" },
         { locale: "de-CH", label: "Deutsch (Schweiz)" },
+        { locale: "ja-JP", label: "日本語 (日本)" },
     ];
 
     return (

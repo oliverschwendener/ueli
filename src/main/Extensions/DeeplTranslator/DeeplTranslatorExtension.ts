@@ -94,6 +94,13 @@ export class DeeplTranslatorExtension implements Extension {
                 searchResultItemName: "DeepL Übersetzer",
                 searchResultItemActionDescription: "DeepL Übersetzer öffnen",
             },
+            "ja-JP": {
+                extensionName: "DeepL翻訳",
+                openAccount: "DeepLアカウントを開く",
+                searchResultItemDescription: "DeepL翻訳",
+                searchResultItemName: "DeepL翻訳 | DeepL Translator",
+                searchResultItemActionDescription: "DeepL翻訳を開く",
+            },
         };
     }
 

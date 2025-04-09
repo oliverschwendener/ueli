@@ -114,6 +114,14 @@ export class CalculatorExtension implements Extension {
                 decimalSeparator: "Dezimaltrennzeichen",
                 argumentSeparator: "Argumententrennzeichen",
             },
+            "ja-JP": {
+                extensionName: "電卓",
+                calculatorResult: "計算結果",
+                copyResultToClipboard: "計算結果をクリップボードにコピー",
+                precision: "精度",
+                decimalSeparator: "小数点区切り",
+                argumentSeparator: "引数区切り",
+            },
         };
     }
 

@@ -56,6 +56,9 @@ export class SystemSettingsExtension implements Extension {
             "de-CH": {
                 extensionName: "Systemeinstellungen",
             },
+            "ja-JP": {
+                extensionName: "システム設定",
+            },
         };
     }
 }

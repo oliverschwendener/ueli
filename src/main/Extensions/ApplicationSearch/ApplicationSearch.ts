@@ -104,6 +104,26 @@ export class ApplicationSearch implements Extension {
                 addFileExtension: "Dateierweiterung hinzufügen",
                 includeAppsFromWindowsStore: "Apps aus dem Windows Store einbeziehen",
             },
+            "ja-JP": {
+                extensionName: "アプリケーション検索",
+                searchResultItemDescription: "アプリケーション",
+                openApplication: "開く",
+                openApplicationAsAdministrator: "管理者で開く",
+                copyFilePathToClipboard: "パスをクリップボードにコピー",
+                advanced: "詳細",
+
+                // Settings
+                general: "一般",
+                folders: "フォルダ",
+                fileExtensions: "ファイル拡張子",
+                folderDoesNotExist: "フォルダが存在しません",
+                add: "追加",
+                remove: "削除",
+                addFolder: "フォルダ追加",
+                chooseFolder: "フォルダ選択",
+                addFileExtension: "ファイル拡張子を追加",
+                includeAppsFromWindowsStore: "Windowsストアアプリを含む",
+            },
         };
     }
 }
