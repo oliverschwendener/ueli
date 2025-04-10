@@ -8,6 +8,7 @@
 .prettierrc @oliverschwendener
 .vscode @oliverschwendener
 assets @oliverschwendener
+build @oliverschwendener
 docs @oliverschwendener
 electron-builder.config.js @oliverschwendener
 LICENSE @oliverschwendener
