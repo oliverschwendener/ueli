@@ -11,7 +11,7 @@ export class CustomSettingsFilePathResolver {
         private readonly app: App,
         private readonly fileSystemUtility: FileSystemUtility,
     ) {
-        this.configFilePath = join(this.app.getPath("home"), "ueli9.config.json");
+        this.configFilePath = join(this.app.getPath("userData"), "ueli9.config.json");
     }
 
     public isEnabled(): boolean {

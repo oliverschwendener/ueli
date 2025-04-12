@@ -6,15 +6,15 @@ import { CustomSettingsFilePathResolver } from "./CustomSettingsFilePathResolver
 
 describe(CustomSettingsFilePathResolver, () => {
     const createCustomSettingsFilePathResolver = ({
-        homePath,
+        userDataPath,
         configFileExists,
         config,
     }: {
-        homePath: string;
+        userDataPath: string;
         configFileExists: boolean;
         config: Record<string, string>;
     }) => {
-        const getPathMock = vi.fn().mockReturnValue(homePath);
+        const getPathMock = vi.fn().mockReturnValue(userDataPath);
         const existsSyncMock = vi.fn().mockReturnValue(configFileExists);
         const readJsonFileSyncMock = vi.fn().mockReturnValue(config);
         const writeJsonFileMock = vi.fn();
@@ -45,44 +45,44 @@ describe(CustomSettingsFilePathResolver, () => {
         it("should return false if config file does not exist", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: false,
                 });
 
             expect(customSettingsFilePathResolver.isEnabled()).toBe(false);
 
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
 
         it("should return false if config file exists but doesnt have a settingsFilePath property", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: true,
                 });
 
             expect(customSettingsFilePathResolver.isEnabled()).toBe(false);
 
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
 
         it("should return true if config file exists and has a settingsFilePath property", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock, readJsonFileSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: { settingsFilePath: "my-custon-settings-file.json" },
                     configFileExists: true,
                 });
 
             expect(customSettingsFilePathResolver.isEnabled()).toBe(true);
 
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
     });
 
@@ -90,29 +90,29 @@ describe(CustomSettingsFilePathResolver, () => {
         it("should write the new settings file path to the config file", async () => {
             const { customSettingsFilePathResolver, readJsonFileSyncMock, writeJsonFileSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: { settingsFilePath: "old-file.json" },
                     configFileExists: true,
                 });
 
             await customSettingsFilePathResolver.remove();
 
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
-            expect(writeJsonFileSyncMock).toHaveBeenCalledWith({}, join("home", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
+            expect(writeJsonFileSyncMock).toHaveBeenCalledWith({}, join("userData", "ueli9.config.json"));
         });
 
         it("should do nothing if the current settings dont have a settingsFilePath property", async () => {
             const { customSettingsFilePathResolver, readJsonFileSyncMock, writeJsonFileSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: true,
                 });
 
             await customSettingsFilePathResolver.remove();
 
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
-            expect(writeJsonFileSyncMock).toHaveBeenCalledWith({}, join("home", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
+            expect(writeJsonFileSyncMock).toHaveBeenCalledWith({}, join("userData", "ueli9.config.json"));
         });
     });
 
@@ -120,41 +120,41 @@ describe(CustomSettingsFilePathResolver, () => {
         it("should return undefined if config file does not exist", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: false,
                 });
 
             expect(customSettingsFilePathResolver.resolve()).toBe(undefined);
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
 
         it("should return undefined if config file exists but doesnt have a settingsFilePath property", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: true,
                 });
 
             expect(customSettingsFilePathResolver.resolve()).toBe(undefined);
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
 
         it("should return the settingsFilePath if config file exists and has a settingsFilePath property", () => {
             const { customSettingsFilePathResolver, getPathMock, existsSyncMock, readJsonFileSyncMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: { settingsFilePath: "myCustomConfigFile.json" },
                     configFileExists: true,
                 });
 
             expect(customSettingsFilePathResolver.resolve()).toBe("myCustomConfigFile.json");
-            expect(getPathMock).toHaveBeenCalledWith("home");
-            expect(existsSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(getPathMock).toHaveBeenCalledWith("userData");
+            expect(existsSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
         });
     });
 
@@ -162,36 +162,36 @@ describe(CustomSettingsFilePathResolver, () => {
         it("should update the existing settingsFilePath in the config file", async () => {
             const { customSettingsFilePathResolver, readJsonFileSyncMock, writeJsonFileMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: { settingsFilePath: "old-file.json" },
                     configFileExists: true,
                 });
 
             await customSettingsFilePathResolver.writeFilePathToConfigFile("new-file.json");
 
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
 
             expect(writeJsonFileMock).toHaveBeenCalledWith(
                 { settingsFilePath: "new-file.json" },
-                join("home", "ueli9.config.json"),
+                join("userData", "ueli9.config.json"),
             );
         });
 
         it("should add the the new settingsFilePath to the config file if it the property is not there yet", async () => {
             const { customSettingsFilePathResolver, readJsonFileSyncMock, writeJsonFileMock } =
                 createCustomSettingsFilePathResolver({
-                    homePath: "home",
+                    userDataPath: "userData",
                     config: {},
                     configFileExists: true,
                 });
 
             await customSettingsFilePathResolver.writeFilePathToConfigFile("new-file.json");
 
-            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("home", "ueli9.config.json"));
+            expect(readJsonFileSyncMock).toHaveBeenCalledWith(join("userData", "ueli9.config.json"));
 
             expect(writeJsonFileMock).toHaveBeenCalledWith(
                 { settingsFilePath: "new-file.json" },
-                join("home", "ueli9.config.json"),
+                join("userData", "ueli9.config.json"),
             );
         });
     });
