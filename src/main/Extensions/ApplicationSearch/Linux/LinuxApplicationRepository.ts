@@ -23,18 +23,27 @@ export class LinuxApplicationRepository implements ApplicationRepository {
     ) {}
 
     public async getApplications(): Promise<Application[]> {
-        const folderPaths: string[] = [];
-        this.settings.getValue<string[]>("linuxFolders").forEach((folderPath) => {
-            if (this.fileSystemUtility.isDirectory(folderPath)) {
-                folderPaths.push(folderPath);
-            } else {
-                this.logger.warn(`${folderPath} is does not exist or is not a folder.`);
-            }
-        });
+        const folderPaths = this.getExistingFolderPaths(this.settings.getValue<string[]>("linuxFolders"));
 
         const filePaths = await this.getApplicationFilePaths(folderPaths);
 
         return await this.generateLinuxApplications(filePaths);
+    }
+
+    private getExistingFolderPaths(candidates: string[]): string[] {
+        const existingFolderPaths: string[] = [];
+
+        for (const candidate of candidates) {
+            if (this.fileSystemUtility.isDirectory(candidate)) {
+                existingFolderPaths.push(candidate);
+            } else {
+                this.logger.warn(
+                    `Unable to get applications from folder "${candidate}". Reason: path doesn't exist or isn't a folder`,
+                );
+            }
+        }
+
+        return existingFolderPaths;
     }
 
     private async getApplicationFilePaths(folderPaths: string[]): Promise<string[]> {
