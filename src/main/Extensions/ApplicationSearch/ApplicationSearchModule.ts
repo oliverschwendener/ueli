@@ -32,6 +32,7 @@ export class ApplicationSearchModule implements ExtensionModule {
                 new WindowsApplicationRepository(
                     moduleRegistry.get("PowershellUtility"),
                     settings,
+                    moduleRegistry.get("FileSystemUtility"),
                     moduleRegistry.get("FileImageGenerator"),
                     moduleRegistry.get("Logger"),
                     moduleRegistry.get("AssetPathResolver"),
