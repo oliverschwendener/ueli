@@ -1,5 +1,6 @@
 import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
@@ -20,7 +21,7 @@ describe(WindowsApplicationRepository, () => {
             expected: WindowsApplication[];
             includeWindowsStoreApps: boolean;
         }) => {
-            const folders = ["folder1", "folder2"];
+            const folders = ["folder1", "folder2", "folder3"];
             const fileExtensions = ["ext1", "ext2"];
 
             const executeScriptMock = vi.fn().mockImplementation((s) => {
@@ -55,6 +56,12 @@ describe(WindowsApplicationRepository, () => {
 
             const fileImageGenerator = <FileImageGenerator>{ getImages: (f) => getImagesMock(f) };
 
+            const isDirectoryMock = vi.fn().mockImplementation((path) => ["folder1", "folder2"].includes(path));
+
+            const fileSystemUtility = <FileSystemUtility>{
+                isDirectory: (path) => isDirectoryMock(path),
+            };
+
             const warnMock = vi.fn();
 
             const logger = <Logger>{ warn: (m) => warnMock(m) };
@@ -68,6 +75,7 @@ describe(WindowsApplicationRepository, () => {
             const windowsApplicationRepository = new WindowsApplicationRepository(
                 powershellUtility,
                 settings,
+                fileSystemUtility,
                 fileImageGenerator,
                 logger,
                 assetPathResolver,
@@ -76,7 +84,12 @@ describe(WindowsApplicationRepository, () => {
             expect(await windowsApplicationRepository.getApplications()).toEqual(expected);
             expect(executeScriptMock).toHaveBeenCalledTimes(includeWindowsStoreApps ? 2 : 1);
             expect(getImagesMock).toHaveBeenCalledWith(["PathToApp1", "PathToApp2"]);
+            expect(isDirectoryMock).toHaveBeenCalledTimes(3);
             expect(getExtensionAssetPathMock).toHaveBeenCalledWith("ApplicationSearch", "windows-generic-app-icon.png");
+            expect(warnMock).toHaveBeenCalledTimes(2);
+            expect(warnMock).toHaveBeenCalledWith(
+                "Unable to get applications from folder \"folder3\". Reason: path doesn't exist or isn't a folder",
+            );
             expect(warnMock).toHaveBeenCalledWith(
                 'Failed to generate icon for "PathToApp2". Using generic icon instead',
             );

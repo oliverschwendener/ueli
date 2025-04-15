@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
@@ -17,10 +18,27 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     public constructor(
         private readonly powershellUtility: PowershellUtility,
         private readonly settings: Settings,
+        private readonly fileSystemUtility: FileSystemUtility,
         private readonly fileImageGenerator: FileImageGenerator,
         private readonly logger: Logger,
         private readonly assetPathResolver: AssetPathResolver,
     ) {}
+
+    private getExistingFolderPaths(candidates: string[]): string[] {
+        const existingFolderPaths: string[] = [];
+
+        for (const candidate of candidates) {
+            if (this.fileSystemUtility.isDirectory(candidate)) {
+                existingFolderPaths.push(candidate);
+            } else {
+                this.logger.warn(
+                    `Unable to get applications from folder "${candidate}". Reason: path doesn't exist or isn't a folder`,
+                );
+            }
+        }
+
+        return existingFolderPaths;
+    }
 
     public async getApplications(): Promise<Application[]> {
         const manuallyInstalledApps = await this.getManuallyInstalledApps();
@@ -30,7 +48,7 @@ export class WindowsApplicationRepository implements ApplicationRepository {
     }
 
     private async getManuallyInstalledApps(): Promise<WindowsApplication[]> {
-        const folderPaths = this.settings.getValue<string[]>("windowsFolders");
+        const folderPaths = this.getExistingFolderPaths(this.settings.getValue<string[]>("windowsFolders"));
         const fileExtensions = this.settings.getValue<string[]>("windowsFileExtensions");
 
         if (!folderPaths.length || !fileExtensions.length) {
