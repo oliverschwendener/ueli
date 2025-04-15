@@ -1,5 +1,5 @@
 import { access, accessSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
-import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "fs/promises";
+import { copyFile, writeFile as fsWriteFile, mkdir, readdir, readFile, rm } from "fs/promises";
 import { join } from "path";
 import type { FileSystemUtility } from "./Contract";
 
@@ -43,8 +43,12 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         rmSync(filePath, { recursive: true });
     }
 
+    public async writeFile(data: Buffer, filePath: string): Promise<void> {
+        await fsWriteFile(filePath, data);
+    }
+
     public async writeTextFile(data: string, filePath: string): Promise<void> {
-        await writeFile(filePath, data, "utf-8");
+        await fsWriteFile(filePath, data, "utf-8");
     }
 
     public async writeJsonFile<T>(data: T, filePath: string): Promise<void> {

@@ -365,4 +365,16 @@ describe(NodeJsFileSystemUtility, () => {
             expect(actual).toBe(content);
         });
     });
+
+    describe(NodeJsFileSystemUtility.prototype.writeFile, () => {
+        it("should write a buffer to a file", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+            const filePath = join(tempFolderPath, "file.txt");
+            const buffer = Buffer.from("test", "utf-8");
+
+            await fileSystemUtility.writeFile(buffer, filePath);
+
+            expect(await fileSystemUtility.readFile(filePath)).toEqual(buffer);
+        });
+    });
 });
