@@ -12,6 +12,7 @@ export interface FileSystemUtility {
     readDirectorySync(folderPath: string, recursive?: boolean): string[];
     removeFile(filePath: string): Promise<void>;
     removeFileSync(filePath: string): void;
+    writeFile(data: Buffer, filePath: string): Promise<void>;
     writeTextFile(data: string, filePath: string): Promise<void>;
     writeJsonFile<T>(data: T, filePath: string): Promise<void>;
     writeJsonFileSync<T>(data: T, filePath: string): void;
