@@ -4,7 +4,6 @@
  */
 const baseConfig = {
     asar: true,
-    asarUnpack: ["**/node_modules/sharp/**/*", "**/node_modules/@img/**/*"],
     productName: "Ueli",
     directories: {
         output: "release",

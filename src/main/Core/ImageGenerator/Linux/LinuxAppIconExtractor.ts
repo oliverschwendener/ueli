@@ -5,8 +5,8 @@ import type { IniFileParser } from "@Core/IniFileParser";
 import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
 import type { Image } from "@common/Core/Image";
+import { nativeImage } from "electron";
 import { basename, dirname, extname, join } from "path";
-import sharp from "sharp";
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";
 
@@ -287,7 +287,8 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
 
     private async saveIcon(source: string, output: string, iconSize: number): Promise<void> {
         if (extname(source) !== "png") {
-            await sharp(source).resize(iconSize).toFile(output);
+            const buffer = nativeImage.createFromPath(source).resize({ width: iconSize }).toPNG();
+            await this.fileSystemUtility.writeFile(buffer, output);
         } else {
             await this.fileSystemUtility.copyFile(source, output);
         }
