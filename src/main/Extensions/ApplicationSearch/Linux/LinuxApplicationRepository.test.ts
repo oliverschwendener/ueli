@@ -70,6 +70,7 @@ describe(LinuxApplicationRepository, () => {
                     "/home/user/my/folder/applications",
                 ];
             }
+
             return undefined;
         });
         const mockSettings = <Settings>{
@@ -80,15 +81,18 @@ describe(LinuxApplicationRepository, () => {
         const isDirectoryMock = vi.fn().mockImplementation((path) => Object.keys(mockFilePaths).includes(path));
         const readDirectoryMock = vi.fn().mockImplementation((path) => {
             const files = mockFilePaths[path];
+
             if (files) {
                 return files;
             }
+
             throw new Error(`Directory ${path} does not exist.`);
         });
         const readFileMock = vi.fn().mockImplementation((path) => {
             if (Object.keys(mockDesktopFiles).includes(path)) {
                 return path;
             }
+
             throw new Error(`File ${path} does not exist`);
         });
 
@@ -111,6 +115,7 @@ describe(LinuxApplicationRepository, () => {
         });
         const getImagesMock = vi.fn().mockImplementation((filePaths) => {
             const images: Record<string, Image> = {};
+
             for (const file of filePaths) {
                 const icon = mockDesktopFiles[file]["Desktop Entry"]["Icon"];
 
@@ -122,6 +127,7 @@ describe(LinuxApplicationRepository, () => {
                     url: `file:///url/to/icon/${icon}.png`,
                 };
             }
+
             return images;
         });
         const mockFileImageGenerator = <FileImageGenerator>{
@@ -138,6 +144,7 @@ describe(LinuxApplicationRepository, () => {
             if (env === "ORIGINAL_XDG_CURRENT_DESKTOP") {
                 return "Desktop1";
             }
+
             return undefined;
         });
         const getAllEnvironmentVariableMock = vi.fn().mockReturnValue({

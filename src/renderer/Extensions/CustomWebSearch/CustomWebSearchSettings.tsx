@@ -61,10 +61,12 @@ export const CustomWebSearchSettings = () => {
             setCurrentEngineSettings(createCustomSearchEngineSetting());
         } else {
             const setting = customSearchEngineSettings.find((setting) => setting.id === id);
+
             if (setting) {
                 setCurrentEngineSettings(setting);
             }
         }
+
         setIsDialogOpen(true);
     };
 

@@ -21,6 +21,7 @@ export const FileSearchSettings = () => {
 
     const chooseFile = async () => {
         const result = await window.ContextBridge.showOpenDialog({ properties: ["openFile"] });
+
         if (!result.canceled && result.filePaths.length > 0) {
             setEsFilePath(result.filePaths[0]);
         }

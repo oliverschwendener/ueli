@@ -24,6 +24,20 @@ export default [
              * Enforces explicit class-member accessibility.
              */
             "@typescript-eslint/explicit-member-accessibility": ["error", { accessibility: "explicit" }],
+
+            "padding-line-between-statements": [
+                "error",
+                { blankLine: "always", prev: "*", next: "if" },
+                { blankLine: "always", prev: "if", next: "*" },
+                { blankLine: "always", prev: "*", next: "for" },
+                { blankLine: "always", prev: "for", next: "*" },
+                { blankLine: "always", prev: "*", next: "try" },
+                { blankLine: "always", prev: "try", next: "*" },
+                { blankLine: "always", prev: "*", next: "while" },
+                { blankLine: "always", prev: "while", next: "*" },
+                { blankLine: "always", prev: "*", next: "switch" },
+                { blankLine: "always", prev: "switch", next: "*" },
+            ],
         },
         languageOptions: {
             globals: {

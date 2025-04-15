@@ -72,6 +72,7 @@ export class PasswordGeneratorExtension implements Extension {
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const command = this.getSettingValue("command");
+
         if (![command].includes(searchTerm.toLowerCase())) {
             return createEmptyInstantSearchResult();
         }

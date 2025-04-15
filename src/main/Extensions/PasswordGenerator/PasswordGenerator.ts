@@ -6,9 +6,11 @@ export class PasswordGenerator {
 
         let password = "";
         let previousCharacter = "";
+
         for (let index = 0; index < settings.passwordLength; index++) {
             let nextCharacter = "";
             let isValid = false;
+
             while (isValid === false) {
                 isValid = true;
                 nextCharacter = this.pickCharacter(
@@ -56,6 +58,7 @@ export class PasswordGenerator {
 
         let charset: string = "";
         let letterCharset: string = "";
+
         if (settings.includeUppercaseCharacters === true) {
             charset += uppercaseCharacters;
             letterCharset += uppercaseCharacters;

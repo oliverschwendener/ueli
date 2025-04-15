@@ -13,6 +13,7 @@ export const NewActionOpenFile = ({ args, setArgs }: NewActionTypeProps) => {
 
     const selectFile = async ({ properties }: Electron.OpenDialogOptions) => {
         const result = await window.ContextBridge.showOpenDialog({ properties });
+
         if (!result.canceled && result.filePaths.length > 0) {
             setFilePath(result.filePaths[0]);
         }

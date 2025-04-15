@@ -92,6 +92,7 @@ export const CustomWebSearchDialog = ({
             open={isDialogOpen}
             onOpenChange={(event, { open }) => {
                 event.stopPropagation();
+
                 if (!open) {
                     closeDialog();
                 }
@@ -166,9 +167,11 @@ export const CustomWebSearchDialog = ({
                                     temporaryCustomSearchEngineSetting,
                                 );
                                 setValidation(validationResult);
+
                                 if (Object.keys(validationResult).length > 0) {
                                     return;
                                 }
+
                                 closeDialog();
                                 temporaryCustomSearchEngineSetting.prefix =
                                     temporaryCustomSearchEngineSetting.prefix.trim();

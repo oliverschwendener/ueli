@@ -20,9 +20,11 @@ describe(WindowsCustomWebBrowserActionHandler, () => {
                 if (k === "general.browser.useDefaultWebBrowser") {
                     return false;
                 }
+
                 if (k === "general.browser.customWebBrowser.executableFilePath") {
                     return "";
                 }
+
                 throw new Error("Unexpected call to getValue");
             });
 
@@ -40,12 +42,15 @@ describe(WindowsCustomWebBrowserActionHandler, () => {
                 if (k === "general.browser.useDefaultWebBrowser") {
                     return false;
                 }
+
                 if (k === "general.browser.customWebBrowser.executableFilePath") {
                     return "path";
                 }
+
                 if (k === "general.browser.customWebBrowser.commandlineArguments") {
                     return "-some -argument -list";
                 }
+
                 throw new Error("Unexpected call to getValue");
             });
 
@@ -67,12 +72,15 @@ describe(WindowsCustomWebBrowserActionHandler, () => {
                 if (k === "general.browser.useDefaultWebBrowser") {
                     return false;
                 }
+
                 if (k === "general.browser.customWebBrowser.executableFilePath") {
                     return "path";
                 }
+
                 if (k === "general.browser.customWebBrowser.commandlineArguments") {
                     return "-some -argument -list {{url}}";
                 }
+
                 throw new Error("Unexpected call to getValue");
             });
 
@@ -96,9 +104,11 @@ describe(WindowsCustomWebBrowserActionHandler, () => {
                 if (k === "general.browser.customWebBrowser.executableFilePath") {
                     return "path";
                 }
+
                 if (k === "general.browser.customWebBrowser.commandlineArguments") {
                     return "-some -argument -list {{url}}";
                 }
+
                 throw new Error("Unexpected call to getValue");
             });
 

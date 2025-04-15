@@ -47,6 +47,7 @@ export class Base64Conversion implements Extension {
         const decodePrefix = this.getSettingValue("decodePrefix");
 
         const results: InvocationResult[] = [];
+
         if (searchTerm.toLowerCase().startsWith(encodePrefix + " ") && searchTerm.length > encodePrefix.length + 1) {
             results.push({
                 action: "encoded",

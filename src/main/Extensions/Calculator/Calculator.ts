@@ -78,6 +78,7 @@ export class Calculator {
         );
 
         let result = calculationResult;
+
         try {
             // Try to extract the number / unit using a regular expression
             // Group 1: Number including separator
@@ -85,6 +86,7 @@ export class Calculator {
             // Group 3: Unit if available
             const resultRegex = /([\d,.]*)(\s*)(.*)/g;
             let matches;
+
             while ((matches = resultRegex.exec(result)) !== null) {
                 // This is necessary to avoid infinite loops with zero-width matches
                 if (matches.index === resultRegex.lastIndex) {

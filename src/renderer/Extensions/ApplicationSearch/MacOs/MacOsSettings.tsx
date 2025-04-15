@@ -37,6 +37,7 @@ export const MacOsSettings = () => {
 
     const chooseFolder = async () => {
         const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
+
         if (!result.canceled && result.filePaths.length) {
             setNewFolder(result.filePaths[0]);
         }

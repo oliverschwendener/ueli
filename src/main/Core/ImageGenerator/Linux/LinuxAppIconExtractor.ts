@@ -243,6 +243,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
 
         const subdirectories: string[] = [];
         const subdirData = new Map<string, IconThemeSubdir>();
+
         for (const dir of iconThemeData["Directories"].split(",")) {
             subdirectories.push(dir);
 
@@ -373,6 +374,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
             for (const subdir of themeIndex.subdirectories) {
                 for (const extension of ["png", "svg", "xpm"]) {
                     const iconThemeSubDir = themeIndex.subdirData.get(subdir);
+
                     if (iconThemeSubDir && this.directoryMatchesSize(iconThemeSubDir, size, scale)) {
                         const filename = `${join(themeIndex.path, subdir, iconName)}.${extension}`;
 
@@ -383,6 +385,7 @@ export class LinuxAppIconExtractor implements FileIconExtractor {
                 }
             }
         }
+
         let minimalSize = Number.MAX_SAFE_INTEGER;
         let closestFilename: string | undefined;
 

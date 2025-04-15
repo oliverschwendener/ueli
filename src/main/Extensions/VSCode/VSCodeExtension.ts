@@ -128,10 +128,12 @@ export class VSCodeExtension implements Extension {
 
     private getPath = (uri: string) => {
         const decodedUri = decodeURIComponent(uri);
+
         if (uri.startsWith("file://")) {
             const url = new URL(decodedUri);
             return Url.fileURLToPath(url, { windows: this.operatingSystem === "Windows" });
         }
+
         return decodedUri;
     };
 
@@ -345,6 +347,7 @@ export const isPath = (searchTerm: string | null | undefined) => {
     if (!searchTerm) {
         return false;
     }
+
     const windowMatch = searchTerm.match(/[A-Z]:.*/) !== null;
     return searchTerm.startsWith("/") || searchTerm.startsWith("~") || windowMatch;
 };

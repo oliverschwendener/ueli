@@ -62,6 +62,7 @@ export const SetCustomSettingsFilePath = () => {
                         <Button
                             onClick={async () => {
                                 const filePath = await selectFile();
+
                                 if (filePath) {
                                     await selectCustomSettingsFilePath(filePath);
                                 }

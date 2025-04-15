@@ -48,6 +48,7 @@ export class UuidGeneratorExtension implements Extension {
         const validateStrictly = this.getSettingValue("validateStrictly");
 
         let uuidSearchTerm = searchTerm;
+
         if (uuidSearchTerm.toLowerCase().startsWith("uuid") || uuidSearchTerm.toLowerCase().startsWith("guid")) {
             uuidSearchTerm = uuidSearchTerm.substring(4);
         }
@@ -59,6 +60,7 @@ export class UuidGeneratorExtension implements Extension {
             braces: false,
             quotes: false,
         });
+
         if (this.validateUuid(possibleUuid)) {
             return {
                 after: [],
@@ -218,6 +220,7 @@ export class UuidGeneratorExtension implements Extension {
 
     public async invoke(settings: Settings): Promise<string[]> {
         const result = [];
+
         for (let index = 0; index < settings.numberOfUuids; index++) {
             result.push(
                 this.generateUuid(
@@ -229,6 +232,7 @@ export class UuidGeneratorExtension implements Extension {
                 ),
             );
         }
+
         return result;
     }
 

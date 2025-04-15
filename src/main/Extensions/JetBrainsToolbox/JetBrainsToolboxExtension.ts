@@ -85,9 +85,11 @@ export class JetBrainsToolboxExtension implements Extension {
             this.operatingSystem === "macOS" ? "Contents/Resources" : ".",
             "product-info.json",
         );
+
         if (!(await this.fileSystemUtility.pathExists(productInfoPath))) {
             return [];
         }
+
         const productInfo = await this.fileSystemUtility.readJsonFile<JetBrainsToolboxToolProductInfo>(productInfoPath);
 
         // get recent projects
@@ -97,9 +99,11 @@ export class JetBrainsToolboxExtension implements Extension {
             "options/recentProjects.xml",
         );
         const recentProjectsExists = await this.fileSystemUtility.pathExists(recentProjectsPath);
+
         if (!recentProjectsExists) {
             return [];
         }
+
         const recentProjectFileContent = await this.fileSystemUtility.readTextFile(recentProjectsPath);
         const recentProjects = this.xmlParser.parse<[JetBrainsRecentProject]>(recentProjectFileContent, {
             preserveOrder: true,
@@ -159,10 +163,12 @@ export class JetBrainsToolboxExtension implements Extension {
         }>(join(toolboxPaths, "state.json"));
 
         const recents: JetBrainsToolboxRecent[] = [];
+
         for (const tool of state.tools) {
             const recentProjects = await this.getToolRecentProjects(tool);
             recents.push(...recentProjects);
         }
+
         return recents;
     }
 
@@ -204,20 +210,24 @@ export class JetBrainsToolboxExtension implements Extension {
     public async getProjectImage(recent: JetBrainsToolboxRecent): Promise<Image> {
         if (recent.projectIconPath) {
             const exists = await this.fileSystemUtility.pathExists(recent.projectIconPath);
+
             if (exists) {
                 return {
                     url: `file://${recent.projectIconPath}`,
                 };
             }
         }
+
         if (recent.toolIconPath) {
             const exists = await this.fileSystemUtility.pathExists(recent.toolIconPath);
+
             if (exists) {
                 return {
                     url: `file://${recent.toolIconPath}`,
                 };
             }
         }
+
         return this.getImage();
     }
 

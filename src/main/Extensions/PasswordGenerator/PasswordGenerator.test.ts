@@ -7,6 +7,7 @@ describe(PasswordGenerator, () => {
     describe(PasswordGenerator.generatePassword, () => {
         const validateSymbols = (password: string, settings: PasswordGeneratorSettings): boolean => {
             const symbolsOnly = password.replace(/abcdefghijklmnopqrstuvwxyz0123456789/gi, "");
+
             if (settings.includeSymbols === false && symbolsOnly.length > 0) {
                 return false;
             }
@@ -22,6 +23,7 @@ describe(PasswordGenerator, () => {
 
         const validateDuplicateCharacters = (password: string): boolean => {
             const characterSet = new Set<string>();
+
             for (const character of password) {
                 if (characterSet.has(character)) {
                     return true;
@@ -35,6 +37,7 @@ describe(PasswordGenerator, () => {
 
         const validateSequentialCharacters = (password: string): boolean => {
             let previousCharacter = "";
+
             for (const character of password) {
                 if (
                     previousCharacter.charCodeAt(0) + 1 === character.charCodeAt(0) ||

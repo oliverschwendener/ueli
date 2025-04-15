@@ -54,6 +54,7 @@ export const EditFolder = ({ initialFolderSetting, onSave }: EditFolderProps) =>
 
     const openFileDialog = async () => {
         const result = await window.ContextBridge.showOpenDialog({ properties: ["openDirectory"] });
+
         if (!result.canceled && result.filePaths.length) {
             setPath(result.filePaths[0]);
         }

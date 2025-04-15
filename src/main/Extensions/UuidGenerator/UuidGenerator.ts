@@ -23,28 +23,35 @@ export class UuidGenerator {
         }
 
         let formattedUuid = uuid;
+
         if (format.uppercase) {
             formattedUuid = formattedUuid.toUpperCase();
         }
+
         if (!format.hyphens) {
             formattedUuid = formattedUuid.replace(/-/g, "");
         }
+
         if (format.braces) {
             formattedUuid = `{${formattedUuid}}`;
         }
+
         if (format.quotes) {
             formattedUuid = `"${formattedUuid}"`;
         }
+
         return formattedUuid;
     }
 
     public static reformat(uuid: string, format: UuidFormat): string {
         let formattedUuid = uuid.replace(/["{}-]/g, "");
+
         if (format.uppercase) {
             formattedUuid = formattedUuid.toUpperCase();
         } else {
             formattedUuid = formattedUuid.toLowerCase();
         }
+
         if (format.hyphens) {
             const tempUuid = formattedUuid.replace(/-/g, "");
 
@@ -61,16 +68,19 @@ export class UuidGenerator {
         } else {
             formattedUuid = formattedUuid.replace(/-/g, "");
         }
+
         if (format.braces) {
             formattedUuid = `{${formattedUuid}}`;
         } else {
             formattedUuid = formattedUuid.replace(/[{}]/g, "");
         }
+
         if (format.quotes) {
             formattedUuid = `"${formattedUuid}"`;
         } else {
             formattedUuid = formattedUuid.replace(/"/g, "");
         }
+
         return formattedUuid;
     }
 
