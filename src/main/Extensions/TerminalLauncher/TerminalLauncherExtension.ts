@@ -94,6 +94,15 @@ export class TerminalLauncherExtension implements Extension {
                 defaultActionDescription: "{{terminalId}}の起動コマンド",
                 searchResultItemDescription: "{{terminalId}}を起動",
             },
+            "ko-KR": {
+                extensionName: "터미널 실행",
+                prefix: "접두사",
+                prefixDescription: "터미널 실행을 트리거하는 접두사입니다. 다음 패턴으로 사용합니다: <접두사> <명령어>",
+                terminals: "터미널",
+                selectTerminals: "터미널 선택",
+                defaultActionDescription: "{{terminalId}}의 실행 명령어",
+                searchResultItemDescription: "{{terminalId}} 실행",
+            },
         };
     }
 

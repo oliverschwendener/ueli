@@ -46,4 +46,15 @@ export const windowsResources: Resources<WindowsTranslations> = {
         searchResultItemDescription: "システムコマンド",
         emptyTrash: "ゴミ箱を空にする",
     },
+    "ko-KR": {
+        extensionName: "시스템 명령어",
+        shutdown: "종료",
+        restart: "재시작",
+        signOut: "로그아웃",
+        lock: "잠금",
+        sleep: "절전 모드",
+        hibernate: "최대 절전 모드",
+        searchResultItemDescription: "시스템 명령어",
+        emptyTrash: "휴지통 비우기",
+    },
 };

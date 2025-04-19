@@ -122,6 +122,14 @@ export class CalculatorExtension implements Extension {
                 decimalSeparator: "小数点区切り",
                 argumentSeparator: "引数区切り",
             },
+            "ko-KR": {
+                extensionName: "계산기",
+                calculatorResult: "계산 결과",
+                copyResultToClipboard: "결과를 클립보드에 복사",
+                precision: "정밀도",
+                decimalSeparator: "소수점 구분 기호",
+                argumentSeparator: "인수 구분 기호",
+            },
         };
     }
 

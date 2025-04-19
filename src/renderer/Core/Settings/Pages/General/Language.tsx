@@ -11,6 +11,7 @@ export const Language = () => {
         { name: "English (US)", locale: "en-US" },
         { name: "Deutsch (Schweiz)", locale: "de-CH" },
         { name: "日本語 (日本)", locale: "ja-JP" },
+        { name: "한국어 (대한민국)", locale: "ko-KR" },
     ];
 
     const { value: language, updateValue: setLanguage } = useSetting({

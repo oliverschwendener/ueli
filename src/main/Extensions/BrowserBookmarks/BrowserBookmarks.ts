@@ -180,6 +180,18 @@ export class BrowserBookmarks implements Extension {
                 copyUrlToClipboard: "クリップボードからURLをコピー",
                 searchResultItemDescription: "{{browserName}} ブックマーク | {{browserName}} Bookmark",
             },
+            "ko-KR": {
+                extensionName: "브라우저 북마크",
+                "searchResultStyle.nameOnly": "이름만",
+                "searchResultStyle.urlOnly": "URL만",
+                "searchResultStyle.nameAndUrl": "이름과 URL",
+                selectBrowsers: "브라우저 선택",
+                iconType: "아이콘 유형",
+                "iconType.favicon": "파비콘",
+                "iconType.browserIcon": "브라우저 아이콘",
+                copyUrlToClipboard: "클립보드에 URL 복사",
+                searchResultItemDescription: "{{browserName}} 북마크",
+            },
         };
     }
 

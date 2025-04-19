@@ -140,6 +140,14 @@ export class CurrencyConversion implements Extension {
                 copyToClipboard: "クリップボードにコピー",
                 currencyConversion: "通貨変換",
             },
+            "ko-KR": {
+                extensionName: "환율 변환기",
+                currencies: "통화",
+                defaultTargetCurrency: "기본 통화",
+                selectCurrencies: "통화 선택",
+                copyToClipboard: "클립보드에 복사",
+                currencyConversion: "환율 변환",
+            },
         };
     }
 

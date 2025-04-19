@@ -149,6 +149,12 @@ export class WebSearchExtension implements Extension {
                 locale: "言語",
                 showInstantSearchResult: "検索結果を表示",
             },
+            "ko-KR": {
+                extensionName: "웹 검색",
+                searchEngine: "검색 엔진",
+                locale: "언어",
+                showInstantSearchResult: "검색결과로 바로가기 표시",
+            },
         };
     }
 

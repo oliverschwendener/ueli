@@ -165,6 +165,28 @@ export class CustomWebSearchExtension implements Extension {
                 remove: "削除",
                 cancel: "キャンセル",
             },
+            "ko-KR": {
+                extensionName: "사용자 정의 웹 검색",
+                addSearchEngine: "검색 엔진 추가",
+                editSearchEngine: "검색 엔진 편집",
+                searchEngines: "검색 엔진",
+                url: "URL",
+                prefix: "접두사",
+                prefixTooltip: "이 사용자 정의 검색 엔진을 트리거하는 접두사입니다.",
+                prefixError: "접두사는 필수입니다",
+                prefixInUseError: "접두사가 이미 사용 중입니다",
+                name: "이름",
+                nameError: "이름은 필수입니다",
+                searchEngineUrl: "URL 템플릿",
+                searchEngineUrlTooltip: "`{{query}}`를 검색어가 삽입될 위치에 사용하세요.",
+                searchEngineUrlError: "URL 템플릿에 `{{query}}`가 포함되어야 합니다.",
+                encodeSearchTerm: "쿼리 인코딩",
+                encodeSearchTermTooltip: "검색 엔진에 전달하기 전에 검색어를 인코딩합니다.",
+                edit: "편집",
+                save: "저장",
+                remove: "삭제",
+                cancel: "취소",
+            },
         };
     }
 }

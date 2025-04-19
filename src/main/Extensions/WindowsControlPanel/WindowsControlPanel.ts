@@ -79,6 +79,11 @@ export class WindowsControlPanel implements Extension {
                 searchResultItemDescription: "Systemsteuerungselement",
                 openItem: "Systemsteuerungselement öffnen",
             },
+            ko: {
+                extensionName: "윈도우 제어판",
+                searchResultItemDescription: "제어판",
+                openItem: "제어판 항목 열기",
+            },
         };
     }
 }

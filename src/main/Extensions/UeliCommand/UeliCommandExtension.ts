@@ -184,6 +184,17 @@ export class UeliCommandExtension implements Extension {
                 disableHotkey: "ホットキーを無効にする | Disable hotkey",
                 enableHotkey: "ホットキーを有効にする | Enable hotkey",
             },
+            "ko-KR": {
+                extensionName: "Ueli 명령어",
+                description: "Ueli 명령어",
+                openSettings: "Ueli 설정 열기",
+                openExtensions: "Ueli 확장 프로그램 열기",
+                centerWindow: "Ueli 창 중앙에 배치",
+                quitUeli: "Ueli 종료",
+                rescanExtensions: "확장 프로그램 재탐색",
+                disableHotkey: "단축키 비활성화",
+                enableHotkey: "단축키 활성화",
+            },
         };
     }
 }

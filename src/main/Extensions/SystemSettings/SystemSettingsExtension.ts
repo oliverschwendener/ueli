@@ -59,6 +59,9 @@ export class SystemSettingsExtension implements Extension {
             "ja-JP": {
                 extensionName: "システム設定",
             },
+            "ko-KR": {
+                extensionName: "시스템 설정",
+            },
         };
     }
 }

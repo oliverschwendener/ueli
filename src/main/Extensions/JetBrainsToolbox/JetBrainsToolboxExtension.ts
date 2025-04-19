@@ -248,6 +248,11 @@ export class JetBrainsToolboxExtension implements Extension {
                 project: "{{tool}} プロジェクト",
                 openWith: "{{project}}を{{toolName}}で開く",
             },
+            "ko-KR": {
+                extensionName: "JetBrains Toolbox",
+                project: "{{tool}} 프로젝트",
+                openWith: "{{project}}를 {{toolName}}으로 열기",
+            },
         };
     }
 }

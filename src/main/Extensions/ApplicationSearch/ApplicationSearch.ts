@@ -124,6 +124,25 @@ export class ApplicationSearch implements Extension {
                 addFileExtension: "ファイル拡張子を追加",
                 includeAppsFromWindowsStore: "Windowsストアアプリを含む",
             },
+            "ko-KR": {
+                extensionName: "애플리케이션 검색",
+                searchResultItemDescription: "애플리케이션",
+                openApplication: "열기",
+                openApplicationAsAdministrator: "관리자 권한으로 열기",
+                copyFilePathToClipboard: "파일 경로를 클립보드에 복사",
+                advanced: "고급",
+                // Settings
+                general: "일반",
+                folders: "폴더",
+                fileExtensions: "파일 확장자",
+                folderDoesNotExist: "폴더가 존재하지 않습니다",
+                add: "추가",
+                remove: "제거",
+                addFolder: "폴더 추가",
+                chooseFolder: "폴더 선택",
+                addFileExtension: "파일 확장자 추가",
+                includeAppsFromWindowsStore: "Windows 스토어 앱 포함",
+            },
         };
     }
 }

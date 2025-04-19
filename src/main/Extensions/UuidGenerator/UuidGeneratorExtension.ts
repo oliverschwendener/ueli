@@ -197,6 +197,25 @@ export class UuidGeneratorExtension implements Extension {
                 addSearchResultFormat: "書式を追加",
                 removeSearchResultFormat: "書式を削除",
             },
+            "ko-KR": {
+                copyUuidToClipboard: "UUID를 클립보드에 복사",
+                copyUuidsToClipboard: "UUID를 클립보드에 복사",
+                extensionName: "UUID / GUID 생성기",
+                generatorResult: "UUID / GUID",
+                openGeneratorDescription: "UUID / GUID 생성기 열기",
+                openGeneratorName: "UUID / GUID 생성기",
+                uuidVersion: "UUID 버전",
+                numberOfUuids: "UUID 개수",
+                validateStrictly: "UUID를 엄격하게 검증",
+                uppercase: "대문자",
+                hyphens: "하이픈",
+                braces: "중괄호",
+                quotes: "따옴표",
+                defaultGeneratorFormat: "생성기 창 형식",
+                searchResultFormats: "검색 결과 형식",
+                addSearchResultFormat: "형식 추가",
+                removeSearchResultFormat: "형식 제거",
+            },
         };
     }
 

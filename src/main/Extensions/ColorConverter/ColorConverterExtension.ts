@@ -71,6 +71,13 @@ export class ColorConverterExtension implements Extension {
                 copyColorToClipboard: "色コードをクリップボードにコピー",
                 extensionName: "色コード変換",
             },
+            "ko-KR": {
+                formats: "색상 포맷",
+                selectAColorFormat: "색상 포맷 선택",
+                color: "{{ format }} 색상",
+                copyColorToClipboard: "색상 포맷을 클립보드에 복사",
+                extensionName: "색상 변환기",
+            },
         };
     }
 

@@ -22,4 +22,9 @@ export const linuxResources: Resources<LinuxTranslations> = {
         searchResultItemDescription: "システムコマンド",
         emptyTrash: "ゴミ箱を空にする",
     },
+    "ko-KR": {
+        extensionName: "시스템 명령어",
+        searchResultItemDescription: "시스템 명령어",
+        emptyTrash: "휴지통 비우기",
+    },
 };

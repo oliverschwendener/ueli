@@ -237,6 +237,27 @@ export class SimpleFileSearchExtension implements Extension {
                 "searchFor.folders": "フォルダ",
                 "searchFor.filesAndFolders": "ファイルとフォルダ",
             },
+            "ko-KR": {
+                extensionName: "간단한 파일 검색",
+                file: "파일",
+                folder: "폴더",
+                openFile: "파일 열기",
+                openFolder: "폴더 열기",
+                folders: "폴더",
+                path: "경로",
+                recursive: "재귀적",
+                add: "추가",
+                addFolder: "폴더 추가",
+                remove: "제거",
+                chooseFolder: "폴더 선택",
+                validFolderPath: "유효한 폴더 경로",
+                invalidFolderPath: "이 폴더는 존재하지 않는 것 같습니다",
+                cancel: "취소",
+                searchFor: "검색 대상",
+                "searchFor.files": "파일",
+                "searchFor.folders": "폴더",
+                "searchFor.filesAndFolders": "파일과 폴더",
+            },
         };
     }
 

@@ -84,7 +84,7 @@ describe(ApplicationSearch, () => {
         it("should return true on Linux", () => testIsSupported({ expected: true, operatingSystem: "Linux" }));
     });
 
-    it("should support en-US, de-DE and ja-JP translations", () => {
+    it("should support en-US, de-DE, ja-JP and ko-KR translations", () => {
         const translations = new ApplicationSearch(
             "Windows",
             <ApplicationRepository>{},
@@ -95,6 +95,7 @@ describe(ApplicationSearch, () => {
         expect(Object.keys(translations)).to.include("en-US");
         expect(Object.keys(translations)).to.include("de-CH");
         expect(Object.keys(translations)).to.include("ja-JP");
+        expect(Object.keys(translations)).to.include("ko-KR");
     });
 
     it("should return the correct image for the given operating system", () => {
