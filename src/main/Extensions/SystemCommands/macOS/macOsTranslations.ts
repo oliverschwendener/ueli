@@ -42,4 +42,14 @@ export const macOsResources: Resources<MacOsTranslations> = {
         lock: "画面ロック",
         emptyTrash: "ゴミ箱を空にする",
     },
+    "ko-KR": {
+        extensionName: "시스템 명령어",
+        searchResultItemDescription: "시스템 명령어",
+        shutdown: "종료",
+        restart: "재시작...",
+        logOut: "로그아웃",
+        sleep: "절전 모드",
+        lock: "잠금",
+        emptyTrash: "휴지통 비우기",
+    },
 };

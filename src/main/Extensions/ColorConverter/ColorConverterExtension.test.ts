@@ -130,7 +130,7 @@ describe(ColorConverterExtension, () => {
     });
 
     describe(ColorConverterExtension.prototype.getI18nResources, () =>
-        it("should support en-US, de-CH and ja-JP", () =>
+        it("should support en-US, de-CH, ja-JP and ko-KR", () =>
             expect(
                 Object.keys(
                     new ColorConverterExtension(
@@ -141,6 +141,6 @@ describe(ColorConverterExtension, () => {
                         <ColorPreviewGenerator>{},
                     ).getI18nResources(),
                 ),
-            ).toEqual(["en-US", "de-CH", "ja-JP"])),
+            ).toEqual(["en-US", "de-CH", "ja-JP", "ko-KR"])),
     );
 });

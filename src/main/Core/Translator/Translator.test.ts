@@ -13,6 +13,7 @@ describe(Translator, () => {
             "en-US": { message: "Hello" },
             "de-CH": { message: "Hoi", otherMessage: "Es anders hoi" },
             "ja-JP": { message: "ようこそ" },
+            "ko-KR": { message: "안녕하세요" },
         });
 
         expect(t("message")).toBe("Hello");

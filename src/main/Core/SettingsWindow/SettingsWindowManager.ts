@@ -32,6 +32,7 @@ export class SettingsWindowManager {
             "en-US": { settingsWindowTitle: "Settings" },
             "de-CH": { settingsWindowTitle: "Einstellungen" },
             "ja-JP": { settingsWindowTitle: "設定" },
+            "ko-KR": { settingsWindowTitle: "설정" },
         });
 
         return t("settingsWindowTitle");
