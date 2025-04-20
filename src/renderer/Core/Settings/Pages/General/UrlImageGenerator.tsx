@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 export const UrlImageGenerator = () => {
     const { t } = useTranslation("settingsGeneral");
 
-    const faviconApiProviders = ["Google", "Favicone"];
+    const faviconApiProviders = ["Google", "Favicone", "DuckDuckGo"];
 
     const { value: faviconApiProvider, updateValue: setFaviconApiProvider } = useSetting<string>({
         key: "imageGenerator.faviconApiProvider",
