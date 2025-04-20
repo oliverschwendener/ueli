@@ -2,6 +2,7 @@ import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import { join } from "path";
 import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
+import { DuckDuckGoFaviconProvider, FaviconeFaviconProvider, GoogleFaviconProvider } from "./FaviconProvider";
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
@@ -12,7 +13,14 @@ import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS
 
 export class ImageGeneratorModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
-        moduleRegistry.register("UrlImageGenerator", new UrlImageGenerator(moduleRegistry.get("SettingsManager")));
+        moduleRegistry.register(
+            "UrlImageGenerator",
+            new UrlImageGenerator(moduleRegistry.get("SettingsManager"), {
+                Google: new GoogleFaviconProvider(),
+                DuckDuckGo: new DuckDuckGoFaviconProvider(),
+                Favicone: new FaviconeFaviconProvider(),
+            }),
+        );
 
         const cacheFolderPath = await ImageGeneratorModule.ensureCacheFolderExists(moduleRegistry);
 
