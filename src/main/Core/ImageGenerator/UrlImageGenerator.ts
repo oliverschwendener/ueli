@@ -9,15 +9,16 @@ export class UrlImageGenerator implements UrlImageGeneratorInterface {
         const { host } = new URL(url);
         const size = 48;
 
-        const imageUrls: Record<string, () => string> = {
+        const faviconProviders: Record<string, () => string> = {
             Google: () => `https://www.google.com/s2/favicons?domain=${host}&sz=${size}`,
             Favicone: () => `https://favicone.com/${host}?s=${size}`,
+            DuckDuckGo: () => `https://icons.duckduckgo.com/ip3/${host}.ico`,
         };
 
         return {
-            url: Object.keys(imageUrls).includes(this.getFaviconApiProvider())
-                ? imageUrls[this.getFaviconApiProvider()]()
-                : imageUrls["Google"](),
+            url: Object.keys(faviconProviders).includes(this.getFaviconApiProvider())
+                ? faviconProviders[this.getFaviconApiProvider()]()
+                : faviconProviders["Google"](),
         };
     }
 
