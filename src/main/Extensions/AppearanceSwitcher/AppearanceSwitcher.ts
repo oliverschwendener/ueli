@@ -84,6 +84,12 @@ export class AppearanceSwitcher implements Extension {
                 searchResultItemName: "アピアランス切り替え | Toggle System Appearance",
                 searchResultItemActionDescription: "OSのダークモード/ライトモードを切り替えます",
             },
+            "ko-KR": {
+                extensionName: "시스템 테마 전환기",
+                searchResultItemDescription: "시스템",
+                searchResultItemName: "시스템 테마 전환",
+                searchResultItemActionDescription: "시스템 테마 전환",
+            },
         };
     }
 }

@@ -182,6 +182,20 @@ export class Base64Conversion implements Extension {
                 encodePrefix: "エンコード時の接頭辞",
                 decodePrefix: "デコード時の接頭辞",
             },
+            "ko-KR": {
+                extensionName: "Base64 변환",
+                searchResultItemDescription: "Base64 인코딩/디코딩",
+                searchResultItemName: "Base64 변환 | Base64 Conversion",
+                searchResultItemActionDescription: "Base64 변환 항목 열기",
+                copyToClipboard: "결과를 클립보드에 복사",
+                encodePlaceHolder: "인코딩할 문자열 입력",
+                decodePlaceHolder: "디코딩할 문자열 입력",
+                encoded: "인코딩됨",
+                decoded: "디코딩됨",
+                encodeDecodePrefix: "변환 시 접두사 사용",
+                encodePrefix: "인코딩 시 접두사",
+                decodePrefix: "디코딩 시 접두사",
+            },
         };
     }
 

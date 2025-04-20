@@ -101,6 +101,13 @@ export class DeeplTranslatorExtension implements Extension {
                 searchResultItemName: "DeepL翻訳 | DeepL Translator",
                 searchResultItemActionDescription: "DeepL翻訳を開く",
             },
+            "ko-KR": {
+                extensionName: "DeepL 번역기",
+                openAccount: "DeepL 계정 열기",
+                searchResultItemDescription: "DeepL 번역",
+                searchResultItemName: "DeepL 번역기",
+                searchResultItemActionDescription: "DeepL 번역기를 엽니다",
+            },
         };
     }
 

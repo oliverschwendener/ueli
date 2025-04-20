@@ -26,4 +26,12 @@ export const resources: Resources<TrayIconTranslations> = {
         "trayIcon.contextMenu.hotkey": "ホットキー",
         "trayIcon.contextMenu.hotkey.tooltip": "クリックで有効無効を切り替える",
     },
+    "ko-KR": {
+        "trayIcon.contextMenu.about": "정보",
+        "trayIcon.contextMenu.quit": "종료",
+        "trayIcon.contextMenu.settings": "설정",
+        "trayIcon.contextMenu.show": "표시",
+        "trayIcon.contextMenu.hotkey": "단축키",
+        "trayIcon.contextMenu.hotkey.tooltip": "클릭하여 단축키를 활성화/비활성화합니다",
+    },
 };

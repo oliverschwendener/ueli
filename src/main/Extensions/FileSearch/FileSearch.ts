@@ -107,6 +107,13 @@ export class FileSearch implements Extension {
                 maxSearchResults: "検索上限数",
                 searchResultItemName: "ファイル検索 | Search files",
             },
+            "ko-KR": {
+                extensionName: "파일 검색",
+                esFilePath: "Everything CLI 파일 경로",
+                fileDoesNotExist: "파일이 존재하지 않습니다",
+                maxSearchResults: "최대 검색 결과",
+                searchResultItemName: "파일 검색하기",
+            },
         };
     }
 

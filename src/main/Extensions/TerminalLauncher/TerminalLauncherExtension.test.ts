@@ -138,7 +138,7 @@ describe(TerminalLauncherExtension, () => {
     });
 
     describe(TerminalLauncherExtension.prototype.getI18nResources, () => {
-        it("should return i18n resources for en-US, de-CH and ja-JP", () => {
+        it("should return i18n resources for en-US, de-CH, ja-JP and ko-KR", () => {
             const extension = new TerminalLauncherExtension(
                 "Windows",
                 <AssetPathResolver>{},
@@ -146,7 +146,7 @@ describe(TerminalLauncherExtension, () => {
                 <Translator>{},
                 <TerminalRegistry>{},
             );
-            expect(Object.keys(extension.getI18nResources())).toEqual(["en-US", "de-CH", "ja-JP"]);
+            expect(Object.keys(extension.getI18nResources())).toEqual(["en-US", "de-CH", "ja-JP", "ko-KR"]);
         });
     });
 });

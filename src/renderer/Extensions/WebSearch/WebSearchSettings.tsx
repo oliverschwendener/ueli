@@ -28,6 +28,7 @@ export const WebSearchSettings = () => {
         { locale: "en-US", label: "English (US)" },
         { locale: "de-CH", label: "Deutsch (Schweiz)" },
         { locale: "ja-JP", label: "日本語 (日本)" },
+        { locale: "ko-KR", label: "한국어 (대한민국)" },
     ];
 
     return (

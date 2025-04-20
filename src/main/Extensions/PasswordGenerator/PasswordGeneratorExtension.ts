@@ -158,6 +158,23 @@ export class PasswordGeneratorExtension implements Extension {
                 generatorResult: "パスワードを生成",
                 copyPasswordToClipboard: "パスワードをクリップボードにコピー",
             },
+            "ko-KR": {
+                extensionName: "비밀번호 생성기",
+                command: "비밀번호 생성 명령어",
+                quantity: "생성할 비밀번호 수",
+                passwordLength: "비밀번호 길이",
+                includeUppercaseCharacters: "대문자 포함",
+                includeLowercaseCharacters: "소문자 포함",
+                includeNumbers: "숫자 포함",
+                includeSymbols: "기호 포함",
+                beginWithALetter: "문자로 시작",
+                noSimilarCharacters: "비슷한 문자 사용 안 함 (예: i, l, 1, L, o, 0, O, ...)",
+                noDuplicateCharacters: "문자 중복 사용 안 함",
+                noSequentialCharacters: "순차적인 문자 사용 안 함 (예: abc, 123, ...)",
+                resetSymbols: "리셋",
+                generatorResult: "생성된 비밀번호",
+                copyPasswordToClipboard: "비밀번호를 클립보드에 복사",
+            },
         };
     }
 

@@ -231,6 +231,16 @@ export class VSCodeExtension implements Extension {
                     "%s が開きたいファイル/プロジェクトに置換されます。これは起動スイッチの --file-uri もしくは --folder-uri で使用されます",
                 showPath: "Show file/folder path",
             },
+            "ko-KR": {
+                extensionName: "Visual Studio Code",
+                prefix: "접두사",
+                prefixDescription:
+                    "Visual Studio Code 실행의 트리거가 되는 접두사입니다. 다음 패턴으로 사용합니다: <접두사> <명령어>",
+                command: "명령어",
+                commandTooltip:
+                    "%s 가 선택한 파일/프로젝트에 삽입됩니다. --file-uri 또는 --folder-uri 스위치를 사용합니다",
+                showPath: "파일/폴더 경로 표시",
+            },
         };
     }
 
