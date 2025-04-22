@@ -15,9 +15,15 @@ export const useSearchHistoryController = () => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
 
     const add = (searchTerm: string) => {
+        const trimmedSearchTerm = searchTerm.trim();
+
+        if (trimmedSearchTerm.length === 0) {
+            return;
+        }
+
         const limit = window.ContextBridge.getSettingValue("general.searchHistory.limit", 10);
 
-        if (!isEnabled || searchHistory.includes(searchTerm.trim())) {
+        if (!isEnabled || searchHistory.includes(trimmedSearchTerm)) {
             return;
         }
 
