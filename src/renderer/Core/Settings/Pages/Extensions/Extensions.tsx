@@ -122,7 +122,13 @@ export const Extensions = () => {
                 </TabList>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: tokens.spacingHorizontalM }}>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                    gap: tokens.spacingHorizontalM,
+                }}
+            >
                 {window.ContextBridge.getAvailableExtensions()
                     .filter((extension) =>
                         selectedTab === "enabled" ? isEnabled(extension.id) : !isEnabled(extension.id),
