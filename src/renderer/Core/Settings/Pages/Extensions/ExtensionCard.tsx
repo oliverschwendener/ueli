@@ -12,10 +12,15 @@ import {
     MenuPopover,
     MenuTrigger,
     Subtitle2,
-    Switch,
     tokens,
 } from "@fluentui/react-components";
-import { ArrowClockwiseRegular, BookRegular, MoreHorizontalRegular, SettingsRegular } from "@fluentui/react-icons";
+import {
+    ArrowClockwiseRegular,
+    BookRegular,
+    MoreHorizontalRegular,
+    PowerFilled,
+    SettingsRegular,
+} from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
 
 type ExtensionCardProps = {
@@ -51,7 +56,7 @@ export const ExtensionCard = ({
         <Card appearance="filled-alternative">
             <CardHeader
                 image={
-                    <div style={{ width: 40, height: 40 }}>
+                    <div style={{ width: 28, height: 28 }}>
                         <img
                             alt={extension.name}
                             style={{ maxWidth: "100%", maxHeight: "100%" }}
@@ -79,7 +84,6 @@ export const ExtensionCard = ({
                             alignItems: "center",
                         }}
                     >
-                        <Switch checked={isEnabled} onChange={(_, { checked }) => (checked ? enable() : disable())} />
                         <Menu>
                             <MenuTrigger>
                                 <Button appearance="subtle" icon={<MoreHorizontalRegular />} />
@@ -98,6 +102,27 @@ export const ExtensionCard = ({
                                     )}
                                     <MenuItem icon={<BookRegular />} onClick={openReadme}>
                                         {t("readme", { ns: "settingsExtensions" })}
+                                    </MenuItem>
+
+                                    <MenuItem
+                                        onClick={() => {
+                                            if (isEnabled) {
+                                                disable();
+                                            } else {
+                                                enable();
+                                            }
+                                        }}
+                                        icon={
+                                            <PowerFilled
+                                                color={
+                                                    isEnabled
+                                                        ? tokens.colorStatusDangerForeground1
+                                                        : tokens.colorStatusSuccessForeground1
+                                                }
+                                            />
+                                        }
+                                    >
+                                        {isEnabled ? "Disable" : "Enable"}
                                     </MenuItem>
                                 </MenuList>
                             </MenuPopover>

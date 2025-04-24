@@ -1,18 +1,30 @@
 import { useSetting } from "@Core/Hooks";
 import { ThemeContext } from "@Core/Theme";
-import { Toast, ToastTitle, Toaster, tokens, useId, useToastController } from "@fluentui/react-components";
-import { useContext } from "react";
+import {
+    Spinner,
+    Tab,
+    TabList,
+    Title3,
+    Toast,
+    ToastTitle,
+    Toaster,
+    tokens,
+    useId,
+    useToastController,
+} from "@fluentui/react-components";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { ExtensionCard } from "./ExtensionCard";
 
 export const Extensions = () => {
     const { shouldUseDarkColors } = useContext(ThemeContext);
+    const [selectedTab, setSelectedTab] = useState("enabled");
     const { t } = useTranslation();
     const navigate = useNavigate();
 
     const toasterId = useId("rescanToasterId");
-    const { dispatchToast } = useToastController(toasterId);
+    const { dispatchToast, dismissToast } = useToastController(toasterId);
 
     const { value: enabledExtensionIds, updateValue: setEnabledExtensionIds } = useSetting({
         key: "extensions.enabledExtensionIds",
@@ -41,8 +53,27 @@ export const Extensions = () => {
     };
 
     const triggerExtensionRescan = async (extensionId: string) => {
-        const { success } = await attemptRescan(extensionId);
         const { name, nameTranslation } = window.ContextBridge.getExtension(extensionId);
+
+        const scanningToastId = crypto.randomUUID();
+
+        dispatchToast(
+            <Toast>
+                <ToastTitle media={<Spinner size="tiny" />}>
+                    {nameTranslation ? t(nameTranslation.key, { ns: nameTranslation.namespace }) : name}:{" "}
+                    {t("rescanning", { ns: "settingsExtensions" })}
+                </ToastTitle>
+            </Toast>,
+            {
+                toastId: scanningToastId,
+                position: "bottom",
+                timeout: -1 /* Negative timeout makes the toast stay forever */,
+            },
+        );
+
+        const { success } = await attemptRescan(extensionId);
+
+        dismissToast(scanningToastId);
 
         dispatchToast(
             <Toast>
@@ -67,19 +98,47 @@ export const Extensions = () => {
     return (
         <>
             <Toaster toasterId={toasterId} />
-            <div style={{ display: "flex", flexDirection: "column", gap: tokens.spacingVerticalM }}>
-                {window.ContextBridge.getAvailableExtensions().map((extension) => (
-                    <ExtensionCard
-                        extension={extension}
-                        isEnabled={isEnabled(extension.id)}
-                        enable={() => enable(extension.id)}
-                        disable={() => disable(extension.id)}
-                        openSettings={() => openSettings(extension.id)}
-                        rescan={() => triggerExtensionRescan(extension.id)}
-                        openReadme={() => openReadme(extension.id)}
-                        shouldUseDarkColors={shouldUseDarkColors}
-                    />
-                ))}
+
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: tokens.spacingVerticalM,
+                }}
+            >
+                <Title3>{t("title", { ns: "settingsExtensions" })}</Title3>
+                <TabList
+                    selectedValue={selectedTab}
+                    onTabSelect={(_, { value }) => {
+                        if (typeof value === "string") {
+                            setSelectedTab(value);
+                        }
+                    }}
+                >
+                    <Tab value="enabled">Enabled</Tab>
+                    <Tab value="available">Available</Tab>
+                </TabList>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: tokens.spacingHorizontalM }}>
+                {window.ContextBridge.getAvailableExtensions()
+                    .filter((extension) =>
+                        selectedTab === "enabled" ? isEnabled(extension.id) : !isEnabled(extension.id),
+                    )
+                    .map((extension) => (
+                        <ExtensionCard
+                            extension={extension}
+                            isEnabled={isEnabled(extension.id)}
+                            enable={() => enable(extension.id)}
+                            disable={() => disable(extension.id)}
+                            openSettings={() => openSettings(extension.id)}
+                            rescan={() => triggerExtensionRescan(extension.id)}
+                            openReadme={() => openReadme(extension.id)}
+                            shouldUseDarkColors={shouldUseDarkColors}
+                        />
+                    ))}
             </div>
         </>
     );
