@@ -117,8 +117,8 @@ export const Extensions = () => {
                         }
                     }}
                 >
-                    <Tab value="enabled">Enabled</Tab>
-                    <Tab value="available">Available</Tab>
+                    <Tab value="enabled">{t("enabled", { ns: "settingsExtensions" })}</Tab>
+                    <Tab value="available">{t("available", { ns: "settingsExtensions" })}</Tab>
                 </TabList>
             </div>
 

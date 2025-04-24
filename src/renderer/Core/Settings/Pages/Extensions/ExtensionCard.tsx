@@ -52,6 +52,14 @@ export const ExtensionCard = ({
     const openAuthorGithubProfile = async () =>
         window.ContextBridge.openExternal(`https://github.com/${extension.author.githubUserName}`);
 
+    const toggle = () => {
+        if (isEnabled) {
+            disable();
+        } else {
+            enable();
+        }
+    };
+
     return (
         <Card appearance="filled-alternative">
             <CardHeader
@@ -104,25 +112,10 @@ export const ExtensionCard = ({
                                         {t("readme", { ns: "settingsExtensions" })}
                                     </MenuItem>
 
-                                    <MenuItem
-                                        onClick={() => {
-                                            if (isEnabled) {
-                                                disable();
-                                            } else {
-                                                enable();
-                                            }
-                                        }}
-                                        icon={
-                                            <PowerFilled
-                                                color={
-                                                    isEnabled
-                                                        ? tokens.colorStatusDangerForeground1
-                                                        : tokens.colorStatusSuccessForeground1
-                                                }
-                                            />
-                                        }
-                                    >
-                                        {isEnabled ? "Disable" : "Enable"}
+                                    <MenuItem onClick={toggle} icon={<PowerFilled />}>
+                                        {isEnabled
+                                            ? t("disable", { ns: "settingsExtensions" })
+                                            : t("enable", { ns: "settingsExtensions" })}
                                     </MenuItem>
                                 </MenuList>
                             </MenuPopover>
