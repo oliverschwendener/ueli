@@ -4,9 +4,24 @@ function Get-Shortcut-Target {
 
     try {
         $Shell = New-Object -ComObject WScript.Shell
-        $TargetPath = $Shell.CreateShortcut($ShortcutFilePath).TargetPath
-        $TargetPathAccessible = Test-Path -Path $TargetPath -PathType Leaf
-        if ($TargetPathAccessible) {
+        $Shortcut = $Shell.CreateShortcut($ShortcutFilePath)
+        $TargetPath = $Shortcut.TargetPath
+        $IconLocation = $Shortcut.IconLocation
+
+        $lastComma = $IconLocation.LastIndexOf(",")
+        if ($lastComma -gt -1) {
+            $IconPath = $IconLocation.Substring(0, $lastComma).Trim()
+            $IconId = [int]($IconLocation.Substring($lastComma + 1).Trim())
+        }
+        else {
+            $IconPath = $IconLocation.Trim()
+            $IconId = 0
+        }
+
+        if ($IconPath -and (Test-Path -Path $IconPath -PathType Leaf)) {
+            return $IconPath
+        }
+        if (Test-Path -Path $TargetPath -PathType Leaf) {
             return $TargetPath
         }
         else {
