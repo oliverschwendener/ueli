@@ -17,7 +17,7 @@ export const Fuzziness = () => {
             description="0 = strict search, 1 = loose search"
             control={
                 <Slider
-                    style={{ width: "70%" }}
+                    style={{ width: 200 }}
                     value={fuzziness}
                     min={0}
                     max={1}

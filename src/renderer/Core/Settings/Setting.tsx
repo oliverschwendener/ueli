@@ -12,29 +12,22 @@ export const Setting = ({ control, label, description }: SettingSectionProps) =>
         <Card appearance="filled-alternative">
             <div
                 style={{
+                    width: "100%",
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    gap: 20,
+                    justifyContent: "space-between",
                 }}
             >
-                <div style={{ flexShrink: 0 }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ flex: "1 1 0" }}>
+                    <div>
                         <Body1>{label}</Body1>
-                        {description && <Caption1>{description}</Caption1>}
+                    </div>
+                    <div style={{ textWrap: "wrap" }}>
+                        <Caption1>{description}</Caption1>
                     </div>
                 </div>
-                <div
-                    style={{
-                        flexGrow: 1,
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                    }}
-                >
-                    {control}
-                </div>
+                <div style={{ flex: "0 0 auto" }}>{control}</div>
             </div>
         </Card>
     );
