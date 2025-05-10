@@ -602,10 +602,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     rescanIntervalInSeconds: "Rescan interval (in seconds)",
                     rescanIntervalTooShort: "Rescan interval must be at least 10 seconds",
                     rescanIntervalResetToDefault: "Reset to default",
-                    excludedItems: "Excluded items",
-                    noExcludedItems: "There are no excluded items",
-                    removeExcludedItem: "Remove item",
-                    keyboardShortcutForManualRescan: "Keyboard shortcut for manual rescan",
                 },
                 "de-CH": {
                     title: "Suchmaschine",
@@ -616,10 +612,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     rescanIntervalInSeconds: "Neuscan-Intervall (in Sekunden)",
                     rescanIntervalTooShort: "Neuscan-Intervall muss mindestens 10 Sekunden betragen",
                     rescanIntervalResetToDefault: "Auf Standardwert zurücksetzen",
-                    excludedItems: "Ausgeschlossene Elemente",
-                    noExcludedItems: "Es gibt keine ausgeschlossene Elemente",
-                    removeExcludedItem: "Element entfernen",
-                    keyboardShortcutForManualRescan: "Tastatur-Shortcut für manuelles neu Scannen",
                 },
                 "ja-JP": {
                     title: "検索エンジン",
@@ -630,10 +622,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     rescanIntervalInSeconds: "再読み込み間隔 (秒)",
                     rescanIntervalTooShort: "再読み込み間隔は10秒以上にしてください",
                     rescanIntervalResetToDefault: "初期値にリセット",
-                    excludedItems: "除外対象",
-                    noExcludedItems: "除外対象はありません",
-                    removeExcludedItem: "削除",
-                    keyboardShortcutForManualRescan: "再読み込みのキーボードショートカット",
                 },
                 "ko-KR": {
                     title: "검색 엔진",
@@ -644,6 +632,35 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     rescanIntervalInSeconds: "재탐색 간격 (초)",
                     rescanIntervalTooShort: "재탐색 간격은 최소 10초 이상이어야 합니다",
                     rescanIntervalResetToDefault: "기본값으로 재설정",
+                },
+            },
+        },
+        {
+            namespace: "settingsExcludedItems",
+            resources: {
+                "en-US": {
+                    title: "Excluded Items",
+                    excludedItems: "Excluded items",
+                    noExcludedItems: "There are no excluded items",
+                    removeExcludedItem: "Remove item",
+                    keyboardShortcutForManualRescan: "Keyboard shortcut for manual rescan",
+                },
+                "de-CH": {
+                    title: "Ausgeschlossene Elemente",
+                    excludedItems: "Ausgeschlossene Elemente",
+                    noExcludedItems: "Es gibt keine ausgeschlossene Elemente",
+                    removeExcludedItem: "Element entfernen",
+                    keyboardShortcutForManualRescan: "Tastatur-Shortcut für manuelles neu Scannen",
+                },
+                "ja-JP": {
+                    title: "除外対象",
+                    excludedItems: "除外対象",
+                    noExcludedItems: "除外対象はありません",
+                    removeExcludedItem: "削除",
+                    keyboardShortcutForManualRescan: "再読み込みのキーボードショートカット",
+                },
+                "ko-KR": {
+                    title: "제외된 항목",
                     excludedItems: "제외된 항목",
                     noExcludedItems: "제외된 항목이 없습니다",
                     removeExcludedItem: "제거",
