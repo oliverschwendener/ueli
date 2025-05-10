@@ -29,4 +29,8 @@ export class TrayIconManager {
         const menu = this.contextMenuBuilder.buildFromTemplate(template);
         this.tray?.setContextMenu(menu);
     }
+
+    public destory() {
+        this.tray?.destroy();
+    }
 }

@@ -44,5 +44,13 @@ export class TrayIconModule {
 
         eventSubscriber.subscribe("settingUpdated[general.language]", () => trayIconManager.updateContextMenu());
         eventSubscriber.subscribe("settingUpdated[general.hotkey.enabled]", () => trayIconManager.updateContextMenu());
+
+        eventSubscriber.subscribe("settingUpdated[trayIcon.show]", ({ value: showTrayIcon }: { value: boolean }) => {
+            if (showTrayIcon) {
+                trayIconManager.createTrayIcon();
+            } else {
+                trayIconManager.destory();
+            }
+        });
     }
 }
