@@ -128,6 +128,12 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customSettingsFileValidationDialogDescription:
                         "Make sure that the selected file exists and contains valid JSON.",
                     close: "Close",
+                    "trayIcon[macOS]": "Menu bar",
+                    "trayIconShow[macOS]": "Show icon in menu bar",
+                    "trayIcon[Windows]": "Taskbar",
+                    "trayIconShow[Windows]": "Show icon in taskbar",
+                    "trayIcon[Linux]": "Tray",
+                    "trayIconShow[Linux]": "Show icon in tray",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -179,6 +185,12 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customSettingsFileValidationDialogDescription:
                         "Stelle sicher, dass die ausgewählte Datei existiert und gültiges JSON enthält.",
                     close: "Schliessen",
+                    "trayIcon[macOS]": "Menüleiste",
+                    "trayIconShow[macOS]": "Symbol in der Menüleiste anzeigen",
+                    "trayIcon[Windows]": "Taskleiste",
+                    "trayIconShow[Windows]": "Symbol im Taskleiste anzeigen",
+                    "trayIcon[Linux]": "Infobereich",
+                    "trayIconShow[Linux]": "Symbol im Infobereich anzeigen",
                 },
                 "ja-JP": {
                     title: "一般",
@@ -215,6 +227,12 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     importExportDescription: "全ての設定をJSONでインポート/エクスポートします",
                     importSettings: "インポート",
                     exportSettings: "エクスポート",
+                    "trayIcon[macOS]": "メニューバー",
+                    "trayIconShow[macOS]": "メニューバーにアイコンを表示",
+                    "trayIcon[Windows]": "トレイ",
+                    "trayIconShow[Windows]": "トレイにアイコンを表示",
+                    "trayIcon[Linux]": "トレイ",
+                    "trayIconShow[Linux]": "トレイにアイコンを表示",
                 },
                 "ko-KR": {
                     title: "일반",
@@ -264,6 +282,12 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     customSettingsFileValidationDialogDescription:
                         "선택한 파일이 존재하고 유효한 JSON을 포함하는지 확인하세요.",
                     close: "닫기",
+                    "trayIcon[macOS]": "메뉴 막대",
+                    "trayIconShow[macOS]": "메뉴 막대에 아이콘 표시",
+                    "trayIcon[Windows]": "트레이",
+                    "trayIconShow[Windows]": "트레이에 아이콘 표시",
+                    "trayIcon[Linux]": "트레이",
+                    "trayIconShow[Linux]": "트레이에 아이콘 표시",
                 },
             },
         },

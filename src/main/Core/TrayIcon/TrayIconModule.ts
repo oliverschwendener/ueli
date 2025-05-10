@@ -17,6 +17,8 @@ export class TrayIconModule {
         const nativeTheme = moduleRegistry.get("NativeTheme");
         const assetPathResolver = moduleRegistry.get("AssetPathResolver");
         const operatingSystem = moduleRegistry.get("OperatingSystem");
+        const eventSubscriber = moduleRegistry.get("EventSubscriber");
+        const settingsManager = moduleRegistry.get("SettingsManager");
 
         const trayIconFilePathResolvers: Record<OperatingSystem, () => TrayIconFilePathResolver> = {
             Linux: () => new LinuxTrayIconFilePathResolver(nativeTheme, assetPathResolver),
@@ -36,13 +38,24 @@ export class TrayIconModule {
             new ContextMenuBuilder(),
         );
 
-        await trayIconManager.createTrayIcon();
+        if (settingsManager.getValue("general.tray.showIcon", true)) {
+            await trayIconManager.createTrayIcon();
+        }
 
         nativeTheme.on("updated", () => trayIconManager.updateImage());
 
-        const eventSubscriber = moduleRegistry.get("EventSubscriber");
-
         eventSubscriber.subscribe("settingUpdated[general.language]", () => trayIconManager.updateContextMenu());
         eventSubscriber.subscribe("settingUpdated[general.hotkey.enabled]", () => trayIconManager.updateContextMenu());
+
+        eventSubscriber.subscribe(
+            "settingUpdated[general.tray.showIcon]",
+            ({ value: showTrayIcon }: { value: boolean }) => {
+                if (showTrayIcon) {
+                    trayIconManager.createTrayIcon();
+                } else {
+                    trayIconManager.destory();
+                }
+            },
+        );
     }
 }
