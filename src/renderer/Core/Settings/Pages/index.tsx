@@ -1,7 +1,7 @@
 import {
     AppsAddIn20Regular,
     Bug20Regular,
-    EyeOffRegular,
+    EyeOff20Regular,
     Info20Regular,
     Keyboard20Regular,
     PaintBrush20Regular,
@@ -78,7 +78,7 @@ export const settingsPages: SettingsPage[] = [
         relativePath: "excluded-items",
         absolutePath: "/excluded-items",
         element: <ExcludedItems />,
-        icon: <EyeOffRegular />,
+        icon: <EyeOff20Regular />,
     },
     {
         translation: { key: "title", namespace: "settingsExtensions" },
