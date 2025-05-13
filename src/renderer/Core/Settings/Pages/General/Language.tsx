@@ -10,6 +10,7 @@ export const Language = () => {
     const languages = [
         { name: "English (US)", locale: "en-US" },
         { name: "Deutsch (Schweiz)", locale: "de-CH" },
+        { name: "Français (France)", locale: "fr-FR" },
         { name: "日本語 (日本)", locale: "ja-JP" },
         { name: "한국어 (대한민국)", locale: "ko-KR" },
     ];
