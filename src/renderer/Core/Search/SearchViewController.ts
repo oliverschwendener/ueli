@@ -121,11 +121,14 @@ export const useSearchViewController = ({
             return;
         }
 
-        await invokeAction(searchResultItem.defaultAction);
+        await invokeAction({
+            action: searchResultItem.defaultAction,
+            confirmed: !searchResultItem.defaultAction.requiresConfirmation,
+        });
     };
 
-    const invokeAction = async (action: SearchResultItemAction) => {
-        if (!action.requiresConfirmation) {
+    const invokeAction = async ({ action, confirmed }: { action: SearchResultItemAction; confirmed: boolean }) => {
+        if (confirmed) {
             await window.ContextBridge.invokeAction(action);
             return;
         }

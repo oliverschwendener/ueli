@@ -13,16 +13,10 @@ import { t } from "i18next";
 type ConfirmationDialogProps = {
     action?: SearchResultItemAction;
     closeDialog: () => void;
+    confirm: () => void;
 };
 
-export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogProps) => {
-    const invokeAction = async () => {
-        if (action) {
-            closeDialog();
-            await window.ContextBridge.invokeAction(action);
-        }
-    };
-
+export const ConfirmationDialog = ({ action, closeDialog, confirm }: ConfirmationDialogProps) => {
     return (
         <Dialog
             open={action !== undefined}
@@ -46,7 +40,13 @@ export const ConfirmationDialog = ({ action, closeDialog }: ConfirmationDialogPr
                         <Button onClick={closeDialog} appearance="secondary">
                             No
                         </Button>
-                        <Button onClick={invokeAction} appearance="primary">
+                        <Button
+                            onClick={() => {
+                                confirm();
+                                closeDialog();
+                            }}
+                            appearance="primary"
+                        >
                             Yes
                         </Button>
                     </DialogActions>
