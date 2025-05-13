@@ -852,13 +852,6 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                 },
                 "fr-FR": {
                     title: "Moteur de recherche",
-                    searchEngine: "Moteur de recherche",
-                    automaticRescan: "Analyse automatique",
-                    fuzziness: "Tolérance",
-                    maxResultLength: "Nombre maximum de résultats",
-                    rescanIntervalInSeconds: "Intervalle d'analyse (en secondes)",
-                    rescanIntervalTooShort: "L'intervalle doit être d'au moins 10 secondes",
-                    rescanIntervalResetToDefault: "Réinitialiser par défaut",
                     excludedItems: "Éléments exclus",
                     noExcludedItems: "Aucun élément exclu",
                     removeExcludedItem: "Supprimer l'élément",
