@@ -807,6 +807,16 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     rescanIntervalTooShort: "재탐색 간격은 최소 10초 이상이어야 합니다",
                     rescanIntervalResetToDefault: "기본값으로 재설정",
                 },
+                "fr-FR": {
+                    title: "Moteur de recherche",
+                    searchEngine: "Moteur de recherche",
+                    automaticRescan: "Analyse automatique",
+                    fuzziness: "Tolérance",
+                    maxResultLength: "Nombre maximum de résultats",
+                    rescanIntervalInSeconds: "Intervalle d'analyse (en secondes)",
+                    rescanIntervalTooShort: "L'intervalle doit être d'au moins 10 secondes",
+                    rescanIntervalResetToDefault: "Réinitialiser par défaut",
+                },
             },
         },
         {
