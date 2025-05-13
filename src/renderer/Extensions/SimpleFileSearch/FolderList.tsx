@@ -11,10 +11,10 @@ type FolderListProps = {
 export const FolderList = ({ folderSettings, removeFolderSetting, updateFolderSetting }: FolderListProps) => {
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: tokens.spacingVerticalS }}>
-            {folderSettings.map((f) => (
+            {folderSettings.map((folderSetting) => (
                 <FolderListItem
-                    key={f.id}
-                    folderSetting={f}
+                    key={folderSetting.id}
+                    folderSetting={folderSetting}
                     removeFolderSetting={removeFolderSetting}
                     updateFolderSetting={updateFolderSetting}
                 />
