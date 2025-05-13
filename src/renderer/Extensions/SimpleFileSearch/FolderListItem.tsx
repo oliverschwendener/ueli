@@ -40,6 +40,18 @@ export const FolderListItem = ({ folderSetting, removeFolderSetting, updateFolde
                             )}
                         </Caption1>
                         <Caption1>
+                            {t("excludeHiddenFiles")}:{" "}
+                            {folderSetting.excludeHiddenFiles ? (
+                                <Badge appearance="tint" size="small">
+                                    Yes
+                                </Badge>
+                            ) : (
+                                <Badge appearance="tint" size="small" color="informative">
+                                    No
+                                </Badge>
+                            )}
+                        </Caption1>
+                        <Caption1>
                             {t("searchFor")}: {t(`searchFor.${folderSetting.searchFor}`)}
                         </Caption1>
                     </div>

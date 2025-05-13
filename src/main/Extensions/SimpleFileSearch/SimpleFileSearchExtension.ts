@@ -126,7 +126,9 @@ export class SimpleFileSearchExtension implements Extension {
 
     private async getFilePaths(folderSettings: FolderSetting[]): Promise<Record<string, string[]>> {
         const promiseResults = await Promise.allSettled(
-            folderSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
+            folderSettings.map(({ path, recursive, excludeHiddenFiles }) =>
+                this.fileSystemUtility.readDirectory(path, recursive, excludeHiddenFiles),
+            ),
         );
 
         const result: Record<string, string[]> = {};
@@ -183,6 +185,7 @@ export class SimpleFileSearchExtension implements Extension {
                 folders: "Folders",
                 path: "Path",
                 recursive: "Recursive",
+                excludeHiddenFiles: "Exclude hidden files",
                 add: "Add",
                 save: "Save",
                 addFolder: "Add folder",
@@ -212,6 +215,7 @@ export class SimpleFileSearchExtension implements Extension {
                 folders: "Ordner",
                 path: "Pfad",
                 recursive: "Rekursiv",
+                excludeHiddenFiles: "Versteckte Dateien ausschliessen",
                 add: "Hinzufügen",
                 save: "Speichern",
                 addFolder: "Ordner hinzufügen",

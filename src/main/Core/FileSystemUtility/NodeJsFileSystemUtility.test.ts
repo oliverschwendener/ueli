@@ -169,6 +169,48 @@ describe(NodeJsFileSystemUtility, () => {
 
             expect(actual).toEqual([]);
         });
+
+        it("should exclude hidden files when excludeHiddenFiles is true", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = await fileSystemUtility.readDirectory(tempFolderPath, false, true);
+
+            expect(actual).toEqual([filePath1]);
+        });
+
+        it("should include hidden files when excludeHiddenFiles is false", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = await fileSystemUtility.readDirectory(tempFolderPath, false, false);
+
+            expect(actual).toEqual([filePath2, filePath1]);
+        });
+
+        it("should include hidden files when excludeHiddenFiles is undefined", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = await fileSystemUtility.readDirectory(tempFolderPath, false, undefined);
+
+            expect(actual).toEqual([filePath2, filePath1]);
+        });
     });
 
     describe(NodeJsFileSystemUtility.prototype.readDirectorySync, () => {
@@ -211,6 +253,48 @@ describe(NodeJsFileSystemUtility, () => {
             const actual = fileSystemUtility.readDirectorySync(folderPath);
 
             expect(actual).toEqual([]);
+        });
+
+        it("should exclude hidden files when excludeHiddenFiles is true", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = fileSystemUtility.readDirectorySync(tempFolderPath, true, true);
+
+            expect(actual).toEqual([filePath1]);
+        });
+
+        it("should include hidden files when excludeHiddenFiles is false", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = fileSystemUtility.readDirectorySync(tempFolderPath, true, false);
+
+            expect(actual).toEqual([filePath2, filePath1]);
+        });
+
+        it("should include hidden files when excludeHiddenFiles is undefined", async () => {
+            const fileSystemUtility = new NodeJsFileSystemUtility();
+
+            const filePath1 = join(tempFolderPath, "file1.txt");
+            const filePath2 = join(tempFolderPath, ".file2.txt");
+
+            await fileSystemUtility.writeTextFile("test", filePath1);
+            await fileSystemUtility.writeTextFile("test 2", filePath2);
+
+            const actual = fileSystemUtility.readDirectorySync(tempFolderPath, true, undefined);
+
+            expect(actual).toEqual([filePath2, filePath1]);
         });
     });
 

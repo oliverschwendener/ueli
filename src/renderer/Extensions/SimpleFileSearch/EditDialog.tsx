@@ -26,6 +26,7 @@ const createFolderSetting = (): FolderSetting => ({
     id: crypto.randomUUID(),
     path: "",
     recursive: false,
+    excludeHiddenFiles: false,
     searchFor: "filesAndFolders",
 });
 
@@ -34,10 +35,11 @@ const folderSettingToState = (folderSetting: FolderSetting): State => ({
     isValidPath: window.ContextBridge.fileExists(folderSetting.path),
 });
 
-const stateToFolderSetting = ({ id, path, recursive, searchFor }: State): FolderSetting => ({
+const stateToFolderSetting = ({ id, path, recursive, searchFor, excludeHiddenFiles }: State): FolderSetting => ({
     id,
     path,
     recursive,
+    excludeHiddenFiles,
     searchFor,
 });
 
@@ -76,6 +78,13 @@ export const EditDialog = ({ title, trigger, confirm, cancel, folderSetting, onS
         setState({
             ...state,
             recursive,
+        });
+    };
+
+    const updateExcludeHiddenFiles = (excludeHiddenFiles: boolean) => {
+        setState({
+            ...state,
+            excludeHiddenFiles,
         });
     };
 
@@ -134,6 +143,11 @@ export const EditDialog = ({ title, trigger, confirm, cancel, folderSetting, onS
                                 label={t("recursive")}
                                 checked={state.recursive}
                                 onChange={(_, { checked }) => updateRecursiveness(checked === true)}
+                            />
+                            <Checkbox
+                                label={t("excludeHiddenFiles")}
+                                checked={state.excludeHiddenFiles}
+                                onChange={(_, { checked }) => updateExcludeHiddenFiles(checked === true)}
                             />
                         </div>
                     </DialogContent>
