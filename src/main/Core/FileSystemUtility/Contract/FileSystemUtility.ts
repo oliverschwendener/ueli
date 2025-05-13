@@ -8,8 +8,8 @@ export interface FileSystemUtility {
     readTextFile(filePath: string, encoding?: BufferEncoding): Promise<string>;
     readJsonFile<T>(filePath: string): Promise<T>;
     readJsonFileSync<T>(filePath: string): T;
-    readDirectory(folderPath: string, recursive?: boolean): Promise<string[]>;
-    readDirectorySync(folderPath: string, recursive?: boolean): string[];
+    readDirectory(folderPath: string, recursive?: boolean, excludeHiddenFiles?: boolean): Promise<string[]>;
+    readDirectorySync(folderPath: string, recursive?: boolean, excludeHiddenFiles?: boolean): string[];
     removeFile(filePath: string): Promise<void>;
     removeFileSync(filePath: string): void;
     writeFile(data: Buffer, filePath: string): Promise<void>;
