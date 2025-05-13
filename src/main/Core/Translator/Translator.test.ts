@@ -20,6 +20,19 @@ describe(Translator, () => {
         expect(t("otherMessage")).toBe("otherMessage");
     });
 
+    it("should fall back to en-US if the translation key is not found for the given language", () => {
+        const getValueMock = vi.fn().mockReturnValue("de-CH");
+        const settingsManager = <SettingsManager>{ getValue: (v, d) => getValueMock(v, d) };
+
+        const translator = new Translator(settingsManager);
+
+        const { t } = translator.createT({
+            "en-US": { message: "Hello" },
+        });
+
+        expect(t("message")).toBe("Hello");
+    });
+
     it("should be able to interpolate", () => {
         const getValueMock = vi.fn().mockReturnValue("en-US");
         const settingsManager = <SettingsManager>{ getValue: (v, d) => getValueMock(v, d) };
