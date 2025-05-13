@@ -93,6 +93,35 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             },
         },
         {
+            namespace: "confirmationDialog",
+            resources: {
+                "en-US": {
+                    title: "Are you sure?",
+                    description: `You are about to invoke "{{actionDescription}}"`,
+                    confirm: "Yes",
+                    cancel: "No",
+                },
+                "de-CH": {
+                    title: "Bist du sicher?",
+                    description: `Du bist dabei "{{actionDescription}}" auszuführen`,
+                    confirm: "Ja",
+                    cancel: "Nein",
+                },
+                "ja-JP": {
+                    title: "本当に実行しますか？",
+                    description: "本当に{{actionDescription}}を実行しますか？",
+                    confirm: "はい",
+                    cancel: "いいえ",
+                },
+                "ko-KR": {
+                    title: "정말로 실행하시겠습니까?",
+                    description: "정말로 {{actionDescription}}을 실행하시겠습니까?",
+                    confirm: "예",
+                    cancel: "아니요",
+                },
+            },
+        },
+        {
             namespace: "settingsGeneral",
             resources: {
                 "en-US": {
@@ -150,6 +179,9 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "trayIconShow[Windows]": "Show icon in taskbar",
                     "trayIcon[Linux]": "Tray",
                     "trayIconShow[Linux]": "Show icon in tray",
+                    preserveUserInput: "Preserve user input",
+                    preserveUserInputDescription:
+                        "When disabled the search bar will be cleared after invoking an action",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -207,6 +239,9 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "trayIconShow[Windows]": "Symbol im Taskleiste anzeigen",
                     "trayIcon[Linux]": "Infobereich",
                     "trayIconShow[Linux]": "Symbol im Infobereich anzeigen",
+                    preserveUserInput: "Benutzereingabe beibehalten",
+                    preserveUserInputDescription:
+                        "Wenn deaktiviert, wird das Suchfeld nach dem Ausführen einer Aktion gelöscht",
                 },
                 "ja-JP": {
                     title: "一般",

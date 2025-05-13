@@ -2,28 +2,11 @@ import type { FolderSetting, Settings } from "@common/Extensions/SimpleFileSearc
 import { useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import {
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableCellActions,
-    TableCellLayout,
-    TableHeader,
-    TableHeaderCell,
-    TableRow,
-    Tooltip,
-} from "@fluentui/react-components";
-import { CheckmarkRegular, DismissRegular } from "@fluentui/react-icons";
+import { Button, tokens } from "@fluentui/react-components";
+import { AddRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import { EditFolder } from "./EditFolder";
-
-const createFolderSetting = (): FolderSetting => ({
-    id: crypto.randomUUID(),
-    path: "",
-    recursive: false,
-    searchFor: "filesAndFolders",
-});
+import { EditDialog } from "./EditDialog";
+import { FolderList } from "./FolderList";
 
 export const SimpleFileSearchSettings = () => {
     const extensionId = "SimpleFileSearch";
@@ -40,50 +23,32 @@ export const SimpleFileSearchSettings = () => {
     const removeFolderSetting = (id: string) =>
         setFolderSettings(folderSettings.filter((folderSetting) => folderSetting.id !== id));
 
+    const updateFolderSetting = (updatedFolderSetting: FolderSetting) => {
+        setFolderSettings(
+            folderSettings.map((folderSetting) =>
+                folderSetting.id === updatedFolderSetting.id ? updatedFolderSetting : folderSetting,
+            ),
+        );
+    };
+
     return (
         <SettingGroupList>
-            <SettingGroup title={t("folders")}>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHeaderCell>{t("path")}</TableHeaderCell>
-                            <TableHeaderCell style={{ width: 100 }}>{t("searchFor")}</TableHeaderCell>
-                            <TableHeaderCell style={{ width: 80 }}>{t("recursive")}</TableHeaderCell>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {folderSettings.map(({ path, recursive, id, searchFor }) => (
-                            <TableRow key={path}>
-                                <TableCell>{path}</TableCell>
-                                <TableCell>{t(`searchFor.${searchFor}`)}</TableCell>
-                                <TableCell>
-                                    <TableCellLayout
-                                        style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
-                                    >
-                                        {recursive ? <CheckmarkRegular /> : ""}
-                                    </TableCellLayout>
-                                    <TableCellActions>
-                                        <Tooltip relationship="label" content={t("remove")}>
-                                            <Button
-                                                size="small"
-                                                icon={<DismissRegular />}
-                                                onClick={() => removeFolderSetting(id)}
-                                            />
-                                        </Tooltip>
-                                    </TableCellActions>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <div>
-                    <EditFolder
-                        onSave={addFolderSetting}
-                        initialFolderSetting={{
-                            ...createFolderSetting(),
-                            isValidPath: false,
-                        }}
+            <SettingGroup>
+                <div style={{ display: "flex", flexDirection: "column", gap: tokens.spacingVerticalM }}>
+                    <FolderList
+                        folderSettings={folderSettings}
+                        removeFolderSetting={removeFolderSetting}
+                        updateFolderSetting={updateFolderSetting}
                     />
+                    <div>
+                        <EditDialog
+                            title={t("addFolder")}
+                            confirm={t("add")}
+                            cancel={t("cancel")}
+                            trigger={<Button icon={<AddRegular />}>{t("addFolder")}</Button>}
+                            onSave={addFolderSetting}
+                        />
+                    </div>
                 </div>
             </SettingGroup>
         </SettingGroupList>

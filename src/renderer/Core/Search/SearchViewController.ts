@@ -1,4 +1,3 @@
-import { useSetting } from "@Core/Hooks";
 import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
@@ -84,11 +83,11 @@ export const useSearchViewController = ({
             : [];
     };
 
-    const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
-    const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "fuzzysort" });
-
     const search = (searchTerm: string, selectedItemId?: string) => {
+        const fuzziness = window.ContextBridge.getSettingValue("searchEngine.fuzziness", 0.5);
+        const maxSearchResultItems = window.ContextBridge.getSettingValue("searchEngine.maxResultLength", 50);
+        const searchEngineId = window.ContextBridge.getSettingValue<SearchEngineId>("searchEngine.id", "fuzzysort");
+
         const searchResult = getSearchResult({
             searchEngineId,
             excludedSearchResultItemIds,
@@ -121,11 +120,20 @@ export const useSearchViewController = ({
             return;
         }
 
-        await invokeAction(searchResultItem.defaultAction);
+        await invokeAction({
+            action: searchResultItem.defaultAction,
+            confirmed: !searchResultItem.defaultAction.requiresConfirmation,
+        });
     };
 
-    const invokeAction = async (action: SearchResultItemAction) => {
-        if (!action.requiresConfirmation) {
+    const invokeAction = async ({ action, confirmed }: { action: SearchResultItemAction; confirmed: boolean }) => {
+        if (confirmed) {
+            const preserveUserInput = window.ContextBridge.getSettingValue("general.preserveUserInput", true);
+
+            if (!preserveUserInput) {
+                search("");
+            }
+
             await window.ContextBridge.invokeAction(action);
             return;
         }
