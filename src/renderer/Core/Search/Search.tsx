@@ -104,7 +104,10 @@ export const Search = ({
                             searchHistory.add(searchTerm.value);
 
                             if (searchResultItemAction !== undefined) {
-                                invokeAction(searchResultItemAction);
+                                invokeAction({
+                                    action: searchResultItemAction,
+                                    confirmed: !searchResultItemAction.requiresConfirmation,
+                                });
                             }
                         },
                     };
@@ -133,9 +136,12 @@ export const Search = ({
 
     const clickHandlers: Record<string, (s: SearchResultItem) => void> = {
         selectSearchResultItem: (s) => selectedItemId.set(s.id),
-        invokeSearchResultItem: (s) => {
+        invokeSearchResultItem: ({ defaultAction }) => {
             searchHistory.add(searchTerm.value);
-            invokeAction(s.defaultAction);
+            invokeAction({
+                action: defaultAction,
+                confirmed: !defaultAction.requiresConfirmation,
+            });
         },
     };
 
@@ -351,6 +357,11 @@ export const Search = ({
                         <ConfirmationDialog
                             closeDialog={closeConfirmationDialog}
                             action={confirmationDialog.action.value}
+                            confirm={() => {
+                                if (confirmationDialog.action.value) {
+                                    invokeAction({ action: confirmationDialog.action.value, confirmed: true });
+                                }
+                            }}
                         />
                         <div
                             style={{
@@ -437,7 +448,7 @@ export const Search = ({
                         <Divider appearance="subtle" vertical />
                         <ActionsMenu
                             actions={searchResult.currentActions()}
-                            invokeAction={invokeAction}
+                            invokeAction={(action) => invokeAction({ action, confirmed: !action.requiresConfirmation })}
                             additionalActionsButtonRef={additionalActionsButtonRef}
                             open={additionalActionsMenuIsOpen}
                             onOpenChange={toggleAdditionalActionsMenu}

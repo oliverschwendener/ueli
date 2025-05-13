@@ -77,6 +77,35 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
             },
         },
         {
+            namespace: "confirmationDialog",
+            resources: {
+                "en-US": {
+                    title: "Are you sure?",
+                    description: `You are about to invoke "{{actionDescription}}"`,
+                    confirm: "Yes",
+                    cancel: "No",
+                },
+                "de-CH": {
+                    title: "Bist du sicher?",
+                    description: `Du bist dabei "{{actionDescription}}" auszuführen`,
+                    confirm: "Ja",
+                    cancel: "Nein",
+                },
+                "ja-JP": {
+                    title: "本当に実行しますか？",
+                    description: "本当に{{actionDescription}}を実行しますか？",
+                    confirm: "はい",
+                    cancel: "いいえ",
+                },
+                "ko-KR": {
+                    title: "정말로 실행하시겠습니까?",
+                    description: "정말로 {{actionDescription}}을 실행하시겠습니까?",
+                    confirm: "예",
+                    cancel: "아니요",
+                },
+            },
+        },
+        {
             namespace: "settingsGeneral",
             resources: {
                 "en-US": {
