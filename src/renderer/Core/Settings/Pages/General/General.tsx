@@ -7,6 +7,7 @@ import { DockSettings } from "./DockSettings";
 import { HotkeySettings } from "./HotKey";
 import { ImportExport } from "./ImportExport";
 import { Language } from "./Language";
+import { PreserveUserInput } from "./PreserveUserInput";
 import { SearchHistory } from "./SearchHistory";
 import { SetCustomSettingsFilePath } from "./SetCustomSettingsFilePath";
 import { TrayIconSettings } from "./TrayIcon";
@@ -22,6 +23,7 @@ export const General = () => {
                 <Language />
                 <Autostart />
                 {operatingSystem === "macOS" && <DockSettings />}
+                <PreserveUserInput />
             </SettingGroup>
             <TrayIconSettings />
             <HotkeySettings />

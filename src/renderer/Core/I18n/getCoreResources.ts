@@ -163,6 +163,9 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "trayIconShow[Windows]": "Show icon in taskbar",
                     "trayIcon[Linux]": "Tray",
                     "trayIconShow[Linux]": "Show icon in tray",
+                    preserveUserInput: "Preserve user input",
+                    preserveUserInputDescription:
+                        "When disabled the search bar will be cleared after invoking an action",
                 },
                 "de-CH": {
                     title: "Allgemein",
@@ -220,6 +223,9 @@ export const getCoreResources = (): { namespace: string; resources: Resources<Tr
                     "trayIconShow[Windows]": "Symbol im Taskleiste anzeigen",
                     "trayIcon[Linux]": "Infobereich",
                     "trayIconShow[Linux]": "Symbol im Infobereich anzeigen",
+                    preserveUserInput: "Benutzereingabe beibehalten",
+                    preserveUserInputDescription:
+                        "Wenn deaktiviert, wird das Suchfeld nach dem Ausführen einer Aktion gelöscht",
                 },
                 "ja-JP": {
                     title: "一般",
