@@ -8,7 +8,7 @@ import {
     DialogSurface,
     DialogTitle,
 } from "@fluentui/react-components";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 type ConfirmationDialogProps = {
     action?: SearchResultItemAction;
@@ -17,10 +17,18 @@ type ConfirmationDialogProps = {
 };
 
 export const ConfirmationDialog = ({ action, closeDialog, confirm }: ConfirmationDialogProps) => {
+    const { t } = useTranslation("confirmationDialog");
+
+    const actionDescription = action?.descriptionTranslation
+        ? t(action?.descriptionTranslation.key, { ns: action?.descriptionTranslation.namespace })
+        : action?.description;
+
     return (
         <Dialog
             open={action !== undefined}
-            onOpenChange={(_, { open }) => {
+            onOpenChange={(event, { open }) => {
+                event.stopPropagation();
+
                 if (open === false) {
                     closeDialog();
                 }
@@ -28,17 +36,11 @@ export const ConfirmationDialog = ({ action, closeDialog, confirm }: Confirmatio
         >
             <DialogSurface>
                 <DialogBody>
-                    <DialogTitle>Are you sure?</DialogTitle>
-                    <DialogContent>
-                        You are about to "
-                        {action?.descriptionTranslation
-                            ? t(action?.descriptionTranslation.key, { ns: action?.descriptionTranslation.namespace })
-                            : action?.description}
-                        "
-                    </DialogContent>
+                    <DialogTitle>{t("title")}</DialogTitle>
+                    <DialogContent>{t("description", { actionDescription })}</DialogContent>
                     <DialogActions>
                         <Button onClick={closeDialog} appearance="secondary">
-                            No
+                            {t("cancel")}
                         </Button>
                         <Button
                             onClick={() => {
@@ -47,7 +49,7 @@ export const ConfirmationDialog = ({ action, closeDialog, confirm }: Confirmatio
                             }}
                             appearance="primary"
                         >
-                            Yes
+                            {t("confirm")}
                         </Button>
                     </DialogActions>
                 </DialogBody>
