@@ -60,7 +60,7 @@
         "@fluentui/react-nav-preview": "^0.13.5",
         "better-sqlite3": "^11.10.0",
         "color": "^4.2.3",
-        "fast-xml-parser": "^4.5.0",
+        "fast-xml-parser": "^5.2.3",
         "fuse.js": "^7.1.0",
         "fuzzysort": "^3.1.0",
         "i18next": "^25.2.1",
