@@ -31,7 +31,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.27.0",
-        "@types/better-sqlite3": "^7.6.11",
+        "@types/better-sqlite3": "^7.6.13",
         "@types/node": "^20.8.6",
         "@types/react": "^18.2.48",
         "@types/react-dom": "^18.2.18",
@@ -57,7 +57,7 @@
         "@fluentui/react-components": "^9.61.6",
         "@fluentui/react-icons": "^2.0.294",
         "@fluentui/react-nav-preview": "^0.13.5",
-        "better-sqlite3": "^11.8.1",
+        "better-sqlite3": "^11.10.0",
         "color": "^5.0.0",
         "fast-xml-parser": "^4.5.0",
         "fuse.js": "^7.1.0",
