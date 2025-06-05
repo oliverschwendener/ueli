@@ -106,4 +106,48 @@ describe(ExtensionManager, () => {
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledTimes(2);
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledWith("search term");
     });
+
+    it("should survive an uncaught exception from an extension", () => {
+        const getInstantSearchResultItem = (extensionId: string): SearchResultItem =>
+            <SearchResultItem>{ id: `instant-result-item-${extensionId}` };
+
+        const getInstantSearchResultItemsMock = vi.fn();
+
+        const extension1 = <Extension>{
+            id: "extension1",
+            isSupported: () => true,
+            getInstantSearchResultItems: (s): InstantSearchResultItems => {
+                getInstantSearchResultItemsMock(s);
+                return { after: [getInstantSearchResultItem("extension1")], before: [] };
+            },
+        };
+
+        const extension2 = <Extension>{
+            id: "extension2",
+            isSupported: () => true,
+            getInstantSearchResultItems: (s): InstantSearchResultItems => {
+                getInstantSearchResultItemsMock(s);
+                throw new Error("simulated error");
+            },
+        };
+
+        const extensionRegistry = <ExtensionRegistry>{ getAll: () => [extension1, extension2] };
+        const getValueMock = vi.fn().mockReturnValue([extension1.id, extension2.id]);
+        const settingsManager = <SettingsManager>{ getValue: (key, defaultValue) => getValueMock(key, defaultValue) };
+        const mockedLogger = <Logger>({ error: vi.fn() } as unknown);
+
+        const extensionManager = new ExtensionManager(
+            extensionRegistry,
+            <SearchIndex>{},
+            settingsManager,
+            mockedLogger,
+        );
+
+        const { after } = extensionManager.getInstantSearchResultItems("search term");
+
+        expect(after).toEqual([getInstantSearchResultItem("extension1")]);
+        expect(getInstantSearchResultItemsMock).toHaveBeenCalledTimes(2);
+        expect(getInstantSearchResultItemsMock).toHaveBeenCalledWith("search term");
+        expect(mockedLogger.error).toHaveBeenCalledExactlyOnceWith(expect.stringContaining("simulated error"));
+    });
 });
