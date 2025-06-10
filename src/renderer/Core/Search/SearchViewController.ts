@@ -17,15 +17,23 @@ type SearchViewControllerProps = {
     operatingSystem: OperatingSystem;
 };
 
-const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[]>) => {
-    const result = [];
-
-    for (const key of Object.keys(searchResult)) {
-        result.push(...searchResult[key]);
-    }
-
-    return result;
+const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
+    Linux: {
+        addToFavorites: "Ctrl+F",
+        excludeFromSearchResults: "Ctrl+Delete",
+    },
+    macOS: {
+        addToFavorites: "Cmd+F",
+        excludeFromSearchResults: "Cmd+Delete",
+    },
+    Windows: {
+        addToFavorites: "Ctrl+F",
+        excludeFromSearchResults: "Ctrl+Delete",
+    },
 };
+
+const flattenSearchResult = (searchResult: Record<string, SearchResultItem[]>): SearchResultItem[] =>
+    Object.values(searchResult).flat();
 
 export const useSearchViewController = ({
     searchResultItems,
@@ -39,42 +47,27 @@ export const useSearchViewController = ({
         selectedItemId: "",
     });
 
-    const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
-        Linux: {
-            addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Delete",
-        },
-        macOS: {
-            addToFavorites: "Cmd+F",
-            excludeFromSearchResults: "Cmd+Delete",
-        },
-        Windows: {
-            addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Delete",
-        },
-    };
-
     const userInputRef = useRef<HTMLInputElement>(null);
 
-    const setSearchTerm = (searchTerm: string) => setViewModel({ ...viewModel, searchTerm });
+    const setSearchTerm = (searchTerm: string) => setViewModel((prev) => ({ ...prev, searchTerm }));
 
-    const setSelectedItemId = (selectedItemId: string) => setViewModel({ ...viewModel, selectedItemId });
+    const setSelectedItemId = (selectedItemId: string) => setViewModel((prev) => ({ ...prev, selectedItemId }));
 
     const setSearchResult = (searchResult: Record<string, SearchResultItem[]>) =>
-        setViewModel({ ...viewModel, searchResult });
+        setViewModel((prev) => ({ ...prev, searchResult }));
 
     const selectNextSearchResultItem = () =>
         setSelectedItemId(
-            getNextSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+            getNextSearchResultItemId(viewModel.selectedItemId, flattenSearchResult(viewModel.searchResult)),
         );
 
     const selectPreviousSearchResultItem = () =>
         setSelectedItemId(
-            getPreviousSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+            getPreviousSearchResultItemId(viewModel.selectedItemId, flattenSearchResult(viewModel.searchResult)),
         );
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        collectSearchResultItems(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
+        flattenSearchResult(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
 
     const getSelectedSearchResultItemActions = (): SearchResultItemAction[] => {
         const selectedSearchResultItem = getSelectedSearchResultItem();
@@ -99,11 +92,12 @@ export const useSearchViewController = ({
             searchTerm,
         });
 
-        setViewModel({
+        setViewModel((prev) => ({
+            ...prev,
             searchTerm,
-            selectedItemId: selectedItemId ?? collectSearchResultItems(searchResult)[0]?.id,
+            selectedItemId: selectedItemId ?? flattenSearchResult(searchResult)[0]?.id,
             searchResult,
-        });
+        }));
     };
 
     const focusUserInput = () => userInputRef.current?.focus();
