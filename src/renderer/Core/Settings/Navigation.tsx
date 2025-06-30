@@ -1,7 +1,7 @@
 import type { ExtensionInfo } from "@common/Core";
 import { getImageUrl } from "@Core/getImageUrl";
 import { ThemeContext } from "@Core/Theme";
-import { NavDivider, NavDrawer, NavDrawerBody, NavItem, NavSectionHeader } from "@fluentui/react-nav-preview";
+import { NavDivider, NavDrawer, NavDrawerBody, NavItem, NavSectionHeader } from "@fluentui/react-components";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
