@@ -12,6 +12,7 @@ import { Vibrancy } from "./Vibrancy";
 import { WindowHeight } from "./WindowHeight";
 import { WindowWidth } from "./WindowWidth";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";
+import { HideInitialList } from "./HideInitialList";
 
 export const Window = () => {
     const operatingSystem = window.ContextBridge.getOperatingSystem();
@@ -33,6 +34,7 @@ export const Window = () => {
                 <ShowOnStartup />
                 <HideWindowOn />
                 <ScrollBehavior />
+                <HideInitialList />
                 <RememberSize />
                 {["macOS", "Linux"].includes(operatingSystem) && <WorkspaceVisibility />}
             </SettingGroup>

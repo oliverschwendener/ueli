@@ -270,6 +270,62 @@ export const Search = ({
     }, []);
 
     useEffect(() => {
+        if (!hideInitialList) {
+            return;
+        }
+
+        // Pixel sizes
+        const searchBarSizes: Record<SearchBarSize, number> = {
+            small: 44,
+            medium: 52,
+            large: 60,
+        };
+        const totalDividerHeight = 2;
+        /*
+        const footerHeight = 40;
+        const singleItemWindowHeight = 123;
+        const itemHeight = 36;
+        const itemGap = 5;
+        const groupingGap = 10;
+        const headerHeight = 25;
+        const listPadding = 20;
+        */
+
+        const searchBarHeight = searchBarSizes[searchBarSize] + totalDividerHeight;
+
+        // Display only the search bar if no search
+        if (!searchTerm.value) {
+            window.ContextBridge.ipcRenderer.send("resizeHeight", { height: searchBarHeight });
+            window.ContextBridge.ipcRenderer.send("limitHeight", { height: searchBarHeight });
+            return;
+        } else {
+            window.ContextBridge.ipcRenderer.send("limitHeight", { height: 0 });
+        }
+
+        /*
+        // Use height equivalent to one item if no results found
+        if (totalNumberOfSearchResultItems === 0) {
+            window.ContextBridge.ipcRenderer.send("resizeHeight", {
+                height: searchBarHeight + singleItemWindowHeight,
+            });
+            return;
+        }
+
+        const searchResultHeight = Object.keys(searchResult.value).reduce((previous, group) => {
+            const groupLength = searchResult.value[group].length;
+            const groupHeight = groupLength * itemHeight + (groupLength - 1) * itemGap;
+            return previous + groupHeight + headerHeight; // Group header height
+        }, listPadding); // List padding is 20px
+        const groupGapHeight = (Object.keys(searchResult.value).length - 1) * groupingGap;
+        const windowHeight = searchBarHeight + groupGapHeight + searchResultHeight + footerHeight;
+        */
+
+        window.ContextBridge.ipcRenderer.send("resizeHeight", {
+            height: maxHeight,
+        });
+    }, [searchResult]);
+
+    useEffect(() => {
         searchHistory.closeMenu();
         search(searchTerm.value, selectedItemId.value);
     }, [searchResultItems]);
@@ -278,6 +334,16 @@ export const Search = ({
         searchHistory.closeMenu();
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
+
+    const { value: hideInitialList } = useSetting({
+        key: "window.hideInitialList",
+        defaultValue: false,
+    });
+
+    const { value: maxHeight } = useSetting({
+        key: "window.maxHeight",
+        defaultValue: 400,
+    });
 
     const { value: searchBarAppearance } = useSetting<SearchBarAppearance>({
         key: "appearance.searchBarAppearance",
@@ -400,62 +466,72 @@ export const Search = ({
                 )
             }
             footer={
-                <Footer draggable>
-                    <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
-                        <Tooltip
-                            withArrow
-                            positioning="above-start"
-                            content={
-                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
-                                    {t("settings", { ns: "general" })}
-                                    <KeyboardShortcut
-                                        shortcut={keyboardShortcuts["openSettings"][operatingSystem]}
-                                        style={{ paddingTop: 2 }}
-                                    />
-                                </div>
-                            }
-                            relationship="label"
-                        >
-                            <Button
-                                className="non-draggable-area"
-                                onClick={() => window.ContextBridge.openSettings()}
-                                size="small"
-                                appearance="subtle"
-                                icon={<Settings16Regular />}
-                            />
-                        </Tooltip>
-                        {rescanStatus === "scanning" && (
-                            <>
-                                <Divider appearance="subtle" vertical />
-                                <RescanIndicator />
-                            </>
-                        )}
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
-                        {searchResult.current() ? (
-                            <Button
-                                className="non-draggable-area"
-                                size="small"
-                                appearance="subtle"
-                                onClick={invokeSelectedSearchResultItem}
+                !searchTerm.value && hideInitialList ? (
+                    <></>
+                ) : (
+                    <Footer draggable>
+                        <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                            <Tooltip
+                                withArrow
+                                positioning="above-start"
+                                content={
+                                    <div
+                                        style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}
+                                    >
+                                        {t("settings", { ns: "general" })}
+                                        <KeyboardShortcut
+                                            shortcut={keyboardShortcuts["openSettings"][operatingSystem]}
+                                            style={{ paddingTop: 2 }}
+                                        />
+                                    </div>
+                                }
+                                relationship="label"
                             >
-                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
-                                    {currentDefaultActionDescription()}
-                                    <KeyboardShortcut shortcut="Enter" />
-                                </div>
-                            </Button>
-                        ) : null}
-                        <Divider appearance="subtle" vertical />
-                        <ActionsMenu
-                            actions={searchResult.currentActions()}
-                            invokeAction={(action) => invokeAction({ action, confirmed: !action.requiresConfirmation })}
-                            additionalActionsButtonRef={additionalActionsButtonRef}
-                            open={additionalActionsMenuIsOpen}
-                            onOpenChange={toggleAdditionalActionsMenu}
-                            keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"][operatingSystem]}
-                        />
-                    </div>
-                </Footer>
+                                <Button
+                                    className="non-draggable-area"
+                                    onClick={() => window.ContextBridge.openSettings()}
+                                    size="small"
+                                    appearance="subtle"
+                                    icon={<Settings16Regular />}
+                                />
+                            </Tooltip>
+                            {rescanStatus === "scanning" && (
+                                <>
+                                    <Divider appearance="subtle" vertical />
+                                    <RescanIndicator />
+                                </>
+                            )}
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                            {searchResult.current() ? (
+                                <Button
+                                    className="non-draggable-area"
+                                    size="small"
+                                    appearance="subtle"
+                                    onClick={invokeSelectedSearchResultItem}
+                                >
+                                    <div
+                                        style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}
+                                    >
+                                        {currentDefaultActionDescription()}
+                                        <KeyboardShortcut shortcut="Enter" />
+                                    </div>
+                                </Button>
+                            ) : null}
+                            <Divider appearance="subtle" vertical />
+                            <ActionsMenu
+                                actions={searchResult.currentActions()}
+                                invokeAction={(action) =>
+                                    invokeAction({ action, confirmed: !action.requiresConfirmation })
+                                }
+                                additionalActionsButtonRef={additionalActionsButtonRef}
+                                open={additionalActionsMenuIsOpen}
+                                onOpenChange={toggleAdditionalActionsMenu}
+                                keyboardShortcut={keyboardShortcuts["openAdditionalActionsMenu"][operatingSystem]}
+                            />
+                        </div>
+                    </Footer>
+                )
             }
         />
     );

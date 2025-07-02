@@ -20,7 +20,7 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
                 ? this.settingsManager.getValue<number>("window.maxHeight", 400)
                 : 400,
             minWidth: 300,
-            minHeight: 200,
+            minHeight: 62,
             frame: false,
             show: this.settingsManager.getValue<boolean>("window.showOnStartup", true),
             webPreferences: {

@@ -9,7 +9,7 @@ export const WindowHeight = () => {
     const { t } = useTranslation("settingsWindow");
 
     const defaultWindowHeight = 400;
-    const minimumWindowHeight = 200;
+    const minimumWindowHeight = 62;
 
     const { value: windowHeight, updateValue: setWindowHeight } = useSetting({
         key: "window.maxHeight",
