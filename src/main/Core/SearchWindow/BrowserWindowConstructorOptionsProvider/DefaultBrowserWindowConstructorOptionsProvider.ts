@@ -3,7 +3,6 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { App } from "electron";
 import { join } from "path";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
-import { defaultWindowSize } from "./defaultWindowSize";
 
 export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWindowConstructorOptionsProvider {
     public constructor(
@@ -14,7 +13,14 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
 
     public get(): Electron.BrowserWindowConstructorOptions {
         return {
-            ...defaultWindowSize,
+            width: this.settingsManager.getValue("window.rememberSize", false)
+                ? this.settingsManager.getValue<number>("window.width", 600)
+                : 600,
+            height: this.settingsManager.getValue("window.rememberSize", false)
+                ? this.settingsManager.getValue<number>("window.maxHeight", 400)
+                : 400,
+            minWidth: 300,
+            minHeight: 200,
             frame: false,
             show: this.settingsManager.getValue<boolean>("window.showOnStartup", true),
             webPreferences: {

@@ -39,6 +39,12 @@ export class SettingsWindowManager {
     }
 
     private async createBrowserWindow(): Promise<BrowserWindow> {
+        const existingWindow = this.browserWindowRegistry.getById(SettingsWindowManager.SettingsWindowId);
+
+        if (existingWindow) {
+            return existingWindow;
+        }
+
         const settingsWindow = new BrowserWindow({
             show: false,
             height: 800,

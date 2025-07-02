@@ -128,10 +128,25 @@ export class SearchWindowModule {
             searchWindow.setVisibleOnAllWorkspaces(value);
         });
 
+        eventSubscriber.subscribe("settingUpdated[window.width]", ({ value }: { value: number }) => {
+            searchWindow.setSize(value, searchWindow.getSize()[1]);
+        });
+
+        eventSubscriber.subscribe("settingUpdated[window.maxHeight]", ({ value }: { value: number }) => {
+            searchWindow.setSize(searchWindow.getSize()[0], value);
+        });
+
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
         ipcMain.on("rescanExtensionsKeyboardShortcutPressed", () =>
             ueliCommandInvoker.invokeUeliCommand("rescanExtensions"),
         );
+
+        searchWindow.on("resize", () => {
+            if (settingsManager.getValue("window.rememberSize", false)) {
+                settingsManager.updateValue("window.width", searchWindow.getSize()[0]);
+                settingsManager.updateValue("window.maxHeight", searchWindow.getSize()[1]);
+            }
+        });
 
         app.on("second-instance", (_, argv) => {
             if (argv.includes("--toggle")) {
