@@ -149,5 +149,6 @@ describe(ExtensionManager, () => {
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledTimes(2);
         expect(getInstantSearchResultItemsMock).toHaveBeenCalledWith("search term");
         expect(mockedLogger.error).toHaveBeenCalledExactlyOnceWith(expect.stringContaining("simulated error"));
+        expect(mockedLogger.error).toHaveBeenCalledExactlyOnceWith(expect.stringContaining("extension2"));
     });
 });

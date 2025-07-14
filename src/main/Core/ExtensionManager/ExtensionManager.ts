@@ -67,7 +67,9 @@ export class ExtensionManager {
                     ? extension.getInstantSearchResultItems(searchTerm)
                     : createEmptyInstantSearchResult();
             } catch (error) {
-                this.logger.error(`Error evaluating extension with id '${extension.id}': ${error}`);
+                this.logger.error(
+                    `Unable to retrieve instant search result items from extension "${extension.id}". Reason: ${error}`,
+                );
             }
 
             for (const searchResultItem of instantSearchResultItems.after) {
