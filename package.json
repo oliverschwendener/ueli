@@ -70,7 +70,7 @@
         "react-i18next": "^15.5.3",
         "react-router": "^7.6.3",
         "react-router-dom": "^7.6.3",
-        "sharp": "^0.34.2",
+        "sharp": "^0.34.3",
         "uuid": "^11.1.0"
     }
 }
