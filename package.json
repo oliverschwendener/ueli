@@ -55,8 +55,8 @@
         "vitest": "^3.2.4"
     },
     "dependencies": {
-        "@fluentui/react-components": "^9.66.5",
-        "@fluentui/react-icons": "^2.0.305",
+        "@fluentui/react-components": "^9.66.7",
+        "@fluentui/react-icons": "^2.0.306",
         "better-sqlite3": "^12.2.0",
         "color": "^4.2.3",
         "fast-xml-parser": "^5.2.5",
