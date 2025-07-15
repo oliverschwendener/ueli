@@ -13,6 +13,7 @@ export const Language = () => {
         { name: "Français (France)", locale: "fr-FR" },
         { name: "日本語 (日本)", locale: "ja-JP" },
         { name: "한국어 (대한민국)", locale: "ko-KR" },
+        { name: "简体中文 (中国大陆)", locale: "zh-CN"},
     ];
 
     const { value: language, updateValue: setLanguage } = useSetting({
