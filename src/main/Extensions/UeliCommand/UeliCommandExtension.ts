@@ -195,6 +195,17 @@ export class UeliCommandExtension implements Extension {
                 disableHotkey: "단축키 비활성화",
                 enableHotkey: "단축키 활성화",
             },
+            "zh-CN": {
+                extensionName: "Ueli 命令",
+                description: "Ueli 命令",
+                openSettings: "打开 Ueli 设置",
+                openExtensions: "浏览 Ueli 扩展",
+                centerWindow: "Ueli 窗口居中",
+                quitUeli: "退出 Ueli",
+                rescanExtensions: "重新扫描扩展",
+                disableHotkey: "禁用热键",
+                enableHotkey: "启用热键",
+            },
         };
     }
 }

@@ -34,4 +34,12 @@ export const resources: Resources<TrayIconTranslations> = {
         "trayIcon.contextMenu.hotkey": "단축키",
         "trayIcon.contextMenu.hotkey.tooltip": "클릭하여 단축키를 활성화/비활성화합니다",
     },
+    "zh-CN": {
+        "trayIcon.contextMenu.about": "关于",
+        "trayIcon.contextMenu.quit": "退出",
+        "trayIcon.contextMenu.settings": "设置",
+        "trayIcon.contextMenu.show": "显示",
+        "trayIcon.contextMenu.hotkey": "热键",
+        "trayIcon.contextMenu.hotkey.tooltip": "点击以启用/禁用热键",
+    },
 };
