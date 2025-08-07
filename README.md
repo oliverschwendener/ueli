@@ -83,7 +83,7 @@ Please read the [contribution guidelines](CONTRIBUTING.md) first.
 
 ## Requirements
 
-- Node.js v20: https://nodejs.org/en
+- Node.js 22: https://nodejs.org/en
 - Make sure you have [commit signing](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) enabled
 - Optional: if you're using Visual Studio Code we recommend installing the recommended extensions
 
