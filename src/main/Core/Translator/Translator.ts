@@ -11,6 +11,7 @@ export class Translator implements TranslatorInterface {
             initImmediate: false, // Is needed for synchronous initialization
             resources: this.createResources(resources),
             lng: this.settingsManager.getValue("general.language", "en-US"),
+            fallbackLng: "en-US",
         });
 
         instance.init();

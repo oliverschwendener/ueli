@@ -1,6 +1,7 @@
 import {
     AppsAddIn20Regular,
     Bug20Regular,
+    EyeOff20Regular,
     Info20Regular,
     Keyboard20Regular,
     PaintBrush20Regular,
@@ -18,6 +19,7 @@ import { Favorites } from "./Favorites";
 import { General } from "./General";
 import { KeyboardAndMouse } from "./KeyboardAndMouse";
 import { SearchEngine } from "./SearchEngine";
+import { ExcludedItems } from "./SearchEngine/ExcludedItems";
 import { Window } from "./Window";
 
 export type SettingsPage = {
@@ -70,6 +72,13 @@ export const settingsPages: SettingsPage[] = [
         absolutePath: "/favorites",
         element: <Favorites />,
         icon: <Star20Regular />,
+    },
+    {
+        translation: { key: "title", namespace: "settingsExcludedItems" },
+        relativePath: "excluded-items",
+        absolutePath: "/excluded-items",
+        element: <ExcludedItems />,
+        icon: <EyeOff20Regular />,
     },
     {
         translation: { key: "title", namespace: "settingsExtensions" },

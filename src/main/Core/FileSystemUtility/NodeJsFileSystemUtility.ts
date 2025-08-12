@@ -100,13 +100,23 @@ export class NodeJsFileSystemUtility implements FileSystemUtility {
         return (await this.readFile(filePath)).toString(encoding);
     }
 
-    public async readDirectory(folderPath: string, recursive?: boolean): Promise<string[]> {
+    public async readDirectory(
+        folderPath: string,
+        recursive?: boolean,
+        excludeHiddenFiles?: boolean,
+    ): Promise<string[]> {
         const fileNames = await readdir(folderPath, { recursive });
-        return fileNames.map((fileName) => join(folderPath, fileName));
+
+        return fileNames
+            .filter((fileName) => (excludeHiddenFiles ? !fileName.startsWith(".") : true))
+            .map((fileName) => join(folderPath, fileName));
     }
 
-    public readDirectorySync(folderPath: string, recursive?: boolean): string[] {
+    public readDirectorySync(folderPath: string, recursive?: boolean, excludeHiddenFiles?: boolean): string[] {
         const fileNames = readdirSync(folderPath, { recursive });
-        return fileNames.map((fileName) => join(folderPath, fileName.toString()));
+
+        return fileNames
+            .filter((fileName) => (excludeHiddenFiles ? !fileName.toString().startsWith(".") : true))
+            .map((fileName) => join(folderPath, fileName.toString()));
     }
 }

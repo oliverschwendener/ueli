@@ -60,9 +60,17 @@ export class ExtensionManager {
         const result: InstantSearchResultItems = createEmptyInstantSearchResult();
 
         for (const extension of this.getEnabledExtensions()) {
-            const instantSearchResultItems: InstantSearchResultItems = extension.getInstantSearchResultItems
-                ? extension.getInstantSearchResultItems(searchTerm)
-                : createEmptyInstantSearchResult();
+            let instantSearchResultItems: InstantSearchResultItems = createEmptyInstantSearchResult();
+
+            try {
+                instantSearchResultItems = extension.getInstantSearchResultItems
+                    ? extension.getInstantSearchResultItems(searchTerm)
+                    : createEmptyInstantSearchResult();
+            } catch (error) {
+                this.logger.error(
+                    `Unable to retrieve instant search result items from extension "${extension.id}". Reason: ${error}`,
+                );
+            }
 
             for (const searchResultItem of instantSearchResultItems.after) {
                 result.after.push(searchResultItem);

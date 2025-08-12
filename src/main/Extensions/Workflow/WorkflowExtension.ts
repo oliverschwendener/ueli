@@ -48,6 +48,7 @@ export class WorkflowExtension implements Extension {
                     handlerId: "Workflow",
                     fluentIcon: "OpenRegular",
                     hideWindowAfterInvocation: true,
+                    requiresConfirmation: workflow.requiresConfirmation,
                 },
                 description: t("searchResultItemDescription"),
                 details: workflow.actions.map((action) => action.name).join(", "),
@@ -117,6 +118,8 @@ export class WorkflowExtension implements Extension {
                 removeWorkflowConfirmationContent: "Are you sure?",
                 yes: "Yes",
                 no: "No",
+                workflowNameError: "Workflow name is required.",
+                requiresConfirmation: "Requires confirmation",
             },
             "de-CH": {
                 extensionName: "Arbeitsabläufe",
@@ -159,6 +162,8 @@ export class WorkflowExtension implements Extension {
                 removeWorkflowConfirmationContent: "Bist du dir sicher?",
                 yes: "Ja",
                 no: "Nein",
+                workflowNameError: "Der Name des Arbeitsablaufs ist erforderlich.",
+                requiresConfirmation: "Bestätigung erforderlich",
             },
             "ja-JP": {
                 extensionName: "ワークフロー",

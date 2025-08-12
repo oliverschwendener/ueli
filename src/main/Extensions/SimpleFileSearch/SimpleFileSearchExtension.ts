@@ -126,7 +126,9 @@ export class SimpleFileSearchExtension implements Extension {
 
     private async getFilePaths(folderSettings: FolderSetting[]): Promise<Record<string, string[]>> {
         const promiseResults = await Promise.allSettled(
-            folderSettings.map(({ path, recursive }) => this.fileSystemUtility.readDirectory(path, recursive)),
+            folderSettings.map(({ path, recursive, excludeHiddenFiles }) =>
+                this.fileSystemUtility.readDirectory(path, recursive, excludeHiddenFiles),
+            ),
         );
 
         const result: Record<string, string[]> = {};
@@ -183,9 +185,13 @@ export class SimpleFileSearchExtension implements Extension {
                 folders: "Folders",
                 path: "Path",
                 recursive: "Recursive",
+                excludeHiddenFiles: "Exclude hidden files",
                 add: "Add",
+                save: "Save",
                 addFolder: "Add folder",
+                editFolder: "Edit folder",
                 remove: "Remove",
+                edit: "Edit",
                 chooseFolder: "Choose folder",
                 validFolderPath: "Valid folder path",
                 invalidFolderPath: "This folder doesn't seem to exist",
@@ -194,6 +200,11 @@ export class SimpleFileSearchExtension implements Extension {
                 "searchFor.files": "Files",
                 "searchFor.folders": "Folders",
                 "searchFor.filesAndFolders": "Files and Folders",
+
+                removeDialogTitle: "Remove folder",
+                removeDialogContent: "Are you sure you want to remove this folder?",
+                removeDialogConfirm: "Remove",
+                removeDialogCancel: "Cancel",
             },
             "de-CH": {
                 extensionName: "Einfache Dateisuche",
@@ -204,9 +215,13 @@ export class SimpleFileSearchExtension implements Extension {
                 folders: "Ordner",
                 path: "Pfad",
                 recursive: "Rekursiv",
+                excludeHiddenFiles: "Versteckte Dateien ausschliessen",
                 add: "Hinzufügen",
+                save: "Speichern",
                 addFolder: "Ordner hinzufügen",
+                editFolder: "Ordner bearbeiten",
                 remove: "Entfernen",
+                edit: "Bearbeiten",
                 chooseFolder: "Ordner auswählen",
                 validFolderPath: "Valider Dateipfad",
                 invalidFolderPath: "Dieser Ordner scheint nicht zu existieren",
@@ -215,6 +230,11 @@ export class SimpleFileSearchExtension implements Extension {
                 "searchFor.files": "Dateien",
                 "searchFor.folders": "Ordner",
                 "searchFor.filesAndFolders": "Dateien und Ordner",
+
+                removeDialogTitle: "Ordner entfernen",
+                removeDialogContent: "Bist du sicher, dass du diesen Ordner entfernen möchtest?",
+                removeDialogConfirm: "Entfernen",
+                removeDialogCancel: "Abbrechen",
             },
             "ja-JP": {
                 extensionName: "簡易ファイル検索",

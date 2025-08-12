@@ -13,6 +13,9 @@ import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS
 
 export class ImageGeneratorModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
+        const ipcMain = moduleRegistry.get("IpcMain");
+        const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
+
         moduleRegistry.register(
             "UrlImageGenerator",
             new UrlImageGenerator(moduleRegistry.get("SettingsManager"), {
@@ -31,6 +34,10 @@ export class ImageGeneratorModule {
                 new GenericFileIconExtractor(moduleRegistry.get("App")),
             ]),
         );
+
+        ipcMain.handle("clearImageCache", async () => {
+            await fileSystemUtility.clearFolder(cacheFolderPath);
+        });
     }
 
     private static async ensureCacheFolderExists(moduleRegistry: UeliModuleRegistry): Promise<string> {

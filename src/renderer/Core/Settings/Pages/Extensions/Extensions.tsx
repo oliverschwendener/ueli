@@ -135,6 +135,7 @@ export const Extensions = () => {
                     )
                     .map((extension) => (
                         <ExtensionCard
+                            key={extension.id}
                             extension={extension}
                             isEnabled={isEnabled(extension.id)}
                             enable={() => enable(extension.id)}

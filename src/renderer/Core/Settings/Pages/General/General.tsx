@@ -7,8 +7,10 @@ import { DockSettings } from "./DockSettings";
 import { HotkeySettings } from "./HotKey";
 import { ImportExport } from "./ImportExport";
 import { Language } from "./Language";
+import { PreserveUserInput } from "./PreserveUserInput";
 import { SearchHistory } from "./SearchHistory";
 import { SetCustomSettingsFilePath } from "./SetCustomSettingsFilePath";
+import { TrayIconSettings } from "./TrayIcon";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 
 export const General = () => {
@@ -21,7 +23,9 @@ export const General = () => {
                 <Language />
                 <Autostart />
                 {operatingSystem === "macOS" && <DockSettings />}
+                <PreserveUserInput />
             </SettingGroup>
+            <TrayIconSettings />
             <HotkeySettings />
             <SettingGroup title={t("searchHistory")}>
                 <SearchHistory />

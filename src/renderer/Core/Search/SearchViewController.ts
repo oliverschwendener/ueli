@@ -1,4 +1,3 @@
-import { useSetting } from "@Core/Hooks";
 import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
 import type { SearchEngineId } from "@common/Core/Search";
 import { useRef, useState } from "react";
@@ -18,15 +17,23 @@ type SearchViewControllerProps = {
     operatingSystem: OperatingSystem;
 };
 
-const collectSearchResultItems = (searchResult: Record<string, SearchResultItem[]>) => {
-    const result = [];
-
-    for (const key of Object.keys(searchResult)) {
-        result.push(...searchResult[key]);
-    }
-
-    return result;
+const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
+    Linux: {
+        addToFavorites: "Ctrl+F",
+        excludeFromSearchResults: "Ctrl+Delete",
+    },
+    macOS: {
+        addToFavorites: "Cmd+F",
+        excludeFromSearchResults: "Cmd+Delete",
+    },
+    Windows: {
+        addToFavorites: "Ctrl+F",
+        excludeFromSearchResults: "Ctrl+Delete",
+    },
 };
+
+const flattenSearchResult = (searchResult: Record<string, SearchResultItem[]>): SearchResultItem[] =>
+    Object.values(searchResult).flat();
 
 export const useSearchViewController = ({
     searchResultItems,
@@ -40,42 +47,27 @@ export const useSearchViewController = ({
         selectedItemId: "",
     });
 
-    const keyboardShortcuts: Record<OperatingSystem, Record<"addToFavorites" | "excludeFromSearchResults", string>> = {
-        Linux: {
-            addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Delete",
-        },
-        macOS: {
-            addToFavorites: "Cmd+F",
-            excludeFromSearchResults: "Cmd+Delete",
-        },
-        Windows: {
-            addToFavorites: "Ctrl+F",
-            excludeFromSearchResults: "Ctrl+Delete",
-        },
-    };
-
     const userInputRef = useRef<HTMLInputElement>(null);
 
-    const setSearchTerm = (searchTerm: string) => setViewModel({ ...viewModel, searchTerm });
+    const setSearchTerm = (searchTerm: string) => setViewModel((prev) => ({ ...prev, searchTerm }));
 
-    const setSelectedItemId = (selectedItemId: string) => setViewModel({ ...viewModel, selectedItemId });
+    const setSelectedItemId = (selectedItemId: string) => setViewModel((prev) => ({ ...prev, selectedItemId }));
 
     const setSearchResult = (searchResult: Record<string, SearchResultItem[]>) =>
-        setViewModel({ ...viewModel, searchResult });
+        setViewModel((prev) => ({ ...prev, searchResult }));
 
     const selectNextSearchResultItem = () =>
         setSelectedItemId(
-            getNextSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+            getNextSearchResultItemId(viewModel.selectedItemId, flattenSearchResult(viewModel.searchResult)),
         );
 
     const selectPreviousSearchResultItem = () =>
         setSelectedItemId(
-            getPreviousSearchResultItemId(viewModel.selectedItemId, collectSearchResultItems(viewModel.searchResult)),
+            getPreviousSearchResultItemId(viewModel.selectedItemId, flattenSearchResult(viewModel.searchResult)),
         );
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
-        collectSearchResultItems(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
+        flattenSearchResult(viewModel.searchResult).find((s) => s.id === viewModel.selectedItemId);
 
     const getSelectedSearchResultItemActions = (): SearchResultItemAction[] => {
         const selectedSearchResultItem = getSelectedSearchResultItem();
@@ -84,11 +76,11 @@ export const useSearchViewController = ({
             : [];
     };
 
-    const { value: fuzziness } = useSetting({ key: "searchEngine.fuzziness", defaultValue: 0.5 });
-    const { value: maxSearchResultItems } = useSetting({ key: "searchEngine.maxResultLength", defaultValue: 50 });
-    const { value: searchEngineId } = useSetting<SearchEngineId>({ key: "searchEngine.id", defaultValue: "fuzzysort" });
-
     const search = (searchTerm: string, selectedItemId?: string) => {
+        const fuzziness = window.ContextBridge.getSettingValue("searchEngine.fuzziness", 0.5);
+        const maxSearchResultItems = window.ContextBridge.getSettingValue("searchEngine.maxResultLength", 50);
+        const searchEngineId = window.ContextBridge.getSettingValue<SearchEngineId>("searchEngine.id", "fuzzysort");
+
         const searchResult = getSearchResult({
             searchEngineId,
             excludedSearchResultItemIds,
@@ -100,11 +92,12 @@ export const useSearchViewController = ({
             searchTerm,
         });
 
-        setViewModel({
+        setViewModel((prev) => ({
+            ...prev,
             searchTerm,
-            selectedItemId: selectedItemId ?? collectSearchResultItems(searchResult)[0]?.id,
+            selectedItemId: selectedItemId ?? flattenSearchResult(searchResult)[0]?.id,
             searchResult,
-        });
+        }));
     };
 
     const focusUserInput = () => userInputRef.current?.focus();
@@ -121,11 +114,20 @@ export const useSearchViewController = ({
             return;
         }
 
-        await invokeAction(searchResultItem.defaultAction);
+        await invokeAction({
+            action: searchResultItem.defaultAction,
+            confirmed: !searchResultItem.defaultAction.requiresConfirmation,
+        });
     };
 
-    const invokeAction = async (action: SearchResultItemAction) => {
-        if (!action.requiresConfirmation) {
+    const invokeAction = async ({ action, confirmed }: { action: SearchResultItemAction; confirmed: boolean }) => {
+        if (confirmed) {
+            const preserveUserInput = window.ContextBridge.getSettingValue("general.preserveUserInput", true);
+
+            if (!preserveUserInput) {
+                search("");
+            }
+
             await window.ContextBridge.invokeAction(action);
             return;
         }

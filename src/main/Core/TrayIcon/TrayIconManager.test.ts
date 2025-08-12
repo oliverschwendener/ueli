@@ -89,4 +89,36 @@ describe(TrayIconManager, () => {
             expect(setImageMock).toHaveBeenCalledWith("test-tray-icon-file-path");
         });
     });
+
+    describe(TrayIconManager.prototype.destory, () => {
+        it("should destroy the tray if it exists", () => {
+            const destroyMock = vi.fn();
+
+            const trayIconManager = new TrayIconManager(
+                <TrayCreator>{},
+                <TrayIconFilePathResolver>{},
+                <ContextMenuTemplateProvider>{},
+                <ContextMenuBuilder>{},
+            );
+
+            trayIconManager["tray"] = <Tray>{ destroy: () => destroyMock() };
+
+            trayIconManager.destory();
+
+            expect(destroyMock).toHaveBeenCalledOnce();
+        });
+
+        it("should do nothing if the tray doesn't exist", () => {
+            const trayIconManager = new TrayIconManager(
+                <TrayCreator>{},
+                <TrayIconFilePathResolver>{},
+                <ContextMenuTemplateProvider>{},
+                <ContextMenuBuilder>{},
+            );
+
+            trayIconManager.destory();
+
+            expect(trayIconManager["tray"]).toBeUndefined();
+        });
+    });
 });
