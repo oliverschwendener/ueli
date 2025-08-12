@@ -72,7 +72,7 @@ export class Calculator {
             precision = 16;
         }
 
-        const math = create(all, { precision: 64, number: "BigNumber" });
+        const math = create(all);
         const calculationResult = String(
             math.evaluate(this.normalizeExpression({ expression, decimalSeparator, argumentSeparator })),
         );

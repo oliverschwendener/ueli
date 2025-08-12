@@ -361,5 +361,27 @@ describe(Calculator, () => {
                 }),
             ).toEqual("0.7071");
         });
+
+        it("should return 72.5 fahrenheit when evaluating 70 fahrenheit + 2.5 fahrenheit", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "70 fahrenheit + 2.5 fahrenheit",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 8,
+                }),
+            ).toEqual("72.5 fahrenheit");
+        });
+
+        it("should return 3.32 when evaluating 2.5!", () => {
+            expect(
+                Calculator.calculate({
+                    expression: "2.5!",
+                    argumentSeparator: ",",
+                    decimalSeparator: ".",
+                    precision: 8,
+                }),
+            ).toEqual("3.32335097");
+        });
     });
 });
