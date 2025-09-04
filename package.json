@@ -43,7 +43,7 @@
         "electron-builder": "^26.0.12",
         "eslint": "^9.34.0",
         "globals": "^16.3.0",
-        "node-abi": "^4.12.0",
+        "node-abi": "^4.14.0",
         "prettier": "^3.6.2",
         "prettier-plugin-organize-imports": "^4.2.0",
         "tree-kill": "^1.2.2",
