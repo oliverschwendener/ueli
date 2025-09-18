@@ -1,0 +1,193 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Logger } from "@Core/Logger";
+import type { SettingsManager } from "@Core/SettingsManager";
+import type { TaskScheduler } from "@Core/TaskScheduler";
+import type { Translator } from "@Core/Translator";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { TodoistExtension } from "./TodoistExtension";
+import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
+import { getTodoistI18nResources } from "./TodoistTranslations";
+
+const resources = getTodoistI18nResources();
+
+const createTranslator = (): Translator => ({
+    createT: () => ({
+        t: (key: string, options?: Record<string, string>) => {
+            const dictionary = resources["en-US"] as Record<string, string>;
+            const value = dictionary[key];
+
+            if (!value) {
+                return key;
+            }
+
+            if (options?.priority) {
+                return value.replace("{{priority}}", options.priority);
+            }
+
+            return value;
+        },
+    }),
+});
+
+describe(TodoistExtension, () => {
+    const setup = ({
+        prefix = "todo",
+        suggestionLimit = 15,
+        apiToken = "",
+    }: {
+        prefix?: string;
+        suggestionLimit?: number;
+        apiToken?: string;
+    } = {}) => {
+        const settings = new Map<string, unknown>([
+            ["extension[Todoist].prefix", prefix],
+            ["extension[Todoist].suggestionLimit", suggestionLimit],
+            ["extension[Todoist].apiToken", apiToken],
+        ]);
+
+        const settingsManager: SettingsManager = {
+            getValue: <T>(key: string, defaultValue: T) =>
+                settings.has(key) ? (settings.get(key) as T) : defaultValue,
+            updateValue: vi.fn(),
+        };
+
+        const assetPathResolver: AssetPathResolver = {
+            getExtensionAssetPath: () => "/path/to/todoist.svg",
+            getModuleAssetPath: () => "",
+        };
+
+        const taskScheduler: TaskScheduler = {
+            scheduleTask: (task, waitMs) => setTimeout(task, waitMs),
+            abortTask: (id) => clearTimeout(id),
+        };
+
+        const logger: Logger = {
+            error: () => undefined,
+            info: () => undefined,
+            debug: () => undefined,
+            warn: () => undefined,
+        };
+
+        const todoistApi: TodoistApiClient = {
+            quickAddTask: vi.fn(),
+            getLabels: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+            getProjects: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+        };
+
+        const todoistApiFactory: TodoistApiFactory = {
+            create: vi.fn().mockReturnValue(todoistApi),
+        };
+
+        const extension = new TodoistExtension(
+            assetPathResolver,
+            settingsManager,
+            createTranslator(),
+            taskScheduler,
+            todoistApiFactory,
+            logger,
+        );
+
+        return {
+            extension,
+            settings,
+            todoistApi,
+            todoistApiFactory,
+        };
+    };
+
+    beforeEach(async () => {
+        await Promise.resolve();
+    });
+
+    it("接頭辞不一致の場合は結果を返さない", () => {
+        const { extension } = setup();
+
+        const result = extension.getInstantSearchResultItems("note buy milk");
+
+        expect(result.before).toHaveLength(0);
+        expect(result.after).toHaveLength(0);
+    });
+
+    it("Quick Add の結果を返す", () => {
+        const { extension } = setup();
+        const result = extension.getInstantSearchResultItems("todo buy milk tomorrow");
+
+        expect(result.before).toHaveLength(1);
+        expect(result.before[0]?.defaultAction.argument).toBe(JSON.stringify({ text: "buy milk tomorrow" }));
+    });
+
+    it("ラベル候補をサジェストする", () => {
+        const { extension } = setup();
+
+        // @ts-expect-error - テスト用に内部状態を直接設定
+        extension.labels = [
+            { id: "1", name: "Home" },
+            { id: "2", name: "Work" },
+        ];
+
+        const result = extension.getInstantSearchResultItems("todo plan @ho");
+
+        expect(result.after).toHaveLength(1);
+        expect(result.after[0]?.name).toBe("@Home");
+        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo plan @Home " }));
+    });
+
+    it("プロジェクト候補の完全一致（空白含む）は非表示", () => {
+        const { extension } = setup();
+
+        // @ts-expect-error - テスト用に内部状態を直接設定
+        extension.projects = [{ id: "1", name: "Home chores" }];
+
+        const result = extension.getInstantSearchResultItems("todo clean #Home chores");
+
+        expect(result.after).toHaveLength(0);
+    });
+
+    it("サジェスト件数の上限を尊重する", () => {
+        const { extension, settings } = setup({ suggestionLimit: 1 });
+
+        // @ts-expect-error - テスト用に内部状態を直接設定
+        extension.labels = [
+            { id: "1", name: "Alpha" },
+            { id: "2", name: "Beta" },
+        ];
+
+        const result = extension.getInstantSearchResultItems("todo task @");
+
+        expect(result.after).toHaveLength(1);
+        expect(result.after[0]?.name).toBe("@Alpha");
+
+        settings.set("extension[Todoist].suggestionLimit", 2);
+        const updated = extension.getInstantSearchResultItems("todo task @");
+        expect(updated.after).toHaveLength(2);
+    });
+
+    it("優先度候補を挿入する", () => {
+        const { extension } = setup();
+
+        const result = extension.getInstantSearchResultItems("todo schedule !p");
+
+        expect(result.after).toHaveLength(4);
+        expect(result.after[0]?.name).toBe("!1");
+        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo schedule !1 " }));
+    });
+
+    it("! 単独でも優先度候補を表示する", () => {
+        const { extension } = setup();
+
+        const result = extension.getInstantSearchResultItems("todo schedule !");
+
+        expect(result.after.map((item) => item?.name)).toEqual(["!1", "!2", "!3", "!4"]);
+    });
+
+    it("大文字の接頭辞でも新しい検索語を正しく構築する", () => {
+        const { extension } = setup({ prefix: "todo" });
+
+        // @ts-expect-error - テスト用に内部状態を直接設定
+        extension.labels = [{ id: "1", name: "Today" }];
+
+        const result = extension.getInstantSearchResultItems("TODO   plan @to");
+
+        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "TODO   plan @Today " }));
+    });
+});

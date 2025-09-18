@@ -12,6 +12,7 @@ import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { PasswordGeneratorSettings } from "./PasswordGenerator";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
+import { TodoistSettings } from "./Todoist";
 import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
 import { VSCodeSettings } from "./VSCode";
 import { WebSearchExtension } from "./WebSearch";
@@ -69,6 +70,9 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         TerminalLauncher: {
             settings: <TerminalLauncherSettings />,
+        },
+        Todoist: {
+            settings: <TodoistSettings />,
         },
         UuidGenerator: {
             extension: <UuidGenerator {...props} />,

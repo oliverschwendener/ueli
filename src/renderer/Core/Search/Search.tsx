@@ -279,6 +279,25 @@ export const Search = ({
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
+    useEffect(() => {
+        const setSearchTermHandler = (_: unknown, newSearchTerm: unknown) => {
+            if (typeof newSearchTerm !== "string") {
+                return;
+            }
+
+            searchHistory.closeMenu();
+            search(newSearchTerm);
+            userInput.focus();
+            userInput.select();
+        };
+
+        window.ContextBridge.ipcRenderer.on("setSearchTerm", setSearchTermHandler);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off("setSearchTerm", setSearchTermHandler);
+        };
+    }, [search, searchHistory, userInput]);
+
     const { value: searchBarAppearance } = useSetting<SearchBarAppearance>({
         key: "appearance.searchBarAppearance",
         defaultValue: "auto",
