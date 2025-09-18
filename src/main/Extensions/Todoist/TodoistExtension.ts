@@ -12,7 +12,9 @@ import { QuickAddHandlerId } from "./TodoistQuickAddActionHandler";
 import { SetSearchTermHandlerId } from "./TodoistSetSearchTermActionHandler";
 import { getTodoistI18nResources, todoistTranslationNamespace } from "./TodoistTranslations";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
+import { TodoistEntityFetcher } from "./TodoistEntityFetcher";
 const CacheRefreshIntervalInMs = 5 * 60 * 1000;
+const TodoistApiPageSize = 100;
 
 type TodoistEntity = {
     id: string;
@@ -36,7 +38,7 @@ export class TodoistExtension implements Extension {
     };
 
     public readonly author = {
-        name: "cou723",
+        name: "coucha",
         githubUserName: "cou723",
     };
 
@@ -362,13 +364,13 @@ export class TodoistExtension implements Extension {
             }
 
             const api = this.todoistApiFactory.create(apiToken);
-            const [labelsResponse, projectsResponse] = await Promise.all([
-                api.getLabels(),
-                api.getProjects(),
+            const [labels, projects] = await Promise.all([
+                new TodoistEntityFetcher(api.getLabels.bind(api), this.logger, "labels").fetchAll(TodoistApiPageSize),
+                new TodoistEntityFetcher(api.getProjects.bind(api), this.logger, "projects").fetchAll(TodoistApiPageSize),
             ]);
 
-            this.labels = TodoistExtension.mapEntities(labelsResponse.results ?? []);
-            this.projects = TodoistExtension.mapEntities(projectsResponse.results ?? []);
+            this.labels = TodoistExtension.mapEntities(labels);
+            this.projects = TodoistExtension.mapEntities(projects);
         } catch (error) {
             this.logger.error(
                 `Failed to refresh Todoist cache. Reason: ${error instanceof Error ? error.message : error}`,

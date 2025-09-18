@@ -9,7 +9,7 @@ const createAction = (newSearchTerm: unknown) => ({
 });
 
 describe(TodoistSetSearchTermActionHandler, () => {
-    it("指定された検索語を通知する", async () => {
+    it("notifies the provided search term", async () => {
         const browserWindowNotifier: BrowserWindowNotifier = {
             notify: vi.fn(),
             notifyAll: vi.fn(),
@@ -26,7 +26,7 @@ describe(TodoistSetSearchTermActionHandler, () => {
         });
     });
 
-    it("不正な引数で例外を送出する", async () => {
+    it("throws when argument is invalid", async () => {
         const browserWindowNotifier: BrowserWindowNotifier = {
             notify: vi.fn(),
             notifyAll: vi.fn(),

@@ -92,7 +92,7 @@ describe(TodoistQuickAddActionHandler, () => {
         vi.useFakeTimers();
     });
 
-    it("成功時に通知を表示しウィンドウを閉じる", async () => {
+    it("shows success notification and closes window", async () => {
         const dependencies = createDependencies({});
 
         const handler = new TodoistQuickAddActionHandler(
@@ -118,7 +118,7 @@ describe(TodoistQuickAddActionHandler, () => {
         expect(dependencies.logger.error).not.toHaveBeenCalled();
     });
 
-    it("APIエラー時にエラーログと通知を行う", async () => {
+    it("logs error and shows failure notification when API fails", async () => {
         const dependencies = createDependencies({
             quickAddTaskImplementation: vi.fn().mockRejectedValue(new Error("API failed")),
         });
@@ -144,7 +144,7 @@ describe(TodoistQuickAddActionHandler, () => {
         expect(dependencies.browserWindow.hide).toHaveBeenCalledOnce();
     });
 
-    it("トークン未設定時にAPIを呼び出さず通知を行う", async () => {
+    it("shows missing token notification without calling API", async () => {
         const dependencies = createDependencies({ apiToken: "" });
 
         const handler = new TodoistQuickAddActionHandler(

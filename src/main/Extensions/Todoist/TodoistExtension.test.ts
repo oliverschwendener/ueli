@@ -99,7 +99,7 @@ describe(TodoistExtension, () => {
         await Promise.resolve();
     });
 
-    it("接頭辞不一致の場合は結果を返さない", () => {
+    it("returns no results when prefix does not match", () => {
         const { extension } = setup();
 
         const result = extension.getInstantSearchResultItems("note buy milk");
@@ -108,7 +108,7 @@ describe(TodoistExtension, () => {
         expect(result.after).toHaveLength(0);
     });
 
-    it("Quick Add の結果を返す", () => {
+    it("returns quick add item", () => {
         const { extension } = setup();
         const result = extension.getInstantSearchResultItems("todo buy milk tomorrow");
 
@@ -116,7 +116,7 @@ describe(TodoistExtension, () => {
         expect(result.before[0]?.defaultAction.argument).toBe(JSON.stringify({ text: "buy milk tomorrow" }));
     });
 
-    it("ラベル候補をサジェストする", () => {
+    it("suggests label candidates", () => {
         const { extension } = setup();
 
         // @ts-expect-error - テスト用に内部状態を直接設定
@@ -132,7 +132,7 @@ describe(TodoistExtension, () => {
         expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo plan @Home " }));
     });
 
-    it("プロジェクト候補の完全一致（空白含む）は非表示", () => {
+    it("hides project candidate when whitespace exact match", () => {
         const { extension } = setup();
 
         // @ts-expect-error - テスト用に内部状態を直接設定
@@ -143,7 +143,7 @@ describe(TodoistExtension, () => {
         expect(result.after).toHaveLength(0);
     });
 
-    it("サジェスト件数の上限を尊重する", () => {
+    it("respects suggestion limit", () => {
         const { extension, settings } = setup({ suggestionLimit: 1 });
 
         // @ts-expect-error - テスト用に内部状態を直接設定
@@ -162,7 +162,7 @@ describe(TodoistExtension, () => {
         expect(updated.after).toHaveLength(2);
     });
 
-    it("優先度候補を挿入する", () => {
+    it("inserts priority candidates", () => {
         const { extension } = setup();
 
         const result = extension.getInstantSearchResultItems("todo schedule !p");
@@ -172,7 +172,7 @@ describe(TodoistExtension, () => {
         expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo schedule !1 " }));
     });
 
-    it("! 単独でも優先度候補を表示する", () => {
+    it("shows priority candidates when bang only", () => {
         const { extension } = setup();
 
         const result = extension.getInstantSearchResultItems("todo schedule !");
@@ -180,7 +180,7 @@ describe(TodoistExtension, () => {
         expect(result.after.map((item) => item?.name)).toEqual(["!1", "!2", "!3", "!4"]);
     });
 
-    it("大文字の接頭辞でも新しい検索語を正しく構築する", () => {
+    it("builds search term correctly with uppercase prefix", () => {
         const { extension } = setup({ prefix: "todo" });
 
         // @ts-expect-error - テスト用に内部状態を直接設定
