@@ -5,7 +5,7 @@ import type { Translator } from "@Core/Translator";
 import type { BrowserWindow } from "electron";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
-import type { NotificationPresenter } from "./TodoistNotificationPresenter";
+import type { NotificationService } from "@Core/Notification";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
@@ -42,7 +42,7 @@ describe(TodoistQuickAddActionHandler, () => {
             updateValue: vi.fn(),
         };
 
-        const notificationPresenter: NotificationPresenter = {
+        const notificationService: NotificationService = {
             show: vi.fn(),
         };
 
@@ -73,7 +73,7 @@ describe(TodoistQuickAddActionHandler, () => {
 
         return {
             settingsManager,
-            notificationPresenter,
+            notificationService,
             browserWindowRegistry,
             browserWindow,
             logger,
@@ -99,7 +99,7 @@ describe(TodoistQuickAddActionHandler, () => {
             dependencies.todoistApiFactory,
             dependencies.settingsManager,
             createTranslator(),
-            dependencies.notificationPresenter,
+            dependencies.notificationService,
             dependencies.browserWindowRegistry,
             dependencies.logger,
         );
@@ -109,7 +109,7 @@ describe(TodoistQuickAddActionHandler, () => {
         expect(dependencies.todoistApiFactory.create).toHaveBeenCalledWith("token");
         expect(dependencies.todoistApi.quickAddTask).toHaveBeenCalledWith({ text: "task" });
 
-        expect(dependencies.notificationPresenter.show).toHaveBeenCalledWith({
+        expect(dependencies.notificationService.show).toHaveBeenCalledWith({
             title: "Todoist",
             body: "Task added.",
         });
@@ -127,7 +127,7 @@ describe(TodoistQuickAddActionHandler, () => {
             dependencies.todoistApiFactory,
             dependencies.settingsManager,
             createTranslator(),
-            dependencies.notificationPresenter,
+            dependencies.notificationService,
             dependencies.browserWindowRegistry,
             dependencies.logger,
         );
@@ -136,7 +136,7 @@ describe(TodoistQuickAddActionHandler, () => {
 
         expect(dependencies.logger.error).toHaveBeenCalledOnce();
 
-        expect(dependencies.notificationPresenter.show).toHaveBeenCalledWith({
+        expect(dependencies.notificationService.show).toHaveBeenCalledWith({
             title: "Todoist",
             body: "Failed to add task.",
         });
@@ -151,7 +151,7 @@ describe(TodoistQuickAddActionHandler, () => {
             dependencies.todoistApiFactory,
             dependencies.settingsManager,
             createTranslator(),
-            dependencies.notificationPresenter,
+            dependencies.notificationService,
             dependencies.browserWindowRegistry,
             dependencies.logger,
         );
@@ -159,7 +159,7 @@ describe(TodoistQuickAddActionHandler, () => {
         await handler.invokeAction(createAction("task"));
 
         expect(dependencies.todoistApiFactory.create).not.toHaveBeenCalled();
-        expect(dependencies.notificationPresenter.show).toHaveBeenCalledWith({
+        expect(dependencies.notificationService.show).toHaveBeenCalledWith({
             title: "Todoist",
             body: "Please configure your API token.",
         });
