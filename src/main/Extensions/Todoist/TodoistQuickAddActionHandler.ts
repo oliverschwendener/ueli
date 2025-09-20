@@ -7,7 +7,7 @@ import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
 import type { NotificationPresenter } from "./TodoistNotificationPresenter";
-import { getTodoistI18nResources, todoistTranslationNamespace } from "./TodoistTranslations";
+import { getTodoistI18nResources } from "./TodoistTranslations";
 
 const QuickAddHandlerId = "TodoistQuickAdd";
 
@@ -32,8 +32,8 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
 
             if (!apiToken) {
                 this.notificationPresenter.show({
-                    title: t("notificationTitle", { ns: todoistTranslationNamespace }),
-                    body: t("missingTokenNotificationBody", { ns: todoistTranslationNamespace }),
+                    title: t("notificationTitle"),
+                    body: t("missingTokenNotificationBody"),
                 });
                 this.hideSearchWindow();
                 return;
@@ -44,8 +44,8 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
                 await todoistApi.quickAddTask({ text });
 
                 this.notificationPresenter.show({
-                    title: t("notificationTitle", { ns: todoistTranslationNamespace }),
-                    body: t("quickAddSuccessNotificationBody", { ns: todoistTranslationNamespace }),
+                    title: t("notificationTitle"),
+                    body: t("quickAddSuccessNotificationBody"),
                 });
                 this.hideSearchWindow();
                 return;
@@ -54,16 +54,16 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
                 this.logger.error(`Todoist quick add failed. Reason: ${message}`);
 
                 this.notificationPresenter.show({
-                    title: t("notificationTitle", { ns: todoistTranslationNamespace }),
-                    body: t("quickAddFailureNotificationBody", { ns: todoistTranslationNamespace }),
+                    title: t("notificationTitle"),
+                    body: t("quickAddFailureNotificationBody"),
                 });
                 this.hideSearchWindow();
             }
         } catch (error) {
             this.logger.error(`Todoist quick add failed. Reason: ${error instanceof Error ? error.message : error}`);
             this.notificationPresenter.show({
-                title: t("notificationTitle", { ns: todoistTranslationNamespace }),
-                body: t("quickAddFailureNotificationBody", { ns: todoistTranslationNamespace }),
+                title: t("notificationTitle"),
+                body: t("quickAddFailureNotificationBody"),
             });
             this.hideSearchWindow();
         }
