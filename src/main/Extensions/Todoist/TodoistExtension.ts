@@ -138,13 +138,13 @@ export class TodoistExtension implements Extension {
         return {
             id: "todoist-quick-add",
             name: body,
-            description: t("quickAddDescription", { ns: todoistTranslationNamespace }),
+            description: t("quickAddDescription"),
             image: this.image,
             details: prefixPart + body,
             defaultAction: {
                 handlerId: QuickAddHandlerId,
                 argument: JSON.stringify({ text: body }),
-                description: t("quickAddDescription", { ns: todoistTranslationNamespace }),
+                description: t("quickAddDescription"),
                 descriptionTranslation: {
                     key: "quickAddDescription",
                     namespace: todoistTranslationNamespace,
@@ -246,12 +246,12 @@ export class TodoistExtension implements Extension {
         return {
             id,
             name: nameOverride ?? token,
-            description: t(descriptionKey, { ns: todoistTranslationNamespace }),
+            description: t(descriptionKey),
             image: this.image,
             defaultAction: {
                 handlerId: SetSearchTermHandlerId,
                 argument: JSON.stringify({ newSearchTerm }),
-                description: t("applySuggestionDescription", { ns: todoistTranslationNamespace }),
+                description: t("applySuggestionDescription"),
                 descriptionTranslation: {
                     key: "applySuggestionDescription",
                     namespace: todoistTranslationNamespace,
