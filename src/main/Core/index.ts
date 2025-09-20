@@ -29,6 +29,7 @@ export * from "./IniFileParser";
 export * from "./LinuxDesktopEnvironment";
 export * from "./Logger";
 export * from "./ModuleRegistry";
+export * from "./Notification";
 export * from "./NativeTheme";
 export * from "./OperatingSystem";
 export * from "./PowershellUtility";

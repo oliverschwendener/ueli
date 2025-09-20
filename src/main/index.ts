@@ -18,7 +18,7 @@ if (!app.requestSingleInstanceLock()) {
         safeStorage,
         screen,
         shell,
-        systemPreferences,
+        systemPreferences
     } = await import("electron");
 
     const { default: mitt } = await import("mitt");
@@ -58,6 +58,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.BrowserWindowNotifierModule.bootstrap(moduleRegistry);
     Core.DateProviderModule.bootstrap(moduleRegistry);
     Core.LoggerModule.bootstrap(moduleRegistry);
+    Core.NotificationModule.bootstrap(moduleRegistry);
     Core.ActionHandlerModule.bootstrap(moduleRegistry);
     Core.RandomStringProviderModule.bootstrap(moduleRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(moduleRegistry);
