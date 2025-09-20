@@ -1,5 +1,11 @@
 import { app } from "electron";
 
+const WINDOWS_APP_USER_MODEL_ID = "OliverSchwendener.Ueli";
+
+if (process.platform === "win32") {
+    app.setAppUserModelId(WINDOWS_APP_USER_MODEL_ID);
+}
+
 if (!app.requestSingleInstanceLock()) {
     console.log("Quitting application. Reason: another instance is already running");
     app.exit();
