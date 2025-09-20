@@ -6,7 +6,7 @@ import type { Translator } from "@Core/Translator";
 import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
-import type { NotificationPresenter } from "./TodoistNotificationPresenter";
+import type { NotificationService } from "@Core/Notification";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
 const QuickAddHandlerId = "TodoistQuickAdd";
@@ -18,7 +18,7 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
         private readonly todoistApiFactory: TodoistApiFactory,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
-        private readonly notificationPresenter: NotificationPresenter,
+        private readonly notificationService: NotificationService,
         private readonly browserWindowRegistry: BrowserWindowRegistry,
         private readonly logger: Logger,
     ) {}
@@ -31,7 +31,7 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
             const apiToken = this.getApiToken();
 
             if (!apiToken) {
-                this.notificationPresenter.show({
+                this.notificationService.show({
                     title: t("notificationTitle"),
                     body: t("missingTokenNotificationBody"),
                 });
@@ -43,7 +43,7 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
                 const todoistApi = this.todoistApiFactory.create(apiToken);
                 await todoistApi.quickAddTask({ text });
 
-                this.notificationPresenter.show({
+                this.notificationService.show({
                     title: t("notificationTitle"),
                     body: t("quickAddSuccessNotificationBody"),
                 });
@@ -53,7 +53,7 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
                 const message = error instanceof Error ? error.message : String(error);
                 this.logger.error(`Todoist quick add failed. Reason: ${message}`);
 
-                this.notificationPresenter.show({
+                this.notificationService.show({
                     title: t("notificationTitle"),
                     body: t("quickAddFailureNotificationBody"),
                 });
@@ -61,7 +61,7 @@ export class TodoistQuickAddActionHandler implements ActionHandler {
             }
         } catch (error) {
             this.logger.error(`Todoist quick add failed. Reason: ${error instanceof Error ? error.message : error}`);
-            this.notificationPresenter.show({
+            this.notificationService.show({
                 title: t("notificationTitle"),
                 body: t("quickAddFailureNotificationBody"),
             });

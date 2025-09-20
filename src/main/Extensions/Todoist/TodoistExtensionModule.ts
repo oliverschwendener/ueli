@@ -3,7 +3,6 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { DefaultTodoistApiFactory } from "./TodoistApiFactory";
 import { TodoistExtension } from "./TodoistExtension";
-import { ElectronNotificationPresenter } from "./TodoistNotificationPresenter";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
 import { TodoistSetSearchTermActionHandler } from "./TodoistSetSearchTermActionHandler";
 
@@ -16,6 +15,7 @@ export class TodoistExtensionModule implements ExtensionModule {
         const logger = moduleRegistry.get("Logger");
         const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
         const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
+        const notificationService = moduleRegistry.get("NotificationService");
         const todoistApiFactory = new DefaultTodoistApiFactory();
 
         const extension = new TodoistExtension(
@@ -34,7 +34,7 @@ export class TodoistExtensionModule implements ExtensionModule {
                     todoistApiFactory,
                     settingsManager,
                     translator,
-                    new ElectronNotificationPresenter(),
+                    notificationService,
                     browserWindowRegistry,
                     logger,
                 ),
