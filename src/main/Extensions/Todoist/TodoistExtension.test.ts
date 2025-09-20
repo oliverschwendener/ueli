@@ -4,8 +4,8 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { TodoistExtension } from "./TodoistExtension";
 import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
+import { TodoistExtension } from "./TodoistExtension";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
 const resources = getTodoistI18nResources();

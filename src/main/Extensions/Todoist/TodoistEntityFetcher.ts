@@ -27,7 +27,6 @@ export class TodoistEntityFetcher<T> {
         const seenCursors = new Set<string>();
         let cursor: string | undefined;
 
-        // eslint-disable-next-line no-constant-condition
         while (true) {
             const params: FetchPageParams = { limit: normalizedPageSize };
 

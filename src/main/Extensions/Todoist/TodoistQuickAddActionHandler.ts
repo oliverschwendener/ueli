@@ -5,8 +5,8 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { NotificationPresenter } from "./TodoistNotificationPresenter";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
+import type { NotificationPresenter } from "./TodoistNotificationPresenter";
 import { getTodoistI18nResources, todoistTranslationNamespace } from "./TodoistTranslations";
 
 const QuickAddHandlerId = "TodoistQuickAdd";

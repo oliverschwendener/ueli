@@ -26,7 +26,12 @@ describe(TodoistEntityFetcher, () => {
     it("collects multiple pages", async () => {
         type TestEntity = { id: string };
         const fetchPage = vi
-            .fn<(params: { limit: number; cursor?: string | null }) => Promise<{ results: TestEntity[]; nextCursor: string | null }>>()
+            .fn<
+                (params: {
+                    limit: number;
+                    cursor?: string | null;
+                }) => Promise<{ results: TestEntity[]; nextCursor: string | null }>
+            >()
             .mockResolvedValueOnce({
                 results: [{ id: "1" }],
                 nextCursor: "cursor-1",
@@ -48,7 +53,12 @@ describe(TodoistEntityFetcher, () => {
 
     it("warns and stops when cursor loops", async () => {
         const fetchPage = vi
-            .fn<(params: { limit: number; cursor?: string | null }) => Promise<{ results: { id: string }[]; nextCursor: string | null }>>()
+            .fn<
+                (params: {
+                    limit: number;
+                    cursor?: string | null;
+                }) => Promise<{ results: { id: string }[]; nextCursor: string | null }>
+            >()
             .mockResolvedValue({
                 results: [],
                 nextCursor: "cursor-1",

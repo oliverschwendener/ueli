@@ -4,9 +4,9 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { BrowserWindow } from "electron";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
 import type { NotificationPresenter } from "./TodoistNotificationPresenter";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
-import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
 const resources = getTodoistI18nResources();

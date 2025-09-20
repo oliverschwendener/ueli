@@ -8,11 +8,11 @@ import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
+import type { TodoistApiFactory } from "./TodoistApiFactory";
+import { TodoistEntityFetcher } from "./TodoistEntityFetcher";
 import { QuickAddHandlerId } from "./TodoistQuickAddActionHandler";
 import { SetSearchTermHandlerId } from "./TodoistSetSearchTermActionHandler";
 import { getTodoistI18nResources, todoistTranslationNamespace } from "./TodoistTranslations";
-import type { TodoistApiFactory } from "./TodoistApiFactory";
-import { TodoistEntityFetcher } from "./TodoistEntityFetcher";
 const CacheRefreshIntervalInMs = 5 * 60 * 1000;
 const TodoistApiPageSize = 100;
 
@@ -366,7 +366,9 @@ export class TodoistExtension implements Extension {
             const api = this.todoistApiFactory.create(apiToken);
             const [labels, projects] = await Promise.all([
                 new TodoistEntityFetcher(api.getLabels.bind(api), this.logger, "labels").fetchAll(TodoistApiPageSize),
-                new TodoistEntityFetcher(api.getProjects.bind(api), this.logger, "projects").fetchAll(TodoistApiPageSize),
+                new TodoistEntityFetcher(api.getProjects.bind(api), this.logger, "projects").fetchAll(
+                    TodoistApiPageSize,
+                ),
             ]);
 
             this.labels = TodoistExtension.mapEntities(labels);
