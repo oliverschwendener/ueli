@@ -1,9 +1,9 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
+import { DefaultTodoistApiFactory } from "./TodoistApiFactory";
 import { TodoistExtension } from "./TodoistExtension";
 import { ElectronNotificationPresenter } from "./TodoistNotificationPresenter";
-import { DefaultTodoistApiFactory } from "./TodoistApiFactory";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
 import { TodoistSetSearchTermActionHandler } from "./TodoistSetSearchTermActionHandler";
 
