@@ -197,13 +197,14 @@ export class TodoistExtension implements Extension {
                 );
         }
 
-        const priorities = ["!1", "!2", "!3", "!4"]
+        const priorities = ["p1", "p2", "p3", "p4"]
             .filter((priority) => {
                 if (trigger.fragment.length === 0) {
                     return true;
                 }
 
-                const searchable = `${priority}${priority.replace("!", "p")}`;
+                const priorityNumber = priority.slice(1);
+                const searchable = `${priority}${priorityNumber}`;
                 return searchable.toLowerCase().includes(trigger.fragment.toLowerCase());
             })
             .slice(0, suggestionLimit);

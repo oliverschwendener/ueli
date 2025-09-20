@@ -168,8 +168,8 @@ describe(TodoistExtension, () => {
         const result = extension.getInstantSearchResultItems("todo schedule !p");
 
         expect(result.after).toHaveLength(4);
-        expect(result.after[0]?.name).toBe("!1");
-        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo schedule !1 " }));
+        expect(result.after[0]?.name).toBe("p1");
+        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo schedule p1 " }));
     });
 
     it("shows priority candidates when bang only", () => {
@@ -177,7 +177,7 @@ describe(TodoistExtension, () => {
 
         const result = extension.getInstantSearchResultItems("todo schedule !");
 
-        expect(result.after.map((item) => item?.name)).toEqual(["!1", "!2", "!3", "!4"]);
+        expect(result.after.map((item) => item?.name)).toEqual(["p1", "p2", "p3", "p4"]);
     });
 
     it("builds search term correctly with uppercase prefix", () => {
