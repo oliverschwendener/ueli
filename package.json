@@ -55,6 +55,7 @@
         "vitest": "^3.2.4"
     },
     "dependencies": {
+        "@doist/todoist-api-typescript": "^5.5.0",
         "@fluentui/react-components": "^9.72.2",
         "@fluentui/react-icons": "^2.0.312",
         "better-sqlite3": "^12.4.1",
