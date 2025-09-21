@@ -1,5 +1,11 @@
 import { app } from "electron";
 
+const WINDOWS_APP_USER_MODEL_ID = "OliverSchwendener.Ueli";
+
+if (process.platform === "win32") {
+    app.setAppUserModelId(WINDOWS_APP_USER_MODEL_ID);
+}
+
 if (!app.requestSingleInstanceLock()) {
     console.log("Quitting application. Reason: another instance is already running");
     app.exit();
@@ -58,11 +64,11 @@ if (!app.requestSingleInstanceLock()) {
     Core.BrowserWindowNotifierModule.bootstrap(moduleRegistry);
     Core.DateProviderModule.bootstrap(moduleRegistry);
     Core.LoggerModule.bootstrap(moduleRegistry);
-    Core.NotificationModule.bootstrap(moduleRegistry);
     Core.ActionHandlerModule.bootstrap(moduleRegistry);
     Core.RandomStringProviderModule.bootstrap(moduleRegistry);
     Core.SafeStorageEncryptionModule.bootstrap(moduleRegistry);
     Core.AssetPathResolverModule.bootstrap(moduleRegistry);
+    Core.NotificationModule.bootstrap(moduleRegistry);
     Core.ClipboardModule.bootstrap(moduleRegistry);
     Core.AboutUeliModule.bootstrap(moduleRegistry);
     Core.CommandlineUtilityModule.bootstrap(moduleRegistry);
