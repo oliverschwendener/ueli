@@ -18,7 +18,7 @@ if (!app.requestSingleInstanceLock()) {
         safeStorage,
         screen,
         shell,
-        systemPreferences
+        systemPreferences,
     } = await import("electron");
 
     const { default: mitt } = await import("mitt");

@@ -1,12 +1,12 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
+import type { NotificationService } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
-import type { NotificationService } from "@Core/Notification";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
 const QuickAddHandlerId = "TodoistQuickAdd";

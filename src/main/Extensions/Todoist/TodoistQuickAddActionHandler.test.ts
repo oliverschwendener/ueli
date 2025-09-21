@@ -1,11 +1,11 @@
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
+import type { NotificationService } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { BrowserWindow } from "electron";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
-import type { NotificationService } from "@Core/Notification";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
 import { getTodoistI18nResources } from "./TodoistTranslations";
 
