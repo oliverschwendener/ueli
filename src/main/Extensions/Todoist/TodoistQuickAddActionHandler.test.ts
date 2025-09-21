@@ -65,6 +65,8 @@ describe(TodoistQuickAddActionHandler, () => {
             quickAddTask: vi.fn(quickAddTaskImplementation),
             getLabels: vi.fn(),
             getProjects: vi.fn(),
+            getTasksByFilter: vi.fn(),
+            getTasks: vi.fn(),
         };
 
         const todoistApiFactory: TodoistApiFactory = {

@@ -3,7 +3,9 @@ import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { DefaultTodoistApiFactory } from "./TodoistApiFactory";
 import { TodoistExtension } from "./TodoistExtension";
+import { TodoistOpenTaskActionHandler } from "./TodoistOpenTaskActionHandler";
 import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
+import { TodoistRefreshCachesActionHandler } from "./TodoistRefreshCachesActionHandler";
 import { TodoistSetSearchTermActionHandler } from "./TodoistSetSearchTermActionHandler";
 
 export class TodoistExtensionModule implements ExtensionModule {
@@ -16,6 +18,7 @@ export class TodoistExtensionModule implements ExtensionModule {
         const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
         const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
         const notificationService = moduleRegistry.get("NotificationService");
+        const shell = moduleRegistry.get("Shell");
         const todoistApiFactory = new DefaultTodoistApiFactory();
 
         const extension = new TodoistExtension(
@@ -25,6 +28,7 @@ export class TodoistExtensionModule implements ExtensionModule {
             taskScheduler,
             todoistApiFactory,
             logger,
+            browserWindowNotifier,
         );
 
         return {
@@ -39,6 +43,15 @@ export class TodoistExtensionModule implements ExtensionModule {
                     logger,
                 ),
                 new TodoistSetSearchTermActionHandler(browserWindowNotifier),
+                new TodoistOpenTaskActionHandler(
+                    shell,
+                    settingsManager,
+                    translator,
+                    browserWindowRegistry,
+                    logger,
+                    (issue) => extension.reportTaskOpenIssue(issue),
+                ),
+                new TodoistRefreshCachesActionHandler((searchTerm) => extension.reloadTasks(searchTerm), logger),
             ],
         };
     }

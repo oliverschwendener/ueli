@@ -75,4 +75,26 @@ describe(TodoistEntityFetcher, () => {
             "TodoistEntityFetcher detected a cursor loop while fetching labels. Last cursor: cursor-1",
         );
     });
+
+    it("respects max results option", async () => {
+        const fetchPage = vi
+            .fn<
+                (params: {
+                    limit: number;
+                    cursor?: string | null;
+                }) => Promise<{ results: { id: string }[]; nextCursor: string | null }>
+            >()
+            .mockResolvedValueOnce({
+                results: [{ id: "1" }],
+                nextCursor: "cursor-1",
+            });
+
+        const fetcher = new TodoistEntityFetcher<{ id: string }>(fetchPage, createLogger(), "tasks");
+
+        const results = await fetcher.fetchAll(10, { maxResults: 1 });
+
+        expect(results).toHaveLength(1);
+        expect(fetchPage).toHaveBeenCalledTimes(1);
+        expect(fetchPage).toHaveBeenCalledWith({ limit: 10 });
+    });
 });

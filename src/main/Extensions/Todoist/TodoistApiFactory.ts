@@ -1,6 +1,9 @@
 import { TodoistApi } from "@doist/todoist-api-typescript";
 
-export type TodoistApiClient = Pick<TodoistApi, "quickAddTask" | "getLabels" | "getProjects">;
+export type TodoistApiClient = Pick<
+    TodoistApi,
+    "quickAddTask" | "getLabels" | "getProjects" | "getTasks" | "getTasksByFilter"
+>;
 
 export interface TodoistApiFactory {
     create(apiToken: string): TodoistApiClient;

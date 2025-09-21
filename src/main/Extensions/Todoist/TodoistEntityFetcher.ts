@@ -21,7 +21,7 @@ export class TodoistEntityFetcher<T> {
         private readonly entityType: string,
     ) {}
 
-    public async fetchAll(pageSize?: number): Promise<T[]> {
+    public async fetchAll(pageSize?: number, options?: { maxResults?: number }): Promise<T[]> {
         const normalizedPageSize = TodoistEntityFetcher.normalizePageSize(pageSize);
         const aggregated: T[] = [];
         const seenCursors = new Set<string>();
@@ -37,6 +37,11 @@ export class TodoistEntityFetcher<T> {
             const { results, nextCursor } = await this.fetchPage(params);
 
             aggregated.push(...results);
+
+            if (options?.maxResults && aggregated.length >= options.maxResults) {
+                aggregated.length = options.maxResults;
+                break;
+            }
 
             if (!nextCursor) {
                 break;

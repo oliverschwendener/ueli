@@ -1,5 +1,9 @@
 export type Settings = {
-    prefix: string;
+    quickAddPrefix: string;
+    taskListPrefix: string;
     suggestionLimit: number;
+    taskListLimit: number;
+    taskOpenTarget: "browser" | "desktopApp";
+    taskFilter: string;
     apiToken: string;
 };
