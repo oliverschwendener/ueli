@@ -5,12 +5,14 @@ export interface NotificationService {
 }
 
 export class ElectronNotificationService implements NotificationService {
+    public constructor(private readonly icon: string) {}
+
     public show({ title, body }: { title: string; body: string }): void {
         if (!Notification.isSupported()) {
             return;
         }
 
-        const notification = new Notification({ title, body });
+        const notification = new Notification({ title, body, icon: this.icon });
         notification.show();
     }
 }

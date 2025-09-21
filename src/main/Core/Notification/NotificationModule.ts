@@ -3,6 +3,10 @@ import { ElectronNotificationService } from "./NotificationService";
 
 export class NotificationModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
-        moduleRegistry.register("NotificationService", new ElectronNotificationService());
+        const assetPathResolver = moduleRegistry.get("AssetPathResolver");
+        moduleRegistry.register(
+            "NotificationService",
+            new ElectronNotificationService(assetPathResolver.getModuleAssetPath("Notification", "icon.png")),
+        );
     }
 }
