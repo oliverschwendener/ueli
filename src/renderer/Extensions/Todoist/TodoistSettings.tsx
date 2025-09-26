@@ -128,6 +128,7 @@ export const TodoistSettings = () => {
                     label={t("taskOpenTarget")}
                     control={
                         <Dropdown
+                            value={t(`taskOpenTarget.${selectedTaskOpenTarget}`)}
                             selectedOptions={[selectedTaskOpenTarget]}
                             onOptionSelect={(_, data) => {
                                 const option = data.optionValue as "browser" | "desktopApp" | undefined;
