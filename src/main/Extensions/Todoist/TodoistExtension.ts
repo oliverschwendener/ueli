@@ -8,7 +8,7 @@ import type { Extension } from "@Core/Extension";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
-import type { Translator } from "@Core/Translator";
+import type { TFunction, Translator } from "@Core/Translator";
 import type { Task } from "@doist/todoist-api-typescript";
 import { TodoistRequestError } from "@doist/todoist-api-typescript";
 import type { TodoistApiFactory } from "./TodoistApiFactory";
@@ -284,7 +284,7 @@ export class TodoistExtension implements Extension {
         prefixPart,
     }: {
         body: string;
-        t: ReturnType<Translator["createT"]>["t"];
+        t: TFunction;
         prefixPart: string;
     }): SearchResultItem {
         return {
@@ -313,7 +313,7 @@ export class TodoistExtension implements Extension {
     }: {
         trigger: Trigger;
         prefixPart: string;
-        t: ReturnType<Translator["createT"]>["t"];
+        t: TFunction;
     }): SearchResultItem[] {
         const suggestionLimit = this.getSuggestionLimit();
 
@@ -778,7 +778,7 @@ export class TodoistExtension implements Extension {
         });
     }
 
-    private createTaskReloadItem(searchTerm: string, t: ReturnType<Translator["createT"]>["t"]): SearchResultItem {
+    private createTaskReloadItem(searchTerm: string, t: TFunction): SearchResultItem {
         return {
             id: "todoist-task-reload",
             name: t("reloadTasks"),
@@ -796,7 +796,7 @@ export class TodoistExtension implements Extension {
         };
     }
 
-    private createTaskLoadingItem(t: ReturnType<Translator["createT"]>["t"], searchTerm: string): SearchResultItem {
+    private createTaskLoadingItem(t: TFunction, searchTerm: string): SearchResultItem {
         return {
             id: "todoist-task-loading",
             name: t("loadingTasks"),
@@ -814,11 +814,7 @@ export class TodoistExtension implements Extension {
         };
     }
 
-    private createTaskErrorItem(
-        message: string,
-        searchTerm: string,
-        t: ReturnType<Translator["createT"]>["t"],
-    ): SearchResultItem {
+    private createTaskErrorItem(message: string, searchTerm: string, t: TFunction): SearchResultItem {
         return {
             id: `todoist-task-error-${Date.now()}`,
             name: message,
@@ -836,7 +832,7 @@ export class TodoistExtension implements Extension {
         };
     }
 
-    private createMissingTokenItem(t: ReturnType<Translator["createT"]>["t"], searchTerm: string): SearchResultItem {
+    private createMissingTokenItem(t: TFunction, searchTerm: string): SearchResultItem {
         return {
             id: "todoist-task-missing-token",
             name: t("missingTokenTaskList"),
@@ -854,7 +850,7 @@ export class TodoistExtension implements Extension {
         };
     }
 
-    private createTaskEmptyItem(t: ReturnType<Translator["createT"]>["t"], searchTerm: string): SearchResultItem {
+    private createTaskEmptyItem(t: TFunction, searchTerm: string): SearchResultItem {
         return {
             id: "todoist-task-empty",
             name: t("taskListEmpty"),
@@ -881,7 +877,7 @@ export class TodoistExtension implements Extension {
         task: Task;
         searchTerm: string;
         defaultTarget: TaskOpenTarget;
-        t: ReturnType<Translator["createT"]>["t"];
+        t: TFunction;
     }): SearchResultItem {
         const desktopUrl = `todoist://task?id=${task.id}`;
         const defaultActionKey = (() => {
