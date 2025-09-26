@@ -25,11 +25,10 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
     ) {}
 
     public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        const { taskId, webUrl, desktopUrl, overrideTarget, searchTerm } = this.parseArgument(action.argument);
+        const { taskId, webUrl, desktopUrl, searchTerm } = this.parseArgument(action.argument);
         const { t } = this.translator.createT(getTodoistI18nResources());
 
-        const defaultTarget = this.getTaskOpenTarget();
-        const target = overrideTarget ?? defaultTarget;
+        const target = this.getTaskOpenTarget();
 
         try {
             if (target === "browser") {
@@ -72,14 +71,12 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
         taskId: string;
         webUrl: string;
         desktopUrl: string;
-        overrideTarget?: "browser" | "desktopApp";
         searchTerm: string;
     } {
         const parsed = JSON.parse(argument) as {
             taskId?: unknown;
             webUrl?: unknown;
             desktopUrl?: unknown;
-            overrideTarget?: unknown;
             searchTerm?: unknown;
         };
 
@@ -103,17 +100,10 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
             throw new Error("Todoist open task action requires a searchTerm string argument.");
         }
 
-        let overrideTarget: "browser" | "desktopApp" | undefined;
-
-        if (parsed.overrideTarget === "browser" || parsed.overrideTarget === "desktopApp") {
-            overrideTarget = parsed.overrideTarget;
-        }
-
         return {
             taskId: parsed.taskId,
             webUrl: parsed.webUrl,
             desktopUrl: parsed.desktopUrl,
-            overrideTarget,
             searchTerm: parsed.searchTerm,
         };
     }

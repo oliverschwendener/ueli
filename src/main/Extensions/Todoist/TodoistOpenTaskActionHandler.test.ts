@@ -83,13 +83,12 @@ describe(TodoistOpenTaskActionHandler, () => {
         };
     };
 
-    const createAction = (override?: Partial<{ overrideTarget: "browser" | "desktopApp" }>) => ({
+    const createAction = () => ({
         argument: JSON.stringify({
             taskId: "task-1",
             webUrl: "https://app.todoist.com/app/task/1",
             desktopUrl: "todoist://task?id=1",
             searchTerm: "tdl",
-            ...override,
         }),
         description: "",
         handlerId: "",

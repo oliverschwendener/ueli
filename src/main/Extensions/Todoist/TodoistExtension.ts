@@ -266,10 +266,9 @@ export class TodoistExtension implements Extension {
         }
 
         const defaultTarget = this.getTaskOpenTarget();
-        const alternateTarget = defaultTarget === "browser" ? "desktopApp" : "browser";
 
         for (const task of filteredTasks) {
-            afterItems.push(this.createTaskSearchResultItem({ task, searchTerm, defaultTarget, alternateTarget, t }));
+            afterItems.push(this.createTaskSearchResultItem({ task, searchTerm, defaultTarget, t }));
         }
 
         if (isLoading && this.tasks.length > 0) {
@@ -877,32 +876,21 @@ export class TodoistExtension implements Extension {
         task,
         searchTerm,
         defaultTarget,
-        alternateTarget,
         t,
     }: {
         task: Task;
         searchTerm: string;
         defaultTarget: "browser" | "desktopApp";
-        alternateTarget: "browser" | "desktopApp";
         t: ReturnType<Translator["createT"]>["t"];
     }): SearchResultItem {
         const desktopUrl = `todoist://task?id=${task.id}`;
         const defaultActionKey = defaultTarget === "browser" ? "openInBrowser" : "openInDesktopApp";
-        const alternateActionKey = alternateTarget === "browser" ? "openInBrowser" : "openInDesktopApp";
 
         const defaultActionArgument = JSON.stringify({
             taskId: task.id,
             webUrl: task.url,
             desktopUrl,
             searchTerm,
-        });
-
-        const alternateActionArgument = JSON.stringify({
-            taskId: task.id,
-            webUrl: task.url,
-            desktopUrl,
-            searchTerm,
-            overrideTarget: alternateTarget,
         });
 
         return {
@@ -923,18 +911,6 @@ export class TodoistExtension implements Extension {
                     namespace: todoistTranslationNamespace,
                 },
             },
-            additionalActions: [
-                {
-                    handlerId: TodoistOpenTaskHandlerId,
-                    argument: alternateActionArgument,
-                    description: t(alternateActionKey),
-                    descriptionTranslation: {
-                        key: alternateActionKey,
-                        namespace: todoistTranslationNamespace,
-                    },
-                    keyboardShortcut: t("openInAlternateTargetShortcut"),
-                },
-            ],
         };
     }
 
