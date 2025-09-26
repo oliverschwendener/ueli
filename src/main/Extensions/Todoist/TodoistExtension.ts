@@ -1,7 +1,7 @@
 import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { Settings } from "@common/Extensions/Todoist";
+import type { Settings, TaskOpenTarget } from "@common/Extensions/Todoist";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Extension } from "@Core/Extension";
@@ -458,7 +458,7 @@ export class TodoistExtension implements Extension {
         return Math.floor(value);
     }
 
-    private getTaskOpenTarget(): "browser" | "desktopApp" {
+    private getTaskOpenTarget(): TaskOpenTarget {
         const value = this.settingsManager.getValue<Settings["taskOpenTarget"]>(
             getExtensionSettingKey(this.id, "taskOpenTarget"),
             this.defaultSettings.taskOpenTarget,
@@ -880,11 +880,22 @@ export class TodoistExtension implements Extension {
     }: {
         task: Task;
         searchTerm: string;
-        defaultTarget: "browser" | "desktopApp";
+        defaultTarget: TaskOpenTarget;
         t: ReturnType<Translator["createT"]>["t"];
     }): SearchResultItem {
         const desktopUrl = `todoist://task?id=${task.id}`;
-        const defaultActionKey = defaultTarget === "browser" ? "openInBrowser" : "openInDesktopApp";
+        const defaultActionKey = (() => {
+            switch (defaultTarget) {
+                case "desktopApp":
+                    return "openInDesktopApp" as const;
+                case "browser":
+                    return "openInBrowser" as const;
+                default: {
+                    defaultTarget satisfies never;
+                    throw new Error(`Unsupported Todoist task open target: ${defaultTarget}`);
+                }
+            }
+        })();
 
         const defaultActionArgument = JSON.stringify({
             taskId: task.id,

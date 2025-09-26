@@ -1,1 +1,1 @@
-export type { Settings } from "./Settings";
+export type { Settings, TaskOpenTarget } from "./Settings";

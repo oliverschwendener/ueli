@@ -1,3 +1,4 @@
+import type { TaskOpenTarget } from "@common/Extensions/Todoist";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
@@ -31,7 +32,7 @@ export const TodoistSettings = () => {
         key: "taskListLimit",
     });
 
-    const { value: taskOpenTarget, updateValue: setTaskOpenTarget } = useExtensionSetting<"browser" | "desktopApp">({
+    const { value: taskOpenTarget, updateValue: setTaskOpenTarget } = useExtensionSetting<TaskOpenTarget>({
         extensionId,
         key: "taskOpenTarget",
     });
@@ -71,7 +72,7 @@ export const TodoistSettings = () => {
         idle: undefined,
     };
 
-    const selectedTaskOpenTarget = taskOpenTarget ?? "browser";
+    const selectedTaskOpenTarget: TaskOpenTarget = taskOpenTarget ?? "browser";
 
     return (
         <SettingGroupList>
@@ -131,7 +132,7 @@ export const TodoistSettings = () => {
                             value={t(`taskOpenTarget.${selectedTaskOpenTarget}`)}
                             selectedOptions={[selectedTaskOpenTarget]}
                             onOptionSelect={(_, data) => {
-                                const option = data.optionValue as "browser" | "desktopApp" | undefined;
+                                const option = data.optionValue as TaskOpenTarget | undefined;
 
                                 if (option) {
                                     void setTaskOpenTarget(option);

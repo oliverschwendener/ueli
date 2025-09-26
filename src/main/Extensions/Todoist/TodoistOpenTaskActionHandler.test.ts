@@ -1,3 +1,4 @@
+import type { TaskOpenTarget } from "@common/Extensions/Todoist";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
@@ -29,8 +30,11 @@ const createBrowserWindow = () => {
 
 describe(TodoistOpenTaskActionHandler, () => {
     const createDependencies = ({
-        taskOpenTarget = "browser" as "browser" | "desktopApp",
+        taskOpenTarget = "browser" as TaskOpenTarget,
         openExternalImplementations = [vi.fn().mockResolvedValue(undefined)],
+    }: {
+        taskOpenTarget?: TaskOpenTarget;
+        openExternalImplementations?: Array<(url: string, index: number) => unknown>;
     } = {}) => {
         const settings = new Map<string, unknown>([["extension[Todoist].taskOpenTarget", taskOpenTarget]]);
 

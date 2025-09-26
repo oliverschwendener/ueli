@@ -1,5 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { TaskOpenTarget } from "@common/Extensions/Todoist";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
@@ -31,34 +32,47 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
         const target = this.getTaskOpenTarget();
 
         try {
-            if (target === "browser") {
-                await this.openExternalWithTimeout(webUrl);
-                this.hideSearchWindow();
-                return;
-            }
-
-            try {
-                await this.openExternalWithTimeout(desktopUrl);
-                this.hideSearchWindow();
-            } catch (desktopError) {
-                const desktopMessage = desktopError instanceof Error ? desktopError.message : String(desktopError);
-                this.logger.warn(`Opening Todoist desktop task failed for ${taskId}. Reason: ${desktopMessage}`);
-
-                try {
+            switch (target) {
+                case "browser": {
                     await this.openExternalWithTimeout(webUrl);
-                    this.reportTaskOpenIssue({
-                        searchTerm,
-                        message: t("desktopOpenFailedFallback"),
-                    });
-                } catch (browserError) {
-                    const browserMessage = browserError instanceof Error ? browserError.message : String(browserError);
-                    this.logger.error(
-                        `Fallback to browser for Todoist task ${taskId} failed. Reason: ${browserMessage}`,
-                    );
-                    this.reportTaskOpenIssue({
-                        searchTerm,
-                        message: t("desktopOpenFailed"),
-                    });
+                    this.hideSearchWindow();
+                    return;
+                }
+                case "desktopApp": {
+                    try {
+                        await this.openExternalWithTimeout(desktopUrl);
+                        this.hideSearchWindow();
+                    } catch (desktopError) {
+                        const desktopMessage =
+                            desktopError instanceof Error ? desktopError.message : String(desktopError);
+                        this.logger.warn(
+                            `Opening Todoist desktop task failed for ${taskId}. Reason: ${desktopMessage}`,
+                        );
+
+                        try {
+                            await this.openExternalWithTimeout(webUrl);
+                            this.reportTaskOpenIssue({
+                                searchTerm,
+                                message: t("desktopOpenFailedFallback"),
+                            });
+                        } catch (browserError) {
+                            const browserMessage =
+                                browserError instanceof Error ? browserError.message : String(browserError);
+                            this.logger.error(
+                                `Fallback to browser for Todoist task ${taskId} failed. Reason: ${browserMessage}`,
+                            );
+                            this.reportTaskOpenIssue({
+                                searchTerm,
+                                message: t("desktopOpenFailed"),
+                            });
+                        }
+                    }
+
+                    return;
+                }
+                default: {
+                    const exhaustiveCheck: never = target;
+                    throw new Error(`Unsupported Todoist task open target: ${exhaustiveCheck}`);
                 }
             }
         } catch (error) {
@@ -108,8 +122,8 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
         };
     }
 
-    private getTaskOpenTarget(): "browser" | "desktopApp" {
-        const value = this.settingsManager.getValue<"browser" | "desktopApp">(
+    private getTaskOpenTarget(): TaskOpenTarget {
+        const value = this.settingsManager.getValue<TaskOpenTarget>(
             getExtensionSettingKey("Todoist", "taskOpenTarget"),
             "browser",
         );
