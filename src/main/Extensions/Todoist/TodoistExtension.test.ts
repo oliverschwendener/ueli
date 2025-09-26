@@ -6,7 +6,7 @@ import type { Translator } from "@Core/Translator";
 import type { Task } from "@doist/todoist-api-typescript";
 import { TodoistRequestError } from "@doist/todoist-api-typescript";
 import type { Mock } from "vitest";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
 import { TodoistExtension } from "./TodoistExtension";
 import { getTodoistI18nResources } from "./TodoistTranslations";
@@ -33,6 +33,15 @@ const createTranslator = (): Translator => ({
 });
 
 describe(TodoistExtension, () => {
+    beforeEach(() => {
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+    });
+
     const setup = ({
         quickAddPrefix = "todo",
         taskListPrefix = "tdl",
