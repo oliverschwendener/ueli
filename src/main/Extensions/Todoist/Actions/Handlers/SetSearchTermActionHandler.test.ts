@@ -1,6 +1,6 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import { describe, expect, it, vi } from "vitest";
-import { TodoistSetSearchTermActionHandler } from "./TodoistSetSearchTermActionHandler";
+import { TodoistSetSearchTermActionHandler } from "./SetSearchTermActionHandler";
 
 const createAction = (newSearchTerm: unknown) => ({
     argument: JSON.stringify({ newSearchTerm }),

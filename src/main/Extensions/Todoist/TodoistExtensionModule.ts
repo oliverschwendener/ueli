@@ -1,12 +1,20 @@
+import type { Image } from "@common/Core/Image";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
-import { DefaultTodoistApiFactory } from "./TodoistApiFactory";
+import {
+    TodoistActionManager,
+    TodoistOpenTaskActionHandler,
+    TodoistQuickAddActionHandler,
+    TodoistRefreshCachesActionHandler,
+    TodoistSetSearchTermActionHandler,
+} from "./Actions";
+import { TodoistCacheManager } from "./Caching";
+import { TodoistQuickAddProvider, TodoistTaskListProvider } from "./Search";
+import { DefaultTodoistApiFactory } from "./Shared";
 import { TodoistExtension } from "./TodoistExtension";
-import { TodoistOpenTaskActionHandler } from "./TodoistOpenTaskActionHandler";
-import { TodoistQuickAddActionHandler } from "./TodoistQuickAddActionHandler";
-import { TodoistRefreshCachesActionHandler } from "./TodoistRefreshCachesActionHandler";
-import { TodoistSetSearchTermActionHandler } from "./TodoistSetSearchTermActionHandler";
+
+const TodoistExtensionId = "Todoist";
 
 export class TodoistExtensionModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
@@ -21,37 +29,41 @@ export class TodoistExtensionModule implements ExtensionModule {
         const shell = moduleRegistry.get("Shell");
         const todoistApiFactory = new DefaultTodoistApiFactory();
 
-        const extension = new TodoistExtension(
-            assetPathResolver,
+        const image: Image = {
+            url: `file://${assetPathResolver.getExtensionAssetPath(TodoistExtensionId, "todoist.svg")}`,
+        };
+
+        const cacheManager = new TodoistCacheManager(
             settingsManager,
-            translator,
             taskScheduler,
             todoistApiFactory,
             logger,
             browserWindowNotifier,
         );
 
+        const quickAddProvider = new TodoistQuickAddProvider(cacheManager, settingsManager, translator, image);
+        const taskListProvider = new TodoistTaskListProvider(cacheManager, settingsManager, translator, image);
+
+        const actionManager = new TodoistActionManager(
+            todoistApiFactory,
+            settingsManager,
+            translator,
+            notificationService,
+            browserWindowRegistry,
+            logger,
+            shell,
+            cacheManager,
+        );
+
+        const extension = new TodoistExtension(image, cacheManager, quickAddProvider, taskListProvider);
+
         return {
             extension,
             actionHandlers: [
-                new TodoistQuickAddActionHandler(
-                    todoistApiFactory,
-                    settingsManager,
-                    translator,
-                    notificationService,
-                    browserWindowRegistry,
-                    logger,
-                ),
+                new TodoistQuickAddActionHandler(actionManager),
                 new TodoistSetSearchTermActionHandler(browserWindowNotifier),
-                new TodoistOpenTaskActionHandler(
-                    shell,
-                    settingsManager,
-                    translator,
-                    browserWindowRegistry,
-                    logger,
-                    (issue) => extension.reportTaskOpenIssue(issue),
-                ),
-                new TodoistRefreshCachesActionHandler((searchTerm) => extension.reloadTasks(searchTerm), logger),
+                new TodoistOpenTaskActionHandler(actionManager),
+                new TodoistRefreshCachesActionHandler(actionManager, logger),
             ],
         };
     }

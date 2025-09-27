@@ -1,6 +1,7 @@
+import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItemAction } from "@common/Core";
+import type { TodoistActionManager } from "../Manager";
 
 export const RefreshCachesHandlerId = "TodoistRefreshCaches";
 
@@ -8,7 +9,7 @@ export class TodoistRefreshCachesActionHandler implements ActionHandler {
     public readonly id = RefreshCachesHandlerId;
 
     public constructor(
-        private readonly reloadTasks: (searchTerm: string) => Promise<void>,
+        private readonly actionManager: TodoistActionManager,
         private readonly logger: Logger,
     ) {}
 
@@ -16,7 +17,7 @@ export class TodoistRefreshCachesActionHandler implements ActionHandler {
         const { searchTerm } = this.parseArgument(action.argument);
 
         try {
-            await this.reloadTasks(searchTerm);
+            await this.actionManager.refreshCaches(searchTerm);
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             this.logger.error(`Todoist task reload failed. Reason: ${message}`);

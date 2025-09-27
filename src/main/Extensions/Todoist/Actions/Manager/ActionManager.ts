@@ -1,34 +1,79 @@
-import type { SearchResultItemAction } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { TaskOpenTarget } from "@common/Extensions/Todoist";
-import type { ActionHandler } from "@Core/ActionHandler";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
+import type { NotificationService } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { Shell } from "electron";
-import { getTodoistI18nResources } from "./TodoistTranslations";
+import type { TodoistCacheManager } from "../../Caching";
+import type { TodoistApiFactory } from "../../Shared";
+import { getTodoistI18nResources, todoistDefaultSettings } from "../../Shared";
 
+const TodoistExtensionId = "Todoist";
 const OpenExternalTimeoutInMs = 3000;
 
-export const TodoistOpenTaskHandlerId = "TodoistOpenTask";
-
-export class TodoistOpenTaskActionHandler implements ActionHandler {
-    public readonly id = TodoistOpenTaskHandlerId;
-
+export class TodoistActionManager {
     public constructor(
-        private readonly shell: Shell,
+        private readonly todoistApiFactory: TodoistApiFactory,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
+        private readonly notificationService: NotificationService,
         private readonly browserWindowRegistry: BrowserWindowRegistry,
         private readonly logger: Logger,
-        private readonly reportTaskOpenIssue: (issue: { searchTerm: string; message: string }) => void,
+        private readonly shell: Shell,
+        private readonly cacheManager: TodoistCacheManager,
     ) {}
 
-    public async invokeAction(action: SearchResultItemAction): Promise<void> {
-        const { taskId, webUrl, desktopUrl, searchTerm } = this.parseArgument(action.argument);
-        const { t } = this.translator.createT(getTodoistI18nResources());
+    public async quickAdd(text: string): Promise<void> {
+        const normalizedText = text.trim();
 
+        if (normalizedText.length === 0) {
+            this.logger.warn("Todoist quick add called with empty text.");
+            return;
+        }
+
+        const { t } = this.translator.createT(getTodoistI18nResources());
+        const apiToken = this.getApiToken();
+
+        if (!apiToken) {
+            this.notificationService.show({
+                title: t("notificationTitle"),
+                body: t("missingTokenNotificationBody"),
+            });
+            this.hideSearchWindow();
+            return;
+        }
+
+        try {
+            const todoistApi = this.todoistApiFactory.create(apiToken);
+            await todoistApi.quickAddTask({ text: normalizedText });
+
+            this.notificationService.show({
+                title: t("notificationTitle"),
+                body: t("quickAddSuccessNotificationBody"),
+            });
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            this.logger.error(`Todoist quick add failed. Reason: ${message}`);
+
+            this.notificationService.show({
+                title: t("notificationTitle"),
+                body: t("quickAddFailureNotificationBody"),
+            });
+        } finally {
+            this.hideSearchWindow();
+        }
+    }
+
+    public async openTask(params: {
+        taskId: string;
+        webUrl: string;
+        desktopUrl: string;
+        searchTerm: string;
+    }): Promise<void> {
+        const { taskId, webUrl, desktopUrl, searchTerm } = params;
+        const { t } = this.translator.createT(getTodoistI18nResources());
         const target = this.getTaskOpenTarget();
 
         try {
@@ -42,6 +87,7 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
                     try {
                         await this.openExternalWithTimeout(desktopUrl);
                         this.hideSearchWindow();
+                        return;
                     } catch (desktopError) {
                         const desktopMessage =
                             desktopError instanceof Error ? desktopError.message : String(desktopError);
@@ -51,17 +97,18 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
 
                         try {
                             await this.openExternalWithTimeout(webUrl);
-                            this.reportTaskOpenIssue({
+                            this.cacheManager.reportTaskIssue({
                                 searchTerm,
                                 message: t("desktopOpenFailedFallback"),
                             });
+                            return;
                         } catch (browserError) {
                             const browserMessage =
                                 browserError instanceof Error ? browserError.message : String(browserError);
                             this.logger.error(
                                 `Fallback to browser for Todoist task ${taskId} failed. Reason: ${browserMessage}`,
                             );
-                            this.reportTaskOpenIssue({
+                            this.cacheManager.reportTaskIssue({
                                 searchTerm,
                                 message: t("desktopOpenFailed"),
                             });
@@ -81,54 +128,29 @@ export class TodoistOpenTaskActionHandler implements ActionHandler {
         }
     }
 
-    private parseArgument(argument: string): {
-        taskId: string;
-        webUrl: string;
-        desktopUrl: string;
-        searchTerm: string;
-    } {
-        const parsed = JSON.parse(argument) as {
-            taskId?: unknown;
-            webUrl?: unknown;
-            desktopUrl?: unknown;
-            searchTerm?: unknown;
-        };
-
-        if (!parsed) {
-            throw new Error("Todoist open task action requires an argument.");
-        }
-
-        if (typeof parsed.taskId !== "string" || parsed.taskId.trim().length === 0) {
-            throw new Error("Todoist open task action requires a taskId string argument.");
-        }
-
-        if (typeof parsed.webUrl !== "string" || parsed.webUrl.trim().length === 0) {
-            throw new Error("Todoist open task action requires a webUrl string argument.");
-        }
-
-        if (typeof parsed.desktopUrl !== "string" || parsed.desktopUrl.trim().length === 0) {
-            throw new Error("Todoist open task action requires a desktopUrl string argument.");
-        }
-
-        if (typeof parsed.searchTerm !== "string") {
-            throw new Error("Todoist open task action requires a searchTerm string argument.");
-        }
-
-        return {
-            taskId: parsed.taskId,
-            webUrl: parsed.webUrl,
-            desktopUrl: parsed.desktopUrl,
-            searchTerm: parsed.searchTerm,
-        };
+    public async refreshCaches(searchTerm: string): Promise<void> {
+        await this.cacheManager.refreshTasks(searchTerm);
     }
 
-    private getTaskOpenTarget(): TaskOpenTarget {
+    public async refreshAll(): Promise<void> {
+        await this.cacheManager.refreshAllCaches();
+    }
+
+    public getTaskOpenTarget(): TaskOpenTarget {
         const value = this.settingsManager.getValue<TaskOpenTarget>(
-            getExtensionSettingKey("Todoist", "taskOpenTarget"),
-            "browser",
+            getExtensionSettingKey(TodoistExtensionId, "taskOpenTarget"),
+            todoistDefaultSettings.taskOpenTarget,
         );
 
         return value === "desktopApp" ? "desktopApp" : "browser";
+    }
+
+    private getApiToken(): string {
+        return this.settingsManager.getValue<string>(
+            getExtensionSettingKey(TodoistExtensionId, "apiToken"),
+            todoistDefaultSettings.apiToken,
+            true,
+        );
     }
 
     private async openExternalWithTimeout(url: string): Promise<void> {

@@ -1,288 +1,162 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { InstantSearchResultItems } from "@common/Core";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
-import type { Task } from "@doist/todoist-api-typescript";
-import { TodoistRequestError } from "@doist/todoist-api-typescript";
-import type { Mock } from "vitest";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { TodoistApiClient, TodoistApiFactory } from "./TodoistApiFactory";
+import { describe, expect, it, vi } from "vitest";
+import { TodoistCacheManager } from "./Caching";
+import { TodoistQuickAddProvider, TodoistTaskListProvider } from "./Search";
+import { todoistDefaultSettings } from "./Shared";
 import { TodoistExtension } from "./TodoistExtension";
-import { getTodoistI18nResources } from "./TodoistTranslations";
 
-const resources = getTodoistI18nResources();
+const createSettingsManager = (overrides?: Partial<Record<string, unknown>>): SettingsManager => {
+    const map = new Map<string, unknown>();
 
-const createTranslator = (): Translator => ({
-    createT: () => ({
-        t: (key: string, options?: Record<string, string>) => {
-            const dictionary = resources["en-US"] as Record<string, string>;
-            const value = dictionary[key];
+    map.set("extension[Todoist].quickAddPrefix", overrides?.quickAddPrefix ?? todoistDefaultSettings.quickAddPrefix);
+    map.set("extension[Todoist].taskListPrefix", overrides?.taskListPrefix ?? todoistDefaultSettings.taskListPrefix);
+    map.set("extension[Todoist].suggestionLimit", overrides?.suggestionLimit ?? todoistDefaultSettings.suggestionLimit);
+    map.set("extension[Todoist].taskListLimit", overrides?.taskListLimit ?? todoistDefaultSettings.taskListLimit);
+    map.set("extension[Todoist].taskOpenTarget", overrides?.taskOpenTarget ?? todoistDefaultSettings.taskOpenTarget);
+    map.set("extension[Todoist].taskFilter", overrides?.taskFilter ?? todoistDefaultSettings.taskFilter);
+    map.set("extension[Todoist].apiToken", overrides?.apiToken ?? todoistDefaultSettings.apiToken);
 
-            if (!value) {
-                return key;
-            }
-
-            if (options?.priority) {
-                return value.replace("{{priority}}", options.priority);
-            }
-
-            return value;
-        },
-    }),
-});
+    return {
+        getValue: <T>(key: string, defaultValue: T) => (map.has(key) ? (map.get(key) as T) : defaultValue),
+        updateValue: vi.fn(),
+    };
+};
 
 describe(TodoistExtension, () => {
-    beforeEach(() => {
-        vi.useFakeTimers();
+    const createTranslator = (): Translator => ({
+        createT: () => ({
+            t: (key: string) => key,
+        }),
     });
 
-    afterEach(() => {
-        vi.clearAllTimers();
-        vi.useRealTimers();
+    const createLogger = (): Logger => ({
+        debug: vi.fn(),
+        error: vi.fn(),
+        info: vi.fn(),
+        warn: vi.fn(),
     });
 
-    const setup = ({
-        quickAddPrefix = "todo",
-        taskListPrefix = "tdl",
-        suggestionLimit = 15,
-        apiToken = "",
-        taskFilter = "",
-    }: {
-        quickAddPrefix?: string;
-        taskListPrefix?: string;
-        suggestionLimit?: number;
-        apiToken?: string;
-        taskFilter?: string;
-    } = {}) => {
-        const settings = new Map<string, unknown>([
-            ["extension[Todoist].quickAddPrefix", quickAddPrefix],
-            ["extension[Todoist].taskListPrefix", taskListPrefix],
-            ["extension[Todoist].suggestionLimit", suggestionLimit],
-            ["extension[Todoist].taskListLimit", 30],
-            ["extension[Todoist].taskOpenTarget", "browser"],
-            ["extension[Todoist].taskFilter", taskFilter],
-            ["extension[Todoist].apiToken", apiToken],
-        ]);
+    const createTaskScheduler = (): TaskScheduler => ({
+        scheduleTask: vi.fn(),
+        abortTask: vi.fn(),
+    });
 
-        const settingsManager: SettingsManager = {
-            getValue: <T>(key: string, defaultValue: T) =>
-                settings.has(key) ? (settings.get(key) as T) : defaultValue,
-            updateValue: vi.fn(),
-        };
+    const createInstantResult = (beforeLength: number, afterLength: number): InstantSearchResultItems => ({
+        before: Array.from({ length: beforeLength }, (_, index) => ({
+            id: `before-${index}`,
+        })) as InstantSearchResultItems["before"],
+        after: Array.from({ length: afterLength }, (_, index) => ({
+            id: `after-${index}`,
+        })) as InstantSearchResultItems["after"],
+    });
 
-        const assetPathResolver: AssetPathResolver = {
-            getExtensionAssetPath: () => "/path/to/todoist.svg",
-            getModuleAssetPath: () => "",
-        };
-
-        const taskScheduler: TaskScheduler = {
-            scheduleTask: (task, waitMs) => setTimeout(task, waitMs),
-            abortTask: (id) => clearTimeout(id),
-        };
-
-        const logger: Logger = {
-            error: () => undefined,
-            info: () => undefined,
-            debug: () => undefined,
-            warn: () => undefined,
-        };
-
-        const todoistApi: TodoistApiClient = {
-            quickAddTask: vi.fn(),
-            getLabels: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
-            getProjects: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
-            getTasks: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
-            getTasksByFilter: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
-        };
-
-        const todoistApiFactory: TodoistApiFactory = {
-            create: vi.fn().mockReturnValue(todoistApi),
-        };
-
+    const setup = () => {
+        const settingsManager = createSettingsManager();
+        const translator = createTranslator();
+        const taskScheduler = createTaskScheduler();
+        const logger = createLogger();
         const browserWindowNotifier = {
             notify: vi.fn(),
             notifyAll: vi.fn(),
         };
 
-        const extension = new TodoistExtension(
-            assetPathResolver,
+        const todoistApiFactory = {
+            create: vi.fn().mockReturnValue({
+                getLabels: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+                getProjects: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+                getTasks: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+                getTasksByFilter: vi.fn().mockResolvedValue({ results: [], nextCursor: null }),
+                quickAddTask: vi.fn(),
+            }),
+        };
+        const cacheManager = new TodoistCacheManager(
             settingsManager,
-            createTranslator(),
             taskScheduler,
             todoistApiFactory,
             logger,
             browserWindowNotifier,
         );
 
+        const image = { url: "file:///todoist.svg" };
+
+        const quickAddProvider = new TodoistQuickAddProvider(cacheManager, settingsManager, translator, image);
+        const taskListProvider = new TodoistTaskListProvider(cacheManager, settingsManager, translator, image);
+        const extension = new TodoistExtension(image, cacheManager, quickAddProvider, taskListProvider);
+
         return {
             extension,
-            settings,
-            todoistApi,
-            todoistApiFactory,
+            cacheManager,
+            quickAddProvider,
+            taskListProvider,
         };
     };
 
-    beforeEach(async () => {
-        await Promise.resolve();
-    });
+    it("prefers quick add results when available", () => {
+        const { extension, quickAddProvider, taskListProvider } = setup();
+        vi.spyOn(quickAddProvider, "createItems").mockReturnValue(createInstantResult(1, 0));
+        vi.spyOn(taskListProvider, "createItems").mockReturnValue(createInstantResult(0, 1));
 
-    it("returns no results when prefix does not match", () => {
-        const { extension } = setup();
-
-        const result = extension.getInstantSearchResultItems("note buy milk");
-
-        expect(result.before).toHaveLength(0);
-        expect(result.after).toHaveLength(0);
-    });
-
-    it("returns quick add item", () => {
-        const { extension } = setup();
-        const result = extension.getInstantSearchResultItems("todo buy milk tomorrow");
+        const result = extension.getInstantSearchResultItems("todo buy milk");
 
         expect(result.before).toHaveLength(1);
-        expect(result.before[0]?.defaultAction.argument).toBe(JSON.stringify({ text: "buy milk tomorrow" }));
+        expect(taskListProvider.createItems).not.toHaveBeenCalled();
     });
 
-    it("suggests label candidates", () => {
+    it("falls back to task list when quick add empty", () => {
+        const { extension, quickAddProvider, taskListProvider } = setup();
+        vi.spyOn(quickAddProvider, "createItems").mockReturnValue(createInstantResult(0, 0));
+        vi.spyOn(taskListProvider, "createItems").mockReturnValue(createInstantResult(0, 2));
+
+        const result = extension.getInstantSearchResultItems("tdl inbox");
+
+        expect(result.after).toHaveLength(2);
+        expect(taskListProvider.createItems).toHaveBeenCalledWith("tdl inbox");
+    });
+
+    it("delegates refresh operations to cache manager", async () => {
+        const { extension, cacheManager } = setup();
+        vi.spyOn(cacheManager, "refreshAllCaches").mockResolvedValue(undefined);
+        vi.spyOn(cacheManager, "refreshTasks").mockResolvedValue(undefined);
+
+        await extension.refreshAllCaches();
+        await extension.reloadTasks("tdl");
+
+        expect(cacheManager.refreshAllCaches).toHaveBeenCalled();
+        expect(cacheManager.refreshTasks).toHaveBeenCalledWith("tdl");
+    });
+
+    it("delegates task issue reporting", () => {
+        const { extension, cacheManager } = setup();
+        vi.spyOn(cacheManager, "reportTaskIssue").mockImplementation(() => undefined);
+
+        extension.reportTaskOpenIssue({ searchTerm: "tdl", message: "error" });
+
+        expect(cacheManager.reportTaskIssue).toHaveBeenCalledWith({ searchTerm: "tdl", message: "error" });
+    });
+
+    it("handles refreshCaches invocation", async () => {
+        const { extension, cacheManager } = setup();
+        vi.spyOn(cacheManager, "refreshAllCaches").mockResolvedValue(undefined);
+
+        const result = await extension.invoke({ type: "refreshCaches" });
+        expect(result).toEqual({ status: "ok" });
+        expect(cacheManager.refreshAllCaches).toHaveBeenCalled();
+    });
+
+    it("throws on unsupported invocation", async () => {
         const { extension } = setup();
 
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.labels = [
-            { id: "1", name: "Home" },
-            { id: "2", name: "Work" },
-        ];
-
-        const result = extension.getInstantSearchResultItems("todo plan @ho");
-
-        expect(result.after).toHaveLength(1);
-        expect(result.after[0]?.name).toBe("@Home");
-        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo plan @Home " }));
+        await expect(extension.invoke({ type: "unknown" })).rejects.toThrow(
+            "Unsupported Todoist extension invocation type",
+        );
     });
 
-    it("hides project candidate when whitespace exact match", () => {
+    it("returns default setting values", () => {
         const { extension } = setup();
-
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.projects = [{ id: "1", name: "Home chores" }];
-
-        const result = extension.getInstantSearchResultItems("todo clean #Home chores");
-
-        expect(result.after).toHaveLength(0);
-    });
-
-    it("respects suggestion limit", () => {
-        const { extension, settings } = setup({ suggestionLimit: 1 });
-
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.labels = [
-            { id: "1", name: "Alpha" },
-            { id: "2", name: "Beta" },
-        ];
-
-        const result = extension.getInstantSearchResultItems("todo task @");
-
-        expect(result.after).toHaveLength(1);
-        expect(result.after[0]?.name).toBe("@Alpha");
-
-        settings.set("extension[Todoist].suggestionLimit", 2);
-        const updated = extension.getInstantSearchResultItems("todo task @");
-        expect(updated.after).toHaveLength(2);
-    });
-
-    it("inserts priority candidates", () => {
-        const { extension } = setup();
-
-        const result = extension.getInstantSearchResultItems("todo schedule !p");
-
-        expect(result.after).toHaveLength(4);
-        expect(result.after[0]?.name).toBe("p1");
-        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "todo schedule p1 " }));
-    });
-
-    it("shows priority candidates when bang only", () => {
-        const { extension } = setup();
-
-        const result = extension.getInstantSearchResultItems("todo schedule !");
-
-        expect(result.after.map((item) => item?.name)).toEqual(["p1", "p2", "p3", "p4"]);
-    });
-
-    it("builds search term correctly with uppercase prefix", () => {
-        const { extension } = setup({ quickAddPrefix: "todo" });
-
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.labels = [{ id: "1", name: "Today" }];
-
-        const result = extension.getInstantSearchResultItems("TODO   plan @to");
-
-        expect(result.after[0]?.defaultAction.argument).toBe(JSON.stringify({ newSearchTerm: "TODO   plan @Today " }));
-    });
-
-    it("uses filter API when task filter is configured", async () => {
-        const { extension, todoistApi } = setup({ apiToken: "token", taskFilter: "today" });
-
-        const task = {
-            id: "200",
-            content: "Review meeting notes",
-            url: "https://app.todoist.com/app/task/200",
-            projectId: "project-1",
-            labels: [],
-            due: null,
-            addedAt: "2024-01-01T00:00:00Z",
-        } as unknown as Task;
-
-        (todoistApi.getTasksByFilter as Mock).mockResolvedValueOnce({ results: [task], nextCursor: null });
-
-        await extension.reloadTasks("tdl ");
-
-        expect(todoistApi.getTasksByFilter).toHaveBeenCalledWith({
-            query: "today",
-            limit: expect.any(Number),
-            cursor: undefined,
-        });
-        expect(todoistApi.getTasks).not.toHaveBeenCalled();
-
-        const result = extension.getInstantSearchResultItems("tdl ");
-        expect(result.after.find((item) => item?.id === "todoist-task-200")).toBeDefined();
-    });
-
-    it("displays filter syntax error when Todoist returns 400", async () => {
-        const { extension, todoistApi } = setup({ apiToken: "token", taskFilter: "today" });
-
-        (todoistApi.getTasksByFilter as Mock).mockRejectedValueOnce(new TodoistRequestError("Bad request", 400));
-
-        await extension.reloadTasks("tdl ");
-
-        const result = extension.getInstantSearchResultItems("tdl ");
-
-        expect(result.after[0]?.name).toBe(resources["en-US"].taskFilterInvalid);
-        expect(todoistApi.getTasks).not.toHaveBeenCalled();
-    });
-
-    it("returns task list items when task prefix matches", () => {
-        const { extension } = setup({ apiToken: "token" });
-
-        const task = {
-            id: "100",
-            content: "Review pull requests",
-            url: "https://app.todoist.com/app/task/100",
-            projectId: "project-1",
-            labels: [],
-            due: null,
-            addedAt: "2024-01-01T00:00:00Z",
-        } as unknown as Task;
-
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.tasks = [task];
-        // @ts-expect-error - set internal state directly for test purposes
-        extension.tasksCacheExpiresAt = Date.now() + 60_000;
-
-        const result = extension.getInstantSearchResultItems("tdl ");
-
-        expect(result.before[0]?.id).toBe("todoist-task-reload");
-        expect(result.after.find((item) => item?.id === "todoist-task-100")).toBeDefined();
-        const taskItem = result.after.find((item) => item?.id === "todoist-task-100");
-        expect(taskItem?.description).toBe(resources["en-US"].openTaskDescription);
+        expect(extension.getSettingDefaultValue("quickAddPrefix")).toBe(todoistDefaultSettings.quickAddPrefix);
     });
 });

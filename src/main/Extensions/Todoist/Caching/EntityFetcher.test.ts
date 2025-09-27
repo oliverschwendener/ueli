@@ -1,6 +1,6 @@
 import type { Logger } from "@Core/Logger";
 import { describe, expect, it, vi } from "vitest";
-import { TodoistEntityFetcher } from "./TodoistEntityFetcher";
+import { TodoistEntityFetcher } from "./EntityFetcher";
 
 const createLogger = (): Logger => ({
     debug: vi.fn(),
