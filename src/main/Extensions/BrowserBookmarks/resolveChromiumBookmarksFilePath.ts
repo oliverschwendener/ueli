@@ -3,15 +3,19 @@ import type { ChromiumBrowser } from "@common/Extensions/BrowserBookmarks";
 import type { App } from "electron";
 import { join } from "path";
 
+
 export const resolveChromiumBookmarksFilePath = ({
     browser,
     operatingSystem,
     app,
+    profileName,
 }: {
     browser: ChromiumBrowser;
     operatingSystem: OperatingSystem;
     app: App;
+    profileName?: string;
 }): string => {
+    const getProfile = (defaultProfile: string) => profileName || defaultProfile;
     const map: Record<ChromiumBrowser, Record<OperatingSystem, () => string>> = {
         Arc: {
             Linux: () => "", // not supported,
@@ -35,9 +39,9 @@ export const resolveChromiumBookmarksFilePath = ({
         },
         "Google Chrome": {
             Linux: () => "", // not supported
-            macOS: () => join(app.getPath("appData"), "Google", "Chrome", "Default", "Bookmarks"),
+            macOS: () => join(app.getPath("appData"), "Google", "Chrome", getProfile("Default"), "Bookmarks"),
             Windows: () =>
-                join(app.getPath("home"), "AppData", "Local", "Google", "Chrome", "User Data", "Default", "Bookmarks"),
+                join(app.getPath("home"), "AppData", "Local", "Google", "Chrome", "User Data", getProfile("Default"), "Bookmarks"),
         },
         "Microsoft Edge": {
             Linux: () => "", // not supported,

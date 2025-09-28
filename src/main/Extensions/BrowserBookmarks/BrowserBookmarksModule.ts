@@ -34,8 +34,21 @@ export class BrowserBookmarksModule implements ExtensionModule {
                     "Brave Browser": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
                         resolveChromiumBookmarksFilePath({ browser: "Brave Browser", operatingSystem, app }),
                     ),
-                    "Google Chrome": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
-                        resolveChromiumBookmarksFilePath({ browser: "Google Chrome", operatingSystem, app }),
+                    "Google Chrome": new ChromiumBrowserBookmarkRepository(
+                        fileSystemUtility,
+                        () => {
+                            // Ottieni il profilo selezionato dalle impostazioni
+                            const chromeProfile = settingsManager.getValue<string>(
+                                "extension[BrowserBookmarks].chromeProfile",
+                                "Default"
+                            );
+                            return resolveChromiumBookmarksFilePath({
+                                browser: "Google Chrome",
+                                operatingSystem,
+                                app,
+                                profileName: chromeProfile || "Default",
+                            });
+                        }
                     ),
                     "Microsoft Edge": new ChromiumBrowserBookmarkRepository(fileSystemUtility, () =>
                         resolveChromiumBookmarksFilePath({ browser: "Microsoft Edge", operatingSystem, app }),

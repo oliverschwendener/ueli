@@ -3,8 +3,12 @@ import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import type { Browser } from "@common/Extensions/BrowserBookmarks";
+
 import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { getChromeProfiles } from "./getChromeProfiles";
+import { ProfileSelector } from "./ProfileSelector/ProfileSelector";
 
 export const BrowserBookmarksSettings = () => {
     const { t } = useTranslation("extension[BrowserBookmarks]");
@@ -37,9 +41,25 @@ export const BrowserBookmarksSettings = () => {
         key: "iconType",
     });
 
+    // Stato per il profilo Chrome selezionato
+    const { value: chromeProfile, updateValue: setChromeProfile } = useExtensionSetting<string>({
+        extensionId,
+        key: "chromeProfile",
+    });
+
+    // Stato per i profili disponibili
+    const [chromeProfiles, setChromeProfiles] = useState<string[]>([]);
+
+    // Carica i profili Chrome solo se Google Chrome è selezionato
+    useEffect(() => {
+        if (browsers.includes("Google Chrome")) {
+            getChromeProfiles().then(setChromeProfiles);
+        }
+    }, [browsers]);
+
     return (
         <SettingGroupList>
-            <SettingGroup title={t("extensionName")}>
+            <SettingGroup title={t("extensionName")}> 
                 <Setting
                     label="Browsers"
                     control={
@@ -63,6 +83,20 @@ export const BrowserBookmarksSettings = () => {
                         </Dropdown>
                     }
                 />
+                {/* Se Google Chrome è selezionato, mostra la selezione del profilo */}
+                {browsers.includes("Google Chrome") && (
+                    <Setting
+                        label="Chrome profile"
+                        control={
+                            <ProfileSelector
+                                profiles={chromeProfiles}
+                                selectedProfile={chromeProfile || chromeProfiles[0] || ""}
+                                onProfileChange={setChromeProfile}
+                                label={t("Select Chrome profile")}
+                            />
+                        }
+                    />
+                )}
                 <Setting
                     label="Search result style"
                     control={
