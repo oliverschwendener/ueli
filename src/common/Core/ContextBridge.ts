@@ -45,6 +45,16 @@ export type ContextBridge = {
     getExtensionAssetFilePath: (extensionId: string, key: string) => string;
     getExtensionResources: <T extends Translations>() => { extensionId: string; resources: Resources<T> }[];
     getExtensionSettingDefaultValue: <Value>(extensionId: string, settingKey: string) => Value;
+
+    /**
+     * Restituisce il percorso di sistema richiesto ("home" o "appData").
+     */
+    getPath: (type: "home" | "appData") => Promise<string>;
+
+    /**
+     * Legge le sottocartelle di una directory.
+     */
+    readDir: (dirPath: string) => Promise<string[]>;
     getFavorites: () => string[];
     getInstantSearchResultItems: (searchTerm: string) => InstantSearchResultItems;
     getLogs: () => string[];

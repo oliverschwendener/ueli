@@ -1,6 +1,7 @@
 import type { ContextBridge } from "@common/Core";
 import { contextBridge, ipcRenderer } from "electron";
 
+import { ipcRenderer, contextBridge } from "electron";
 const contextBridgeImplementation: ContextBridge = {
     ipcRenderer: {
         on: (channel, listener) => ipcRenderer.on(channel, listener),
@@ -56,6 +57,9 @@ const contextBridgeImplementation: ContextBridge = {
     updateSettingValue: (key, value, isSensitive) =>
         ipcRenderer.invoke("updateSettingValue", { key, value, isSensitive }),
     searchIndexCacheFileExists: () => ipcRenderer.sendSync("searchIndexCacheFileExists"),
+
+    getPath: (type) => ipcRenderer.invoke("getPath", { type }),
+    readDir: (dirPath) => ipcRenderer.invoke("readDir", { dirPath }),
 };
 
 contextBridge.exposeInMainWorld("ContextBridge", contextBridgeImplementation);

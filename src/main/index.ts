@@ -5,6 +5,12 @@ if (!app.requestSingleInstanceLock()) {
     app.exit();
 }
 
+
+import { ipcMain } from "electron";
+import { homedir } from "os";
+import { app as electronApp } from "electron";
+import { readdir } from "fs/promises";
+
 (async () => {
     await app.whenReady();
 
@@ -89,6 +95,21 @@ if (!app.requestSingleInstanceLock()) {
     Core.TerminalModule.bootstrap(moduleRegistry);
     Core.ExtensionRegistryModule.bootstrap(moduleRegistry);
     Core.DragAndDropModule.bootstrap(moduleRegistry);
+
+    // IPC handlers per ContextBridge custom
+    ipcMain.handle("getPath", (event, { type }) => {
+        if (type === "home") return homedir();
+        if (type === "appData") return electronApp.getPath("appData");
+        throw new Error("Unknown path type: " + type);
+    });
+    ipcMain.handle("readDir", async (event, { dirPath }) => {
+        try {
+            const entries = await readdir(dirPath, { withFileTypes: true });
+            return entries.filter((e) => e.isDirectory()).map((e) => e.name);
+        } catch (e) {
+            return [];
+        }
+    });
 
     // Extensions
     Extensions.ExtensionLoader.bootstrap(moduleRegistry);
