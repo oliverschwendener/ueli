@@ -57,7 +57,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.69.0",
         "@fluentui/react-icons": "^2.0.309",
-        "better-sqlite3": "^12.2.0",
+        "better-sqlite3": "^12.4.1",
         "color": "^4.2.3",
         "fast-xml-parser": "^5.2.5",
         "fuse.js": "^7.1.0",
