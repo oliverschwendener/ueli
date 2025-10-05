@@ -95,15 +95,30 @@ describe(TodoistExtension, () => {
         };
     };
 
-    it("prefers quick add results when available", () => {
+    it("merges quick add results with task list results", () => {
         const { extension, quickAddProvider, taskListProvider } = setup();
-        vi.spyOn(quickAddProvider, "createItems").mockReturnValue(createInstantResult(1, 0));
-        vi.spyOn(taskListProvider, "createItems").mockReturnValue(createInstantResult(0, 1));
+        const quickAddResult = createInstantResult(1, 0);
+        const taskListResult = createInstantResult(0, 1);
+        vi.spyOn(quickAddProvider, "createItems").mockReturnValue(quickAddResult);
+        vi.spyOn(taskListProvider, "createItems").mockReturnValue(taskListResult);
 
         const result = extension.getInstantSearchResultItems("todo buy milk");
 
-        expect(result.before).toHaveLength(1);
-        expect(taskListProvider.createItems).not.toHaveBeenCalled();
+        expect(result.before).toHaveLength(quickAddResult.before.length + taskListResult.before.length);
+        expect(result.after).toHaveLength(quickAddResult.after.length + taskListResult.after.length);
+        expect(taskListProvider.createItems).toHaveBeenCalledWith("todo buy milk");
+    });
+
+    it("returns empty result when providers return no items", () => {
+        const { extension, quickAddProvider, taskListProvider } = setup();
+        const quickAddResult = createInstantResult(0, 0);
+        vi.spyOn(quickAddProvider, "createItems").mockReturnValue(quickAddResult);
+        vi.spyOn(taskListProvider, "createItems").mockReturnValue(createInstantResult(0, 0));
+
+        const result = extension.getInstantSearchResultItems("todo");
+
+        expect(result.before).toHaveLength(0);
+        expect(result.after).toHaveLength(0);
     });
 
     it("falls back to task list when quick add empty", () => {

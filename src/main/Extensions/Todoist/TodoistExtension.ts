@@ -1,4 +1,4 @@
-import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
+import { type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Settings } from "@common/Extensions/Todoist";
@@ -58,18 +58,9 @@ export class TodoistExtension implements Extension {
 
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const quickAddItems = this.quickAddProvider.createItems(searchTerm);
-
-        if (TodoistExtension.hasItems(quickAddItems)) {
-            return quickAddItems;
-        }
-
         const taskListItems = this.taskListProvider.createItems(searchTerm);
 
-        if (TodoistExtension.hasItems(taskListItems)) {
-            return taskListItems;
-        }
-
-        return createEmptyInstantSearchResult();
+        return TodoistExtension.joinItems(quickAddItems, taskListItems);
     }
 
     public getSettingKeysTriggeringRescan(): string[] {
@@ -114,4 +105,12 @@ export class TodoistExtension implements Extension {
     private static hasItems(result: InstantSearchResultItems): boolean {
         return result.before.length > 0 || result.after.length > 0;
     }
+
+    private static joinItems(a: InstantSearchResultItems, b: InstantSearchResultItems): InstantSearchResultItems {
+        return {
+            before: [...a.before, ...b.before],
+            after: [...a.after, ...b.after],
+        };
+    }
+
 }
