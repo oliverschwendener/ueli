@@ -13,6 +13,7 @@ import { BrowserWindowToggler } from "./BrowserWindowToggler";
 
 export class SearchWindowModule {
     private static readonly DefaultHideWindowOnOptions = ["blur", "afterInvocation", "escapePressed"];
+    private static interalResizeFlag = true; // Indicates that the window was resized programatically, and the resulting ElectronWindow resize event should be dismissed
 
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
         const app = moduleRegistry.get("App");
@@ -128,10 +129,41 @@ export class SearchWindowModule {
             searchWindow.setVisibleOnAllWorkspaces(value);
         });
 
+        eventSubscriber.subscribe("settingUpdated[window.width]", ({ value }: { value: number }) => {
+            searchWindow.setSize(value, searchWindow.getSize()[1]);
+        });
+
+        eventSubscriber.subscribe("settingUpdated[window.maxHeight]", ({ value }: { value: number }) => {
+            searchWindow.setSize(searchWindow.getSize()[0], value);
+        });
+
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
         ipcMain.on("rescanExtensionsKeyboardShortcutPressed", () =>
             ueliCommandInvoker.invokeUeliCommand("rescanExtensions"),
         );
+
+        ipcMain.on("resizeHeight", (_, { height }: { height: number }) => {
+            console.log(`resizing to ${height}`)
+            this.interalResizeFlag = true;
+            searchWindow.setSize(searchWindow.getSize()[0], height);
+        });
+
+        ipcMain.on("limitHeight", (_, { height }: { height: number }) => {
+            console.log(`limiting to ${height}`)
+            searchWindow.setMaximumSize(0, height);
+        });
+
+        searchWindow.on("resize", () => {
+            console.log("resize event")
+
+            if (!this.interalResizeFlag && settingsManager.getValue("window.rememberSize", false)) {
+                console.log("update event")
+                settingsManager.updateValue("window.width", searchWindow.getSize()[0]);
+                settingsManager.updateValue("window.maxHeight", searchWindow.getSize()[1]);
+            }
+
+            this.interalResizeFlag = false;
+        });
 
         app.on("second-instance", (_, argv) => {
             if (argv.includes("--toggle")) {
