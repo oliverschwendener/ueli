@@ -53,6 +53,10 @@ export class TodoistActionManager {
                 title: t("notificationTitle"),
                 body: t("quickAddSuccessNotificationBody"),
             });
+
+            // Immediately refresh tasks in the background so that the next
+            // task-list search reflects the newly added item.
+            void this.cacheManager.ensureTasks({ force: true });
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             this.logger.error(`Todoist quick add failed. Reason: ${message}`);
@@ -137,6 +141,8 @@ export class TodoistActionManager {
     }
 
     public getTaskOpenTarget(): TaskOpenTarget {
+        // Normalize runtime value from persisted settings; unknown strings fall back
+        // to a safe default to remain robust across manual edits or older versions.
         const value = this.settingsManager.getValue<TaskOpenTarget>(
             getExtensionSettingKey(TodoistExtensionId, "taskOpenTarget"),
             todoistDefaultSettings.taskOpenTarget,

@@ -130,6 +130,10 @@ export class TodoistCacheManager {
         this.resetTaskCache();
         this.currentTaskFilter = this.getTaskFilter();
         await Promise.all([this.refreshEntityCaches(), this.executeTasksRefresh({ force: true })]);
+        // Make sure subsequent task-list searches always fetch fresh data even if
+        // a recent Quick Add or server-side delay caused the immediate refresh
+        // to miss the latest tasks.
+        this.tasksCacheExpiresAt = 0;
     }
 
     public async refreshTasks(searchTerm: string): Promise<void> {
@@ -161,20 +165,11 @@ export class TodoistCacheManager {
         );
     }
 
-    private getTaskListLimit(): number {
-        const value = this.settingsManager.getValue<number>(
-            getExtensionSettingKey(TodoistExtensionId, "taskListLimit"),
-            todoistDefaultSettings.taskListLimit,
-        );
-
-        if (typeof value !== "number" || Number.isNaN(value) || value <= 0) {
-            return todoistDefaultSettings.taskListLimit;
-        }
-
-        return Math.floor(value);
-    }
-
     private getTaskFilter(): string {
+        // Note: Although SettingsManager.getValue<T> provides a compile-time generic,
+        // settings are persisted as JSON (and some values may also be encrypted/decrypted).
+        // Users can hand-edit the file or older versions may have left incompatible types.
+        // Therefore we defensively validate the runtime type here instead of trusting T.
         const value = this.settingsManager.getValue<string>(
             getExtensionSettingKey(TodoistExtensionId, "taskFilter"),
             todoistDefaultSettings.taskFilter,
@@ -308,16 +303,15 @@ export class TodoistCacheManager {
         }
 
         const api = this.todoistApiFactory.create(apiToken);
-        const limit = this.getTaskListLimit();
-        const pageSize = Math.min(TodoistApiPageSize, limit);
+        const pageSize = TodoistApiPageSize;
         const filter = this.getTaskFilter();
 
         const fetcher = filter.length
             ? new TodoistEntityFetcher(
-                  ({ limit: pageLimit, cursor }) =>
+                  ({ limit, cursor }) =>
                       api.getTasksByFilter({
                           query: filter,
-                          limit: pageLimit,
+                          limit,
                           cursor: cursor ?? undefined,
                       }),
                   this.logger,
@@ -326,7 +320,7 @@ export class TodoistCacheManager {
             : new TodoistEntityFetcher(api.getTasks.bind(api), this.logger, "tasks");
 
         try {
-            const tasks = await fetcher.fetchAll(pageSize, { maxResults: limit });
+            const tasks = await fetcher.fetchAll(pageSize);
             this.lastTaskFilterError = false;
             return [...tasks].sort(TodoistCacheManager.compareTasks);
         } catch (error) {

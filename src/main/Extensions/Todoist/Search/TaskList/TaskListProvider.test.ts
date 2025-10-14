@@ -110,7 +110,8 @@ describe(TodoistTaskListProvider, () => {
         });
         const provider = createProvider({ cacheManager, settingsManager: createSettingsManager() });
         const result = provider.createItems("tdl inbox");
-        expect(result.after[0]?.name).toBe(resources["en-US"].loadingTasks);
+        expect(result.before[0]?.name).toBe(resources["en-US"].loadingTasks);
+        expect(result.after).toHaveLength(0);
     });
 
     it("returns task items when available", () => {

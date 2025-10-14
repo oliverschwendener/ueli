@@ -14,12 +14,14 @@ This extension lets you add tasks to Todoist and browse your active tasks direct
 - Press enter to run the Quick Add action; the raw text is forwarded to Todoist's `/rest/v2/quick/add` endpoint.
 - Ueli posts a native OS notification indicating success or failure and then closes the search window.
 
+![Notification](notification.png)
+
 ### Task list
 
 - Type the task-list prefix (default `tdl`) to fetch the latest active tasks from Todoist.
 - Tasks are sorted by due date then creation date and can be filtered further by typing after the prefix (matches task content, project name, and label names case-insensitively).
 - Selecting a task launches Todoist either in the browser or desktop app based on the configured target; an alternate action lets you hold `Alt` to flip targets.
-- A "Reload tasks" item appears at the top to clear the cache and refresh immediately. If Todoist returns an error (including filter syntax errors) the list shows an inline error item instead of opening notifications.
+- If Todoist returns an error (including filter syntax errors) the list shows an inline error item instead of opening notifications.
 
 ## Settings
 

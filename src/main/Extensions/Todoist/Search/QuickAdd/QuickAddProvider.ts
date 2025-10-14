@@ -230,6 +230,7 @@ export class TodoistQuickAddProvider {
     }
 
     private getQuickAddPrefix(): string {
+        // Defensive runtime validation for persisted settings; see CacheManager.getTaskFilter.
         const value = this.settingsManager.getValue<string>(
             getExtensionSettingKey(TodoistExtensionId, "quickAddPrefix"),
             todoistDefaultSettings.quickAddPrefix,
@@ -241,6 +242,7 @@ export class TodoistQuickAddProvider {
     }
 
     private getSuggestionLimit(): number {
+        // Defensive number normalization to guard against invalid persisted values.
         const value = this.settingsManager.getValue<number>(
             getExtensionSettingKey(TodoistExtensionId, "suggestionLimit"),
             todoistDefaultSettings.suggestionLimit,

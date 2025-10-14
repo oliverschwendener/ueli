@@ -44,7 +44,7 @@ export class TodoistTaskListProvider {
 
         void this.cacheManager.ensureTasks({ searchTerm });
 
-        const beforeItems: SearchResultItem[] = [this.createTaskReloadItem(searchTerm, t)];
+        const beforeItems: SearchResultItem[] = [];
         const issues = this.cacheManager.consumeTaskIssues(searchTerm);
         this.appendIssues(beforeItems, issues, searchTerm, t);
 
@@ -52,10 +52,14 @@ export class TodoistTaskListProvider {
         const isLoading = snapshot.isRefreshing;
         const hasError = snapshot.lastFilterError || typeof snapshot.lastError === "string";
 
+        if (isLoading) {
+            beforeItems.push(this.createTaskLoadingItem(t, searchTerm));
+        }
+
         if (isLoading && snapshot.tasks.length === 0 && !hasError) {
             return {
                 before: beforeItems,
-                after: [this.createTaskLoadingItem(t, searchTerm)],
+                after: [],
             };
         }
 
@@ -88,9 +92,7 @@ export class TodoistTaskListProvider {
             }),
         );
 
-        if (isLoading && snapshot.tasks.length > 0) {
-            afterItems.push(this.createTaskLoadingItem(t, searchTerm));
-        }
+        // Loading表示は先頭固定（before）に統一
 
         return {
             before: beforeItems,
@@ -143,23 +145,7 @@ export class TodoistTaskListProvider {
         });
     }
 
-    private createTaskReloadItem(searchTerm: string, t: ReturnType<Translator["createT"]>["t"]): SearchResultItem {
-        return {
-            id: "todoist-task-reload",
-            name: t("reloadTasks"),
-            description: t("reloadTasksDescription"),
-            image: this.image,
-            defaultAction: {
-                handlerId: RefreshCachesHandlerId,
-                argument: JSON.stringify({ searchTerm }),
-                description: t("reloadTasksDescription"),
-                descriptionTranslation: {
-                    key: "reloadTasksDescription",
-                    namespace: todoistTranslationNamespace,
-                },
-            },
-        };
-    }
+    // Note: Explicit "Reload tasks" item has been removed per UX change.
 
     private createTaskLoadingItem(t: ReturnType<Translator["createT"]>["t"], searchTerm: string): SearchResultItem {
         return {
@@ -170,9 +156,9 @@ export class TodoistTaskListProvider {
             defaultAction: {
                 handlerId: RefreshCachesHandlerId,
                 argument: JSON.stringify({ searchTerm }),
-                description: t("reloadTasksDescription"),
+                description: t("refreshCachesDescription"),
                 descriptionTranslation: {
-                    key: "reloadTasksDescription",
+                    key: "refreshCachesDescription",
                     namespace: todoistTranslationNamespace,
                 },
             },
@@ -187,14 +173,14 @@ export class TodoistTaskListProvider {
         return {
             id: `todoist-task-error-${Date.now()}`,
             name: message,
-            description: t("reloadTasksDescription"),
+            description: t("refreshCachesDescription"),
             image: this.image,
             defaultAction: {
                 handlerId: RefreshCachesHandlerId,
                 argument: JSON.stringify({ searchTerm }),
-                description: t("reloadTasksDescription"),
+                description: t("refreshCachesDescription"),
                 descriptionTranslation: {
-                    key: "reloadTasksDescription",
+                    key: "refreshCachesDescription",
                     namespace: todoistTranslationNamespace,
                 },
             },
@@ -205,14 +191,14 @@ export class TodoistTaskListProvider {
         return {
             id: "todoist-task-missing-token",
             name: t("missingTokenTaskList"),
-            description: t("reloadTasksDescription"),
+            description: t("refreshCachesDescription"),
             image: this.image,
             defaultAction: {
                 handlerId: RefreshCachesHandlerId,
                 argument: JSON.stringify({ searchTerm }),
-                description: t("reloadTasksDescription"),
+                description: t("refreshCachesDescription"),
                 descriptionTranslation: {
-                    key: "reloadTasksDescription",
+                    key: "refreshCachesDescription",
                     namespace: todoistTranslationNamespace,
                 },
             },
@@ -228,9 +214,9 @@ export class TodoistTaskListProvider {
             defaultAction: {
                 handlerId: RefreshCachesHandlerId,
                 argument: JSON.stringify({ searchTerm }),
-                description: t("reloadTasksDescription"),
+                description: t("refreshCachesDescription"),
                 descriptionTranslation: {
-                    key: "reloadTasksDescription",
+                    key: "refreshCachesDescription",
                     namespace: todoistTranslationNamespace,
                 },
             },
@@ -294,6 +280,8 @@ export class TodoistTaskListProvider {
     }
 
     private getTaskListPrefix(): string {
+        // See note in CacheManager.getTaskFilter: we validate runtime types for
+        // settings because persisted values may be malformed or from older versions.
         const value = this.settingsManager.getValue<string>(
             getExtensionSettingKey(TodoistExtensionId, "taskListPrefix"),
             todoistDefaultSettings.taskListPrefix,
@@ -305,6 +293,8 @@ export class TodoistTaskListProvider {
     }
 
     private getTaskListLimit(): number {
+        // Render-only cap: validate number shape to avoid NaN/negative values
+        // from user-edited settings files.
         const value = this.settingsManager.getValue<number>(
             getExtensionSettingKey(TodoistExtensionId, "taskListLimit"),
             todoistDefaultSettings.taskListLimit,
@@ -318,6 +308,7 @@ export class TodoistTaskListProvider {
     }
 
     private getTaskOpenTarget(): TaskOpenTarget {
+        // Normalize to a safe enum value; unknown strings fall back to "browser".
         const value = this.settingsManager.getValue<TaskOpenTarget>(
             getExtensionSettingKey(TodoistExtensionId, "taskOpenTarget"),
             todoistDefaultSettings.taskOpenTarget,
