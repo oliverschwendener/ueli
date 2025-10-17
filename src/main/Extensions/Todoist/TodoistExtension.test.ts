@@ -4,6 +4,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
+import type { TodoistActionManager } from "./Actions";
 import { TodoistCacheManager } from "./Caching";
 import { TodoistQuickAddProvider, TodoistTaskListProvider } from "./Search";
 import { todoistDefaultSettings } from "./Shared";
@@ -59,10 +60,6 @@ describe(TodoistExtension, () => {
         const translator = createTranslator();
         const taskScheduler = createTaskScheduler();
         const logger = createLogger();
-        const browserWindowNotifier = {
-            notify: vi.fn(),
-            notifyAll: vi.fn(),
-        };
 
         const todoistApiFactory = {
             create: vi.fn().mockReturnValue({
@@ -73,18 +70,22 @@ describe(TodoistExtension, () => {
                 quickAddTask: vi.fn(),
             }),
         };
-        const cacheManager = new TodoistCacheManager(
-            settingsManager,
-            taskScheduler,
-            todoistApiFactory,
-            logger,
-            browserWindowNotifier,
-        );
+        const cacheManager = new TodoistCacheManager(settingsManager, taskScheduler, todoistApiFactory, logger);
 
         const image = { url: "file:///todoist.svg" };
 
         const quickAddProvider = new TodoistQuickAddProvider(cacheManager, settingsManager, translator, image);
-        const taskListProvider = new TodoistTaskListProvider(cacheManager, settingsManager, translator, image);
+        const actionManagerStub: Pick<TodoistActionManager, "refreshTasksInBackground" | "requestSearchRefresh"> = {
+            refreshTasksInBackground: vi.fn(),
+            requestSearchRefresh: vi.fn(),
+        };
+        const taskListProvider = new TodoistTaskListProvider(
+            cacheManager,
+            settingsManager,
+            translator,
+            image,
+            actionManagerStub as unknown as TodoistActionManager,
+        );
         const extension = new TodoistExtension(image, cacheManager, quickAddProvider, taskListProvider);
 
         return {
@@ -138,10 +139,10 @@ describe(TodoistExtension, () => {
         vi.spyOn(cacheManager, "refreshTasks").mockResolvedValue(undefined);
 
         await extension.refreshAllCaches();
-        await extension.reloadTasks("tdl");
+        await extension.reloadTasks();
 
         expect(cacheManager.refreshAllCaches).toHaveBeenCalled();
-        expect(cacheManager.refreshTasks).toHaveBeenCalledWith("tdl");
+        expect(cacheManager.refreshTasks).toHaveBeenCalled();
     });
 
     it("delegates task issue reporting", () => {

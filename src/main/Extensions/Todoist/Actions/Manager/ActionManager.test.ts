@@ -1,10 +1,11 @@
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
 import type { NotificationService } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
-import type { Shell } from "electron";
+import type { BrowserWindow, Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 import { TodoistCacheManager } from "../../Caching";
 import type { TodoistApiFactory } from "../../Shared";
@@ -47,14 +48,15 @@ describe(TodoistActionManager, () => {
             createTaskScheduler(),
             todoistApiFactory,
             createLogger(),
-            { notify: vi.fn(), notifyAll: vi.fn() }
         );
 
         const notificationService: NotificationService = { show: vi.fn() };
+        const mockWindow = { isDestroyed: () => false, hide: vi.fn() } as unknown as BrowserWindow;
         const browserWindowRegistry: BrowserWindowRegistry = {
-            getById: vi.fn().mockReturnValue({ isDestroyed: () => false, hide: vi.fn() } as any),
+            getById: vi.fn().mockReturnValue(mockWindow),
             register: vi.fn(),
-            unregister: vi.fn(),
+            remove: vi.fn(),
+            getAll: vi.fn().mockReturnValue([]),
         };
 
         const shell = { openExternal: vi.fn().mockResolvedValue(undefined) } as unknown as Shell;
@@ -68,15 +70,15 @@ describe(TodoistActionManager, () => {
             createLogger(),
             shell,
             cacheManager,
+            { notify: vi.fn(), notifyAll: vi.fn() } as BrowserWindowNotifier,
         );
 
-        const ensureTasksSpy = vi.spyOn(cacheManager, "ensureTasks").mockResolvedValue(undefined);
+        const refreshTasksSpy = vi.spyOn(cacheManager, "refreshTasks").mockResolvedValue(undefined);
 
         await actionManager.quickAdd("New task from test");
 
         expect(quickAddTask).toHaveBeenCalled();
         expect(notificationService.show).toHaveBeenCalled();
-        expect(ensureTasksSpy).toHaveBeenCalledWith({ force: true });
+        expect(refreshTasksSpy).toHaveBeenCalled();
     });
 });
-

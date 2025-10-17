@@ -1,5 +1,6 @@
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { TaskOpenTarget } from "@common/Extensions/Todoist";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
 import type { NotificationService } from "@Core/Notification";
@@ -23,6 +24,7 @@ export class TodoistActionManager {
         private readonly logger: Logger,
         private readonly shell: Shell,
         private readonly cacheManager: TodoistCacheManager,
+        private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {}
 
     public async quickAdd(text: string): Promise<void> {
@@ -56,7 +58,7 @@ export class TodoistActionManager {
 
             // Immediately refresh tasks in the background so that the next
             // task-list search reflects the newly added item.
-            void this.cacheManager.ensureTasks({ force: true });
+            void this.cacheManager.refreshTasks();
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             this.logger.error(`Todoist quick add failed. Reason: ${message}`);
@@ -105,6 +107,7 @@ export class TodoistActionManager {
                                 searchTerm,
                                 message: t("desktopOpenFailedFallback"),
                             });
+                            this.requestSearchRefresh(searchTerm);
                             return;
                         } catch (browserError) {
                             const browserMessage =
@@ -116,6 +119,7 @@ export class TodoistActionManager {
                                 searchTerm,
                                 message: t("desktopOpenFailed"),
                             });
+                            this.requestSearchRefresh(searchTerm);
                         }
                     }
 
@@ -133,7 +137,8 @@ export class TodoistActionManager {
     }
 
     public async refreshCaches(searchTerm: string): Promise<void> {
-        await this.cacheManager.refreshTasks(searchTerm);
+        await this.cacheManager.refreshTasks();
+        this.requestSearchRefresh(searchTerm);
     }
 
     public async refreshAll(): Promise<void> {
@@ -182,5 +187,28 @@ export class TodoistActionManager {
         if (searchWindow && !searchWindow.isDestroyed()) {
             searchWindow.hide();
         }
+    }
+
+    /**
+     * Request renderer to re-run the current search without altering the input field.
+     * This avoids focus/selection side-effects caused by setSearchTerm.
+     */
+    public requestSearchRefresh(searchTerm?: string): void {
+        this.browserWindowNotifier.notify({
+            browserWindowId: "search",
+            channel: "refreshInstantSearch",
+            data: searchTerm,
+        });
+    }
+
+    /**
+     * Fire-and-forget helper for TaskList provider to refresh tasks
+     * and then ask renderer to re-run search for the same term.
+     */
+    public refreshTasksInBackground(searchTerm: string): void {
+        void this.cacheManager
+            .ensureTasks()
+            .catch(() => undefined)
+            .finally(() => this.requestSearchRefresh(searchTerm));
     }
 }

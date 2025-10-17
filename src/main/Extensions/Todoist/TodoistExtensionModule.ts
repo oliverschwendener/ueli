@@ -33,16 +33,7 @@ export class TodoistExtensionModule implements ExtensionModule {
             url: `file://${assetPathResolver.getExtensionAssetPath(TodoistExtensionId, "todoist.svg")}`,
         };
 
-        const cacheManager = new TodoistCacheManager(
-            settingsManager,
-            taskScheduler,
-            todoistApiFactory,
-            logger,
-            browserWindowNotifier,
-        );
-
-        const quickAddProvider = new TodoistQuickAddProvider(cacheManager, settingsManager, translator, image);
-        const taskListProvider = new TodoistTaskListProvider(cacheManager, settingsManager, translator, image);
+        const cacheManager = new TodoistCacheManager(settingsManager, taskScheduler, todoistApiFactory, logger);
 
         const actionManager = new TodoistActionManager(
             todoistApiFactory,
@@ -53,6 +44,16 @@ export class TodoistExtensionModule implements ExtensionModule {
             logger,
             shell,
             cacheManager,
+            browserWindowNotifier,
+        );
+
+        const quickAddProvider = new TodoistQuickAddProvider(cacheManager, settingsManager, translator, image);
+        const taskListProvider = new TodoistTaskListProvider(
+            cacheManager,
+            settingsManager,
+            translator,
+            image,
+            actionManager,
         );
 
         const extension = new TodoistExtension(image, cacheManager, quickAddProvider, taskListProvider);

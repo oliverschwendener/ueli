@@ -2,6 +2,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { Task } from "@doist/todoist-api-typescript";
 import { describe, expect, it, vi } from "vitest";
+import type { TodoistActionManager } from "../../Actions";
 import type { TodoistCacheManager } from "../../Caching";
 import type { TodoistTaskSnapshot } from "../../Shared";
 import { getTodoistI18nResources } from "../../Shared";
@@ -49,7 +50,6 @@ describe(TodoistTaskListProvider, () => {
     }) => {
         const cacheManager: Partial<TodoistCacheManager> = {
             ensureEntitiesUpToDate: vi.fn(),
-            setLastTaskListSearchTerm: vi.fn(),
             ensureTasks: vi.fn(),
             consumeTaskIssues: vi.fn().mockReturnValue(issues),
             getTaskSnapshot: vi.fn().mockReturnValue(snapshot),
@@ -78,8 +78,20 @@ describe(TodoistTaskListProvider, () => {
     }: {
         cacheManager: TodoistCacheManager;
         settingsManager: SettingsManager;
-    }) =>
-        new TodoistTaskListProvider(cacheManager, settingsManager, createTranslator(), { url: "file:///todoist.svg" });
+    }) => {
+        const actionManagerStub: Pick<TodoistActionManager, "refreshTasksInBackground" | "requestSearchRefresh"> = {
+            refreshTasksInBackground: vi.fn(),
+            requestSearchRefresh: vi.fn(),
+        };
+
+        return new TodoistTaskListProvider(
+            cacheManager,
+            settingsManager,
+            createTranslator(),
+            { url: "file:///todoist.svg" },
+            actionManagerStub as unknown as TodoistActionManager,
+        );
+    };
 
     it("returns empty result when prefix does not match", () => {
         const cacheManager = createCacheManager({

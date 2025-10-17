@@ -6,6 +6,7 @@ import type { TaskOpenTarget } from "@common/Extensions/Todoist";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { Task } from "@doist/todoist-api-typescript";
+import type { TodoistActionManager } from "../../Actions";
 import { RefreshCachesHandlerId, TodoistOpenTaskHandlerId } from "../../Actions";
 import type { TodoistCacheManager } from "../../Caching";
 import type { TodoistTaskIssue } from "../../Shared";
@@ -19,6 +20,7 @@ export class TodoistTaskListProvider {
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
         private readonly image: Image,
+        private readonly actionManager: TodoistActionManager,
     ) {}
 
     public createItems(searchTerm: string): InstantSearchResultItems {
@@ -29,7 +31,6 @@ export class TodoistTaskListProvider {
         }
 
         this.cacheManager.ensureEntitiesUpToDate();
-        this.cacheManager.setLastTaskListSearchTerm(searchTerm);
 
         const { t } = this.translator.createT(getTodoistI18nResources());
         const prefixPart = taskListMatch[0];
@@ -42,7 +43,8 @@ export class TodoistTaskListProvider {
             };
         }
 
-        void this.cacheManager.ensureTasks({ searchTerm });
+        // Fetch tasks asynchronously and request a non-intrusive re-search when done
+        this.actionManager.refreshTasksInBackground(searchTerm);
 
         const beforeItems: SearchResultItem[] = [];
         const issues = this.cacheManager.consumeTaskIssues(searchTerm);
@@ -92,7 +94,7 @@ export class TodoistTaskListProvider {
             }),
         );
 
-        // Loading表示は先頭固定（before）に統一
+        // Keep loading indicator in the "before" section for consistency
 
         return {
             before: beforeItems,

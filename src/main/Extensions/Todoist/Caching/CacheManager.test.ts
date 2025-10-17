@@ -50,7 +50,6 @@ describe(TodoistCacheManager, () => {
             createTaskScheduler(),
             todoistApiFactory,
             createLogger(),
-            { notify: vi.fn(), notifyAll: vi.fn() },
         );
 
         // Initial entity refresh is scheduled on initialize
@@ -65,4 +64,3 @@ describe(TodoistCacheManager, () => {
         expect(getTasks).toHaveBeenCalledTimes(2);
     });
 });
-

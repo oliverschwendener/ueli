@@ -94,16 +94,12 @@ export class TodoistExtension implements Extension {
         await this.cacheManager.refreshAllCaches();
     }
 
-    public async reloadTasks(searchTerm: string): Promise<void> {
-        await this.cacheManager.refreshTasks(searchTerm);
+    public async reloadTasks(): Promise<void> {
+        await this.cacheManager.refreshTasks();
     }
 
     public reportTaskOpenIssue(issue: { searchTerm: string; message: string }): void {
         this.cacheManager.reportTaskIssue(issue);
-    }
-
-    private static hasItems(result: InstantSearchResultItems): boolean {
-        return result.before.length > 0 || result.after.length > 0;
     }
 
     private static joinItems(a: InstantSearchResultItems, b: InstantSearchResultItems): InstantSearchResultItems {
@@ -112,5 +108,4 @@ export class TodoistExtension implements Extension {
             after: [...a.after, ...b.after],
         };
     }
-
 }

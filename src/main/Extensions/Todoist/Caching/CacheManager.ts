@@ -1,4 +1,3 @@
-import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
@@ -27,7 +26,6 @@ export class TodoistCacheManager {
     private tasksCacheExpiresAt = 0;
     private tasksFetchPromise?: Promise<void>;
     private lastTaskLoadError?: string;
-    private lastTaskListSearchTerm?: string;
     private pendingTaskIssues: TodoistTaskIssue[] = [];
     private lastTaskFilterError = false;
 
@@ -36,7 +34,6 @@ export class TodoistCacheManager {
         private readonly taskScheduler: TaskScheduler,
         private readonly todoistApiFactory: TodoistApiFactory,
         private readonly logger: Logger,
-        private readonly browserWindowNotifier: BrowserWindowNotifier,
     ) {}
 
     public initialize(): void {
@@ -63,8 +60,7 @@ export class TodoistCacheManager {
         }
     }
 
-    public async ensureTasks(options?: { force?: boolean; searchTerm?: string }): Promise<void> {
-        const searchTerm = options?.searchTerm;
+    public async ensureTasks(): Promise<void> {
         const filter = this.getTaskFilter();
 
         if (filter !== this.currentTaskFilter) {
@@ -74,11 +70,27 @@ export class TodoistCacheManager {
 
         const hasValidCache = Date.now() < this.tasksCacheExpiresAt && !this.lastTaskLoadError;
 
-        if (hasValidCache && !options?.force) {
+        if (hasValidCache) {
             return;
         }
 
-        await this.executeTasksRefresh({ force: options?.force ?? !hasValidCache, searchTerm });
+        if (this.tasksFetchPromise) {
+            // Do not piggyback on an in-flight fetch; return early.
+            // Callers decide when/how to resync their UI.
+            return;
+        }
+
+        this.tasksFetchPromise = this.fetchTasksAndUpdate()
+            .catch((error) => {
+                this.logger.error(
+                    `Todoist tasks refresh promise failed. Reason: ${error instanceof Error ? error.message : error}`,
+                );
+            })
+            .finally(() => {
+                this.tasksFetchPromise = undefined;
+            });
+
+        await this.tasksFetchPromise;
     }
 
     public getLabels(): TodoistEntity[] {
@@ -97,9 +109,7 @@ export class TodoistCacheManager {
         return this.projectNameById.get(projectId);
     }
 
-    public setLastTaskListSearchTerm(searchTerm: string): void {
-        this.lastTaskListSearchTerm = searchTerm;
-    }
+    // Note: The data layer does not keep any search term; UI orchestrates it.
 
     public getTaskSnapshot(): TodoistTaskSnapshot {
         return {
@@ -117,7 +127,6 @@ export class TodoistCacheManager {
             timestamp: Date.now(),
         };
         this.pendingTaskIssues.push(enriched);
-        this.notifySearchTerm(issue.searchTerm);
     }
 
     public consumeTaskIssues(searchTerm: string): TodoistTaskIssue[] {
@@ -129,17 +138,32 @@ export class TodoistCacheManager {
     public async refreshAllCaches(): Promise<void> {
         this.resetTaskCache();
         this.currentTaskFilter = this.getTaskFilter();
-        await Promise.all([this.refreshEntityCaches(), this.executeTasksRefresh({ force: true })]);
+        await Promise.all([this.refreshEntityCaches(), this.refreshTasks()]);
         // Make sure subsequent task-list searches always fetch fresh data even if
         // a recent Quick Add or server-side delay caused the immediate refresh
         // to miss the latest tasks.
         this.tasksCacheExpiresAt = 0;
     }
 
-    public async refreshTasks(searchTerm: string): Promise<void> {
-        this.currentTaskFilter = this.getTaskFilter();
+    public async refreshTasks(): Promise<void> {
+        const filter = this.getTaskFilter();
+
+        if (filter !== this.currentTaskFilter) {
+            this.currentTaskFilter = filter;
+            this.resetTaskCache();
+        }
+
         this.lastTaskFilterError = false;
-        await this.executeTasksRefresh({ force: true, searchTerm });
+
+        if (this.tasksFetchPromise) {
+            try {
+                await this.tasksFetchPromise;
+            } catch {
+                // ignore
+            }
+        }
+
+        await this.fetchTasksAndUpdate();
     }
 
     private resetTaskCache(): void {
@@ -149,13 +173,7 @@ export class TodoistCacheManager {
         this.lastTaskFilterError = false;
     }
 
-    private notifySearchTerm(searchTerm: string): void {
-        this.browserWindowNotifier.notify({
-            browserWindowId: "search",
-            channel: "setSearchTerm",
-            data: searchTerm,
-        });
-    }
+    // Note: UI notifications are intentionally not handled in this data layer.
 
     private getApiToken(): string {
         return this.settingsManager.getValue<string>(
@@ -228,71 +246,28 @@ export class TodoistCacheManager {
         }
     }
 
-    private async executeTasksRefresh({ force, searchTerm }: { force: boolean; searchTerm?: string }): Promise<void> {
+    private async fetchTasksAndUpdate(): Promise<void> {
         if (!this.getApiToken()) {
             this.resetTaskCache();
-
-            if (searchTerm) {
-                this.notifySearchTerm(searchTerm);
-            }
-
             return;
         }
 
-        if (!force && this.tasksFetchPromise) {
-            if (searchTerm) {
-                this.tasksFetchPromise
-                    .finally(() => {
-                        this.notifySearchTerm(searchTerm);
-                    })
-                    .catch(() => undefined);
-            }
+        try {
+            const tasks = await this.fetchTasksFromApi();
+            this.tasks = tasks;
+            this.lastTaskLoadError = undefined;
+            this.tasksCacheExpiresAt = Date.now() + TaskCacheTtlInMs;
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            this.logger.error(`Failed to refresh Todoist tasks. Reason: ${message}`);
+            this.tasksCacheExpiresAt = Date.now();
 
-            return;
-        }
-
-        if (this.tasksFetchPromise) {
-            await this.tasksFetchPromise;
-        }
-
-        const fetchPromise = (async () => {
-            try {
-                const tasks = await this.fetchTasksFromApi();
-                this.tasks = tasks;
+            if (this.lastTaskFilterError) {
                 this.lastTaskLoadError = undefined;
-                this.tasksCacheExpiresAt = Date.now() + TaskCacheTtlInMs;
-            } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
-                this.logger.error(`Failed to refresh Todoist tasks. Reason: ${message}`);
-                this.tasksCacheExpiresAt = Date.now();
-
-                if (this.lastTaskFilterError) {
-                    this.lastTaskLoadError = undefined;
-                } else {
-                    this.lastTaskLoadError = message;
-                }
+            } else {
+                this.lastTaskLoadError = message;
             }
-        })()
-            .catch((error) => {
-                this.logger.error(
-                    `Todoist tasks refresh promise failed. Reason: ${error instanceof Error ? error.message : error}`,
-                );
-            })
-            .finally(() => {
-                if (this.tasksFetchPromise === fetchPromise) {
-                    this.tasksFetchPromise = undefined;
-                }
-
-                if (searchTerm) {
-                    this.notifySearchTerm(searchTerm);
-                } else if (this.lastTaskListSearchTerm) {
-                    this.notifySearchTerm(this.lastTaskListSearchTerm);
-                }
-            });
-
-        this.tasksFetchPromise = fetchPromise;
-
-        await fetchPromise;
+        }
     }
 
     private async fetchTasksFromApi(): Promise<Task[]> {
