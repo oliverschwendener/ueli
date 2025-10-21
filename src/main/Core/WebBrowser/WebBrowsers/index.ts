@@ -1,4 +1,4 @@
-export * from "./ArcBrowser";
+export * from "./Arc";
 export * from "./BraveBrowser";
 export * from "./Firefox";
 export * from "./GoogleChrome";
