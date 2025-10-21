@@ -86,6 +86,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.UeliCommandModule.bootstrap(moduleRegistry);
     await Core.TrayIconModule.bootstrap(moduleRegistry);
     Core.DialogModule.bootstrap(moduleRegistry);
+    Core.WebBrowserModule.bootstrap(moduleRegistry);
     Core.TerminalModule.bootstrap(moduleRegistry);
     Core.ExtensionRegistryModule.bootstrap(moduleRegistry);
     Core.DragAndDropModule.bootstrap(moduleRegistry);

@@ -12,3 +12,4 @@ export * from "./RescanStatus";
 export * from "./SearchResultItem";
 export * from "./SearchResultItemAction";
 export * from "./SearchResultItemActionUtility";
+export * from "./WebBrowser";

@@ -33,6 +33,7 @@ import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { TerminalRegistry } from "@Core/Terminal";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
+import type { WebBrowserRegistry } from "@Core/WebBrowser/Contract";
 import type { XmlParser } from "@Core/XmlParser";
 import type {
     App,
@@ -97,5 +98,6 @@ export type UeliModules = {
     Translator: Translator;
     UeliCommandInvoker: UeliCommandInvoker;
     UrlImageGenerator: UrlImageGenerator;
+    WebBrowserRegistry: WebBrowserRegistry;
     XmlParser: XmlParser;
 };

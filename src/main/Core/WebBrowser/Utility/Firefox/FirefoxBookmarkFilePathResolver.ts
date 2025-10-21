@@ -4,7 +4,7 @@ import type { OperatingSystem } from "@common/Core";
 import type { App } from "electron";
 import { join } from "path";
 
-export class FirefoxBookmarkFileResolver {
+export class FirefoxBookmarkFilePathResolver {
     public constructor(
         private readonly operatingSystem: OperatingSystem,
         private readonly app: App,
@@ -17,13 +17,15 @@ export class FirefoxBookmarkFileResolver {
     }
 
     private getAppDataFilePath(): string {
-        const map: Record<OperatingSystem, string> = {
-            Linux: "", // not supported
-            macOS: join(this.app.getPath("appData"), "Firefox"),
-            Windows: join(this.app.getPath("home"), "AppData", "Roaming", "Mozilla", "Firefox"),
+        const map: Record<OperatingSystem, () => string> = {
+            Linux: () => {
+                throw new Error("Linux is not supported by Firefox.");
+            },
+            macOS: () => join(this.app.getPath("appData"), "Firefox"),
+            Windows: () => join(this.app.getPath("home"), "AppData", "Roaming", "Mozilla", "Firefox"),
         };
 
-        return map[this.operatingSystem];
+        return map[this.operatingSystem]();
     }
 
     private getRelativeProfilePath(): string {

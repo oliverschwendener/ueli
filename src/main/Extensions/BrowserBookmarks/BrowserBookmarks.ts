@@ -1,8 +1,10 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
+import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import type { WebBrowser, WebBrowserBookmark, WebBrowserRegistry } from "@Core/WebBrowser";
 import {
     createCopyToClipboardAction,
     createOpenUrlSearchResultAction,
@@ -11,12 +13,9 @@ import {
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
-import type { Browser } from "@common/Extensions/BrowserBookmarks";
-import type { BrowserBookmark } from "./BrowserBookmark";
-import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 
 type Settings = {
-    browsers: Browser[];
+    browsers: string[];
     searchResultStyle: string;
     iconType: string;
 };
@@ -41,71 +40,46 @@ export class BrowserBookmarks implements Extension {
         iconType: "favicon",
     };
 
+    private readonly keyboardShortcuts: Record<OperatingSystem, Record<string, string>> = {
+        Linux: { copyUrlToClipboard: "Ctrl+C" },
+        macOS: { copyUrlToClipboard: "Cmd+C" },
+        Windows: { copyUrlToClipboard: "Ctrl+C" },
+    };
+
     public constructor(
-        private readonly browserBookmarkRepositories: Record<Browser, BrowserBookmarkRepository>,
+        private readonly webBrowserRegistry: WebBrowserRegistry,
         private readonly settingsManager: SettingsManager,
         private readonly assetPathResolver: AssetPathResolver,
-        private readonly urlImageGenerator: UrlImageGenerator,
         private readonly operatingSystem: OperatingSystem,
         private readonly translator: Translator,
+        private readonly urlImageGenerator: UrlImageGenerator,
+        private readonly logger: Logger,
     ) {}
 
     public async getSearchResultItems(): Promise<SearchResultItem[]> {
-        const { t } = this.translator.createT(this.getI18nResources());
-        const browsers = this.getCurrentlyConfiguredBrowsers();
-
-        const keyboardShortcuts: Record<OperatingSystem, Record<string, string>> = {
-            Linux: { copyUrlToClipboard: "Ctrl+C" },
-            macOS: { copyUrlToClipboard: "Cmd+C" },
-            Windows: { copyUrlToClipboard: "Ctrl+C" },
-        };
-
-        const toSearchResultItem = (browserBookmark: BrowserBookmark, browserName: Browser): SearchResultItem => {
-            return {
-                description: t("searchResultItemDescription", { browserName }),
-                details: browserBookmark.getUrl(),
-                defaultAction: createOpenUrlSearchResultAction({
-                    url: browserBookmark.getUrl(),
-                }),
-                id: browserBookmark.getId(),
-                name: this.getName(browserBookmark),
-                image: this.getBrowserBookmarkImage(browserBookmark, browserName),
-                additionalActions: [
-                    createCopyToClipboardAction({
-                        textToCopy: browserBookmark.getUrl(),
-                        description: "Copy URL to clipboard",
-                        descriptionTranslation: {
-                            key: "copyUrlToClipboard",
-                            namespace: "extension[BrowserBookmarks]",
-                        },
-                        keyboardShortcut: keyboardShortcuts[this.operatingSystem].copyUrlToClipboard,
-                    }),
-                ],
-            };
-        };
-
         let result: SearchResultItem[] = [];
 
-        for (const browser of browsers) {
-            const repository: BrowserBookmarkRepository | undefined = this.browserBookmarkRepositories[browser];
+        const promiseResult = await Promise.allSettled(
+            this.getCurrentlyConfiguredBrowsers().map((webBrowser) => webBrowser.getBookmarks()),
+        );
 
-            if (repository) {
-                result = [...result, ...(await repository.getAll()).map((b) => toSearchResultItem(b, browser))];
+        for (let i = 0; i < promiseResult.length; i++) {
+            const webBrowser = this.getCurrentlyConfiguredBrowsers()[i];
+            const bookmarksResult = promiseResult[i];
+
+            if (bookmarksResult.status === "fulfilled") {
+                result = [
+                    ...result,
+                    ...bookmarksResult.value.map((b) => this.mapBookmarkToSearchResultItem(b, webBrowser)),
+                ];
+            } else {
+                this.logger.error(
+                    `Unable to get bookmarks for browser "${webBrowser.getName()}". Reason: ${bookmarksResult.reason}`,
+                );
             }
         }
 
         return result;
-    }
-
-    private getBrowserBookmarkImage(browserBookmark: BrowserBookmark, browser: Browser): Image {
-        const iconType = this.settingsManager.getValue<string>(
-            `extension[${this.id}].iconType`,
-            this.defaultSettings["iconType"],
-        );
-
-        return iconType === "browserIcon"
-            ? this.getBrowserImage(browser)
-            : this.urlImageGenerator.getImage(browserBookmark.getUrl());
     }
 
     public isSupported(): boolean {
@@ -129,16 +103,6 @@ export class BrowserBookmarks implements Extension {
     public getImage(): Image {
         return {
             url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "browser-bookmarks.png")}`,
-        };
-    }
-
-    public getAssetFilePath(key: string): string {
-        return this.getBrowserImageFilePath(key as Browser);
-    }
-
-    private getBrowserImage(browser: Browser): Image {
-        return {
-            url: `file://${this.getBrowserImageFilePath(browser)}`,
         };
     }
 
@@ -195,7 +159,44 @@ export class BrowserBookmarks implements Extension {
         };
     }
 
-    private getName(browserBookmark: BrowserBookmark): string {
+    private mapBookmarkToSearchResultItem(
+        browserBookmark: WebBrowserBookmark,
+        webBrowser: WebBrowser,
+    ): SearchResultItem {
+        const { t } = this.translator.createT(this.getI18nResources());
+
+        const iconType = this.settingsManager.getValue<string>(
+            `extension[${this.id}].iconType`,
+            this.defaultSettings["iconType"],
+        );
+
+        return {
+            description: t("searchResultItemDescription", { browserName: webBrowser.getName() }),
+            details: browserBookmark.getUrl(),
+            defaultAction: createOpenUrlSearchResultAction({
+                url: browserBookmark.getUrl(),
+            }),
+            id: browserBookmark.getId(),
+            name: this.getName(browserBookmark),
+            image:
+                iconType === "browserIcon"
+                    ? webBrowser.getImage()
+                    : this.urlImageGenerator.getImage(browserBookmark.getUrl()),
+            additionalActions: [
+                createCopyToClipboardAction({
+                    textToCopy: browserBookmark.getUrl(),
+                    description: "Copy URL to clipboard",
+                    descriptionTranslation: {
+                        key: "copyUrlToClipboard",
+                        namespace: "extension[BrowserBookmarks]",
+                    },
+                    keyboardShortcut: this.keyboardShortcuts[this.operatingSystem].copyUrlToClipboard,
+                }),
+            ],
+        };
+    }
+
+    private getName(browserBookmark: WebBrowserBookmark): string {
         const searchResultStyle = this.settingsManager.getValue<string>(
             getExtensionSettingKey(this.id, "searchResultStyle"),
             <string>this.getSettingDefaultValue("searchResultStyle"),
@@ -210,23 +211,12 @@ export class BrowserBookmarks implements Extension {
         return Object.keys(names).includes(searchResultStyle) ? names[searchResultStyle]() : names["nameOnly"]();
     }
 
-    private getCurrentlyConfiguredBrowsers(): Browser[] {
-        return this.settingsManager.getValue<Browser[]>(
+    private getCurrentlyConfiguredBrowsers(): WebBrowser[] {
+        const browserNames = this.settingsManager.getValue<string[]>(
             getExtensionSettingKey("BrowserBookmarks", "browsers"),
-            <Browser[]>this.getSettingDefaultValue("browsers"),
+            <string[]>this.getSettingDefaultValue("browsers"),
         );
-    }
 
-    private getBrowserImageFilePath(key: Browser): string {
-        const assetFileNames: Record<Browser, string> = {
-            Firefox: "firefox.png",
-            Arc: "arc.png",
-            "Brave Browser": "brave-browser.png",
-            "Google Chrome": "google-chrome.png",
-            "Microsoft Edge": "microsoft-edge.png",
-            "Yandex Browser": "yandex-browser.svg",
-        };
-
-        return this.assetPathResolver.getExtensionAssetPath(this.id, assetFileNames[key]);
+        return this.webBrowserRegistry.getByNames(browserNames);
     }
 }

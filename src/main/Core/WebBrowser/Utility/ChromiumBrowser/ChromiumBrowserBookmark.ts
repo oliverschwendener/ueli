@@ -1,6 +1,6 @@
-import type { BrowserBookmark } from "./BrowserBookmark";
+import type { WebBrowserBookmark } from "../../Contract";
 
-export class FirefoxBrowserBookmark implements BrowserBookmark {
+export class ChromiumBrowserBookmark implements WebBrowserBookmark {
     public constructor(
         private readonly name: string,
         private readonly url: string,
@@ -16,6 +16,6 @@ export class FirefoxBrowserBookmark implements BrowserBookmark {
     }
 
     public getId(): string {
-        return `FirefoxBrowserBookmark[${this.id}]`;
+        return this.id;
     }
 }

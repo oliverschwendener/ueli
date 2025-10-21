@@ -1,27 +1,13 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { BrowserBookmark } from "./BrowserBookmark";
-import type { BrowserBookmarkRepository } from "./BrowserBookmarkRepository";
 import { ChromiumBrowserBookmark } from "./ChromiumBrowserBookmark";
+import type { BookmarkItem, ChromiumBrowserBookmarkFile } from "./ChromiumBrowserBookmarkFile";
 
-type BookmarkItem = {
-    children: BookmarkItem[];
-    guid: string;
-    name: string;
-    type: "folder" | "url";
-    url?: string;
-};
+export class ChromiumBrowserBookmarkRepository {
+    public constructor(private readonly fileSystemUtility: FileSystemUtility) {}
 
-type BookmarksFileContent = { roots: { bookmark_bar: BookmarkItem; other: BookmarkItem } };
+    public async getAll(bookmarkFilePath: string): Promise<ChromiumBrowserBookmark[]> {
+        const fileContent = await this.fileSystemUtility.readJsonFile<ChromiumBrowserBookmarkFile>(bookmarkFilePath);
 
-export class ChromiumBrowserBookmarkRepository implements BrowserBookmarkRepository {
-    public constructor(
-        private readonly fileSystemUtility: FileSystemUtility,
-        private readonly bookmarksFilePathResolver: () => string,
-    ) {}
-
-    public async getAll(): Promise<BrowserBookmark[]> {
-        const jsonFilePath = this.bookmarksFilePathResolver();
-        const fileContent = await this.fileSystemUtility.readJsonFile<BookmarksFileContent>(jsonFilePath);
         const bookmarkBarBookmarks = this.getBookmarksFromItem(fileContent.roots.bookmark_bar);
         const otherBookmarks = this.getBookmarksFromItem(fileContent.roots.other);
 
