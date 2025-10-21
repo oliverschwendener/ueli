@@ -18,8 +18,8 @@ export class DummyWebBrowser implements WebBrowser {
         return this.image;
     }
 
-    public getBookmarks(): Promise<WebBrowserBookmark[]> {
-        return Promise.resolve(this.bookmarks);
+    public async getBookmarks(): Promise<WebBrowserBookmark[]> {
+        return this.bookmarks;
     }
 
     public isSupported(): boolean {
