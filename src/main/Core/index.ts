@@ -49,4 +49,5 @@ export * from "./Terminal";
 export * from "./Translator";
 export * from "./TrayIcon";
 export * from "./UeliCommand";
+export * from "./WebBrowser";
 export * from "./XmlParser";

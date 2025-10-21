@@ -1,28 +1,27 @@
+import type { WebBrowser } from "@common/Core";
+import { getImageUrl } from "@Core/getImageUrl";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import type { Browser } from "@common/Extensions/BrowserBookmarks";
+import { ThemeContext } from "@Core/Theme";
 import { Dropdown, Option } from "@fluentui/react-components";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 export const BrowserBookmarksSettings = () => {
+    const { shouldUseDarkColors } = useContext(ThemeContext);
     const { t } = useTranslation("extension[BrowserBookmarks]");
 
     const extensionId = "BrowserBookmarks";
 
-    const browserOptions: Browser[] = [
-        "Arc",
-        "Brave Browser",
-        "Firefox",
-        "Google Chrome",
-        "Microsoft Edge",
-        "Yandex Browser",
-    ];
+    const supportedWebBrowsers: WebBrowser[] = window.ContextBridge.ipcRenderer.sendSync(
+        "WebBrowserRegistry:getAllSupported",
+    );
 
     const searchResultStyles = ["nameOnly", "urlOnly", "nameAndUrl"];
 
-    const { value: browsers, updateValue: setBrowsers } = useExtensionSetting<Browser[]>({
+    const { value: browsers, updateValue: setBrowsers } = useExtensionSetting<string[]>({
         extensionId,
         key: "browsers",
     });
@@ -46,18 +45,18 @@ export const BrowserBookmarksSettings = () => {
                         <Dropdown
                             value={browsers.join(", ")}
                             selectedOptions={browsers}
-                            onOptionSelect={(_, { selectedOptions }) => setBrowsers(selectedOptions as Browser[])}
+                            onOptionSelect={(_, { selectedOptions }) => setBrowsers(selectedOptions)}
                             multiselect
                             placeholder={t("selectBrowsers")}
                         >
-                            {browserOptions.map((browserName) => (
-                                <Option key={browserName} value={browserName} text={browserName}>
+                            {supportedWebBrowsers.map((webBrowser) => (
+                                <Option key={webBrowser.name} value={webBrowser.name} text={webBrowser.name}>
                                     <img
                                         style={{ width: 20, height: 20 }}
-                                        alt={browserName}
-                                        src={`file://${window.ContextBridge.getExtensionAssetFilePath(extensionId, browserName)}`}
+                                        alt={webBrowser.name}
+                                        src={getImageUrl({ image: webBrowser.image, shouldUseDarkColors })}
                                     />
-                                    {browserName}
+                                    {webBrowser.name}
                                 </Option>
                             ))}
                         </Dropdown>
