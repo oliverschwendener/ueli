@@ -5,10 +5,14 @@ import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";
 import { HideWindowOn } from "./HideWindowOn";
 import { Opacity } from "./Opacity";
+import { RememberSize } from "./RememberSize";
 import { ScrollBehavior } from "./ScrollBehavior";
 import { ShowOnStartup } from "./ShowOnStartup";
 import { Vibrancy } from "./Vibrancy";
+import { WindowHeight } from "./WindowHeight";
+import { WindowWidth } from "./WindowWidth";
 import { WorkspaceVisibility } from "./WorkspaceVisibility";
+import { HideInitialList } from "./HideInitialList";
 
 export const Window = () => {
     const operatingSystem = window.ContextBridge.getOperatingSystem();
@@ -18,6 +22,11 @@ export const Window = () => {
         defaultValue: "Mica",
     });
 
+    const { value: rememberSize } = useSetting({
+        key: "window.rememberSize",
+        defaultValue: false,
+    });
+
     return (
         <SettingGroupList>
             <SettingGroup title="Behavior">
@@ -25,6 +34,8 @@ export const Window = () => {
                 <ShowOnStartup />
                 <HideWindowOn />
                 <ScrollBehavior />
+                <HideInitialList />
+                <RememberSize />
                 {["macOS", "Linux"].includes(operatingSystem) && <WorkspaceVisibility />}
             </SettingGroup>
 
@@ -38,6 +49,12 @@ export const Window = () => {
                 {operatingSystem === "Windows" && backgroundMaterial === "Acrylic" && <Opacity />}
                 {operatingSystem === "macOS" && <Vibrancy />}
             </SettingGroup>
+            {rememberSize && (
+                <SettingGroup title="Window Size">
+                    <WindowWidth />
+                    <WindowHeight />
+                </SettingGroup>
+            )}
         </SettingGroupList>
     );
 };
