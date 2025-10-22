@@ -3,7 +3,6 @@ import { useExtensionSetting } from "@Core/Hooks";
 import {
     Button,
     DialogTrigger,
-    Label,
     Table,
     TableBody,
     TableCell,
@@ -18,6 +17,8 @@ import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@flue
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomWebSearchDialog } from "./CustomWebSearchDialog";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 
 const createCustomSearchEngineSetting = (): CustomSearchEngineSetting => ({
     id: crypto.randomUUID(),
@@ -71,70 +72,69 @@ export const CustomWebSearchSettings = () => {
     };
 
     return (
-        <div>
-            <div style={{ float: "left" }}>
-                <Label weight="semibold">{t("searchEngines")}</Label>
-            </div>
-            <div style={{ marginBottom: 8, float: "right", textAlign: "right" }}>
-                <DialogTrigger disableButtonEnhancement>
-                    <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
-                        {t("addSearchEngine")}
-                    </Button>
-                </DialogTrigger>
-                <CustomWebSearchDialog
-                    isAddDialog={currentEngineSettings.prefix === ""}
-                    isDialogOpen={isDialogOpen}
-                    closeDialog={() => setIsDialogOpen(false)}
-                    onSave={editCustomSearchEngineSetting}
-                    initialEngineSetting={{ ...currentEngineSettings }}
-                    existingPrefixes={customSearchEngineSettings
-                        .filter((setting) => setting.id !== currentEngineSettings.id)
-                        .map((setting) => setting.prefix)}
-                />
-            </div>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHeaderCell style={{ width: 120 }}>{t("name")}</TableHeaderCell>
-                        <TableHeaderCell style={{ width: 80 }}>{t("prefix")}</TableHeaderCell>
-                        <TableHeaderCell>{t("url")}</TableHeaderCell>
-                        <TableHeaderCell style={{ width: 80 }}>{t("encodeSearchTerm")}</TableHeaderCell>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {customSearchEngineSettings.map(({ id, name, prefix, url, encodeSearchTerm }) => (
-                        <TableRow key={name}>
-                            <TableCell>{name}</TableCell>
-                            <TableCell>{prefix}</TableCell>
-                            <TableCell style={{ overflow: "hidden" }}>{url}</TableCell>
-                            <TableCell>
-                                <TableCellLayout
-                                    style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
-                                >
-                                    {encodeSearchTerm ? <CheckmarkRegular /> : ""}
-                                </TableCellLayout>
-                                <TableCellActions>
-                                    <Tooltip relationship="label" content={t("edit")}>
-                                        <Button
-                                            size="small"
-                                            icon={<EditRegular />}
-                                            onClick={() => openEditDialog(id)}
-                                        />
-                                    </Tooltip>
-                                    <Tooltip relationship="label" content={t("remove")}>
-                                        <Button
-                                            style={{ marginLeft: 4 }}
-                                            size="small"
-                                            icon={<DismissRegular />}
-                                            onClick={() => removeCustomSearchEngineSetting(id)}
-                                        />
-                                    </Tooltip>
-                                </TableCellActions>
-                            </TableCell>
+        <SettingGroupList>
+            <SettingGroup title={t("searchEngines")}>
+                <Table style={{ marginBottom: 8 }}>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHeaderCell style={{ width: 120 }}>{t("name")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 80 }}>{t("prefix")}</TableHeaderCell>
+                            <TableHeaderCell>{t("url")}</TableHeaderCell>
+                            <TableHeaderCell style={{ width: 80 }}>{t("encodeSearchTerm")}</TableHeaderCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </div>
+                    </TableHeader>
+                    <TableBody>
+                        {customSearchEngineSettings.map(({ id, name, prefix, url, encodeSearchTerm }) => (
+                            <TableRow key={name}>
+                                <TableCell>{name}</TableCell>
+                                <TableCell>{prefix}</TableCell>
+                                <TableCell style={{ overflow: "hidden" }}>{url}</TableCell>
+                                <TableCell>
+                                    <TableCellLayout
+                                        style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+                                    >
+                                        {encodeSearchTerm ? <CheckmarkRegular /> : ""}
+                                    </TableCellLayout>
+                                    <TableCellActions>
+                                        <Tooltip relationship="label" content={t("edit")}>
+                                            <Button
+                                                size="small"
+                                                icon={<EditRegular />}
+                                                onClick={() => openEditDialog(id)}
+                                            />
+                                        </Tooltip>
+                                        <Tooltip relationship="label" content={t("remove")}>
+                                            <Button
+                                                style={{ marginLeft: 4 }}
+                                                size="small"
+                                                icon={<DismissRegular />}
+                                                onClick={() => removeCustomSearchEngineSetting(id)}
+                                            />
+                                        </Tooltip>
+                                    </TableCellActions>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <div style={{ textAlign: "left", position: "sticky", bottom: 0, zIndex: 10000 }}>
+                    <DialogTrigger disableButtonEnhancement>
+                        <Button onClick={() => openEditDialog()} icon={<AddRegular />}>
+                            {t("addSearchEngine")}
+                        </Button>
+                    </DialogTrigger>
+                    <CustomWebSearchDialog
+                        isAddDialog={currentEngineSettings.prefix === ""}
+                        isDialogOpen={isDialogOpen}
+                        closeDialog={() => setIsDialogOpen(false)}
+                        onSave={editCustomSearchEngineSetting}
+                        initialEngineSetting={{ ...currentEngineSettings }}
+                        existingPrefixes={customSearchEngineSettings
+                            .filter((setting) => setting.id !== currentEngineSettings.id)
+                            .map((setting) => setting.prefix)}
+                    />
+                </div>
+            </SettingGroup>
+        </SettingGroupList>
     );
 };
