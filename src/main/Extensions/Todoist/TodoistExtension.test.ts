@@ -136,13 +136,10 @@ describe(TodoistExtension, () => {
     it("delegates refresh operations to cache manager", async () => {
         const { extension, cacheManager } = setup();
         vi.spyOn(cacheManager, "refreshAllCaches").mockResolvedValue(undefined);
-        vi.spyOn(cacheManager, "refreshTasks").mockResolvedValue(undefined);
 
         await extension.refreshAllCaches();
-        await extension.reloadTasks();
 
         expect(cacheManager.refreshAllCaches).toHaveBeenCalled();
-        expect(cacheManager.refreshTasks).toHaveBeenCalled();
     });
 
     it("delegates task issue reporting", () => {

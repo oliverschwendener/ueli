@@ -20,7 +20,7 @@ This extension lets you add tasks to Todoist and browse your active tasks direct
 
 - Type the task-list prefix (default `tdl`) to fetch the latest active tasks from Todoist.
 - Tasks are sorted by due date then creation date and can be filtered further by typing after the prefix (matches task content, project name, and label names case-insensitively).
-- Selecting a task launches Todoist either in the browser or desktop app based on the configured target; an alternate action lets you hold `Alt` to flip targets.
+- Selecting a task launches Todoist either in the browser or desktop app based on the configured target.
 - If Todoist returns an error (including filter syntax errors) the list shows an inline error item instead of opening notifications.
 
 ## Settings
@@ -29,7 +29,7 @@ This extension lets you add tasks to Todoist and browse your active tasks direct
 - Task list prefix: case-insensitive trigger for the task list. Default `tdl`.
 - Suggestion limit: maximum number of label/project suggestions and the page size for entity fetches. Default `15`.
 - Task list limit: maximum number of tasks shown per refresh. Default `30`.
-- Task open target: choose `browser` or `desktopApp` for the default open action; the alternate action opens the other target.
+- Task open target: choose `browser` or `desktopApp` for the default open action.
 - Task filter: optional Todoist filter query applied server-side when fetching tasks (uses Todoist's native syntax). Empty by default.
 - API token: personal Todoist API token required for all operations. Stored via SafeStorage when marked sensitive.
 

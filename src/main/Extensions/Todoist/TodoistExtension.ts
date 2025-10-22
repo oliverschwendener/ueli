@@ -94,10 +94,6 @@ export class TodoistExtension implements Extension {
         await this.cacheManager.refreshAllCaches();
     }
 
-    public async reloadTasks(): Promise<void> {
-        await this.cacheManager.refreshTasks();
-    }
-
     public reportTaskOpenIssue(issue: { searchTerm: string; message: string }): void {
         this.cacheManager.reportTaskIssue(issue);
     }
