@@ -1,5 +1,7 @@
 import type { CustomSearchEngineSetting, Settings } from "@common/Extensions/CustomWebSearch";
 import { useExtensionSetting } from "@Core/Hooks";
+import { SettingGroup } from "@Core/Settings/SettingGroup";
+import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import {
     Button,
     DialogTrigger,
@@ -17,8 +19,6 @@ import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@flue
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomWebSearchDialog } from "./CustomWebSearchDialog";
-import { SettingGroup } from "@Core/Settings/SettingGroup";
-import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 
 const createCustomSearchEngineSetting = (): CustomSearchEngineSetting => ({
     id: crypto.randomUUID(),
