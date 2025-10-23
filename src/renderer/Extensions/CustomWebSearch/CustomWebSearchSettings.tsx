@@ -102,37 +102,39 @@ export const CustomWebSearchSettings = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {customSearchEngineSettings.map(({ id, name, prefix, url, encodeSearchTerm }) => (
-                        <TableRow key={name}>
-                            <TableCell>{name}</TableCell>
-                            <TableCell>{prefix}</TableCell>
-                            <TableCell style={{ overflow: "hidden" }}>{url}</TableCell>
-                            <TableCell>
-                                <TableCellLayout
-                                    style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
-                                >
-                                    {encodeSearchTerm ? <CheckmarkRegular /> : ""}
-                                </TableCellLayout>
-                                <TableCellActions>
-                                    <Tooltip relationship="label" content={t("edit")}>
-                                        <Button
-                                            size="small"
-                                            icon={<EditRegular />}
-                                            onClick={() => openEditDialog(id)}
-                                        />
-                                    </Tooltip>
-                                    <Tooltip relationship="label" content={t("remove")}>
-                                        <Button
-                                            style={{ marginLeft: 4 }}
-                                            size="small"
-                                            icon={<DismissRegular />}
-                                            onClick={() => removeCustomSearchEngineSetting(id)}
-                                        />
-                                    </Tooltip>
-                                </TableCellActions>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {customSearchEngineSettings
+                        .sort((a, b) => a.prefix.localeCompare(b.prefix))
+                        .map(({ id, name, prefix, url, encodeSearchTerm }) => (
+                            <TableRow key={name}>
+                                <TableCell>{name}</TableCell>
+                                <TableCell>{prefix}</TableCell>
+                                <TableCell style={{ overflow: "hidden" }}>{url}</TableCell>
+                                <TableCell>
+                                    <TableCellLayout
+                                        style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
+                                    >
+                                        {encodeSearchTerm ? <CheckmarkRegular /> : ""}
+                                    </TableCellLayout>
+                                    <TableCellActions>
+                                        <Tooltip relationship="label" content={t("edit")}>
+                                            <Button
+                                                size="small"
+                                                icon={<EditRegular />}
+                                                onClick={() => openEditDialog(id)}
+                                            />
+                                        </Tooltip>
+                                        <Tooltip relationship="label" content={t("remove")}>
+                                            <Button
+                                                style={{ marginLeft: 4 }}
+                                                size="small"
+                                                icon={<DismissRegular />}
+                                                onClick={() => removeCustomSearchEngineSetting(id)}
+                                            />
+                                        </Tooltip>
+                                    </TableCellActions>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
         </div>
