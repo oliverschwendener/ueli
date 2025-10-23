@@ -102,7 +102,9 @@ export const CustomWebSearchSettings = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {customSearchEngineSettings.map(({ id, name, prefix, url, encodeSearchTerm }) => (
+                    {customSearchEngineSettings
+                        .sort((a, b) => a.prefix.localeCompare(b.prefix))
+                        .map(({ id, name, prefix, url, encodeSearchTerm }) => (
                         <TableRow key={name}>
                             <TableCell>{name}</TableCell>
                             <TableCell>{prefix}</TableCell>
