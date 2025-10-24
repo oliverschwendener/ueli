@@ -4,7 +4,6 @@ import type { App, BrowserWindowConstructorOptions } from "electron";
 import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
 import { DefaultBrowserWindowConstructorOptionsProvider } from "./DefaultBrowserWindowConstructorOptionsProvider";
-import { defaultWindowSize } from "./defaultWindowSize";
 
 describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
     describe(DefaultBrowserWindowConstructorOptionsProvider.prototype.get, () => {
@@ -20,8 +19,10 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             expect(
                 new DefaultBrowserWindowConstructorOptionsProvider(app, settingsManager, appIconFilePathResolver).get(),
             ).toEqual(<BrowserWindowConstructorOptions>{
-                width: defaultWindowSize.width,
-                height: defaultWindowSize.height,
+                width: 600,
+                height: 400,
+                minHeight: 200,
+                minWidth: 300,
                 alwaysOnTop: undefined,
                 show: undefined,
                 frame: false,
