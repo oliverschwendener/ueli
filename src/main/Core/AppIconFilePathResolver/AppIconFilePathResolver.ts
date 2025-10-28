@@ -20,6 +20,6 @@ export class AppIconFilePathResolver {
             ? fileNames[this.operatingSystem].dark
             : fileNames[this.operatingSystem].light;
 
-        return this.assetPathResolver.getModuleAssetPath("BrowserWindow", filename);
+        return this.assetPathResolver.getModuleAssetPath("AppIconFilePathResolver", filename);
     }
 }

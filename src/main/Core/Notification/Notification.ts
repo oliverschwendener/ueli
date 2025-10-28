@@ -1,10 +1,7 @@
 import { Notification } from "electron";
+import { type Notification as NotificationInterface } from "./Contract";
 
-export interface NotificationService {
-    show({ title, body }: { title: string; body: string }): void;
-}
-
-export class ElectronNotificationService implements NotificationService {
+export class ElectronNotification implements NotificationInterface {
     public constructor(private readonly icon: string) {}
 
     public show({ title, body }: { title: string; body: string }): void {
