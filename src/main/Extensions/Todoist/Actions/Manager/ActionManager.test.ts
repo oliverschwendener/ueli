@@ -1,7 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
-import type { NotificationService } from "@Core/Notification";
+import type { Notification } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import type { Translator } from "@Core/Translator";
@@ -50,7 +50,7 @@ describe(TodoistActionManager, () => {
             createLogger(),
         );
 
-        const notificationService: NotificationService = { show: vi.fn() };
+        const notificationService: Notification = { show: vi.fn() };
         const mockWindow = { isDestroyed: () => false, hide: vi.fn() } as unknown as BrowserWindow;
         const browserWindowRegistry: BrowserWindowRegistry = {
             getById: vi.fn().mockReturnValue(mockWindow),

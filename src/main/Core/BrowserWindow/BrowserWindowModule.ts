@@ -1,6 +1,6 @@
+import { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { NavigateToActionHandler } from "./ActionHandler";
-import { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
 import { HtmlLoader } from "./HtmlLoader";
 import { VibrancyProvider } from "./Vibrancy";

@@ -25,7 +25,7 @@ export class TodoistExtensionModule implements ExtensionModule {
         const logger = moduleRegistry.get("Logger");
         const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
         const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
-        const notificationService = moduleRegistry.get("NotificationService");
+        const notification = moduleRegistry.get("Notification");
         const shell = moduleRegistry.get("Shell");
         const todoistApiFactory = new DefaultTodoistApiFactory();
 
@@ -39,7 +39,7 @@ export class TodoistExtensionModule implements ExtensionModule {
             todoistApiFactory,
             settingsManager,
             translator,
-            notificationService,
+            notification,
             browserWindowRegistry,
             logger,
             shell,

@@ -3,7 +3,7 @@ import type { TaskOpenTarget } from "@common/Extensions/Todoist";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { Logger } from "@Core/Logger";
-import type { NotificationService } from "@Core/Notification";
+import type { Notification } from "@Core/Notification";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { Shell } from "electron";
@@ -19,7 +19,7 @@ export class TodoistActionManager {
         private readonly todoistApiFactory: TodoistApiFactory,
         private readonly settingsManager: SettingsManager,
         private readonly translator: Translator,
-        private readonly notificationService: NotificationService,
+        private readonly notification: Notification,
         private readonly browserWindowRegistry: BrowserWindowRegistry,
         private readonly logger: Logger,
         private readonly shell: Shell,
@@ -39,7 +39,7 @@ export class TodoistActionManager {
         const apiToken = this.getApiToken();
 
         if (!apiToken) {
-            this.notificationService.show({
+            this.notification.show({
                 title: t("notificationTitle"),
                 body: t("missingTokenNotificationBody"),
             });
@@ -51,7 +51,7 @@ export class TodoistActionManager {
             const todoistApi = this.todoistApiFactory.create(apiToken);
             await todoistApi.quickAddTask({ text: normalizedText });
 
-            this.notificationService.show({
+            this.notification.show({
                 title: t("notificationTitle"),
                 body: t("quickAddSuccessNotificationBody"),
             });
@@ -63,7 +63,7 @@ export class TodoistActionManager {
             const message = error instanceof Error ? error.message : String(error);
             this.logger.error(`Todoist quick add failed. Reason: ${message}`);
 
-            this.notificationService.show({
+            this.notification.show({
                 title: t("notificationTitle"),
                 body: t("quickAddFailureNotificationBody"),
             });
