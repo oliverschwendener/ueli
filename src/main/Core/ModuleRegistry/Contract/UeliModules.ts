@@ -21,7 +21,7 @@ import type { FileImageGenerator, UrlImageGenerator } from "@Core/ImageGenerator
 import type { IniFileParser } from "@Core/IniFileParser";
 import type { LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
-import type { NotificationService } from "@Core/Notification";
+import type { Notification } from "@Core/Notification";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { RandomStringProvider } from "@Core/RandomStringProvider";
 import type { SafeStorageEncryption } from "@Core/SafeStorageEncryption";
@@ -79,7 +79,7 @@ export type UeliModules = {
     LinuxDesktopEnvironmentResolver: LinuxDesktopEnvironmentResolver;
     Logger: Logger;
     NativeTheme: NativeTheme;
-    NotificationService: NotificationService;
+    Notification: Notification;
     Net: Net;
     OperatingSystem: OperatingSystem;
     Platform: string;

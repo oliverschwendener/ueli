@@ -1,2 +1,3 @@
+export * from "./Contract";
+export * from "./Notification";
 export * from "./NotificationModule";
-export * from "./NotificationService";

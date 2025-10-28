@@ -1,6 +1,6 @@
 import { AppIconFilePathResolver } from "@Core/BrowserWindow/AppIconFilePathResolver";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import { ElectronNotificationService } from "./NotificationService";
+import { ElectronNotification } from "./Notification";
 
 export class NotificationModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
@@ -10,9 +10,6 @@ export class NotificationModule {
             assetPathResolver,
             moduleRegistry.get("OperatingSystem"),
         );
-        moduleRegistry.register(
-            "NotificationService",
-            new ElectronNotificationService(appIconFilePathResolver.getAppIconFilePath()),
-        );
+        moduleRegistry.register("Notification", new ElectronNotification(appIconFilePathResolver.getAppIconFilePath()));
     }
 }
