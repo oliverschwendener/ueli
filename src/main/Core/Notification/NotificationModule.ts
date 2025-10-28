@@ -1,4 +1,4 @@
-import { AppIconFilePathResolver } from "@Core/BrowserWindow/AppIconFilePathResolver";
+import { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { ElectronNotification } from "./Notification";
 
