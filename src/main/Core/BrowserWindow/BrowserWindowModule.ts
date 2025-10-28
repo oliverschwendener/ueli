@@ -25,7 +25,7 @@ export class BrowserWindowModule {
         );
 
         moduleRegistry.register(
-            "BrowserWindowAppIconFilePathResolver",
+            "AppIconFilePathResolver",
             new AppIconFilePathResolver(
                 moduleRegistry.get("NativeTheme"),
                 moduleRegistry.get("AssetPathResolver"),

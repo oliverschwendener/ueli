@@ -1,9 +1,9 @@
 import type { OperatingSystem } from "@common/Core";
 import type { ActionHandlerRegistry } from "@Core/ActionHandler";
+import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type {
-    BrowserWindowAppIconFilePathResolver,
     BrowserWindowBackgroundMaterialProvider,
     BrowserWindowHtmlLoader,
     BrowserWindowVibrancyProvider,
@@ -55,7 +55,7 @@ export type UeliModules = {
     App: App;
     AppleScriptUtility: AppleScriptUtility;
     AssetPathResolver: AssetPathResolver;
-    BrowserWindowAppIconFilePathResolver: BrowserWindowAppIconFilePathResolver;
+    AppIconFilePathResolver: AppIconFilePathResolver;
     BrowserWindowBackgroundMaterialProvider: BrowserWindowBackgroundMaterialProvider;
     BrowserWindowHtmlLoader: BrowserWindowHtmlLoader;
     BrowserWindowNotifier: BrowserWindowNotifier;
