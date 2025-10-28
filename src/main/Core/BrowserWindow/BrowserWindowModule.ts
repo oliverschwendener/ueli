@@ -1,4 +1,3 @@
-import { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { NavigateToActionHandler } from "./ActionHandler";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
@@ -8,6 +7,7 @@ import { VibrancyProvider } from "./Vibrancy";
 export class BrowserWindowModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
         const actionHandlerRegistry = moduleRegistry.get("ActionHandlerRegistry");
+        const appIconFilePathResolver = moduleRegistry.get("AppIconFilePathResolver");
 
         moduleRegistry.register(
             "BrowserWindowBackgroundMaterialProvider",
@@ -24,14 +24,11 @@ export class BrowserWindowModule {
             new HtmlLoader(moduleRegistry.get("EnvironmentVariableProvider")),
         );
 
-        moduleRegistry.register(
-            "BrowserWindowAppIconFilePathResolver",
-            new AppIconFilePathResolver(
-                moduleRegistry.get("NativeTheme"),
-                moduleRegistry.get("AssetPathResolver"),
-                moduleRegistry.get("OperatingSystem"),
-            ),
-        );
+        // Bind the generic AppIcon resolver to the BrowserWindow-specific contract.
+        // Rationale: keep BrowserWindow dependent on its minimal adapter interface
+        // for decoupling and easy testing/mocking. The implementation can change
+        // without touching BrowserWindow code.
+        moduleRegistry.register("BrowserWindowAppIconFilePathResolver", appIconFilePathResolver);
 
         actionHandlerRegistry.register(new NavigateToActionHandler(moduleRegistry.get("BrowserWindowNotifier")));
     }
