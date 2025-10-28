@@ -62,7 +62,7 @@ export class SettingsWindowModule {
 
         nativeTheme.on("updated", async () => {
             const settingsWindow = await settingsWindowManager.getWindow();
-            settingsWindow.setIcon(appIconFilePathResolver.getAppIconFilePath());
+            settingsWindow.setIcon(appIconFilePathResolver.resolve());
         });
     }
 }

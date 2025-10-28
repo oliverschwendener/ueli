@@ -46,7 +46,7 @@ export class SettingsWindowManager {
             height: 800,
             width: 1000,
             autoHideMenuBar: true,
-            icon: this.appIconFilePathResolver.getAppIconFilePath(),
+            icon: this.appIconFilePathResolver.resolve(),
             title: this.getWindowTitle(),
             webPreferences: {
                 preload: join(__dirname, "..", "dist-preload", "index.js"),

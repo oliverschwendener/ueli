@@ -14,7 +14,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             const app = <App>{ isPackaged: true };
             const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
             const appIconFilePathResolver = <AppIconFilePathResolver>{
-                getAppIconFilePath: () => "appIconFilePath",
+                resolve: () => "appIconFilePath",
             };
 
             expect(
@@ -45,7 +45,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             const app = <App>{ isPackaged: false };
             const settingsManager = <SettingsManager>{ getValue: (k, d) => getValueMock(k, d) };
             const appIconFilePathResolver = <AppIconFilePathResolver>{
-                getAppIconFilePath: () => "appIconFilePath",
+                resolve: () => "appIconFilePath",
             };
 
             const { webPreferences } = new DefaultBrowserWindowConstructorOptionsProvider(

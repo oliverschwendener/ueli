@@ -30,7 +30,7 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
                 webSecurity: this.app.isPackaged,
             },
             alwaysOnTop: this.settingsManager.getValue<boolean>("window.alwaysOnTop", false),
-            icon: this.appIconFilePathResolver.getAppIconFilePath(),
+            icon: this.appIconFilePathResolver.resolve(),
         };
     }
 }

@@ -2,5 +2,5 @@
  * Resolve application icon file path based on OS and theme.
  */
 export interface AppIconFilePathResolver {
-    getAppIconFilePath(): string;
+    resolve(): string;
 }

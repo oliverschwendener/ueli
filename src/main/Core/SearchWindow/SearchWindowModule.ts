@@ -65,7 +65,7 @@ export class SearchWindowModule {
             browserWindowRegistry,
         );
 
-        nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.getAppIconFilePath()));
+        nativeTheme.on("updated", () => searchWindow.setIcon(appIconFilePathResolver.resolve()));
 
         const settingsWindowIsVisible = () => {
             const settingsWindow = browserWindowRegistry.getById("settings");
