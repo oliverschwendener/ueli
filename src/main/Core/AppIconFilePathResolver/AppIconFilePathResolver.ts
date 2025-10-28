@@ -1,8 +1,9 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { OperatingSystem } from "@common/Core";
 import type { NativeTheme } from "electron";
+import type { AppIconFilePathResolver as AppIconFilePathResolverInterface } from "./Contract";
 
-export class AppIconFilePathResolver {
+export class AppIconFilePathResolver implements AppIconFilePathResolverInterface {
     public constructor(
         private readonly nativeTheme: NativeTheme,
         private readonly assetPathResolver: AssetPathResolver,

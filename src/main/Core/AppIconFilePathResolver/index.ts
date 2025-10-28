@@ -1,1 +1,2 @@
-export * from "./AppIconFilePathResolver";
+export * from "./AppIconFilePathResolverModule";
+export * from "./Contract";
