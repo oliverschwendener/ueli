@@ -12,7 +12,10 @@ permissions: {}
 
 jobs:
     build:
-        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                os: [macos-13, macos-14, windows-2022, ubuntu-22.04]
+        runs-on: ${{ matrix.os }}
         name: Build
         steps:
             - name: Checkout current commit/branch/tag
