@@ -1,12 +1,12 @@
 import type { WebBrowser as WebBrowserDTO } from "@common/Core";
-import type { ModuleRegistry, UeliModules } from "@Core/ModuleRegistry";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { WebBrowser } from "./Contract";
 import { ChromiumBrowserBookmarkRepository, FirefoxBookmarkRepository } from "./Utility";
 import { WebBrowserRegistry } from "./WebBrowserRegistry";
 import { Arc, BraveBrowser, Firefox, GoogleChrome, MicrosoftEdge, YandexBrowser, Zen } from "./WebBrowsers/";
 
 export class WebBrowserModule {
-    public static bootstrap(moduleRegistry: ModuleRegistry<UeliModules>): void {
+    public static bootstrap(moduleRegistry: UeliModuleRegistry): void {
         const ipcMain = moduleRegistry.get("IpcMain");
 
         const webBrowserRegistry = new WebBrowserRegistry([
@@ -29,7 +29,7 @@ export class WebBrowserModule {
         });
     }
 
-    private static bootstrapChromiumBasedBrowsers(moduleRegistry: ModuleRegistry<UeliModules>): WebBrowser[] {
+    private static bootstrapChromiumBasedBrowsers(moduleRegistry: UeliModuleRegistry): WebBrowser[] {
         const operatingSystem = moduleRegistry.get("OperatingSystem");
         const app = moduleRegistry.get("App");
         const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
@@ -46,7 +46,7 @@ export class WebBrowserModule {
         ];
     }
 
-    private static bootstrapFirefoxBasedBrowsers(moduleRegistry: ModuleRegistry<UeliModules>): WebBrowser[] {
+    private static bootstrapFirefoxBasedBrowsers(moduleRegistry: UeliModuleRegistry): WebBrowser[] {
         const operatingSystem = moduleRegistry.get("OperatingSystem");
         const app = moduleRegistry.get("App");
         const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
