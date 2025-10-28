@@ -23,7 +23,10 @@ describe(AppIconFilePathResolver, () => {
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Windows");
 
         expect(appIconFilePathResolver.getAppIconFilePath()).toBe("windows-light-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-light-transparent.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith(
+            "AppIconFilePathResolver",
+            "app-icon-light-transparent.png",
+        );
     });
 
     it("should return the correct app icon file path on macOS' dark theme", () => {
