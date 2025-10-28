@@ -4,7 +4,6 @@ import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type {
-    BrowserWindowAppIconFilePathResolver,
     BrowserWindowBackgroundMaterialProvider,
     BrowserWindowHtmlLoader,
     BrowserWindowVibrancyProvider,
@@ -58,7 +57,6 @@ export type UeliModules = {
     AppleScriptUtility: AppleScriptUtility;
     AssetPathResolver: AssetPathResolver;
     AppIconFilePathResolver: AppIconFilePathResolver;
-    BrowserWindowAppIconFilePathResolver: BrowserWindowAppIconFilePathResolver;
     BrowserWindowBackgroundMaterialProvider: BrowserWindowBackgroundMaterialProvider;
     BrowserWindowHtmlLoader: BrowserWindowHtmlLoader;
     BrowserWindowNotifier: BrowserWindowNotifier;

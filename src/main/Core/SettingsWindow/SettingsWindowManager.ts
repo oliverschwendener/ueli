@@ -1,4 +1,5 @@
-import type { BrowserWindowAppIconFilePathResolver, BrowserWindowHtmlLoader } from "@Core/BrowserWindow";
+import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
+import type { BrowserWindowHtmlLoader } from "@Core/BrowserWindow";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { Translator } from "@Core/Translator";
@@ -11,7 +12,7 @@ export class SettingsWindowManager {
     private browserWindow?: BrowserWindow;
 
     public constructor(
-        private readonly browserWindowAppIconFilePathResolver: BrowserWindowAppIconFilePathResolver,
+        private readonly appIconFilePathResolver: AppIconFilePathResolver,
         private readonly translator: Translator,
         private readonly app: App,
         private readonly browserWindowRegistry: BrowserWindowRegistry,
@@ -45,7 +46,7 @@ export class SettingsWindowManager {
             height: 800,
             width: 1000,
             autoHideMenuBar: true,
-            icon: this.browserWindowAppIconFilePathResolver.getAppIconFilePath(),
+            icon: this.appIconFilePathResolver.getAppIconFilePath(),
             title: this.getWindowTitle(),
             webPreferences: {
                 preload: join(__dirname, "..", "dist-preload", "index.js"),

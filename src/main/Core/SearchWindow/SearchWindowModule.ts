@@ -16,7 +16,7 @@ export class SearchWindowModule {
 
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
         const app = moduleRegistry.get("App");
-        const appIconFilePathResolver = moduleRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const appIconFilePathResolver = moduleRegistry.get("AppIconFilePathResolver");
         const backgroundMaterialProvider = moduleRegistry.get("BrowserWindowBackgroundMaterialProvider");
         const eventSubscriber = moduleRegistry.get("EventSubscriber");
         const htmlLoader = moduleRegistry.get("BrowserWindowHtmlLoader");
