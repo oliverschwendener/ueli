@@ -1,1 +1,1 @@
-export * from "./FirefoxBookmarkFilePathResolver";
+export * from "./FirefoxBookmarkRepository";

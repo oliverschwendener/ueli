@@ -1,11 +1,11 @@
-import type { OperatingSystem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import { type OperatingSystem } from "@common/Core";
+import { type Image } from "@common/Core/Image";
+import { type AssetPathResolver } from "@Core/AssetPathResolver";
+import type { FirefoxBookmarkRepository } from "@Core/WebBrowser/Utility";
 import type { WebBrowser, WebBrowserBookmark } from "../../Contract";
-import type { FirefoxBookmarkRepository } from "../../Utility";
 
-export class Firefox implements WebBrowser {
-    private readonly name = "Firefox";
+export class Zen implements WebBrowser {
+    private readonly name = "Zen";
 
     public constructor(
         private readonly operatingSystem: OperatingSystem,
@@ -19,7 +19,7 @@ export class Firefox implements WebBrowser {
 
     public getImage(): Image {
         return {
-            url: `file://${this.assetPathResolver.getModuleAssetPath("WebBrowser", "firefox.png")}`,
+            url: `file://${this.assetPathResolver.getModuleAssetPath("WebBrowser", "zen.png")}`,
         };
     }
 
@@ -28,6 +28,6 @@ export class Firefox implements WebBrowser {
     }
 
     public isSupported(): boolean {
-        return this.operatingSystem === "Windows" || this.operatingSystem === "macOS";
+        return this.operatingSystem === "macOS" || this.operatingSystem === "Windows";
     }
 }
