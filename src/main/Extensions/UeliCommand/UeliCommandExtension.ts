@@ -206,6 +206,17 @@ export class UeliCommandExtension implements Extension {
                 disableHotkey: "禁用热键",
                 enableHotkey: "启用热键",
             },
+            "zh-TW": {
+                extensionName: "Ueli 指令",
+                description: "Ueli 指令",
+                openSettings: "開啟 Ueli 設定",
+                openExtensions: "瀏覽 Ueli 擴充套件",
+                centerWindow: "Ueli 視窗置中",
+                quitUeli: "結束 Ueli",
+                rescanExtensions: "重新掃描擴充套件",
+                disableHotkey: "停用快捷鍵",
+                enableHotkey: "啟用快捷鍵",
+            },
         };
     }
 }

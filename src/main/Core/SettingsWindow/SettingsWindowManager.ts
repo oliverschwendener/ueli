@@ -34,6 +34,7 @@ export class SettingsWindowManager {
             "ja-JP": { settingsWindowTitle: "設定" },
             "ko-KR": { settingsWindowTitle: "설정" },
             "zh-CN": { settingsWindowTitle: "设置" },
+            "zh-TW": { settingsWindowTitle: "設定" },
         });
 
         return t("settingsWindowTitle");
