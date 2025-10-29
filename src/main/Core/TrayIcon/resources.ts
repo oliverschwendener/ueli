@@ -42,4 +42,12 @@ export const resources: Resources<TrayIconTranslations> = {
         "trayIcon.contextMenu.hotkey": "热键",
         "trayIcon.contextMenu.hotkey.tooltip": "点击以启用/禁用热键",
     },
+    "zh-TW": {
+        "trayIcon.contextMenu.about": "關於",
+        "trayIcon.contextMenu.quit": "退出",
+        "trayIcon.contextMenu.settings": "設定",
+        "trayIcon.contextMenu.show": "顯示",
+        "trayIcon.contextMenu.hotkey": "快捷鍵",
+        "trayIcon.contextMenu.hotkey.tooltip": "點擊以啟用/停用快捷鍵",
+    },
 };
