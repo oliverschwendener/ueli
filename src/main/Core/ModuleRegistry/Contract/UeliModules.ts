@@ -54,9 +54,9 @@ import type { Emitter } from "mitt";
 export type UeliModules = {
     ActionHandlerRegistry: ActionHandlerRegistry;
     App: App;
+    AppIconFilePathResolver: AppIconFilePathResolver;
     AppleScriptUtility: AppleScriptUtility;
     AssetPathResolver: AssetPathResolver;
-    AppIconFilePathResolver: AppIconFilePathResolver;
     BrowserWindowBackgroundMaterialProvider: BrowserWindowBackgroundMaterialProvider;
     BrowserWindowHtmlLoader: BrowserWindowHtmlLoader;
     BrowserWindowNotifier: BrowserWindowNotifier;

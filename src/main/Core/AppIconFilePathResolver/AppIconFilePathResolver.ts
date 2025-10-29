@@ -10,7 +10,7 @@ export class AppIconFilePathResolver implements AppIconFilePathResolverInterface
         private readonly operatingSystem: OperatingSystem,
     ) {}
 
-    public getAppIconFilePath(): string {
+    public resolve(): string {
         const fileNames: Record<OperatingSystem, { dark: string; light: string }> = {
             Linux: { dark: "app-icon-dark.png", light: "app-icon-light.png" },
             macOS: { dark: "app-icon-dark.png", light: "app-icon-light.png" },
