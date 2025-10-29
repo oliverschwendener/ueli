@@ -5,7 +5,7 @@ import { SettingsWindowManager } from "./SettingsWindowManager";
 export class SettingsWindowModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {
         const app = moduleRegistry.get("App");
-        const browserWindowAppIconFilePathResolver = moduleRegistry.get("BrowserWindowAppIconFilePathResolver");
+        const appIconFilePathResolver = moduleRegistry.get("AppIconFilePathResolver");
         const eventSubscriber = moduleRegistry.get("EventSubscriber");
         const htmlLoader = moduleRegistry.get("BrowserWindowHtmlLoader");
         const ipcMain = moduleRegistry.get("IpcMain");
@@ -16,7 +16,7 @@ export class SettingsWindowModule {
         const eventEmitter = moduleRegistry.get("EventEmitter");
 
         const settingsWindowManager = new SettingsWindowManager(
-            browserWindowAppIconFilePathResolver,
+            appIconFilePathResolver,
             translator,
             app,
             browserWindowRegistry,
@@ -62,7 +62,7 @@ export class SettingsWindowModule {
 
         nativeTheme.on("updated", async () => {
             const settingsWindow = await settingsWindowManager.getWindow();
-            settingsWindow.setIcon(browserWindowAppIconFilePathResolver.getAppIconFilePath());
+            settingsWindow.setIcon(appIconFilePathResolver.resolve());
         });
     }
 }

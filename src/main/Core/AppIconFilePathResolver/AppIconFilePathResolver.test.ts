@@ -11,8 +11,8 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Windows");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("windows-dark-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark-transparent.png");
+        expect(appIconFilePathResolver.resolve()).toBe("windows-dark-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-dark-transparent.png");
     });
 
     it("should return the correct app icon file path on Windows' light theme", () => {
@@ -22,8 +22,11 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Windows");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("windows-light-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light-transparent.png");
+        expect(appIconFilePathResolver.resolve()).toBe("windows-light-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith(
+            "AppIconFilePathResolver",
+            "app-icon-light-transparent.png",
+        );
     });
 
     it("should return the correct app icon file path on macOS' dark theme", () => {
@@ -33,8 +36,8 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "macOS");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("macos-dark-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
+        expect(appIconFilePathResolver.resolve()).toBe("macos-dark-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-dark.png");
     });
 
     it("should return the correct app icon file path on macOS' light theme", () => {
@@ -44,8 +47,8 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "macOS");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("macos-light-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light.png");
+        expect(appIconFilePathResolver.resolve()).toBe("macos-light-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-light.png");
     });
 
     it("should return the correct app icon file path on Linux' dark theme", () => {
@@ -55,8 +58,8 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Linux");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("linux-dark-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-dark.png");
+        expect(appIconFilePathResolver.resolve()).toBe("linux-dark-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-dark.png");
     });
 
     it("should return the correct app icon file path on Linux' light theme", () => {
@@ -66,7 +69,7 @@ describe(AppIconFilePathResolver, () => {
 
         const appIconFilePathResolver = new AppIconFilePathResolver(nativeTheme, assetPathResolver, "Linux");
 
-        expect(appIconFilePathResolver.getAppIconFilePath()).toBe("linux-light-theme-icon.png");
-        expect(getModuleAssetPathMock).toHaveBeenCalledWith("BrowserWindow", "app-icon-light.png");
+        expect(appIconFilePathResolver.resolve()).toBe("linux-light-theme-icon.png");
+        expect(getModuleAssetPathMock).toHaveBeenCalledWith("AppIconFilePathResolver", "app-icon-light.png");
     });
 });

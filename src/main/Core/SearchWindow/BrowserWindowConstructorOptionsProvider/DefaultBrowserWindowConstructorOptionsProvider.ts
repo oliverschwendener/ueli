@@ -1,4 +1,4 @@
-import type { BrowserWindowAppIconFilePathResolver } from "@Core/BrowserWindow";
+import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { App } from "electron";
 import { join } from "path";
@@ -9,7 +9,7 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
     public constructor(
         private readonly app: App,
         private readonly settingsManager: SettingsManager,
-        private readonly browserWindowAppIconFilePathResolver: BrowserWindowAppIconFilePathResolver,
+        private readonly appIconFilePathResolver: AppIconFilePathResolver,
     ) {}
 
     public get(): Electron.BrowserWindowConstructorOptions {
@@ -30,7 +30,7 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
                 webSecurity: this.app.isPackaged,
             },
             alwaysOnTop: this.settingsManager.getValue<boolean>("window.alwaysOnTop", false),
-            icon: this.browserWindowAppIconFilePathResolver.getAppIconFilePath(),
+            icon: this.appIconFilePathResolver.resolve(),
         };
     }
 }
