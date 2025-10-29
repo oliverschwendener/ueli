@@ -1,9 +1,9 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import { AppIconFilePathResolver as AppIconFilePathResolverImpl } from "./AppIconFilePathResolver";
+import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 
 export class AppIconFilePathResolverModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {
-        const resolver = new AppIconFilePathResolverImpl(
+        const resolver = new AppIconFilePathResolver(
             moduleRegistry.get("NativeTheme"),
             moduleRegistry.get("AssetPathResolver"),
             moduleRegistry.get("OperatingSystem"),
