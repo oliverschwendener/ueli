@@ -5,6 +5,10 @@ export class App {
         const app = moduleRegistry.get("App");
         const ipcMain = moduleRegistry.get("IpcMain");
 
+        if (process.platform === "win32") {
+            app.setAppUserModelId("OliverSchwendener.Ueli");
+        }
+
         ipcMain.on("restartApp", () => {
             app.relaunch();
             app.exit();

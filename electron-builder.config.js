@@ -4,6 +4,7 @@
  */
 const baseConfig = {
     asar: true,
+    appId: "OliverSchwendener.Ueli",
     asarUnpack: ["**/node_modules/sharp/**/*", "**/node_modules/@img/**/*"],
     productName: "Ueli",
     directories: {

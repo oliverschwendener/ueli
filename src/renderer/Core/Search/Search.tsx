@@ -279,6 +279,40 @@ export const Search = ({
         search(searchTerm.value);
     }, [favoriteSearchResultItemIds, excludedSearchResultItemIds]);
 
+    useEffect(() => {
+        const setSearchTermHandler = (_: unknown, newSearchTerm: unknown) => {
+            if (typeof newSearchTerm !== "string") {
+                return;
+            }
+
+            searchHistory.closeMenu();
+            search(newSearchTerm);
+            userInput.focus();
+            userInput.select();
+        };
+
+        window.ContextBridge.ipcRenderer.on("setSearchTerm", setSearchTermHandler);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off("setSearchTerm", setSearchTermHandler);
+        };
+    }, [search, searchHistory, userInput]);
+
+    // Non-intrusive refresh: re-run search with current input
+    // without changing the value or moving focus/selection.
+    useEffect(() => {
+        const refreshHandler = () => {
+            searchHistory.closeMenu();
+            search(searchTerm.value);
+        };
+
+        window.ContextBridge.ipcRenderer.on("refreshInstantSearch", refreshHandler);
+
+        return () => {
+            window.ContextBridge.ipcRenderer.off("refreshInstantSearch", refreshHandler);
+        };
+    }, [search, searchHistory, searchTerm.value]);
+
     const { value: searchBarAppearance } = useSetting<SearchBarAppearance>({
         key: "appearance.searchBarAppearance",
         defaultValue: "auto",

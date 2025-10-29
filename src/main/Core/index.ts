@@ -1,6 +1,7 @@
 export * from "./AboutUeli";
 export * from "./ActionHandler";
 export * from "./App";
+export * from "./AppIconFilePathResolver";
 export * from "./AppleScriptUtility";
 export * from "./AssetPathResolver";
 export * from "./Autostart";
@@ -30,6 +31,7 @@ export * from "./LinuxDesktopEnvironment";
 export * from "./Logger";
 export * from "./ModuleRegistry";
 export * from "./NativeTheme";
+export * from "./Notification";
 export * from "./OperatingSystem";
 export * from "./PowershellUtility";
 export * from "./RandomStringProvider";
