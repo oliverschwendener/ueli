@@ -163,6 +163,25 @@ export class ApplicationSearch implements Extension {
                 addFileExtension: "添加文件扩展名",
                 includeAppsFromWindowsStore: "包括来自 Windows 应用商店的应用",
             },
+            "zh-TW": {
+                extensionName: "應用程式尋找",
+                searchResultItemDescription: "應用程式",
+                openApplication: "開啟",
+                openApplicationAsAdministrator: "以系統管理員身份開啟",
+                copyFilePathToClipboard: "將檔案路徑複製到剪貼簿",
+                advanced: "進階",
+                // Settings
+                general: "一般",
+                folders: "資料夾",
+                fileExtensions: "檔案副檔名",
+                folderDoesNotExist: "資料夾不存在",
+                add: "新增",
+                remove: "刪除",
+                addFolder: "新增資料夾",
+                chooseFolder: "選擇資料夾",
+                addFileExtension: "新增檔案副檔名",
+                includeAppsFromWindowsStore: "包含來自 Windows 應用商店的應用",
+            },
         };
     }
 }
