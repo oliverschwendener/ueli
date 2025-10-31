@@ -1,16 +1,16 @@
 import { type AppIconFilePathResolver } from "@Core/AppIconFilePathResolver/Contract";
-import { Notification } from "electron";
+import { Notification as ElectronNotification } from "electron";
 import { type Notification as NotificationInterface } from "./Contract";
 
-export class ElectronNotification implements NotificationInterface {
+export class Notification implements NotificationInterface {
     public constructor(private readonly appIconFilePathResolver: AppIconFilePathResolver) {}
 
     public show({ title, body }: { title: string; body: string }): void {
-        if (!Notification.isSupported()) {
+        if (!ElectronNotification.isSupported()) {
             return;
         }
 
-        const notification = new Notification({ title, body, icon: this.appIconFilePathResolver.getAppIconFilePath() });
+        const notification = new ElectronNotification({ title, body, icon: this.appIconFilePathResolver.resolve() });
         notification.show();
     }
 }
