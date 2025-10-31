@@ -31,6 +31,7 @@ export * from "./LinuxDesktopEnvironment";
 export * from "./Logger";
 export * from "./ModuleRegistry";
 export * from "./NativeTheme";
+export * from "./Notification";
 export * from "./OperatingSystem";
 export * from "./PowershellUtility";
 export * from "./RandomStringProvider";
