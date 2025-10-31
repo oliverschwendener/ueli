@@ -63,6 +63,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.SafeStorageEncryptionModule.bootstrap(moduleRegistry);
     Core.AssetPathResolverModule.bootstrap(moduleRegistry);
     Core.AppIconFilePathResolverModule.bootstrap(moduleRegistry);
+    Core.NotificationModule.bootstrap(moduleRegistry);
     Core.ClipboardModule.bootstrap(moduleRegistry);
     Core.AboutUeliModule.bootstrap(moduleRegistry);
     Core.CommandlineUtilityModule.bootstrap(moduleRegistry);
