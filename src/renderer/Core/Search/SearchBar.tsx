@@ -6,7 +6,7 @@ import type { SearchBarAppearance } from "./SearchBarAppearance";
 import type { SearchBarSize } from "./SearchBarSize";
 
 type SearchBarProps = {
-    refObject?: RefObject<HTMLInputElement>;
+    refObject?: RefObject<HTMLInputElement | null>;
     searchTerm?: string;
     onSearchTermUpdated?: (searchTerm: string) => void;
     onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
