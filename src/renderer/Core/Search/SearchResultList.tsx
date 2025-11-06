@@ -5,7 +5,7 @@ import { SearchResultListItem } from "./SearchResultListItem";
 import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListProps = {
-    containerRef: RefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement | null>;
     selectedItemId: string;
     searchResultItems: SearchResultItem[];
     onSearchResultItemClick: (searchResultItem: SearchResultItem) => void;

@@ -8,7 +8,7 @@ import { SearchResultListItemSelectedIndicator } from "./SearchResultListItemSel
 import type { SearchResultListLayout } from "./SearchResultListLayout";
 
 type SearchResultListItemProps = {
-    containerRef: RefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement | null>;
     isSelected: boolean;
     onClick: () => void;
     onDoubleClick: () => void;

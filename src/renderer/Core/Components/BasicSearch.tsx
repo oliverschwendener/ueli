@@ -31,7 +31,7 @@ export const BasicSearch = ({
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
-    const contentRef = useRef(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>([]);
 
