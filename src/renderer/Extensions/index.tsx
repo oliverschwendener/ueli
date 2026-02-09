@@ -10,6 +10,7 @@ import { CustomWebSearchSettings } from "./CustomWebSearch";
 import { DeeplTranslator, DeeplTranslatorSettings } from "./DeeplTranslator";
 import { FileSearch, FileSearchSettings } from "./FileSearch";
 import { PasswordGeneratorSettings } from "./PasswordGenerator";
+import { RowlyTextEditor, RowlyTextEditorSettings } from "./RowlyTextEditor";
 import { SimpleFileSearchSettings } from "./SimpleFileSearch";
 import { TerminalLauncherSettings } from "./TerminalLauncher";
 import { UuidGenerator, UuidGeneratorSettings } from "./UuidGenerator";
@@ -63,6 +64,10 @@ export const getExtension = (extensionId: string): ExtensionReactElements | unde
         },
         PasswordGenerator: {
             settings: <PasswordGeneratorSettings />,
+        },
+        RowlyTextEditor: {
+            extension: <RowlyTextEditor {...props} />,
+            settings: <RowlyTextEditorSettings />,
         },
         SimpleFileSearch: {
             settings: <SimpleFileSearchSettings />,

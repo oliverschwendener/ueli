@@ -12,6 +12,7 @@ import type { ExtensionModule } from "./ExtensionModule";
 import { FileSearchModule } from "./FileSearch/FileSearchModule";
 import { JetBrainsToolboxModule } from "./JetBrainsToolbox";
 import { PasswordGeneratorModule } from "./PasswordGenerator";
+import { RowlyTextEditorModule } from "./RowlyTextEditor";
 import { SimpleFileSearchExtensionModule } from "./SimpleFileSearch/SimpleFileSearchExtensionModule";
 import { SystemCommandsModule } from "./SystemCommands";
 import { SystemSettingsModule } from "./SystemSettings";
@@ -42,6 +43,7 @@ export class ExtensionLoader {
             new FileSearchModule(),
             new JetBrainsToolboxModule(),
             new PasswordGeneratorModule(),
+            new RowlyTextEditorModule(),
             new SimpleFileSearchExtensionModule(),
             new SystemCommandsModule(),
             new SystemSettingsModule(),
