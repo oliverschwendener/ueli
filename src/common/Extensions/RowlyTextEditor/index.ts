@@ -1,2 +1,2 @@
-export * from "./RowlyTextEditorSettings";
 export * from "./InvocationArgument";
+export * from "./RowlyTextEditorSettings";

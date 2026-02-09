@@ -1,6 +1,6 @@
+import type { ContextBridge } from "@common/Core";
 import type { InvocationArgument } from "@common/Extensions/RowlyTextEditor";
 import { useExtensionSetting } from "@Core/Hooks";
-import type { ContextBridge } from "@common/Core";
 import { Input, Label, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
@@ -36,7 +36,7 @@ export const Editor = ({
     const [inputText, setInputText] = useState<string>("");
     const [pattern, setPattern] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    
+
     const { value: rowSeparator, updateValue: setRowSeparator } = useExtensionSetting<string>({
         extensionId,
         key: "rowSeparator",
@@ -46,20 +46,19 @@ export const Editor = ({
         extensionId,
         key: "columnSeparator",
     });
-    
-    const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
 
+    const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
 
     const apply = async () => {
         try {
             const output = await contextBridge.invokeExtension<InvocationArgument, string>(extensionId, {
-                        inputText,
-                        pattern,
-                        settings: {
-                            rowSeparator,
-                            columnSeparator,
-                        },
-                    });
+                inputText,
+                pattern,
+                settings: {
+                    rowSeparator,
+                    columnSeparator,
+                },
+            });
             setOutputText(output);
         } catch (error) {
             setOutputText("");
@@ -81,7 +80,7 @@ export const Editor = ({
                 await apply();
             }, 250),
         );
-    }, [ inputText, pattern, rowSeparator, columnSeparator]);
+    }, [inputText, pattern, rowSeparator, columnSeparator]);
 
     return (
         <div
