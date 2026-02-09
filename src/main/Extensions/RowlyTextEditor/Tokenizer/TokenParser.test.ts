@@ -13,41 +13,35 @@ describe(TokenParser, () => {
             expect(new TokenParser("Hello, World!").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "Hello, World!" },
             ]);
-            expect(new TokenParser("$").parse()).toEqual(<TokenType[]>[
-                { type: "literal", value: "$" }
-            ]);
+            expect(new TokenParser("$").parse()).toEqual(<TokenType[]>[{ type: "literal", value: "$" }]);
             expect(new TokenParser("$ TEST").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "$" },
-                { type: "literal", value: " TEST" }
+                { type: "literal", value: " TEST" },
             ]);
             expect(new TokenParser("$_TEST").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "$" },
-                { type: "literal", value: "_TEST" }
+                { type: "literal", value: "_TEST" },
             ]);
-            expect(new TokenParser("$$").parse()).toEqual(<TokenType[]>[
-                { type: "literal", value: "$" }
-            ]);
+            expect(new TokenParser("$$").parse()).toEqual(<TokenType[]>[{ type: "literal", value: "$" }]);
             expect(new TokenParser("$$ $$").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "$" },
-                { type: "literal", value: " $" }
+                { type: "literal", value: " $" },
             ]);
-            expect(new TokenParser("$$$$").parse()).toEqual(<TokenType[]>[
-                { type: "literal", value: "$$" }
-            ]);
+            expect(new TokenParser("$$$$").parse()).toEqual(<TokenType[]>[{ type: "literal", value: "$$" }]);
             expect(new TokenParser("Hello $$123 $$$$").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "Hello $" },
                 { type: "literal", value: "123 $$" },
             ]);
             expect(new TokenParser("I'm rich because I've 1886$$").parse()).toEqual(<TokenType[]>[
-                { type: "literal", value: "I'm rich because I've 1886$" }
-             ]);
-             expect(new TokenParser("$$TEST()").parse()).toEqual(<TokenType[]>[
+                { type: "literal", value: "I'm rich because I've 1886$" },
+            ]);
+            expect(new TokenParser("$$TEST()").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "$" },
                 { type: "literal", value: "TEST()" },
-             ]);
-             expect(new TokenParser("test((hallowelt)").parse()).toEqual(<TokenType[]>[
+            ]);
+            expect(new TokenParser("test((hallowelt)").parse()).toEqual(<TokenType[]>[
                 { type: "literal", value: "test((hallowelt)" },
-             ]);
+            ]);
         });
 
         it("simple column patterns", () => {
@@ -132,20 +126,13 @@ describe(TokenParser, () => {
         });
 
         it("should handle invalid patterns gracefully", () => {
-            expect(() => new TokenParser("$TODAY(dd.MM.yyyy").parse())
-                .toThrow("Unclosed function bracket");
-            
-            expect(() => new TokenParser("$(test)").parse())
-                .toThrow("expected function name before '('");
-            
-            expect(() => new TokenParser("$OUTER($INNER(test)").parse())
-                .toThrow("Unclosed function bracket");
-
-            expect(() => new TokenParser("$OUTER(test,)").parse())
-                .toThrow("Empty parameter: trailing comma before ')'");
-                
-            expect(() => new TokenParser("$OUTER(($INNER(test))").parse())
-                .toThrow("Unmatched '('");
+            expect(() => new TokenParser("$TODAY(dd.MM.yyyy").parse()).toThrow("Unclosed function bracket");
+            expect(() => new TokenParser("$(test)").parse()).toThrow("expected function name before '('");
+            expect(() => new TokenParser("$OUTER($INNER(test)").parse()).toThrow("Unclosed function bracket");
+            expect(() => new TokenParser("$OUTER(test,)").parse()).toThrow(
+                "Empty parameter: trailing comma before ')'",
+            );
+            expect(() => new TokenParser("$OUTER(($INNER(test))").parse()).toThrow("Unmatched '('");
         });
     });
 });

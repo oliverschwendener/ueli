@@ -3,7 +3,7 @@ import { TokenEvaluator } from "./Tokenizer/TokenEvaluator";
 import { TokenParser } from "./Tokenizer/TokenParser";
 
 export class RowlyTextProcessor implements TextProcessor {
-    private tokenEvaluator : TokenEvaluator;
+    private tokenEvaluator: TokenEvaluator;
 
     public constructor() {
         this.tokenEvaluator = new TokenEvaluator();
@@ -16,7 +16,7 @@ export class RowlyTextProcessor implements TextProcessor {
 
             const rows = this.split(input, unescapedRowSep);
             const tokens = new TokenParser(pattern).parse();
-            
+
             const processedRows = rows.map((row) => {
                 const columns = this.split(row, unescapedColSep);
                 return this.tokenEvaluator.evaluate(tokens, columns);

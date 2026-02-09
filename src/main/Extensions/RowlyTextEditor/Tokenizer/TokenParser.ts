@@ -17,12 +17,11 @@ export class TokenParser {
             if (literal.type === "literal" && literal.value.length > 0) {
                 nodes.push(literal);
             }
-            
+
             if (this.position < this.input.length && this.input[this.position] === "$") {
                 nodes.push(this.parseDollarExpression());
             }
         }
-
 
         return nodes;
     }
@@ -30,20 +29,20 @@ export class TokenParser {
     private parseLiteral(): TokenType {
         let value = "";
 
-        while (this.position < this.input.length && this.input[this.position] !== '$') {
+        while (this.position < this.input.length && this.input[this.position] !== "$") {
             value += this.input[this.position++];
         }
 
-        while (this.position < this.input.length && this.input[this.position] === '$') {
-            if (this.position + 1 < this.input.length && this.input[this.position + 1] === '$') {
-                value += '$';
+        while (this.position < this.input.length && this.input[this.position] === "$") {
+            if (this.position + 1 < this.input.length && this.input[this.position + 1] === "$") {
+                value += "$";
                 this.position += 2;
             } else {
                 break;
             }
         }
 
-        return { type: 'literal', value };
+        return { type: "literal", value };
     }
 
     private parseDollarExpression(): TokenType {
