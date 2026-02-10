@@ -1,4 +1,4 @@
-import type { RowlyTextEditorSettings } from "./RowlyTextEditorSettings";
+import type { RowlyTextEditorSettings } from "./RowlandTextEditorSettings";
 
 export type InvocationArgument = {
     pattern: string;

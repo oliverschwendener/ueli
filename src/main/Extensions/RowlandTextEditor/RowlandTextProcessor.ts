@@ -2,7 +2,7 @@ import type { TextProcessor } from "./TextProcessor";
 import { TokenEvaluator } from "./Tokenizer/TokenEvaluator";
 import { TokenParser } from "./Tokenizer/TokenParser";
 
-export class RowlyTextProcessor implements TextProcessor {
+export class RowlandTextProcessor implements TextProcessor {
     private tokenEvaluator: TokenEvaluator;
 
     public constructor() {

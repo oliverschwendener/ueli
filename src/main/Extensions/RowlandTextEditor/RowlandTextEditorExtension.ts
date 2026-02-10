@@ -3,16 +3,16 @@ import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
 import { createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
-import type { InvocationArgument, RowlyTextEditorSettings as Settings } from "@common/Extensions/RowlyTextEditor";
+import type { InvocationArgument, RowlandTextEditorSettings as Settings } from "@common/Extensions/RowlandTextEditor";
 import type { TextProcessor } from "./TextProcessor";
 
-export class RowlyTextEditorExtension implements Extension {
-    public readonly id = "RowlyTextEditor";
-    public readonly name = "Rowly Text Editor";
+export class RowlandTextEditorExtension implements Extension {
+    public readonly id = "RowlandTextEditor";
+    public readonly name = "Rowland Text Editor";
 
     public readonly nameTranslation = {
         key: "extensionName",
-        namespace: "extension[RowlyTextEditor]",
+        namespace: "extension[RowlandTextEditor]",
     };
 
     public readonly defaultSettings: Settings = {
@@ -35,7 +35,7 @@ export class RowlyTextEditorExtension implements Extension {
         const { t } = this.translator.createT(this.getI18nResources());
         return [
             {
-                id: "RowlyTextEditor:invoke",
+                id: "RowlandTextEditor:invoke",
                 description: t("searchResultItemDescription"),
                 name: t("searchResultItemName"),
                 image: this.getImage(),
@@ -58,7 +58,7 @@ export class RowlyTextEditorExtension implements Extension {
 
     public getImage(): Image {
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "rowly-texteditor.png")}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "Rowland-texteditor.png")}`,
         };
     }
 
@@ -69,10 +69,10 @@ export class RowlyTextEditorExtension implements Extension {
     public getI18nResources() {
         return {
             "en-US": {
-                extensionName: "Rowly Text Editor",
-                searchResultItemName: "Rowly Text Editor",
+                extensionName: "Rowland Text Editor",
+                searchResultItemName: "Rowland Text Editor",
                 searchResultItemDescription: "Format rows of text",
-                searchResultItemActionDescription: "Open Rowly Text Editor",
+                searchResultItemActionDescription: "Open Rowland Text Editor",
                 copyToClipboard: "Copy result to clipboard",
                 inputPlaceholder: "Input",
                 outputPlaceholder: "Output",
@@ -84,10 +84,10 @@ export class RowlyTextEditorExtension implements Extension {
                 columnSeparatorPlaceholder: "Column separator",
             },
             "de-CH": {
-                extensionName: "Rowly Text Editor",
-                searchResultItemName: "Rowly Text Editor",
+                extensionName: "Rowland Text Editor",
+                searchResultItemName: "Rowland Text Editor",
                 searchResultItemDescription: "Reihen von Text formatieren",
-                searchResultItemActionDescription: "Rowly Text Editor öffnen",
+                searchResultItemActionDescription: "Rowland Text Editor öffnen",
                 copyToClipboard: "Resultat in Zwischenablage kopieren",
                 inputPlaceholder: "Eingabe",
                 outputPlaceholder: "Resultat",
