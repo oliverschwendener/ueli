@@ -1,8 +1,8 @@
 import type { ContextBridge } from "@common/Core";
 import type { InvocationArgument } from "@common/Extensions/RowlyTextEditor";
 import { useExtensionSetting } from "@Core/Hooks";
-import { Input, Label, ProgressBar, Textarea } from "@fluentui/react-components";
-import { useEffect, useState } from "react";
+import { Input, Label, ProgressBar, Textarea, tokens } from "@fluentui/react-components";
+import { useEffect, useRef, useState } from "react";
 
 type EditorProps = {
     outputText: string;
@@ -82,6 +82,18 @@ export const Editor = ({
         );
     }, [inputText, pattern, rowSeparator, columnSeparator]);
 
+    const inputTextareaRef = useRef<HTMLTextAreaElement>(null);
+    const outputTextareaRef = useRef<HTMLTextAreaElement>(null);
+    useEffect(() => {
+        if (inputTextareaRef.current) {
+            inputTextareaRef.current.style.fontFamily = tokens.fontFamilyMonospace;
+        }
+
+        if (outputTextareaRef.current) {
+            outputTextareaRef.current.style.fontFamily = tokens.fontFamilyMonospace;
+        }
+    }, []);
+
     return (
         <div
             style={{
@@ -95,12 +107,13 @@ export const Editor = ({
         >
             <div style={{ display: "flex", flexDirection: "column", gap: 10, flexGrow: 1 }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, flexGrow: 1 }}>
-                    <Textarea
-                        autoFocus
-                        style={{ flexGrow: 1, width: "100%", height: "100%" }}
-                        placeholder={inputPlaceholder}
-                        onChange={(_, { value }) => setInputText(value)}
-                    />
+                        <Textarea
+                            ref={inputTextareaRef}
+                            autoFocus
+                            style={{ flexGrow: 1, width: "100%", height: "100%" }}                        
+                            placeholder={inputPlaceholder}
+                            onChange={(_, { value }) => setInputText(value)}
+                        />
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", gap: 10, alignItems: "flex-end" }}>
@@ -137,6 +150,7 @@ export const Editor = ({
 
                 <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, flexGrow: 1 }}>
                     <Textarea
+                        ref={outputTextareaRef}
                         style={{ flexGrow: 1, width: "100%", height: "100%" }}
                         value={outputText}
                         placeholder={outputPlaceholder}
