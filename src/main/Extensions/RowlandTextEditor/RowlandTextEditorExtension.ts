@@ -16,8 +16,8 @@ export class RowlandTextEditorExtension implements Extension {
     };
 
     public readonly defaultSettings: Settings = {
-        columnSeparator: "",
-        rowSeparator: "\n",
+        columnSeparator: "\\t",
+        rowSeparator: "\\n",
     };
 
     public readonly author = {

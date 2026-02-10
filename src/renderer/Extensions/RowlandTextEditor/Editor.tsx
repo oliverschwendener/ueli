@@ -1,5 +1,5 @@
 import type { ContextBridge } from "@common/Core";
-import type { InvocationArgument } from "@common/Extensions/RowlyTextEditor";
+import type { InvocationArgument } from "@common/Extensions/RowlandTextEditor";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Input, Label, ProgressBar, Textarea, tokens } from "@fluentui/react-components";
 import { useEffect, useRef, useState } from "react";
@@ -31,7 +31,7 @@ export const Editor = ({
     columnSeparatorPlaceholder,
     contextBridge,
 }: EditorProps) => {
-    const extensionId = "RowlyTextEditor";
+    const extensionId = "RowlandTextEditor";
 
     const [inputText, setInputText] = useState<string>("");
     const [pattern, setPattern] = useState("");

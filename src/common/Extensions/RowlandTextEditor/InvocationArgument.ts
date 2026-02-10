@@ -1,7 +1,7 @@
-import type { RowlyTextEditorSettings } from "./RowlandTextEditorSettings";
+import type { RowlandTextEditorSettings } from "./RowlandTextEditorSettings";
 
 export type InvocationArgument = {
     pattern: string;
     inputText: string;
-    settings: RowlyTextEditorSettings;
+    settings: RowlandTextEditorSettings;
 };

@@ -5,9 +5,9 @@ import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
-export const RowlyTextEditorSettings = () => {
-    const extensionId = "RowlyTextEditor";
-    const { t } = useTranslation("extension[RowlyTextEditor]");
+export const RowlandTextEditorSettings = () => {
+    const extensionId = "RowlandTextEditor";
+    const { t } = useTranslation("extension[RowlandTextEditor]");
 
     const { value: rowSeparator, updateValue: setRowSeparator } = useExtensionSetting<string>({
         extensionId,

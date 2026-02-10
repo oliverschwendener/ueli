@@ -1,4 +1,4 @@
-export type RowlyTextEditorSettings = {
+export type RowlandTextEditorSettings = {
     columnSeparator: string;
     rowSeparator: string;
 };

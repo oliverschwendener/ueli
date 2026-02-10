@@ -10,10 +10,10 @@ import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Editor } from "./Editor";
 
-export const RowlyTextEditor = ({ contextBridge, goBack }: ExtensionProps) => {
+export const RowlandTextEditor = ({ contextBridge, goBack }: ExtensionProps) => {
     const { shouldUseDarkColors } = useContext(ThemeContext);
-    const { t } = useTranslation("extension[RowlyTextEditor]");
-    const extensionId = "RowlyTextEditor";
+    const { t } = useTranslation("extension[RowlandTextEditor]");
+    const extensionId = "RowlandTextEditor";
     const [outputText, setOutputText] = useState<string>("");
 
     const handleKeyDownEvent = (event: KeyboardEvent) => {
