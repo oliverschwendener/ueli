@@ -4,7 +4,7 @@ export class GetDateFunction implements TokenFunction {
     public name = "GETDATE";
 
     public evaluate(params: string[]): string {
-        const format = params[0] || "dd.MM.yyyy";
+        const format = params[0] || "yyyy-MM-ddTHH:mm:ss.000Z";
         return this.formatDate(new Date(), format);
     }
 
@@ -15,6 +15,7 @@ export class GetDateFunction implements TokenFunction {
         const hours = String(date.getHours()).padStart(2, "0");
         const minutes = String(date.getMinutes()).padStart(2, "0");
         const seconds = String(date.getSeconds()).padStart(2, "0");
+        const milliseconds = String(date.getMilliseconds()).padStart(3, "0");
 
         return format
             .replace(/yyyy/g, String(year))
@@ -22,6 +23,7 @@ export class GetDateFunction implements TokenFunction {
             .replace(/dd/g, day)
             .replace(/HH/g, hours)
             .replace(/mm/g, minutes)
-            .replace(/ss/g, seconds);
+            .replace(/ss/g, seconds)
+            .replace(/SSS/g, milliseconds);
     }
 }
