@@ -1,5 +1,5 @@
-import type { TokenFunction } from "./TokenFunction";
 import { v4 as uuidv4, v6 as uuidv6, v7 as uuidv7 } from "uuid";
+import type { TokenFunction } from "./TokenFunction";
 
 export class UuidFunction implements TokenFunction {
     public name = "UUID";
@@ -30,7 +30,9 @@ export class UuidFunction implements TokenFunction {
         const format = formatString.trim().toUpperCase();
 
         if (format.length !== 1) {
-            throw new Error(`Invalid UUID format: '${formatString}'. Format must be a single character (N, D, B or P).`);
+            throw new Error(
+                `Invalid UUID format: '${formatString}'. Format must be a single character (N, D, B or P).`,
+            );
         }
 
         const validFormats = ["N", "D", "B", "P"];

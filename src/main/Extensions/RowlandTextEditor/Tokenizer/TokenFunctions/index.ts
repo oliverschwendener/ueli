@@ -1,2 +1,2 @@
-export { type TokenFunction } from "./TokenFunction";
 export { GetDateFunction } from "./GetDateFunction";
+export { type TokenFunction } from "./TokenFunction";

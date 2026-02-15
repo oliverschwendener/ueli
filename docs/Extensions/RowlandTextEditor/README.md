@@ -32,7 +32,7 @@ Generate a UUID (Universally Unique Identifier) in Microsoft .NET GUID format.
 
 **Examples:**
 
-``` JavaScript
+```JavaScript
 UUID()          → 550e8400-e29b-41d4-a716-446655440000
 UUID(N)         → 550e8400e29b41d4a716446655440000
 UUID(B, v7)     → {550e8400-e29b-41d4-a716-446655440000}
@@ -59,7 +59,7 @@ Generate the current date and time in the specified format.
 
 **Examples:**
 
-``` JavaScript
+```JavaScript
 GETDATE()                   → 2026-02-15T14:30:45.123Z
 GETDATE(yyyy-MM-dd)         → 2026-02-15
 GETDATE(HH:mm:ss)           → 14:30:45
@@ -78,7 +78,7 @@ Extract a substring from the provided text.
 
 **Examples:**
 
-``` JavaScript
+```JavaScript
 SUBSTRING("Hello World", 0, 5)    → Hello
 SUBSTRING("Hello World", 6, 5)    → World
 SUBSTRING("Hello World", 0, 11)   → Hello World

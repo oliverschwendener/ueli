@@ -1,8 +1,8 @@
-import type { TokenType } from "./TokenType";
-import type { TokenFunction } from "./TokenFunctions/TokenFunction";
 import { GetDateFunction } from "./TokenFunctions/GetDateFunction";
 import { SubstringFunction } from "./TokenFunctions/SubstringFunction";
+import type { TokenFunction } from "./TokenFunctions/TokenFunction";
 import { UuidFunction } from "./TokenFunctions/UuidFunction";
+import type { TokenType } from "./TokenType";
 
 export class TokenEvaluator {
     private functions: Map<string, TokenFunction>;
@@ -36,7 +36,7 @@ export class TokenEvaluator {
 
         return result;
     }
-    
+
     private registerFunction(func: TokenFunction): void {
         this.functions.set(func.name.toUpperCase(), func);
     }

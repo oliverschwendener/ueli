@@ -107,13 +107,13 @@ export const Editor = ({
         >
             <div style={{ display: "flex", flexDirection: "column", gap: 10, flexGrow: 1 }}>
                 <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 10, flexGrow: 1 }}>
-                        <Textarea
-                            ref={inputTextareaRef}
-                            autoFocus
-                            style={{ flexGrow: 1, width: "100%", height: "100%" }}                        
-                            placeholder={inputPlaceholder}
-                            onChange={(_, { value }) => setInputText(value)}
-                        />
+                    <Textarea
+                        ref={inputTextareaRef}
+                        autoFocus
+                        style={{ flexGrow: 1, width: "100%", height: "100%" }}
+                        placeholder={inputPlaceholder}
+                        onChange={(_, { value }) => setInputText(value)}
+                    />
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", gap: 10, alignItems: "flex-end" }}>

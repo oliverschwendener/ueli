@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { GetDateFunction } from "./GetDateFunction";
 
-
 describe(GetDateFunction, () => {
     describe(GetDateFunction.prototype.evaluate, () => {
         it("should return current date in iso format", () => {
@@ -13,7 +12,9 @@ describe(GetDateFunction, () => {
             expect(new GetDateFunction().evaluate(["yyyy/MM/dd"])).toMatch(/^\d{4}\/\d{2}\/\d{2}$/);
             expect(new GetDateFunction().evaluate(["dd-MM-yyyy"])).toMatch(/^\d{2}-\d{2}-\d{4}$/);
             expect(new GetDateFunction().evaluate(["HH:mm:ss"])).toMatch(/^\d{2}:\d{2}:\d{2}$/);
-            expect(new GetDateFunction().evaluate(["dd.MM.yyyy HH:mm:ss.SSS"])).toMatch(/^\d{2}.\d{2}.\d{4} \d{2}:\d{2}:\d{2}.\d{3}$/);
+            expect(new GetDateFunction().evaluate(["dd.MM.yyyy HH:mm:ss.SSS"])).toMatch(
+                /^\d{2}.\d{2}.\d{4} \d{2}:\d{2}:\d{2}.\d{3}$/,
+            );
         });
 
         it("should ignore extra parameters", () => {

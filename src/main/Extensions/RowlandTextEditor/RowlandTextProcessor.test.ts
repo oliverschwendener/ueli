@@ -18,13 +18,22 @@ describe(RowlandTextProcessor, () => {
                 "Test",
                 "Test3",
             ]);
-            expect(new RowlandTextProcessor().split("Test$Test$Test3", "$")).toEqual(<string[]>["Test", "Test", "Test3"]);
+            expect(new RowlandTextProcessor().split("Test$Test$Test3", "$")).toEqual(<string[]>[
+                "Test",
+                "Test",
+                "Test3",
+            ]);
             expect(new RowlandTextProcessor().split("Test$\nTest$\nTest3", "$\n")).toEqual(<string[]>[
                 "Test",
                 "Test",
                 "Test3",
             ]);
-            expect(new RowlandTextProcessor().split("TestTestTest3", "e")).toEqual(<string[]>["T", "stT", "stT", "st3"]);
+            expect(new RowlandTextProcessor().split("TestTestTest3", "e")).toEqual(<string[]>[
+                "T",
+                "stT",
+                "stT",
+                "st3",
+            ]);
         });
     });
 
@@ -52,11 +61,17 @@ describe(RowlandTextProcessor, () => {
             expect(new RowlandTextProcessor().process("Hello\tWorld\nFoo\tBar", "$0 $1", "\\n", "\\t")).toEqual(
                 "Hello World\nFoo Bar",
             );
-            expect(new RowlandTextProcessor().process("123\t456", "$0 = \"$0\"", "\\n", "\\t")).toEqual(
-                "123 = \"123\"",
+            expect(new RowlandTextProcessor().process("123\t456", '$0 = "$0"', "\\n", "\\t")).toEqual('123 = "123"');
+            expect(
+                new RowlandTextProcessor().process(
+                    "1234,Test",
+                    "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('$UUID(v6)', $0, '$1', '$GETDATE()'",
+                    "\\n",
+                    ",",
+                ),
+            ).toEqual(
+                "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('00000000-0000-6000-8000-000000000000', 1234, 'Test', '2024-06-01T00:00:00.000Z'",
             );
-            expect(new RowlandTextProcessor().process("1234,Test", "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('$UUID(v6)', $0, '$1', '$GETDATE()'", "\\n", ","))
-                .toEqual("INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('00000000-0000-6000-8000-000000000000', 1234, 'Test', '2024-06-01T00:00:00.000Z'");
         });
 
         it("should handle errors gracefully", () => {
