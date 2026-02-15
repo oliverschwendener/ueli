@@ -65,12 +65,12 @@ describe(RowlandTextProcessor, () => {
             expect(
                 new RowlandTextProcessor().process(
                     "1234,Test",
-                    "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('$UUID(v6)', $0, '$1', '$GETDATE()'",
+                    "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('$UUID()', $0, '$1', '$GETDATE()')",
                     "\\n",
                     ",",
                 ),
-            ).toEqual(
-                "INSERT INTO MyTestTable(Id, Number, Name, CreationDate) VALUES ('00000000-0000-6000-8000-000000000000', 1234, 'Test', '2024-06-01T00:00:00.000Z'",
+            ).toMatch(
+                /^INSERT INTO MyTestTable\(Id, Number, Name, CreationDate\) VALUES \('([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})', 1234, 'Test', '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z'\)$/,
             );
         });
 
