@@ -15,8 +15,8 @@ describe(TokenEvaluator, () => {
         });
 
         it("evaluate functions", () => {
-            expect(new TokenEvaluator().evaluate([{ type: "function", name: "GETDATE", params: [] }], []),).toMatch(/^\d{2}.\d{2}.\d{4}$/);
-            expect(new TokenEvaluator().evaluate([{ type: "function", name: "gEtDaTe", params: [] }], []),).toMatch(/^\d{2}.\d{2}.\d{4}$/);
+            expect(new TokenEvaluator().evaluate([{ type: "function", name: "GETDATE", params: [] }], []),).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+            expect(new TokenEvaluator().evaluate([{ type: "function", name: "gEtDaTe", params: [] }], []),).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
             expect(new TokenEvaluator().evaluate([{ type: "function", name: "GETDATE", params: [[{ type: "literal", value: "yyyy/MM/dd" }]] }], []),).toMatch(/^\d{4}\/\d{2}\/\d{2}$/);
             expect(new TokenEvaluator().evaluate([{ type: "function", name: "GETDATE", params: [[{ type: "column", index: 0 }]] }], ["HH:mm:ss"]),).toMatch(/^\d{2}:\d{2}:\d{2}$/);
         });

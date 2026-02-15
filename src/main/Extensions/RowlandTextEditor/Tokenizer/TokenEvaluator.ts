@@ -1,6 +1,8 @@
 import type { TokenType } from "./TokenType";
 import type { TokenFunction } from "./TokenFunctions/TokenFunction";
 import { GetDateFunction } from "./TokenFunctions/GetDateFunction";
+import { SubstringFunction } from "./TokenFunctions/SubstringFunction";
+import { UuidFunction } from "./TokenFunctions/UuidFunction";
 
 export class TokenEvaluator {
     private functions: Map<string, TokenFunction>;
@@ -8,6 +10,8 @@ export class TokenEvaluator {
     public constructor() {
         this.functions = new Map();
         this.registerFunction(new GetDateFunction());
+        this.registerFunction(new SubstringFunction());
+        this.registerFunction(new UuidFunction());
     }
 
     public evaluate(tokens: TokenType[], columns: string[]): string {
