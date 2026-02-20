@@ -58,7 +58,7 @@ export class RowlandTextEditorExtension implements Extension {
 
     public getImage(): Image {
         return {
-            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "Rowland-texteditor.png")}`,
+            url: `file://${this.assetPathResolver.getExtensionAssetPath(this.id, "rowland-texteditor.png")}`,
         };
     }
 
