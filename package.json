@@ -39,7 +39,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@vitejs/plugin-react": "^5.1.2",
         "@vitest/coverage-v8": "^4.0.17",
-        "electron": "^40.0.0",
+        "electron": "^41.0.2",
         "electron-builder": "^26.6.0",
         "eslint": "^10.0.0",
         "globals": "^17.0.0",
@@ -57,7 +57,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.72.9",
         "@fluentui/react-icons": "^2.0.316",
-        "better-sqlite3": "^12.6.2",
+        "better-sqlite3": "^12.8.0",
         "color": "^4.2.3",
         "fast-xml-parser": "^5.3.8",
         "fuse.js": "^7.1.0",
