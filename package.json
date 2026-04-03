@@ -39,7 +39,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@vitejs/plugin-react": "^5.1.2",
         "@vitest/coverage-v8": "^4.0.17",
-        "electron": "^41.0.3",
+        "electron": "^41.1.0",
         "electron-builder": "^26.6.0",
         "eslint": "^10.0.0",
         "globals": "^17.0.0",
