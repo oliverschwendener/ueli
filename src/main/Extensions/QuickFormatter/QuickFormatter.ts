@@ -248,7 +248,6 @@ export class QuickFormatter {
         try {
             let wasUnescaped = false;
 
-            // If text contains encoded entities and initial parse will fail, unescape first
             if ((text.includes("&lt;") || text.includes("&gt;") || text.includes("&amp;")) && enableDeepFormatting) {
                 text = this.unescapeXml(text);
                 wasUnescaped = true;
