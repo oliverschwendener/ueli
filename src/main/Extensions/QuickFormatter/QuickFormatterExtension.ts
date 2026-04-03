@@ -98,7 +98,7 @@ export class QuickFormatterExtension implements Extension {
                     name: formattedText,
                     description: "Formatted text",
                     descriptionTranslation: {
-                        key: "generatorResult",
+                        key: "quickFormatterResult",
                         namespace: "extension[QuickFormatter]",
                     },
                     id: "quickFormatter:instantResult",
