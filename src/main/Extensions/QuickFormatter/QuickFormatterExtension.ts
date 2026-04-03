@@ -65,7 +65,7 @@ export class QuickFormatterExtension implements Extension {
     public getInstantSearchResultItems(searchTerm: string): InstantSearchResultItems {
         const command = this.getSettingValue("command");
 
-        let formattedText = "";
+        let formattedText;
 
         if (
             this.getSettingValue("enableStackTrace") &&
