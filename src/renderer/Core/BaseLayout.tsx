@@ -3,7 +3,7 @@ import type { KeyboardEvent, ReactNode, RefObject } from "react";
 
 type BaseLayoutProps = {
     header?: ReactNode;
-    contentRef?: RefObject<HTMLDivElement | null>;
+    contentRef?: RefObject<HTMLDivElement>;
     content: ReactNode;
     footer?: ReactNode;
     onKeyDown?: (event: KeyboardEvent) => void;
