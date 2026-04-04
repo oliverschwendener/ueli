@@ -3,7 +3,6 @@
         "allowSyntheticDefaultImports": true,
         "composite": true,
         "module": "ESNext",
-        "moduleResolution": "Node",
         "noUnusedLocals": true,
         "paths": {
             "@common/*": ["./src/common/*"],
