@@ -23,7 +23,7 @@ export const RowlandTextEditorSettings = () => {
         <SettingGroupList>
             <SettingGroup title={t("extensionName")}>
                 <Setting
-                    label={t("columnSeparator")}
+                    label={t("columnSeparatorLabel")}
                     control={
                         <Input
                             value={`${rowSeparator}`}
@@ -33,7 +33,7 @@ export const RowlandTextEditorSettings = () => {
                     }
                 />
                 <Setting
-                    label={t("rowSeparator")}
+                    label={t("rowSeparatorLabel")}
                     control={
                         <Input
                             value={`${columnSeparator}`}
