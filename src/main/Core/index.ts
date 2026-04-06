@@ -52,4 +52,5 @@ export * from "./Translator";
 export * from "./TrayIcon";
 export * from "./UeliCommand";
 export * from "./WebBrowser";
+export * from "./XmlBuilder";
 export * from "./XmlParser";

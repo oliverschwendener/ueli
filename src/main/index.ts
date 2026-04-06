@@ -52,6 +52,7 @@ if (!app.requestSingleInstanceLock()) {
     Core.LinuxDesktopEnvironmentModule.bootstrap(moduleRegistry);
     Core.IniFileParserModule.bootstrap(moduleRegistry);
     Core.XmlParserModule.bootstrap(moduleRegistry);
+    Core.XmlBuilderModule.bootstrap(moduleRegistry);
     Core.EventEmitterModule.bootstrap(moduleRegistry);
     Core.EventSubscriberModule.bootstrap(moduleRegistry);
     Core.BrowserWindowRegistryModule.bootstrap(moduleRegistry);
