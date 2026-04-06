@@ -108,6 +108,7 @@ export class JetBrainsToolboxExtension implements Extension {
         const recentProjects = this.xmlParser.parse<[JetBrainsRecentProject]>(recentProjectFileContent, {
             preserveOrder: true,
             ignoreAttributes: false,
+            processEntities: true,
         });
 
         // get project paths

@@ -126,7 +126,7 @@ export class QuickFormatterExtension implements Extension {
                 enableXml: "Enable XML formatting",
                 enableDeepFormatting:
                     "Enable deep formatting of text (i.e. &lt; becomes <, JSON inside JSON values is also formatted)",
-                generatorResult: "Formatted Text",
+                quickFormatterResult: "Formatted Text",
                 copyFormattedTextToClipboard: "Copy formatted text to clipboard",
             },
             "de-CH": {
@@ -137,7 +137,7 @@ export class QuickFormatterExtension implements Extension {
                 enableXml: "Formattiere XML",
                 enableDeepFormatting:
                     "Formattiere inneren Text (z.B. &lt; wird zu <, JSON innerhalb JSON Werten wird auch formattiert)",
-                generatorResult: "Formatierter Text",
+                quickFormatterResult: "Formatierter Text",
                 copyFormattedTextToClipboard: "Formatierten Text in die Zwischenablage kopieren",
             },
         };

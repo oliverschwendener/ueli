@@ -1,18 +1,21 @@
-import { XMLBuilder, XMLParser } from "fast-xml-parser";
+import { XmlBuilder } from "@Core/XmlBuilder/XmlBuilder";
+import { XmlParser } from "@Core/XmlParser/XmlParser";
 
 export class QuickFormatter {
-    private static readonly xmlParser = new XMLParser({
+    private static readonly xmlParser = new XmlParser();
+    private static readonly xmlParserOptions = {
         ignoreAttributes: false,
         processEntities: true,
         preserveOrder: false,
-    });
+    };
 
-    private static readonly xmlBuilder = new XMLBuilder({
+    private static readonly xmlBuilder = new XmlBuilder();
+    private static readonly xmlBuilderOptions = {
         format: true,
         indentBy: "  ",
         ignoreAttributes: false,
         processEntities: true,
-    });
+    };
 
     public static formatAuto(text: string, enableDeepFormatting: boolean): string {
         const result = this.formatAutoInternal(text, enableDeepFormatting);
@@ -34,7 +37,7 @@ export class QuickFormatter {
 
             if (trimmed.startsWith("<")) {
                 try {
-                    this.xmlParser.parse(trimmed);
+                    this.xmlParser.parse(trimmed, this.xmlParserOptions);
                     return this.formatXmlInternal(trimmed, enableDeepFormatting, true);
                 } catch {
                     return this.formatStackTraceInternal(trimmed, enableDeepFormatting, true);
@@ -185,7 +188,7 @@ export class QuickFormatter {
 
                     if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
                         try {
-                            this.xmlParser.parse(trimmed);
+                            this.xmlParser.parse(trimmed, this.xmlParserOptions);
                             const formatted = this.formatAutoInternal(trimmed, true);
                             result.push(formatted);
                             continue;
@@ -216,7 +219,7 @@ export class QuickFormatter {
 
                         if (content.startsWith("<") && content.endsWith(">")) {
                             try {
-                                this.xmlParser.parse(content);
+                                this.xmlParser.parse(content, this.xmlParserOptions);
                                 const formatted = this.formatAutoInternal(content, true);
                                 result.push("  " + prefix.trimEnd() + " " + formatted);
                                 continue;
@@ -253,13 +256,13 @@ export class QuickFormatter {
                 wasUnescaped = true;
             }
 
-            let xml = this.xmlParser.parse(text);
+            let xml = this.xmlParser.parse(text, this.xmlParserOptions);
 
             if (enableDeepFormatting && !wasUnescaped) {
                 xml = allowAutoDetect ? this.formatDeepXmlAuto(xml) : this.formatDeepXml(xml);
             }
 
-            let result = this.xmlBuilder.build(xml).trimEnd();
+            let result = this.xmlBuilder.build(xml, this.xmlBuilderOptions).trimEnd();
 
             if (enableDeepFormatting && allowAutoDetect) {
                 result = result.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
@@ -280,7 +283,7 @@ export class QuickFormatter {
             const unescaped = this.unescapeXml(xmlNode);
 
             try {
-                return this.formatDeepXml(this.xmlParser.parse(unescaped));
+                return this.formatDeepXml(this.xmlParser.parse(unescaped, this.xmlParserOptions));
             } catch {
                 return xmlNode;
             }
@@ -312,7 +315,7 @@ export class QuickFormatter {
             const unescaped = this.unescapeXml(xmlNode);
 
             try {
-                return this.formatDeepXmlAuto(this.xmlParser.parse(unescaped));
+                return this.formatDeepXmlAuto(this.xmlParser.parse(unescaped, this.xmlParserOptions));
             } catch {
                 return this.formatAutoInternal(xmlNode, true);
             }
