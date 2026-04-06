@@ -8,7 +8,7 @@ export class Translator implements TranslatorInterface {
 
     public createT<T extends Translations>(resources: Resources<T>): { t: TFunction } {
         const instance = createInstance({
-            initImmediate: false, // Is needed for synchronous initialization
+            initAsync: false, // Is needed for synchronous initialization
             resources: this.createResources(resources),
             lng: this.settingsManager.getValue("general.language", "en-US"),
             fallbackLng: "en-US",
