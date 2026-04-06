@@ -101,6 +101,9 @@ export default defineConfig(({ command }) => {
                 include: ["**/*.ts"],
                 exclude: ["**/index.ts", "**/*.test.ts"],
             },
+            alias: {
+                "@Core": join(__dirname, "src", "main", "Core"),
+            },
         },
     };
 });

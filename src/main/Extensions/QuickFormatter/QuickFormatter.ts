@@ -1,23 +1,24 @@
-import { XmlBuilder } from "@Core/XmlBuilder/XmlBuilder";
-import { XmlParser } from "@Core/XmlParser/XmlParser";
+import type { XmlBuilder } from "@Core/XmlBuilder";
+import type { XmlParser } from "@Core/XmlParser";
 
 export class QuickFormatter {
-    private static readonly xmlParser = new XmlParser();
-    private static readonly xmlParserOptions = {
-        ignoreAttributes: false,
-        processEntities: true,
-        preserveOrder: false,
-    };
+    public constructor(
+        private readonly xmlBuilder: XmlBuilder,
+        private readonly xmlBuilderOptions = {
+            format: true,
+            indentBy: "  ",
+            ignoreAttributes: false,
+            processEntities: true,
+        },
+        private readonly xmlParser: XmlParser,
+        private readonly xmlParserOptions = {
+            ignoreAttributes: false,
+            processEntities: true,
+            preserveOrder: false,
+        },
+    ) {}
 
-    private static readonly xmlBuilder = new XmlBuilder();
-    private static readonly xmlBuilderOptions = {
-        format: true,
-        indentBy: "  ",
-        ignoreAttributes: false,
-        processEntities: true,
-    };
-
-    public static formatAuto(text: string, enableDeepFormatting: boolean): string {
+    public formatAuto(text: string, enableDeepFormatting: boolean): string {
         const result = this.formatAutoInternal(text, enableDeepFormatting);
 
         if (enableDeepFormatting) {
@@ -27,7 +28,7 @@ export class QuickFormatter {
         return result;
     }
 
-    private static formatAutoInternal(text: string, enableDeepFormatting: boolean): string {
+    private formatAutoInternal(text: string, enableDeepFormatting: boolean): string {
         try {
             const trimmed = text.trim();
 
@@ -57,11 +58,11 @@ export class QuickFormatter {
         }
     }
 
-    public static formatJson(text: string, enableDeepFormatting: boolean): string {
+    public formatJson(text: string, enableDeepFormatting: boolean): string {
         return this.formatJsonInternal(text, enableDeepFormatting, false);
     }
 
-    private static formatJsonInternal(text: string, enableDeepFormatting: boolean, allowAutoDetect: boolean): string {
+    private formatJsonInternal(text: string, enableDeepFormatting: boolean, allowAutoDetect: boolean): string {
         try {
             let json = JSON.parse(text);
 
@@ -75,7 +76,7 @@ export class QuickFormatter {
         }
     }
 
-    private static formatDeepJsonAuto(value: unknown): unknown {
+    private formatDeepJsonAuto(value: unknown): unknown {
         if (typeof value === "string") {
             const formatted = this.formatAutoInternal(value, true);
 
@@ -108,7 +109,7 @@ export class QuickFormatter {
         return value;
     }
 
-    private static formatDeepJson(text: unknown): unknown {
+    private formatDeepJson(text: unknown): unknown {
         if (typeof text === "string") {
             try {
                 const json = JSON.parse(text);
@@ -134,15 +135,11 @@ export class QuickFormatter {
         return text;
     }
 
-    public static formatStackTrace(text: string, enableDeepFormatting: boolean): string {
+    public formatStackTrace(text: string, enableDeepFormatting: boolean): string {
         return this.formatStackTraceInternal(text, enableDeepFormatting, false);
     }
 
-    private static formatStackTraceInternal(
-        text: string,
-        enableDeepFormatting: boolean,
-        allowAutoDetect: boolean,
-    ): string {
+    private formatStackTraceInternal(text: string, enableDeepFormatting: boolean, allowAutoDetect: boolean): string {
         try {
             const normalized = text
                 .replace(/\\t/g, "  ")
@@ -243,11 +240,11 @@ export class QuickFormatter {
         }
     }
 
-    public static formatXml(text: string, enableDeepFormatting: boolean): string {
+    public formatXml(text: string, enableDeepFormatting: boolean): string {
         return this.formatXmlInternal(text, enableDeepFormatting, false);
     }
 
-    private static formatXmlInternal(text: string, enableDeepFormatting: boolean, allowAutoDetect: boolean): string {
+    private formatXmlInternal(text: string, enableDeepFormatting: boolean, allowAutoDetect: boolean): string {
         try {
             let wasUnescaped = false;
 
@@ -274,7 +271,7 @@ export class QuickFormatter {
         }
     }
 
-    private static formatDeepXml(xmlNode: unknown): unknown {
+    private formatDeepXml(xmlNode: unknown): unknown {
         if (typeof xmlNode === "string") {
             if (!xmlNode.trim().startsWith("<")) {
                 return xmlNode;
@@ -306,7 +303,7 @@ export class QuickFormatter {
         return xmlNode;
     }
 
-    private static formatDeepXmlAuto(xmlNode: unknown): unknown {
+    private formatDeepXmlAuto(xmlNode: unknown): unknown {
         if (typeof xmlNode === "string") {
             if (!xmlNode.trim().startsWith("<")) {
                 return this.formatAutoInternal(xmlNode, true);
@@ -338,7 +335,7 @@ export class QuickFormatter {
         return xmlNode;
     }
 
-    private static unescapeXml(text: string): string {
+    private unescapeXml(text: string): string {
         return text
             .replace(/&amp;/g, "&")
             .replace(/&lt;/g, "<")
@@ -346,6 +343,6 @@ export class QuickFormatter {
             .replace(/&quot;/g, '"')
             .replace(/&apos;/g, "'")
             .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
-            .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+            .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)));
     }
 }

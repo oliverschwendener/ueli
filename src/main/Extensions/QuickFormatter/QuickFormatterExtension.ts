@@ -1,6 +1,8 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
+import { XmlBuilder } from "@Core/XmlBuilder/XmlBuilder";
+import { XmlParser } from "@Core/XmlParser/XmlParser";
 import {
     createCopyToClipboardAction,
     createEmptyInstantSearchResult,
@@ -146,14 +148,30 @@ export class QuickFormatterExtension implements Extension {
     private formatText(text: string, mode: "auto" | "stacktrace" | "json" | "xml"): string {
         const enableDeepFormatting = this.getSettingValue("enableDeepFormatting");
 
+        const quickFormatter = new QuickFormatter(
+            new XmlBuilder(),
+            {
+                format: true,
+                indentBy: "  ",
+                ignoreAttributes: false,
+                processEntities: true,
+            },
+            new XmlParser(),
+            {
+                ignoreAttributes: false,
+                processEntities: true,
+                preserveOrder: false,
+            },
+        );
+
         if (mode === "stacktrace") {
-            return QuickFormatter.formatStackTrace(text, enableDeepFormatting);
+            return quickFormatter.formatStackTrace(text, enableDeepFormatting);
         } else if (mode === "json") {
-            return QuickFormatter.formatJson(text, enableDeepFormatting);
+            return quickFormatter.formatJson(text, enableDeepFormatting);
         } else if (mode === "xml") {
-            return QuickFormatter.formatXml(text, enableDeepFormatting);
+            return quickFormatter.formatXml(text, enableDeepFormatting);
         } else {
-            return QuickFormatter.formatAuto(text, enableDeepFormatting);
+            return quickFormatter.formatAuto(text, enableDeepFormatting);
         }
     }
 }
