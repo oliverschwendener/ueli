@@ -35,6 +35,7 @@ import type { TerminalRegistry } from "@Core/Terminal";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import type { WebBrowserRegistry } from "@Core/WebBrowser/Contract";
+import type { XmlBuilder } from "@Core/XmlBuilder";
 import type { XmlParser } from "@Core/XmlParser";
 import type {
     App,
@@ -101,5 +102,6 @@ export type UeliModules = {
     UeliCommandInvoker: UeliCommandInvoker;
     UrlImageGenerator: UrlImageGenerator;
     WebBrowserRegistry: WebBrowserRegistry;
+    XmlBuilder: XmlBuilder;
     XmlParser: XmlParser;
 };
