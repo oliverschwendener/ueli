@@ -259,7 +259,7 @@ export class QuickFormatter {
                 xml = allowAutoDetect ? this.formatDeepXmlAuto(xml) : this.formatDeepXml(xml);
             }
 
-            let result = this.xmlBuilder.build(xml, this.xmlBuilderOptions).trimEnd();
+            let result = this.xmlBuilder.build(xml as object, this.xmlBuilderOptions).trimEnd();
 
             if (enableDeepFormatting && allowAutoDetect) {
                 result = result.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
