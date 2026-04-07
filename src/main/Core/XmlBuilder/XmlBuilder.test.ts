@@ -3,7 +3,7 @@ import { XmlBuilder } from "./XmlBuilder";
 
 describe(XmlBuilder, () => {
     describe(XmlBuilder.prototype.build, () => {
-        it("should build and format XML file content", async () => {
+        it("should build and format XML file content", () => {
             const xml = { root: { test: "test" } };
             const actual = new XmlBuilder().build(xml, {
                 format: true,
