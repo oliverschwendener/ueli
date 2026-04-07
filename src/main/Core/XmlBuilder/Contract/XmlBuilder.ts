@@ -12,8 +12,8 @@ export interface XmlBuilder {
      * @param options.processEntities - Whether to process entities in the XML.
      * @returns The built XML string.
      */
-    build(
-        obj: unknown,
+    build<T extends object>(
+        obj: T,
         options?: { format: boolean; indentBy: string; ignoreAttributes: boolean; processEntities: boolean },
     ): string;
 }
