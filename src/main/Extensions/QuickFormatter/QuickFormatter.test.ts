@@ -3,21 +3,7 @@ import { XmlParser } from "@Core/XmlParser/XmlParser";
 import { describe, expect, it } from "vitest";
 import { QuickFormatter } from "./QuickFormatter";
 
-const quickFormatter = new QuickFormatter(
-    new XmlBuilder(),
-    {
-        format: true,
-        indentBy: "  ",
-        ignoreAttributes: false,
-        processEntities: true,
-    },
-    new XmlParser(),
-    {
-        ignoreAttributes: false,
-        processEntities: true,
-        preserveOrder: false,
-    },
-);
+const quickFormatter = new QuickFormatter(new XmlBuilder(), new XmlParser());
 
 describe("QuickFormatter", () => {
     describe("formatJson", () => {

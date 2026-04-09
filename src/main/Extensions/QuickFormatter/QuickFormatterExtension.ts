@@ -1,8 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { XmlBuilder } from "@Core/XmlBuilder/XmlBuilder";
-import { XmlParser } from "@Core/XmlParser/XmlParser";
 import {
     createCopyToClipboardAction,
     createEmptyInstantSearchResult,
@@ -12,7 +10,7 @@ import {
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { QuickFormatterSettings as Settings } from "@common/Extensions/QuickFormatter";
-import { QuickFormatter } from "./QuickFormatter";
+import type { QuickFormatter } from "./QuickFormatter";
 
 export class QuickFormatterExtension implements Extension {
     public readonly id = "QuickFormatter";
@@ -39,6 +37,7 @@ export class QuickFormatterExtension implements Extension {
     public constructor(
         private readonly assetPathResolver: AssetPathResolver,
         private readonly settingsManager: SettingsManager,
+        private readonly quickFormatter: QuickFormatter,
     ) {}
 
     public isSupported(): boolean {
@@ -148,30 +147,14 @@ export class QuickFormatterExtension implements Extension {
     private formatText(text: string, mode: "auto" | "stacktrace" | "json" | "xml"): string {
         const enableDeepFormatting = this.getSettingValue("enableDeepFormatting");
 
-        const quickFormatter = new QuickFormatter(
-            new XmlBuilder(),
-            {
-                format: true,
-                indentBy: "  ",
-                ignoreAttributes: false,
-                processEntities: true,
-            },
-            new XmlParser(),
-            {
-                ignoreAttributes: false,
-                processEntities: true,
-                preserveOrder: false,
-            },
-        );
-
         if (mode === "stacktrace") {
-            return quickFormatter.formatStackTrace(text, enableDeepFormatting);
+            return this.quickFormatter.formatStackTrace(text, enableDeepFormatting);
         } else if (mode === "json") {
-            return quickFormatter.formatJson(text, enableDeepFormatting);
+            return this.quickFormatter.formatJson(text, enableDeepFormatting);
         } else if (mode === "xml") {
-            return quickFormatter.formatXml(text, enableDeepFormatting);
+            return this.quickFormatter.formatXml(text, enableDeepFormatting);
         } else {
-            return quickFormatter.formatAuto(text, enableDeepFormatting);
+            return this.quickFormatter.formatAuto(text, enableDeepFormatting);
         }
     }
 }

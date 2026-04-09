@@ -2,20 +2,22 @@ import type { XmlBuilder } from "@Core/XmlBuilder";
 import type { XmlParser } from "@Core/XmlParser";
 
 export class QuickFormatter {
+    private readonly xmlBuilderOptions = {
+        format: true,
+        indentBy: "  ",
+        ignoreAttributes: false,
+        processEntities: true,
+    };
+
+    private readonly xmlParserOptions = {
+        ignoreAttributes: false,
+        processEntities: true,
+        preserveOrder: false,
+    };
+
     public constructor(
         private readonly xmlBuilder: XmlBuilder,
-        private readonly xmlBuilderOptions = {
-            format: true,
-            indentBy: "  ",
-            ignoreAttributes: false,
-            processEntities: true,
-        },
         private readonly xmlParser: XmlParser,
-        private readonly xmlParserOptions = {
-            ignoreAttributes: false,
-            processEntities: true,
-            preserveOrder: false,
-        },
     ) {}
 
     public formatAuto(text: string, enableDeepFormatting: boolean): string {
