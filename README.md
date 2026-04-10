@@ -61,6 +61,7 @@ Here you might find some logs that help find the issue.
 - [File Search](docs/Extensions/FileSearch/README.md)
 - [JetBrains Toolbox](docs/Extensions/JetBrainsToolbox/README.md)
 - [Password Generator](docs/Extensions/PasswordGenerator/README.md)
+- [Quick Formatter](docs/Extensions/QuickFormatter/README.md)
 - [Rowland Text Editor](docs/Extensions/RowlandTextEditor/README.md)
 - [Simple File Search](docs/Extensions/SimpleFileSearch/README.md)
 - [System Commands](docs/Extensions/SystemCommands/README.md)
