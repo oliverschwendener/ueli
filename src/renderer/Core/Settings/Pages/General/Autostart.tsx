@@ -18,7 +18,11 @@ export const Autostart = () => {
             label={t("autostart")}
             description={t("autostartDescription")}
             control={
-                <Switch checked={autostartIsEnabled} onChange={(_, { checked }) => updateAutostartSettings(checked)} />
+                <Switch
+                    size="small"
+                    checked={autostartIsEnabled}
+                    onChange={(_, { checked }) => updateAutostartSettings(checked)}
+                />
             }
         />
     );

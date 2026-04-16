@@ -134,6 +134,7 @@ export const UuidGeneratorSettings = () => {
                     label={t("validateStrictly")}
                     control={
                         <Switch
+                            size="small"
                             checked={validateStrictly}
                             onChange={(_, { checked }) => setValidateStrictly(checked)}
                         />

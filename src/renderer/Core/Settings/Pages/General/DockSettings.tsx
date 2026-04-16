@@ -20,7 +20,11 @@ export const DockSettings = () => {
         <Setting
             label={t("showAppIconInDock")}
             control={
-                <Switch checked={showAppIconInDock} onChange={(_, { checked }) => updateShowAppIconInDock(checked)} />
+                <Switch
+                    size="small"
+                    checked={showAppIconInDock}
+                    onChange={(_, { checked }) => updateShowAppIconInDock(checked)}
+                />
             }
         />
     );

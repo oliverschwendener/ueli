@@ -46,7 +46,9 @@ export const VSCodeSettings = () => {
                 />
                 <Setting
                     label={t("showPath")}
-                    control={<Switch checked={showPath} onChange={(_, { checked }) => setShowPath(checked)} />}
+                    control={
+                        <Switch size="small" checked={showPath} onChange={(_, { checked }) => setShowPath(checked)} />
+                    }
                 />
             </SettingGroup>
         </SettingGroupList>

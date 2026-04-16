@@ -79,6 +79,7 @@ export const WebSearchSettings = () => {
                     label={t("showInstantSearchResult")}
                     control={
                         <Switch
+                            size="small"
                             checked={showInstantSearchResult}
                             onChange={(_, { checked }) => setShowInstantSearchResult(checked)}
                         />

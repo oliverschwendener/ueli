@@ -110,6 +110,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("includeUppercaseCharacters")}
                     control={
                         <Switch
+                            size="small"
                             checked={includeUppercaseCharacters}
                             onChange={(_, { checked }) => setIncludeUppercaseCharacters(checked)}
                         />
@@ -119,6 +120,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("includeLowercaseCharacters")}
                     control={
                         <Switch
+                            size="small"
                             checked={includeLowercaseCharacters}
                             onChange={(_, { checked }) => setIncludeLowercaseCharacters(checked)}
                         />
@@ -127,7 +129,11 @@ export const PasswordGeneratorSettings = () => {
                 <Setting
                     label={t("includeNumbers")}
                     control={
-                        <Switch checked={includeNumbers} onChange={(_, { checked }) => setIncludeNumbers(checked)} />
+                        <Switch
+                            size="small"
+                            checked={includeNumbers}
+                            onChange={(_, { checked }) => setIncludeNumbers(checked)}
+                        />
                     }
                 />
                 <Setting
@@ -159,6 +165,7 @@ export const PasswordGeneratorSettings = () => {
                                 }
                             />
                             <Switch
+                                size="small"
                                 checked={includeSymbols}
                                 onChange={(_, { checked }) => setIncludeSymbols(checked)}
                             />
@@ -169,6 +176,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("beginWithALetter")}
                     control={
                         <Switch
+                            size="small"
                             checked={beginWithALetter}
                             onChange={(_, { checked }) => setBeginWithALetter(checked)}
                         />
@@ -178,6 +186,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("noSimilarCharacters")}
                     control={
                         <Switch
+                            size="small"
                             checked={noSimilarCharacters}
                             onChange={(_, { checked }) => setNoSimilarCharacters(checked)}
                         />
@@ -187,6 +196,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("noDuplicateCharacters")}
                     control={
                         <Switch
+                            size="small"
                             checked={noDuplicateCharacters}
                             onChange={(_, { checked }) => setNoDuplicateCharacters(checked)}
                         />
@@ -196,6 +206,7 @@ export const PasswordGeneratorSettings = () => {
                     label={t("noSequentialCharacters")}
                     control={
                         <Switch
+                            size="small"
                             checked={noSequentialCharacters}
                             onChange={(_, { checked }) => setNoSequentialCharacters(checked)}
                         />

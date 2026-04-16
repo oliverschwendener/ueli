@@ -25,6 +25,7 @@ export const SearchHistory = () => {
                 description={t("searchHistoryEnabledDescription")}
                 control={
                     <Switch
+                        size="small"
                         checked={enabled}
                         onChange={(_, { checked }) => {
                             setEnabled(checked);

@@ -14,7 +14,7 @@ export const WorkspaceVisibility = () => {
     return (
         <Setting
             label={t("visibleOnAllWorkspaces")}
-            control={<Switch checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
+            control={<Switch size="small" checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
         />
     );
 };

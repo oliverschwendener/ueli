@@ -69,6 +69,7 @@ export const KeyboardAndMouse = () => {
                     label={t("dragAndDrop")}
                     control={
                         <Switch
+                            size="small"
                             checked={dragAndDropEnabled}
                             onChange={(_, { checked }) => setDragAndDropEnabled(checked)}
                         />

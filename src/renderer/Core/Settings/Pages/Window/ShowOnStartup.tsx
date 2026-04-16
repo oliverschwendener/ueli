@@ -11,7 +11,7 @@ export const ShowOnStartup = () => {
     return (
         <Setting
             label={t("showOnStartup")}
-            control={<Switch checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
+            control={<Switch size="small" checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
         />
     );
 };

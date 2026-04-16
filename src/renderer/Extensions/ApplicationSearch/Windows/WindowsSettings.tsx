@@ -22,6 +22,7 @@ export const WindowsSettings = () => {
                     label={t("includeAppsFromWindowsStore")}
                     control={
                         <Switch
+                            size="small"
                             checked={includeWindowsStoreApps}
                             onChange={(_, { checked }) => setIncludeWindowsStoreApps(checked)}
                         />

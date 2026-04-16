@@ -10,7 +10,7 @@ export const AlwaysOnTop = () => {
     return (
         <Setting
             label={t("alwaysOnTop")}
-            control={<Switch checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
+            control={<Switch size="small" checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
         />
     );
 };

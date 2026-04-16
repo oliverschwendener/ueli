@@ -14,7 +14,11 @@ export const UseDefaultBrowser = ({ useDefaultWebBrowser, setUseDefaultBrowser }
         <Setting
             label={t("useDefaultWebBrowser")}
             control={
-                <Switch checked={useDefaultWebBrowser} onChange={(_, { checked }) => setUseDefaultBrowser(checked)} />
+                <Switch
+                    size="small"
+                    checked={useDefaultWebBrowser}
+                    onChange={(_, { checked }) => setUseDefaultBrowser(checked)}
+                />
             }
         />
     );

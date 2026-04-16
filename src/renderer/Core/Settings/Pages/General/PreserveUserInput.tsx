@@ -12,7 +12,7 @@ export const PreserveUserInput = () => {
         <Setting
             label={t("preserveUserInput")}
             description={t("preserveUserInputDescription")}
-            control={<Switch checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
+            control={<Switch size="small" checked={value} onChange={(_, { checked }) => updateValue(checked)} />}
         />
     );
 };

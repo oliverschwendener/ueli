@@ -50,6 +50,7 @@ export const QuickFormatterSettings = () => {
                     label={t("enableStackTrace")}
                     control={
                         <Switch
+                            size="small"
                             checked={enableStackTrace}
                             onChange={(_, { checked }) => setEnableStackTrace(checked)}
                         />
@@ -57,16 +58,25 @@ export const QuickFormatterSettings = () => {
                 />
                 <Setting
                     label={t("enableJson")}
-                    control={<Switch checked={enableJson} onChange={(_, { checked }) => setEnableJson(checked)} />}
+                    control={
+                        <Switch
+                            size="small"
+                            checked={enableJson}
+                            onChange={(_, { checked }) => setEnableJson(checked)}
+                        />
+                    }
                 />
                 <Setting
                     label={t("enableXml")}
-                    control={<Switch checked={enableXml} onChange={(_, { checked }) => setEnableXml(checked)} />}
+                    control={
+                        <Switch size="small" checked={enableXml} onChange={(_, { checked }) => setEnableXml(checked)} />
+                    }
                 />
                 <Setting
                     label={t("enableDeepFormatting")}
                     control={
                         <Switch
+                            size="small"
                             checked={enableDeepFormatting}
                             onChange={(_, { checked }) => setEnableDeepFormatting(checked)}
                         />

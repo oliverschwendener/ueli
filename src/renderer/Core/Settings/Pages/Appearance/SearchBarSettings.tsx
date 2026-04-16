@@ -103,7 +103,7 @@ export const SearchBarSettings = () => {
             />
             <Setting
                 label={t("searchBarShowIcon", { ns: "settingsAppearance" })}
-                control={<Switch checked={showIcon} onChange={(_, { checked }) => setShowIcon(checked)} />}
+                control={<Switch size="small" checked={showIcon} onChange={(_, { checked }) => setShowIcon(checked)} />}
             />
         </SettingGroup>
     );

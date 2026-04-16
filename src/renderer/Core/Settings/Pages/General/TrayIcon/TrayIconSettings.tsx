@@ -31,7 +31,13 @@ export const TrayIconSettings = () => {
         <SettingGroup title={groupTitles[operatingSystem]}>
             <Setting
                 label={switchLabels[operatingSystem]}
-                control={<Switch checked={showTrayIcon} onChange={(_, { checked }) => setShowTrayIcon(checked)} />}
+                control={
+                    <Switch
+                        size="small"
+                        checked={showTrayIcon}
+                        onChange={(_, { checked }) => setShowTrayIcon(checked)}
+                    />
+                }
             />
         </SettingGroup>
     );

@@ -15,6 +15,7 @@ export const AutomaticRescan = ({ automaticRescanEnabled, setAutomaticRescanEnab
             label={t("automaticRescan")}
             control={
                 <Switch
+                    size="small"
                     checked={automaticRescanEnabled}
                     onChange={(_, { checked }) => setAutomaticRescanEnabled(checked)}
                 />

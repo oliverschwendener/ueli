@@ -13,7 +13,9 @@ export const HotkeyEnabled = ({ hotkeyEnabled, setHotkeyEnabled }: HotkeyEnabled
     return (
         <Setting
             label={t("hotkeyEnabled")}
-            control={<Switch checked={hotkeyEnabled} onChange={(_, { checked }) => setHotkeyEnabled(checked)} />}
+            control={
+                <Switch size="small" checked={hotkeyEnabled} onChange={(_, { checked }) => setHotkeyEnabled(checked)} />
+            }
         />
     );
 };
