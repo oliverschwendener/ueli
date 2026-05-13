@@ -110,7 +110,7 @@ describe("QuickFormatter", () => {
         it("should remove duplicate empty lines", () => {
             const input = "Error\n\n\nat line 5\n\n\nat line 10";
             const result = quickFormatter.formatStackTrace(input, false);
-            const expected = "Error\n\n  at line 5\n\n  at line 10";
+            const expected = "Error\n  at line 5\n  at line 10";
             expect(result).toBe(expected);
         });
 
@@ -118,6 +118,24 @@ describe("QuickFormatter", () => {
             const input = "Error\r\nat line 5\rat line 10\nat line 15";
             const result = quickFormatter.formatStackTrace(input, false);
             const expected = "Error\n  at line 5\n  at line 10\n  at line 15";
+            expect(result).toBe(expected);
+        });
+
+        it("should split inline stack frames after multiple spaces", () => {
+            const input =
+                "ERROR TYPE: FaultException  MESSAGE: Test error  STACKTRACE:    at MyNamespace.MyClass.Method(MyClass.cs:10)\n    at Other.Namespace.OtherClass.OtherMethod(OtherClass.cs:20)";
+            const result = quickFormatter.formatStackTrace(input, false);
+            const expected =
+                "ERROR TYPE: FaultException\nMESSAGE: Test error\nSTACKTRACE:\n  at MyNamespace.MyClass.Method(MyClass.cs:10)\n  at Other.Namespace.OtherClass.OtherMethod(OtherClass.cs:20)";
+            expect(result).toBe(expected);
+        });
+
+        it("should split collapsed inline stack frames after multiple spaces", () => {
+            const input =
+                "ERROR TYPE: FaultException  MESSAGE: Test error  STACKTRACE:    at A.B.C.Method1()                 at A.B.C.Method2()                 at A.B.C.Method3()";
+            const result = quickFormatter.formatStackTrace(input, false);
+            const expected =
+                "ERROR TYPE: FaultException\nMESSAGE: Test error\nSTACKTRACE:\n  at A.B.C.Method1()\n  at A.B.C.Method2()\n  at A.B.C.Method3()";
             expect(result).toBe(expected);
         });
     });

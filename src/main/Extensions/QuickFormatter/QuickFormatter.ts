@@ -150,7 +150,8 @@ export class QuickFormatter {
                 .replace(/\\n/g, "\n")
                 .replace(/\r\n/g, "\n")
                 .replace(/\r/g, "\n")
-                .replace(/\t/g, "  ");
+                .replace(/\t/g, "  ")
+                .replace(/\s{2,}/g, "\n");
 
             const lines = normalized.split("\n");
             const result: string[] = [];
