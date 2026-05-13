@@ -9,6 +9,7 @@ import {
     createOpenFileAction,
     type OperatingSystem,
     type SearchResultItem,
+    type SearchResultItemAction,
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
@@ -129,11 +130,23 @@ export class FileSearch implements Extension {
             const isDirectory =
                 this.fileSystemUtility.isAccessibleSync(filePath) && this.fileSystemUtility.isDirectory(filePath);
 
+            const additionalActions: SearchResultItemAction[] = [];
+
+            if (!isDirectory) {
+                additionalActions.push(
+                    createOpenFileAction({
+                        filePath: dirname(filePath),
+                        description: `Open Folder`,
+                    }),
+                );
+            }
+
             return {
                 defaultAction: createOpenFileAction({
                     filePath,
                     description: `Open ${isDirectory ? "Folder" : "File"}`,
                 }),
+                additionalActions: additionalActions,
                 description: isDirectory ? "Folder" : "File",
                 details: dirname(filePath),
                 dragAndDrop: { filePath },

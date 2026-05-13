@@ -1,5 +1,6 @@
 import { BaseLayout } from "@Core/BaseLayout";
 import { Header } from "@Core/Header";
+import { ActionsMenu } from "@Core/Search/ActionsMenu";
 import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
@@ -16,6 +17,7 @@ type BasicSearchProps = {
     inputPlaceholder?: string;
     debounceDurationInMs?: number;
     showGoBackButton?: boolean;
+    showFooter?: boolean;
     searchResultListLayout?: SearchResultListLayout;
 };
 
@@ -24,6 +26,7 @@ export const BasicSearch = ({
     inputPlaceholder,
     debounceDurationInMs,
     showGoBackButton,
+    showFooter,
     searchResultListLayout,
 }: BasicSearchProps) => {
     const navigate = useNavigate();
@@ -32,6 +35,8 @@ export const BasicSearch = ({
     const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [clearTimeoutValue, setClearTimeoutValue] = useState<NodeJS.Timeout | undefined>(undefined);
     const contentRef = useRef<HTMLDivElement>(null);
+    const additionalActionsButtonRef = useRef<HTMLButtonElement>(null);
+    const [additionalActionsMenuIsOpen, setAdditionalActionsMenuIsOpen] = useState<boolean>(false);
 
     const [searchResultItems, setSearchResultItems] = useState<SearchResultItem[]>([]);
 
@@ -45,6 +50,16 @@ export const BasicSearch = ({
 
     const getSelectedSearchResultItem = (): SearchResultItem | undefined =>
         searchResultItems.find((s) => s.id === selectedItemId);
+
+    const selectedSearchResultItem = getSelectedSearchResultItem();
+    const actions = selectedSearchResultItem
+        ? [
+              { ...selectedSearchResultItem.defaultAction, keyboardShortcut: "Enter" },
+              ...(selectedSearchResultItem.additionalActions ?? []),
+          ]
+        : [];
+
+    const toggleAdditionalActionsMenu = (open: boolean) => setAdditionalActionsMenuIsOpen(open);
 
     const goBack = () => navigate({ pathname: "/" });
 
@@ -175,6 +190,28 @@ export const BasicSearch = ({
                         />
                     </div>
                 )
+            }
+            footer={
+                showFooter ? (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            gap: 8,
+                            padding: 10,
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <ActionsMenu
+                            actions={actions}
+                            invokeAction={(action) => window.ContextBridge.invokeAction(action)}
+                            additionalActionsButtonRef={additionalActionsButtonRef}
+                            open={additionalActionsMenuIsOpen}
+                            onOpenChange={toggleAdditionalActionsMenu}
+                            keyboardShortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "Ctrl+K"}
+                        />
+                    </div>
+                ) : undefined
             }
         />
     );
