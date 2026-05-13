@@ -340,12 +340,12 @@ export class QuickFormatter {
 
     private unescapeXml(text: string): string {
         return text
-            .replace(/&amp;/g, "&")
             .replace(/&lt;/g, "<")
             .replace(/&gt;/g, ">")
             .replace(/&quot;/g, '"')
             .replace(/&apos;/g, "'")
             .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
-            .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)));
+            .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(Number.parseInt(hex, 16)))
+            .replace(/&amp;/g, "&");
     }
 }
