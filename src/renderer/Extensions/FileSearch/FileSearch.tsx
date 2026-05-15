@@ -28,6 +28,11 @@ export const FileSearch = ({ contextBridge, goBack }: ExtensionProps) => {
     }
 
     return (
-        <BasicSearch getSearchResultItems={getSearchResultItems} showGoBackButton searchResultListLayout="detailed" />
+        <BasicSearch
+            getSearchResultItems={getSearchResultItems}
+            showGoBackButton
+            showFooter
+            searchResultListLayout="detailed"
+        />
     );
 };
