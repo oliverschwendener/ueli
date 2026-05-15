@@ -5,7 +5,7 @@ const getWindowsAppsPowershellScript = `
             [string[]]$FileExtensions
         )
 
-        Get-ChildItem -File -Path $FolderPaths -Recurse -Include $FileExtensions | Select-Object -Property Name, FullName, Extension, BaseName | ConvertTo-Json -Compress
+        Get-ChildItem -File -Path $FolderPaths -Recurse -Include $FileExtensions -ErrorAction SilentlyContinue | Select-Object -Property Name, FullName, Extension, BaseName | ConvertTo-Json -Compress
     }`;
 
 const getWindowsStoreApps = `
