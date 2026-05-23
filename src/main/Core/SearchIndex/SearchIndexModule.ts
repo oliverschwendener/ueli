@@ -9,10 +9,11 @@ export class SearchIndexModule {
         const browserWindowNotifier = moduleRegistry.get("BrowserWindowNotifier");
         const fileSystemUtility = moduleRegistry.get("FileSystemUtility");
         const ipcMain = moduleRegistry.get("IpcMain");
+        const logger = moduleRegistry.get("Logger");
 
         const searchIndexFile: SearchIndexFileInterface = new SearchIndexFile(app, fileSystemUtility);
 
-        const searchIndex = new SearchIndex(browserWindowNotifier, searchIndexFile);
+        const searchIndex = new SearchIndex(browserWindowNotifier, searchIndexFile, logger);
 
         moduleRegistry.register("SearchIndex", searchIndex);
 

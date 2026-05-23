@@ -1,4 +1,5 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
+import type { Logger } from "@Core/Logger";
 import type { SearchResultItem } from "@common/Core";
 import type { SearchIndex as SearchIndexInterface } from "./Contract";
 import type { SearchIndexFile } from "./Contract/SearchIndexFile";
@@ -10,8 +11,17 @@ export class SearchIndex implements SearchIndexInterface {
     public constructor(
         private readonly browserWindowNotifier: BrowserWindowNotifier,
         private readonly indexFile: SearchIndexFile,
+        private readonly logger: Logger,
     ) {
-        this.index = indexFile.read();
+        try {
+            this.index = indexFile.read();
+        } catch (error) {
+            if (error instanceof Error) {
+                this.logger.error(`Unable to read index file, falling back to empty index. Reason: ${error.message}`);
+            }
+
+            this.index = {};
+        }
     }
 
     public set(index: Index): void {

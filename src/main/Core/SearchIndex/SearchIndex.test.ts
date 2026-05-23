@@ -1,4 +1,5 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
+import type { Logger } from "@Core/Logger";
 import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
 import type { Index } from "./Contract";
@@ -39,9 +40,46 @@ describe(SearchIndex, () => {
 
             const { searchIndexFile } = searchIndexFileDummy({ index });
 
-            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile);
+            const logger = <Logger>{};
+
+            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile, logger);
 
             expect(searchIndex["index"]).toEqual(index);
+        });
+
+        it("should fall back to empty index and log error if reading the index file fails", () => {
+            const browserWindowNotifier = <BrowserWindowNotifier>{};
+
+            const searchIndexFile = new (class implements SearchIndexFile {
+                public getPath(): string {
+                    return "";
+                }
+
+                public exists(): boolean {
+                    return true;
+                }
+
+                public read(): Index {
+                    throw new Error("read error");
+                }
+
+                public write(_index: Index): void {
+                    console.log("write", _index);
+                }
+            })();
+
+            const loggerErrorMock = vi.fn();
+
+            const logger = <Logger>{
+                error: (message: string) => loggerErrorMock(message),
+            };
+
+            const searchIndex = new SearchIndex(browserWindowNotifier, searchIndexFile, logger);
+
+            expect(searchIndex["index"]).toEqual({});
+            expect(loggerErrorMock).toHaveBeenCalledWith(
+                "Unable to read index file, falling back to empty index. Reason: read error",
+            );
         });
     });
 
@@ -60,7 +98,9 @@ describe(SearchIndex, () => {
             const notifyAllMock = vi.fn();
             const browserWindowNotifier = <BrowserWindowNotifier>{ notifyAll: (c) => notifyAllMock(c) };
 
-            const searchIndex = new SearchIndex(browserWindowNotifier, searchIndexFile);
+            const logger = <Logger>{};
+
+            const searchIndex = new SearchIndex(browserWindowNotifier, searchIndexFile, logger);
 
             const newIndex: Index = {
                 extensionId2: [
@@ -81,7 +121,8 @@ describe(SearchIndex, () => {
     describe(SearchIndex.prototype.getSearchResultItems, () => {
         it("should return an empty list of search result items if the search index is empty", () => {
             const { searchIndexFile } = searchIndexFileDummy({ index: {} });
-            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile);
+            const logger = <Logger>{};
+            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile, logger);
             expect(searchIndex.getSearchResultItems()).toEqual([]);
         });
 
@@ -94,7 +135,9 @@ describe(SearchIndex, () => {
 
             const { searchIndexFile } = searchIndexFileDummy({ index: { testExtensionId: searchResultItems } });
 
-            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile);
+            const logger = <Logger>{};
+
+            const searchIndex = new SearchIndex(<BrowserWindowNotifier>{}, searchIndexFile, logger);
 
             expect(searchIndex.getSearchResultItems()).toEqual(searchResultItems);
         });
@@ -113,7 +156,9 @@ describe(SearchIndex, () => {
 
             const { searchIndexFile, writeMock } = searchIndexFileDummy({ index: {} });
 
-            const searchIndex = new SearchIndex(eventEmitter, searchIndexFile);
+            const logger = <Logger>{};
+
+            const searchIndex = new SearchIndex(eventEmitter, searchIndexFile, logger);
 
             searchIndex.addSearchResultItems("extensionId1", searchResultItems);
 
@@ -138,7 +183,9 @@ describe(SearchIndex, () => {
                 },
             });
 
-            const searchIndex = new SearchIndex(eventEmitter, searchIndexFile);
+            const logger = <Logger>{};
+
+            const searchIndex = new SearchIndex(eventEmitter, searchIndexFile, logger);
 
             searchIndex.removeSearchResultItems("extensionId1");
 
