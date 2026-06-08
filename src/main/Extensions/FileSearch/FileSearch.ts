@@ -137,6 +137,7 @@ export class FileSearch implements Extension {
                     createOpenFileAction({
                         filePath: dirname(filePath),
                         description: `Open Folder`,
+                        keyboardShortcut: "Shift+Enter",
                     }),
                 );
             }

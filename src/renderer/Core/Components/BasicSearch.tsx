@@ -1,15 +1,18 @@
 import { BaseLayout } from "@Core/BaseLayout";
+import { KeyboardShortcut } from "@Core/Components";
+import { Footer } from "@Core/Footer";
 import { Header } from "@Core/Header";
 import { ActionsMenu } from "@Core/Search/ActionsMenu";
+import { getSearchResultItemActionByKeyboardshortcut } from "@Core/Search/Helpers";
 import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchResultItemId";
 import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultListLayout } from "@Core/Search/SearchResultListLayout";
 import type { SearchResultItem } from "@common/Core";
-import { Button, Input, ProgressBar } from "@fluentui/react-components";
+import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
-import type { KeyboardEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 type BasicSearchProps = {
@@ -61,21 +64,98 @@ export const BasicSearch = ({
 
     const toggleAdditionalActionsMenu = (open: boolean) => setAdditionalActionsMenuIsOpen(open);
 
+    const operatingSystem = window.ContextBridge.getOperatingSystem();
+    const isMacOS = operatingSystem === "macOS";
+    const actionMenuKeyboardShortcut = isMacOS ? "⌘+K" : "Ctrl+K";
+
+    const { t } = useTranslation();
+
+    const currentDefaultActionDescription = () => {
+        if (!selectedSearchResultItem) {
+            return undefined;
+        }
+
+        const defaultAction = selectedSearchResultItem.defaultAction;
+        return defaultAction.descriptionTranslation
+            ? t(defaultAction.descriptionTranslation.key, {
+                  ns: defaultAction.descriptionTranslation.namespace,
+              })
+            : defaultAction.description;
+    };
+
+    const openAdditionalActionsMenu = () => additionalActionsButtonRef.current?.click();
+
+    useEffect(() => {
+        const windowKeyDownEventHandler = (event: KeyboardEvent): void => {
+            if ((isMacOS ? event.metaKey : event.ctrlKey) && event.key.toLowerCase() === "k") {
+                event.preventDefault();
+                openAdditionalActionsMenu();
+            }
+        };
+
+        window.addEventListener("keydown", windowKeyDownEventHandler as EventListener);
+
+        return () => window.removeEventListener("keydown", windowKeyDownEventHandler as EventListener);
+    }, [isMacOS]);
+
     const goBack = () => navigate({ pathname: "/" });
 
-    const handleKeyDownEvent = async (event: KeyboardEvent) => {
-        if (event.key === "ArrowDown") {
-            event.preventDefault();
-            selectNextSearchResultItem();
-        } else if (event.key === "ArrowUp") {
-            event.preventDefault();
-            selectPreviousSearchResultItem();
-        } else if (event.key === "Enter") {
-            event.preventDefault();
-            await invokeSelectedSearchResultItem();
-        } else if (event.key === "Escape") {
-            event.preventDefault();
-            goBack();
+    const handleKeyDownEvent = async (event: ReactKeyboardEvent<HTMLInputElement>) => {
+        const isModifierPressed = (keyboardEvent: ReactKeyboardEvent<HTMLInputElement>) =>
+            isMacOS ? keyboardEvent.metaKey : keyboardEvent.ctrlKey;
+
+        const eventHandlers: Array<{
+            check: (keyboardEvent: ReactKeyboardEvent<HTMLInputElement>) => {
+                shouldInvokeAction: boolean;
+                action: () => Promise<void> | void;
+            };
+        }> = [
+            {
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction:
+                        keyboardEvent.key === "ArrowDown" ||
+                        (isModifierPressed(keyboardEvent) && keyboardEvent.key.toLowerCase() === "n"),
+                    action: selectNextSearchResultItem,
+                }),
+            },
+            {
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction:
+                        keyboardEvent.key === "ArrowUp" ||
+                        (isModifierPressed(keyboardEvent) && keyboardEvent.key.toLowerCase() === "p"),
+                    action: selectPreviousSearchResultItem,
+                }),
+            },
+            {
+                check: (keyboardEvent) => ({
+                    shouldInvokeAction: keyboardEvent.key === "Escape",
+                    action: goBack,
+                }),
+            },
+            {
+                check: (keyboardEvent) => {
+                    const action = getSearchResultItemActionByKeyboardshortcut(keyboardEvent, actions);
+
+                    return {
+                        shouldInvokeAction: action !== undefined,
+                        action: async () => {
+                            if (action) {
+                                await window.ContextBridge.invokeAction(action);
+                            }
+                        },
+                    };
+                },
+            },
+        ];
+
+        for (const eventHandler of eventHandlers) {
+            const { shouldInvokeAction, action } = eventHandler.check(event);
+
+            if (shouldInvokeAction) {
+                event.preventDefault();
+                await Promise.resolve(action());
+                break;
+            }
         }
     };
 
@@ -193,24 +273,35 @@ export const BasicSearch = ({
             }
             footer={
                 showFooter ? (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            gap: 8,
-                            padding: 10,
-                            boxSizing: "border-box",
-                        }}
-                    >
-                        <ActionsMenu
-                            actions={actions}
-                            invokeAction={(action) => window.ContextBridge.invokeAction(action)}
-                            additionalActionsButtonRef={additionalActionsButtonRef}
-                            open={additionalActionsMenuIsOpen}
-                            onOpenChange={toggleAdditionalActionsMenu}
-                            keyboardShortcut={window.ContextBridge.getOperatingSystem() === "macOS" ? "⌘+K" : "Ctrl+K"}
-                        />
-                    </div>
+                    <Footer draggable>
+                        <div />
+                        <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                            {selectedSearchResultItem ? (
+                                <Button
+                                    className="non-draggable-area"
+                                    size="small"
+                                    appearance="subtle"
+                                    onClick={invokeSelectedSearchResultItem}
+                                >
+                                    <div
+                                        style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}
+                                    >
+                                        {currentDefaultActionDescription()}
+                                        <KeyboardShortcut shortcut="Enter" />
+                                    </div>
+                                </Button>
+                            ) : null}
+                            <Divider appearance="subtle" vertical />
+                            <ActionsMenu
+                                actions={actions}
+                                invokeAction={(action) => window.ContextBridge.invokeAction(action)}
+                                additionalActionsButtonRef={additionalActionsButtonRef}
+                                open={additionalActionsMenuIsOpen}
+                                onOpenChange={toggleAdditionalActionsMenu}
+                                keyboardShortcut={actionMenuKeyboardShortcut}
+                            />
+                        </div>
+                    </Footer>
                 ) : undefined
             }
         />
