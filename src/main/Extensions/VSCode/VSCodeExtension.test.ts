@@ -4,10 +4,7 @@ import { getRecentUri, isPath, mergeRecents } from "./VSCodeExtension";
 describe(mergeRecents, () => {
     it("should merge lists in order and deduplicate by uri", () => {
         const local = [{ folderUri: "file:///home/user/project-a" }, { folderUri: "file:///home/user/project-b" }];
-        const remote = [
-            { folderUri: "vscode-vfs://github/org/repo" },
-            { folderUri: "file:///home/user/project-a" },
-        ];
+        const remote = [{ folderUri: "vscode-vfs://github/org/repo" }, { folderUri: "file:///home/user/project-a" }];
 
         expect(mergeRecents(local, remote)).toEqual([
             { folderUri: "file:///home/user/project-a" },
