@@ -95,13 +95,6 @@ export class VSCodeExtension implements Extension {
     private getRecentsRaw(): VSCodeRecentRaw[] {
         const userDatabasePath = this.stateDatabasePaths[this.operatingSystem];
 
-        if (this.useLegacyRecentsQuery()) {
-            return mergeRecents(
-                this.getRecentsFromDatabase(userDatabasePath, "recently.opened"),
-                this.getRecentsFromDatabase(userDatabasePath, "history.recentlyOpenedPathsList"),
-            );
-        }
-
         return mergeRecents(
             this.getRecentsFromDatabase(
                 this.sharedStateDatabasePaths[this.operatingSystem],
@@ -109,13 +102,6 @@ export class VSCodeExtension implements Extension {
             ),
             this.getRecentsFromDatabase(userDatabasePath, "recently.opened"),
             this.getRecentsFromDatabase(userDatabasePath, "history.recentlyOpenedPathsList"),
-        );
-    }
-
-    private useLegacyRecentsQuery(): boolean {
-        return this.settingsManager.getValue<boolean>(
-            `extension[${this.id}].useLegacyRecentsQuery`,
-            this.getSettingDefaultValue("useLegacyRecentsQuery"),
         );
     }
 
@@ -227,7 +213,6 @@ export class VSCodeExtension implements Extension {
             prefix: "vscode",
             command: "code %s",
             showPath: false,
-            useLegacyRecentsQuery: false,
         };
 
         if (this.operatingSystem === "macOS") {
@@ -264,8 +249,6 @@ export class VSCodeExtension implements Extension {
                 commandTooltip:
                     "Use %s where the selected file/project should be inserted. It uses the --file-uri or --folder-uri switch",
                 showPath: "Show file/folder path",
-                useLegacyRecentsQuery: "Use legacy recents query",
-                useLegacyRecentsQueryDescription: "Enable if on VS Code <1.118.",
             },
             "ja-JP": {
                 extensionName: "Visual Studio Code",

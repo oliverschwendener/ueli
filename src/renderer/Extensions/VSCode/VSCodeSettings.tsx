@@ -25,11 +25,6 @@ export const VSCodeSettings = () => {
         key: "showPath",
     });
 
-    const { value: useLegacyRecentsQuery, updateValue: setUseLegacyRecentsQuery } = useExtensionSetting<boolean>({
-        extensionId,
-        key: "useLegacyRecentsQuery",
-    });
-
     return (
         <SettingGroupList>
             <SettingGroup title={t("extensionName")}>
@@ -46,17 +41,6 @@ export const VSCodeSettings = () => {
                     label={t("showPath")}
                     control={
                         <Switch size="small" checked={showPath} onChange={(_, { checked }) => setShowPath(checked)} />
-                    }
-                />
-                <Setting
-                    label={t("useLegacyRecentsQuery")}
-                    description={t("useLegacyRecentsQueryDescription")}
-                    control={
-                        <Switch
-                            size="small"
-                            checked={useLegacyRecentsQuery}
-                            onChange={(_, { checked }) => setUseLegacyRecentsQuery(checked)}
-                        />
                     }
                 />
             </SettingGroup>
