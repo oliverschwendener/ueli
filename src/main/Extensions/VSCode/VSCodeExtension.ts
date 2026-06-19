@@ -112,9 +112,12 @@ export class VSCodeExtension implements Extension {
 
         try {
             const raw = new Database(databasePath, { readonly: true })
-                .prepare("SELECT json_extract(value, '$.entries') as entries FROM ItemTable WHERE key = ?")
+                .prepare<
+                    string,
+                    string | null
+                >("SELECT json_extract(value, '$.entries') as entries FROM ItemTable WHERE key = ?")
                 .pluck()
-                .get(key) as string | null;
+                .get(key);
 
             if (!raw) {
                 return [];
