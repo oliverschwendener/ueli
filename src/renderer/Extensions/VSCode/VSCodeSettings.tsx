@@ -2,8 +2,7 @@ import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import { Input, Switch, Tooltip } from "@fluentui/react-components";
-import { Info16Regular } from "@fluentui/react-icons";
+import { Input, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
 
 export const VSCodeSettings = () => {
@@ -35,14 +34,8 @@ export const VSCodeSettings = () => {
                 />
                 <Setting
                     label={t("command")}
-                    control={
-                        <>
-                            <Tooltip relationship="description" content={t("commandTooltip")}>
-                                <Info16Regular style={{ marginRight: 20 }} />
-                            </Tooltip>
-                            <Input value={command} onChange={(_, { value }) => setCommand(value)} />
-                        </>
-                    }
+                    description={t("commandTooltip")}
+                    control={<Input value={command} onChange={(_, { value }) => setCommand(value)} />}
                 />
                 <Setting
                     label={t("showPath")}

@@ -57,6 +57,13 @@ export class VSCodeExtension implements Extension {
         Linux: process.env.HOME + "/.config/Code/User/globalStorage/state.vscdb",
     };
 
+    // VS Code 1.118+ stores local recents in application-shared storage.
+    private readonly sharedStateDatabasePaths = {
+        Windows: process.env.USERPROFILE + "/.vscode-shared/sharedStorage/state.vscdb",
+        macOS: process.env.HOME + "/.vscode-shared/sharedStorage/state.vscdb",
+        Linux: process.env.HOME + "/.vscode-shared/sharedStorage/state.vscdb",
+    };
+
     private recents: VSCodeRecent[] = [];
 
     public constructor(
@@ -86,16 +93,41 @@ export class VSCodeExtension implements Extension {
     }
 
     private getRecentsRaw(): VSCodeRecentRaw[] {
-        const databasePath = this.stateDatabasePaths[this.operatingSystem];
+        const userDatabasePath = this.stateDatabasePaths[this.operatingSystem];
 
-        return JSON.parse(
-            new Database(databasePath, {})
-                .prepare(
-                    "SELECT json_extract(value, '$.entries') as entries FROM ItemTable WHERE key = 'history.recentlyOpenedPathsList'",
-                )
-                .pluck()
-                .get() as string,
+        return mergeRecents(
+            this.getRecentsFromDatabase(
+                this.sharedStateDatabasePaths[this.operatingSystem],
+                "history.recentlyOpenedPathsList",
+            ),
+            this.getRecentsFromDatabase(userDatabasePath, "recently.opened"),
+            this.getRecentsFromDatabase(userDatabasePath, "history.recentlyOpenedPathsList"),
         );
+    }
+
+    private getRecentsFromDatabase(databasePath: string, key: string): VSCodeRecentRaw[] {
+        if (!this.fileSystemUtility.existsSync(databasePath)) {
+            return [];
+        }
+
+        try {
+            const raw = new Database(databasePath, { readonly: true })
+                .prepare<
+                    string,
+                    string | null
+                >("SELECT json_extract(value, '$.entries') as entries FROM ItemTable WHERE key = ?")
+                .pluck()
+                .get(key);
+
+            if (!raw) {
+                return [];
+            }
+
+            return JSON.parse(raw);
+        } catch (error) {
+            this.logger.error(`${this.id}: failed to read recents from ${databasePath} (${key}): ${error}`);
+            return [];
+        }
     }
 
     private async getRecent(recentRaw: VSCodeRecentRaw): Promise<VSCodeRecent> {
@@ -352,6 +384,29 @@ export class VSCodeExtension implements Extension {
         );
     }
 }
+
+export const getRecentUri = (recent: VSCodeRecentRaw): string | undefined =>
+    recent.fileUri ?? recent.folderUri ?? recent.workspace?.configPath;
+
+export const mergeRecents = (...lists: VSCodeRecentRaw[][]): VSCodeRecentRaw[] => {
+    const seen = new Set<string>();
+    const result: VSCodeRecentRaw[] = [];
+
+    for (const list of lists) {
+        for (const entry of list) {
+            const uri = getRecentUri(entry);
+
+            if (!uri || seen.has(uri)) {
+                continue;
+            }
+
+            seen.add(uri);
+            result.push(entry);
+        }
+    }
+
+    return result;
+};
 
 export const isPath = (searchTerm: string | null | undefined) => {
     if (!searchTerm) {
