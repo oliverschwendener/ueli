@@ -93,9 +93,9 @@ export const BasicSearch = ({
             }
         };
 
-        window.addEventListener("keydown", windowKeyDownEventHandler as EventListener);
+        window.addEventListener("keydown", windowKeyDownEventHandler);
 
-        return () => window.removeEventListener("keydown", windowKeyDownEventHandler as EventListener);
+        return () => window.removeEventListener("keydown", windowKeyDownEventHandler);
     }, [isMacOS]);
 
     const goBack = () => navigate({ pathname: "/" });
