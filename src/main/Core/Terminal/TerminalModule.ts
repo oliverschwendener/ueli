@@ -31,13 +31,13 @@ export class TerminalModule {
         ipcMain.on(
             "getAvailableTerminals",
             (event) =>
-                (event.returnValue = terminalRegistry.getAll().map(
-                    ({ terminalId, getAssetFileName, getTerminalName }): Terminal => ({
+                (event.returnValue = terminalRegistry
+                    .getAll()
+                    .map(({ terminalId, getAssetFileName, getTerminalName }): Terminal => ({
                         id: terminalId,
                         name: getTerminalName(),
                         assetFilePath: assetPathResolver.getModuleAssetPath("Terminal", getAssetFileName()),
-                    }),
-                )),
+                    }))),
         );
     }
 }

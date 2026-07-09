@@ -153,9 +153,10 @@ export class TerminalLauncherExtension implements Extension {
 
     private getEnabledTerminalIds(): string[] {
         return this.settingsManager
-            .getValue<
-                string[]
-            >(`extension[${this.id}].terminalIds`, <string[]>this.getSettingDefaultValue("terminalIds"))
+            .getValue<string[]>(
+                `extension[${this.id}].terminalIds`,
+                <string[]>this.getSettingDefaultValue("terminalIds"),
+            )
             .filter((terminalId) =>
                 this.terminalRegistry
                     .getAll()
