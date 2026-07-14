@@ -1,6 +1,7 @@
-import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { SearchResultItemAction } from "@common/Core";
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { LaunchDesktopFileActionHandler } from "./LaunchDesktopFileActionHandler";
 
 describe(LaunchDesktopFileActionHandler, () => {

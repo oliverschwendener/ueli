@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
+
 import type { SystemCommand } from "../SystemCommand";
 
 export class WindowsSystemCommand implements SystemCommand {

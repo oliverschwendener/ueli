@@ -1,10 +1,10 @@
+import type { SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommand } from "@Core/UeliCommand";
-import type { SearchResultItem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
 
 export class UeliCommandExtension implements Extension {
     public readonly id = "UeliCommand";

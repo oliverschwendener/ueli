@@ -1,4 +1,5 @@
 import Fuse from "fuse.js";
+
 import type { InternalSearchFilter } from "./InternalSearchFilter";
 import { SearchResultItemFilter } from "./SearchResultItemFilter";
 

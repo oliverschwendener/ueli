@@ -1,6 +1,7 @@
 import type { OperatingSystem } from "@common/Core";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OpenExternalOptions } from "electron";
+
 import { OpenFilePathActionHandler, ShowItemInFileExplorerActionHandler, UrlActionHandler } from "./ActionHandler";
 import {
     type CustomWebBrowserActionHandler,

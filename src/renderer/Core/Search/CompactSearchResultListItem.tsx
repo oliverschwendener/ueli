@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
+
 import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";
 

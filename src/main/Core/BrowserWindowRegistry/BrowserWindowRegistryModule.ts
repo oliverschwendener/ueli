@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { BrowserWindowRegistry } from "./BrowserWindowRegistry";
 
 export class BrowserWindowRegistryModule {

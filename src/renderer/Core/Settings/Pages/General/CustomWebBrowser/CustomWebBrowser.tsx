@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { useTranslation } from "react-i18next";
+
 import { CustomWebBrowserCommandlineArguments } from "./CustomWebBrowserCommandlineArguments";
 import { CustomWebBrowserExecutable } from "./CustomWebBrowserExecutable";
 import { CustomWebBrowserName } from "./CustomWebBrowserName";

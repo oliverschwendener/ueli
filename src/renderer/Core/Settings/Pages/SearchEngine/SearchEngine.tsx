@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
+
 import { AutomaticRescan } from "./AutomaticRescan";
 import { Fuzziness } from "./Fuzziness";
 import { ManualRescanKeyboardShortcut } from "./ManualRescanKeyboardShortcut";

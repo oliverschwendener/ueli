@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { XmlParser } from "./XmlParser";
 
 export class XmlParserModule {

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { SettingsFileReader } from "./SettingsFileReader";
 
 export class SettingsReaderModule {

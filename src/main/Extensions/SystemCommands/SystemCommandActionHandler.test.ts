@@ -1,5 +1,6 @@
 import type { SearchResultItem, SearchResultItemAction } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+
 import { SystemCommandActionHandler } from "./SystemCommandActionHandler";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 

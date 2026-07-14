@@ -1,7 +1,9 @@
+import { join } from "path";
+
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { App } from "electron";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import { CustomSettingsFilePathResolver } from "./CustomSettingsFilePathResolver";
 
 describe(CustomSettingsFilePathResolver, () => {

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { SettingsManager } from "./SettingsManager";
 
 export class SettingsManagerModule {

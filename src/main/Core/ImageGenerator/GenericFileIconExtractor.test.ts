@@ -1,5 +1,6 @@
 import type { App, NativeImage } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 
 describe(GenericFileIconExtractor, () => {

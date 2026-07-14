@@ -1,12 +1,13 @@
-import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { FileSearch } from "./FileSearch";
 import type { FileSearcher } from "./FileSearcher";
 import { LinuxFileSearcher } from "./Linux/LinuxFileSearcher";
-import { EverythingFileSearcher } from "./Windows/EverythingFileSearcher";
 import { MdfindFileSearcher } from "./macOS/MdfindFileSearcher";
+import { EverythingFileSearcher } from "./Windows/EverythingFileSearcher";
 
 export class FileSearchModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {

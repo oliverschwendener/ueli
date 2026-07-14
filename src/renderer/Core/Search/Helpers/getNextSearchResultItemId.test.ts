@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
+
 import { getNextSearchResultItemId } from "./getNextSearchResultItemId";
 
 describe(getNextSearchResultItemId, () => {

@@ -1,6 +1,8 @@
+import { join } from "path";
+
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { App } from "electron";
-import { join } from "path";
+
 import type { SearchIndexFile as SearchIndexFileInterface } from "./Contract/SearchIndexFile";
 import type { Index } from "./Contract/SearchIndexStructure";
 

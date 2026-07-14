@@ -1,8 +1,9 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 
 export class SystemCommands implements Extension {

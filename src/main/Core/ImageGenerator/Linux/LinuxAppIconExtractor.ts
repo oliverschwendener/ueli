@@ -1,12 +1,14 @@
+import { basename, dirname, extname, join } from "path";
+
+import type { Image } from "@common/Core/Image";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
 import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
-import type { Image } from "@common/Core/Image";
-import { basename, dirname, extname, join } from "path";
 import sharp from "sharp";
+
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";
 

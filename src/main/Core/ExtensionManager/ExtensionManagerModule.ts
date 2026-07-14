@@ -1,8 +1,9 @@
 import type { Extension } from "@Core/Extension";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { ExtensionManager } from "./ExtensionManager";
-import { RescanStatusManager } from "./RescanStatusManager";
 import { mapExtensionToInfo } from "./mapExtensionToInfo";
+import { RescanStatusManager } from "./RescanStatusManager";
 
 export class ExtensionManagerModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {

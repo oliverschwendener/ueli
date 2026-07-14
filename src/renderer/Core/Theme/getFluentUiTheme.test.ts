@@ -1,5 +1,6 @@
 import { teamsDarkTheme, teamsLightTheme, webDarkTheme, webLightTheme } from "@fluentui/react-components";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
 import { getFluentUiTheme } from "./getFluentUiTheme";
 
 const createWindowStub = ({ themeName }: { themeName: string }) => {

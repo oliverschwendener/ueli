@@ -1,5 +1,6 @@
 import type { Tray } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { TrayCreator } from "./TrayCreator";
 
 const dummyTray = <Tray>{};

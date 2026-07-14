@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { getOperatingSystemFromPlatform } from "./getOperatingSystemFromPlatform";
 
 export class OperatingSystemModule {

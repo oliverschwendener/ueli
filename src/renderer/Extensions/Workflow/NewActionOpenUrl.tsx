@@ -1,6 +1,7 @@
 import type { OpenUrlActionArgs } from "@common/Extensions/Workflow";
 import { Field, Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenUrl = ({ args, setArgs }: NewActionTypeProps) => {

@@ -1,4 +1,5 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
+
 import { ChromiumBrowserBookmark } from "./ChromiumBrowserBookmark";
 import type { BookmarkItem, ChromiumBrowserBookmarkFile } from "./ChromiumBrowserBookmarkFile";
 

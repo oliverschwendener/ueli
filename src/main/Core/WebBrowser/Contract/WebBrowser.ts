@@ -1,4 +1,5 @@
 import type { Image } from "@common/Core/Image";
+
 import type { WebBrowserBookmark } from "./WebBrowserBookmark";
 
 export interface WebBrowser {

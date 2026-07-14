@@ -2,6 +2,7 @@ import type { EventEmitter } from "@Core/EventEmitter";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { TaskScheduler } from "@Core/TaskScheduler";
 import { describe, expect, it, vi } from "vitest";
+
 import { RescanOrchestrator } from "./RescanOrchestrator";
 
 describe(RescanOrchestrator, () => {

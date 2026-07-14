@@ -1,8 +1,10 @@
+import { join } from "path";
+
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { App } from "electron";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import { MacOsFolderIconExtractor } from "./MacOsFolderIconExtractor";
 
 describe(MacOsFolderIconExtractor, () => {

@@ -1,5 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
+
 import type { CustomWebBrowserActionHandler } from "./CustomWebBrowserActionHandler";
 
 export class MacOsCustomWebBrowserActionHandler implements CustomWebBrowserActionHandler {

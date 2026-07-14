@@ -1,6 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { FavoriteManager } from "./FavoriteManager";
 
 describe(FavoriteManager, () => {

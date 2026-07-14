@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { SearchIndexFile as SearchIndexFileInterface } from "./Contract/SearchIndexFile";
 import { SearchIndex } from "./SearchIndex";
 import { SearchIndexFile } from "./SearchIndexFile";

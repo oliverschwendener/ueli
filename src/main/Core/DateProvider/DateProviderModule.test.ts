@@ -1,5 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+
 import { DateProvider } from "./DateProvider";
 import { DateProviderModule } from "./DateProviderModule";
 

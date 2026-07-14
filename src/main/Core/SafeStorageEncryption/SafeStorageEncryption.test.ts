@@ -1,5 +1,6 @@
 import type { SafeStorage } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { SafeStorageEncryption } from "./SafeStorageEncryption";
 
 describe(SafeStorageEncryption, () => {

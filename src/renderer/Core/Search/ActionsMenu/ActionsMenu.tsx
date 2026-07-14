@@ -1,5 +1,5 @@
-import { KeyboardShortcut } from "@Core/Components";
 import { type SearchResultItemAction } from "@common/Core";
+import { KeyboardShortcut } from "@Core/Components";
 import {
     Button,
     Menu,
@@ -18,6 +18,7 @@ import {
 import { MoreVerticalFilled } from "@fluentui/react-icons";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
+
 import { FluentIcon } from "../FluentIcon";
 
 type AdditionalActionsProps = {

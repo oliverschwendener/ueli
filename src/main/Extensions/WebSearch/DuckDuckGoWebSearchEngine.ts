@@ -1,4 +1,5 @@
 import type { Net } from "electron";
+
 import type { Suggestion } from "./Suggestion";
 import type { WebSearchEngine } from "./WebSearchEngine";
 
@@ -16,10 +17,12 @@ export class DuckDuckGoWebSearchEngine implements WebSearchEngine {
 
         const suggestions = (await response.json()) as DuckDuckGoSuggestion[];
 
-        return suggestions.map(({ phrase }): Suggestion => ({
-            text: phrase,
-            url: this.getSearchUrl(phrase, locale),
-        }));
+        return suggestions.map(
+            ({ phrase }): Suggestion => ({
+                text: phrase,
+                url: this.getSearchUrl(phrase, locale),
+            }),
+        );
     }
 
     public getSearchUrl(searchTerm: string, locale: string): string {

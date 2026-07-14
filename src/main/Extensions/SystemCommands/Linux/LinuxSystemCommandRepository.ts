@@ -3,6 +3,7 @@ import type { Resources } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Translator } from "@Core/Translator";
+
 import type { SystemCommand } from "../SystemCommand";
 import type { SystemCommandRepository } from "../SystemCommandRepository";
 import { LinuxSystemCommand } from "./LinuxSystemCommand";

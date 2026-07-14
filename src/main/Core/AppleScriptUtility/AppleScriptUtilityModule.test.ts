@@ -1,6 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+
 import { AppleScriptUtility } from "./AppleScriptUtility";
 import { AppleScriptUtilityModule } from "./AppleScriptUtilityModule";
 

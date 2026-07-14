@@ -1,13 +1,14 @@
 import { BaseLayout } from "@Core/BaseLayout";
 import type { ExtensionProps } from "@Core/ExtensionProps";
+import { getImageUrl } from "@Core/getImageUrl";
 import { Header } from "@Core/Header";
 import { ThemeContext } from "@Core/Theme";
-import { getImageUrl } from "@Core/getImageUrl";
 import { Button, Text } from "@fluentui/react-components";
 import { ArrowLeftFilled, CopyRegular } from "@fluentui/react-icons";
 import type { KeyboardEvent } from "react";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { Editor } from "./Editor";
 
 export const RowlandTextEditor = ({ contextBridge, goBack }: ExtensionProps) => {

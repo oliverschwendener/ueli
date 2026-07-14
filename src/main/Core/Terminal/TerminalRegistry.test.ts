@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import type { Terminal } from "./Contract";
 import { TerminalRegistry } from "./TerminalRegistry";
 

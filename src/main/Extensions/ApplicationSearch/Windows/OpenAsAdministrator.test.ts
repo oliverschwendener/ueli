@@ -1,6 +1,7 @@
-import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SearchResultItemAction } from "@common/Core";
+import type { PowershellUtility } from "@Core/PowershellUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { OpenAsAdministrator } from "./OpenAsAdministrator";
 
 describe(OpenAsAdministrator, () => {

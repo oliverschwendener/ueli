@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { SubstringFunction } from "./SubstringFunction";
 
 describe(SubstringFunction, () => {

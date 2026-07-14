@@ -1,15 +1,17 @@
-import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@common/Core";
 import { join } from "path";
+
+import type { OperatingSystem } from "@common/Core";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import { DuckDuckGoFaviconProvider, FaviconeFaviconProvider, GoogleFaviconProvider } from "./FaviconProvider";
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 import { GenericFileIconExtractor } from "./GenericFileIconExtractor";
 import { LinuxAppIconExtractor } from "./Linux";
+import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
 import { UrlImageGenerator } from "./UrlImageGenerator";
 import { WindowsApplicationIconExtractor, WindowsFolderIconExtractor } from "./Windows";
-import { MacOsApplicationIconExtractor, MacOsFolderIconExtractor } from "./macOS";
 
 export class ImageGeneratorModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {

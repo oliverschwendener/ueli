@@ -1,5 +1,6 @@
 import type { Net } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { GoogleWebSearchEngine } from "./GoogleWebSearchEngine";
 
 describe(GoogleWebSearchEngine, () => {

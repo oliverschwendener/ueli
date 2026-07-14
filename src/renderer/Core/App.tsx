@@ -3,12 +3,13 @@ import type { IpcRendererEvent } from "electron";
 import { changeLanguage } from "i18next";
 import { useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
+
 import { Extension } from "./Extension";
+import { getAppCssProperties } from "./getAppCssProperties";
 import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems, useSetting } from "./Hooks";
 import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { ThemeContext } from "./Theme";
-import { getAppCssProperties } from "./getAppCssProperties";
 
 export const App = () => {
     const { fluentUiTheme, shouldUseDarkColors } = useContext(ThemeContext);

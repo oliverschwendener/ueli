@@ -1,5 +1,6 @@
 import type { Emitter } from "mitt";
 import { describe, expect, it, vi } from "vitest";
+
 import { MittEventEmitter } from "./MittEventEmitter";
 
 describe(MittEventEmitter, () => {

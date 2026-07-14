@@ -1,4 +1,5 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
+
 import type { AppleScriptUtility as AppleScriptUtilityInterface } from "./Contract";
 
 export class AppleScriptUtility implements AppleScriptUtilityInterface {

@@ -1,4 +1,5 @@
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
+
 import type {
     LinuxDesktopEnvironment,
     LinuxDesktopEnvironmentResolver as LinuxDesktopEnvironmentResolverInterface,

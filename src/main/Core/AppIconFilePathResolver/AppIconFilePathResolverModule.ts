@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { AppIconFilePathResolver } from "./AppIconFilePathResolver";
 
 export class AppIconFilePathResolverModule {

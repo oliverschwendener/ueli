@@ -1,5 +1,6 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { CustomSettingsFilePathValidator } from "./CustomSettingsFilePathValidator";
 
 describe(CustomSettingsFilePathValidator, () => {

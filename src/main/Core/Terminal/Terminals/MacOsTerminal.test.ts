@@ -1,5 +1,6 @@
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { MacOsTerminal } from "./MacOsTerminal";
 
 describe(MacOsTerminal, () => {

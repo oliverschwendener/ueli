@@ -1,5 +1,6 @@
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { App } from "electron";
+
 import type { EventEmitter } from "../EventEmitter";
 import type {
     UeliCommand,

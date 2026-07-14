@@ -1,6 +1,7 @@
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import { describe, expect, it } from "vitest";
+
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import { WindowsApplicationIconExtractor } from "./WindowsApplicationIconExtractor";
 

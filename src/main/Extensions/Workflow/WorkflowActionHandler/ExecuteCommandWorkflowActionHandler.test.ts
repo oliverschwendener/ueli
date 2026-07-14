@@ -1,6 +1,7 @@
-import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { ExecuteCommandActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
+import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { ExecuteCommandWorkflowActionHandler } from "./ExecuteCommandWorkflowActionHandler";
 
 describe(ExecuteCommandWorkflowActionHandler, () => {

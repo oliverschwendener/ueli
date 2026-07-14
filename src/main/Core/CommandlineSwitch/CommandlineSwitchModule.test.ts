@@ -1,7 +1,8 @@
-import type { UeliModuleRegistry, UeliModules } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
+import type { UeliModuleRegistry, UeliModules } from "@Core/ModuleRegistry";
 import type { App } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { CommandlineSwitchModule } from "./CommandlineSwitchModule";
 
 describe(CommandlineSwitchModule, () => {

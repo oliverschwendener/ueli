@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { AppearanceSwitcherModule } from "./AppearanceSwitcher";
 import { ApplicationSearchModule } from "./ApplicationSearch";
 import { Base64ConversionModule } from "./Base64Conversion";

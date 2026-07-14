@@ -1,4 +1,5 @@
 import type { SearchResultItem } from "@common/Core";
+
 import type { Index } from "./SearchIndexStructure";
 
 /**

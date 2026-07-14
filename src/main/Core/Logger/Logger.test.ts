@@ -1,6 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { DateProvider } from "@Core/DateProvider/DateProvider";
 import { describe, expect, it, vi } from "vitest";
+
 import { Logger } from "./Logger";
 
 describe(Logger, () => {
@@ -10,10 +11,9 @@ describe(Logger, () => {
         const getDateMock = vi.fn().mockReturnValue(date);
         const notifyAllMock = vi.fn();
 
-        const logger = new Logger(
-            <DateProvider>{ get: () => getDateMock() },
-            <BrowserWindowNotifier>{ notifyAll: (c) => notifyAllMock(c) },
-        );
+        const logger = new Logger(<DateProvider>{ get: () => getDateMock() }, <BrowserWindowNotifier>{
+            notifyAll: (c) => notifyAllMock(c),
+        });
 
         logger.error("This is an error");
 
@@ -26,10 +26,9 @@ describe(Logger, () => {
         const getDateMock = vi.fn().mockReturnValue(date);
         const notifyAllMock = vi.fn();
 
-        const logger = new Logger(
-            <DateProvider>{ get: () => getDateMock() },
-            <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) },
-        );
+        const logger = new Logger(<DateProvider>{ get: () => getDateMock() }, <BrowserWindowNotifier>{
+            notifyAll: (a) => notifyAllMock(a),
+        });
 
         logger.debug("This is a debug message");
 
@@ -42,10 +41,9 @@ describe(Logger, () => {
         const getDateMock = vi.fn().mockReturnValue(date);
         const notifyAllMock = vi.fn();
 
-        const logger = new Logger(
-            <DateProvider>{ get: () => getDateMock() },
-            <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) },
-        );
+        const logger = new Logger(<DateProvider>{ get: () => getDateMock() }, <BrowserWindowNotifier>{
+            notifyAll: (a) => notifyAllMock(a),
+        });
 
         logger.info("This is a info message");
 
@@ -58,10 +56,9 @@ describe(Logger, () => {
         const getDateMock = vi.fn().mockReturnValue(date);
         const notifyAllMock = vi.fn();
 
-        const logger = new Logger(
-            <DateProvider>{ get: () => getDateMock() },
-            <BrowserWindowNotifier>{ notifyAll: (a) => notifyAllMock(a) },
-        );
+        const logger = new Logger(<DateProvider>{ get: () => getDateMock() }, <BrowserWindowNotifier>{
+            notifyAll: (a) => notifyAllMock(a),
+        });
 
         logger.warn("This is a warning");
 

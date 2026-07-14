@@ -1,5 +1,6 @@
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import { describe, expect, it, vi } from "vitest";
+
 import type { LinuxDesktopEnvironment } from "./Contract";
 import { LinuxDesktopEnvironmentResolver } from "./LinuxDesktopEnvironmentResolver";
 

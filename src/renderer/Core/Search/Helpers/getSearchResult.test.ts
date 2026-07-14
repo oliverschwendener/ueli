@@ -1,5 +1,6 @@
 import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { describe, expect, it } from "vitest";
+
 import { getSearchResult } from "./getSearchResult";
 
 describe(getSearchResult, () => {

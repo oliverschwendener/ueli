@@ -1,8 +1,10 @@
+import { join } from "path";
+
 import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { App, BrowserWindowConstructorOptions } from "electron";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import { DefaultBrowserWindowConstructorOptionsProvider } from "./DefaultBrowserWindowConstructorOptionsProvider";
 import { defaultWindowSize } from "./defaultWindowSize";
 

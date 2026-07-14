@@ -1,5 +1,7 @@
-import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { join } from "path";
+
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { PowershellActionHandler } from "./ActionHandler";
 import { PowershellUtility } from "./PowershellUtility";
 

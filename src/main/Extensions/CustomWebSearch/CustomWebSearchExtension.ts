@@ -1,11 +1,11 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { UrlImageGenerator } from "@Core/ImageGenerator";
-import type { SettingsManager } from "@Core/SettingsManager";
 import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { CustomSearchEngineSetting, Settings } from "@common/Extensions/CustomWebSearch";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { UrlImageGenerator } from "@Core/ImageGenerator";
+import type { SettingsManager } from "@Core/SettingsManager";
 
 export class CustomWebSearchExtension implements Extension {
     public readonly id = "CustomWebSearch";

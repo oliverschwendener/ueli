@@ -2,6 +2,7 @@ import type { OpenFileActionArgs } from "@common/Extensions/Workflow";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { DocumentRegular, FolderRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenFile = ({ args, setArgs }: NewActionTypeProps) => {

@@ -1,5 +1,6 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
+
 import { SettingGroupList } from "../../SettingGroupList";
 import { AlwaysOnTop } from "./AlwaysOnTop";
 import { BackgroundMaterial } from "./BackgroundMaterial";

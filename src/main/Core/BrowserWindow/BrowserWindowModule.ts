@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { NavigateToActionHandler } from "./ActionHandler";
 import { BackgroundMaterialProvider } from "./BackgroundMaterial";
 import { HtmlLoader } from "./HtmlLoader";

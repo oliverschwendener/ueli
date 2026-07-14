@@ -1,6 +1,7 @@
+import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItemAction } from "@common/Core";
+
 import { WorkflowActionArgumentDecoder } from "./Utility";
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 

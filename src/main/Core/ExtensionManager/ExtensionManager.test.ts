@@ -1,10 +1,11 @@
+import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import type { Extension } from "@Core/Extension";
 import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+
 import { ExtensionManager } from "./ExtensionManager";
 
 describe(ExtensionManager, () => {

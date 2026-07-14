@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { SettingsFileWriter } from "./SettingsFileWriter";
 
 export class SettingsWriterModule {

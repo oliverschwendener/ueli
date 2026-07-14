@@ -1,3 +1,4 @@
+import type { SearchResultItem } from "@common/Core";
 import { BaseLayout } from "@Core/BaseLayout";
 import { KeyboardShortcut } from "@Core/Components";
 import { Footer } from "@Core/Footer";
@@ -8,7 +9,6 @@ import { getNextSearchResultItemId } from "@Core/Search/Helpers/getNextSearchRes
 import { getPreviousSearchResultItemId } from "@Core/Search/Helpers/getPreviousSearchResultItemId";
 import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultListLayout } from "@Core/Search/SearchResultListLayout";
-import type { SearchResultItem } from "@common/Core";
 import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";

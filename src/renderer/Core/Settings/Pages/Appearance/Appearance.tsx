@@ -2,6 +2,7 @@ import { useSetting } from "@Core/Hooks";
 import { getAvailableThemes } from "@Core/Theme";
 import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import { Setting } from "../../Setting";
 import { SettingGroup } from "../../SettingGroup";
 import { SettingGroupList } from "../../SettingGroupList";

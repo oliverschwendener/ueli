@@ -1,9 +1,6 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { FileImageGenerator } from "@Core/ImageGenerator";
-import type { Logger } from "@Core/Logger";
-import type { SettingsManager } from "@Core/SettingsManager";
+import * as Path from "path";
+import * as Url from "url";
+
 import {
     createEmptyInstantSearchResult,
     type InstantSearchResultItems,
@@ -13,9 +10,14 @@ import {
 import type { Image } from "@common/Core/Image";
 import type { SearchEngineId } from "@common/Core/Search";
 import { searchFilter } from "@common/Core/Search/SearchFilter";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { FileSystemUtility } from "@Core/FileSystemUtility";
+import type { FileImageGenerator } from "@Core/ImageGenerator";
+import type { Logger } from "@Core/Logger";
+import type { SettingsManager } from "@Core/SettingsManager";
 import Database from "better-sqlite3";
-import * as Path from "path";
-import * as Url from "url";
+
 import type { Settings } from "./Settings";
 
 type VSCodeRecentRaw = {

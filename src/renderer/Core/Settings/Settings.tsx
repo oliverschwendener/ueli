@@ -5,6 +5,7 @@ import { FluentProvider } from "@fluentui/react-components";
 import type { IpcRendererEvent } from "electron";
 import { useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router";
+
 import { ExtensionSettings } from "./ExtensionSettings";
 import { Navigation } from "./Navigation";
 import { settingsPages } from "./Pages";

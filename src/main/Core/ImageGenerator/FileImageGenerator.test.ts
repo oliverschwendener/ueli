@@ -1,5 +1,6 @@
 import type { Image } from "@common/Core/Image";
 import { describe, expect, it, vi } from "vitest";
+
 import type { FileIconExtractor } from "./FileIconExtractor";
 import { FileImageGenerator } from "./FileImageGenerator";
 

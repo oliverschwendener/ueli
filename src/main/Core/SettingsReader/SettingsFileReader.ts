@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+
 import type { Settings } from "../Settings";
 import type { SettingsReader } from "./Contract";
 

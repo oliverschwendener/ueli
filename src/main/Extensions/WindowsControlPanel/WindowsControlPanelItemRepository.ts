@@ -1,7 +1,8 @@
 import type { PowershellUtility } from "@Core/PowershellUtility/Contract";
+
+import { getIconsCommand } from "./powershellScripts";
 import type { WindowsControlPanelItem } from "./WindowsControlPanelItem";
 import type { WindowsControlPanelItemRepository as WindowsControlPanelItemRepositoryInterface } from "./WindowsControlPanelItemRepositoryInterface";
-import { getIconsCommand } from "./powershellScripts";
 
 export class WindowsControlPanelItemRepository implements WindowsControlPanelItemRepositoryInterface {
     public constructor(private readonly powershellUtility: PowershellUtility) {}

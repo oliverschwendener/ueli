@@ -1,6 +1,7 @@
 import type { ExecuteCommandActionArgs } from "@common/Extensions/Workflow";
 import { Field, Input } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionExecuteCommand = ({ args, setArgs }: NewActionTypeProps) => {

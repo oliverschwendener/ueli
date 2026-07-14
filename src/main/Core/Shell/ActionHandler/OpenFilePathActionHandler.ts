@@ -1,5 +1,5 @@
-import type { ActionHandler } from "@Core/ActionHandler";
 import type { SearchResultItemAction } from "@common/Core";
+import type { ActionHandler } from "@Core/ActionHandler";
 import type { Shell } from "electron";
 
 /**

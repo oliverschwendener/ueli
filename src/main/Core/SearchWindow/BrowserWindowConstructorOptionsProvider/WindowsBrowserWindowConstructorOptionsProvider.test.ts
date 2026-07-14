@@ -1,6 +1,7 @@
 import type { BrowserWindowBackgroundMaterialProvider } from "@Core/BrowserWindow";
 import type { BrowserWindowConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { WindowsBrowserWindowConstructorOptionsProvider } from "./WindowsBrowserWindowConstructorOptionsProvider";
 
 describe(WindowsBrowserWindowConstructorOptionsProvider, () => {

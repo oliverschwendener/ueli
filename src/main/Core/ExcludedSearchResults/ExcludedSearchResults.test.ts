@@ -1,6 +1,7 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { ExcludedSearchResults } from "./ExcludedSearchResults";
 
 describe(ExcludedSearchResults, () => {

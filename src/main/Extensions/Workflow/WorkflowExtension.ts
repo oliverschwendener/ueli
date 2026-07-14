@@ -1,11 +1,12 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { Translator } from "@Core/Translator";
 import type { SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { Workflow } from "@common/Extensions/Workflow";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { Translator } from "@Core/Translator";
+
 import type { Settings } from "./Settings";
 import { WorkflowActionArgumentEncoder } from "./Utility";
 import type { WorkflowRepository } from "./WorkflowRepository";

@@ -1,6 +1,7 @@
 import type { SearchResultItem } from "@common/Core";
 import { tokens } from "@fluentui/react-components";
 import { useEffect, useRef, useState, type RefObject } from "react";
+
 import { CompactSearchResultListItem } from "./CompactSearchResultListItem";
 import { DetailedSearchResultListItem } from "./DetailedSearchResultItem";
 import { elementIsVisible } from "./Helpers";

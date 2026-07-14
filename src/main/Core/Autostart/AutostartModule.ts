@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { DefaultAutostartManager } from "./DefaultAutostartManager";
 import { WindowsStoreAutostartManager } from "./WindowsStoreAutostartManager";
 

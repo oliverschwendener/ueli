@@ -1,7 +1,8 @@
+import type { SearchResultItem } from "@common/Core";
 import type { AssetPathResolver } from "@Core/AssetPathResolver/AssetPathResolver";
 import type { Translator } from "@Core/Translator";
-import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+
 import { WindowsControlPanel } from "./WindowsControlPanel";
 import type { WindowsControlPanelItem } from "./WindowsControlPanelItem";
 import type { WindowsControlPanelItemRepository } from "./WindowsControlPanelItemRepositoryInterface";

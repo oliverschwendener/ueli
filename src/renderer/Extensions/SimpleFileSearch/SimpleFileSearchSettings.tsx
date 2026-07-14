@@ -5,6 +5,7 @@ import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Button, tokens } from "@fluentui/react-components";
 import { AddRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+
 import { EditDialog } from "./EditDialog";
 import { FolderList } from "./FolderList";
 

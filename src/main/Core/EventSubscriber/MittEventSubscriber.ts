@@ -1,4 +1,5 @@
 import type { Emitter } from "mitt";
+
 import type { EventSubscriber } from "./Contract";
 
 export class MittEventSubscriber implements EventSubscriber {

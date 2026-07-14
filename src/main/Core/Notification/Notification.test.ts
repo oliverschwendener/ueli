@@ -1,5 +1,6 @@
 import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { Notification } from "./Notification";
 
 type ConstructorOptions = { title: string; body: string; icon?: string };

@@ -1,7 +1,7 @@
+import type { Workflow } from "@common/Extensions/Workflow";
 import { useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
-import type { Workflow } from "@common/Extensions/Workflow";
 import {
     Body1Strong,
     Button,
@@ -18,6 +18,7 @@ import {
 } from "@fluentui/react-components";
 import { AddRegular, EditRegular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
+
 import { DeleteWorkflowButton } from "./DeleteWorkflowButton";
 import { EditWorkflow } from "./EditWorkflow";
 

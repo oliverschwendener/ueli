@@ -1,6 +1,7 @@
 import type { PasswordGeneratorSettings } from "@common/Extensions/PasswordGenerator";
 import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
 import { describe, expect, it } from "vitest";
+
 import { PasswordGenerator } from "./PasswordGenerator";
 
 describe(PasswordGenerator, () => {

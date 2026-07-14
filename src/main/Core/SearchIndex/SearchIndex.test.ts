@@ -1,7 +1,8 @@
+import type { SearchResultItem } from "@common/Core";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItem } from "@common/Core";
 import { describe, expect, it, vi } from "vitest";
+
 import type { Index } from "./Contract";
 import type { SearchIndexFile } from "./Contract/SearchIndexFile";
 import { SearchIndex } from "./SearchIndex";

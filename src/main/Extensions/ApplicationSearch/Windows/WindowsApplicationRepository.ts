@@ -1,16 +1,17 @@
+import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
-import type { Image } from "@common/Core/Image";
+
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";
 import type { Settings } from "../Settings";
+import { usePowershellScripts } from "./usePowershellScripts";
 import { WindowsApplication } from "./WindowsApplication";
 import type { WindowsApplicationRetrieverResult } from "./WindowsApplicationRetrieverResult";
 import type { WindowsStoreApplication } from "./WindowsStoreApplication";
-import { usePowershellScripts } from "./usePowershellScripts";
 
 export class WindowsApplicationRepository implements ApplicationRepository {
     private static readonly POWERSHELL_MAX_BUFFER_SIZE = 4096 * 4096;

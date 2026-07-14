@@ -1,4 +1,5 @@
 import type { Image } from "@common/Core/Image";
+
 import type { WebBrowser, WebBrowserBookmark } from "./Contract";
 import { DummyWebBrowserBookmark } from "./DummyWebBrowserBookmark";
 

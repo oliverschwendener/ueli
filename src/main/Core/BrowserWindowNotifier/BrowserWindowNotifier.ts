@@ -1,4 +1,5 @@
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
+
 import type { BrowserWindowNotifier as BrowserWindowNotifierInterface } from "./Contract";
 
 export class BrowserWindowNotifier implements BrowserWindowNotifierInterface {

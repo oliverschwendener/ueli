@@ -1,6 +1,7 @@
 import type { BrowserWindowVibrancyProvider } from "@Core/BrowserWindow";
 import type { BrowserWindowConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { MacOsBrowserWindowConstructorOptionsProvider } from "./MacOsBrowserWindowConstructorOptionsProvider";
 
 describe(MacOsBrowserWindowConstructorOptionsProvider, () => {

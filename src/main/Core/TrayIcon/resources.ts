@@ -1,4 +1,5 @@
 import type { Resources } from "@common/Core/Translator";
+
 import type { TrayIconTranslations } from "./TrayIconTranslations";
 
 export const resources: Resources<TrayIconTranslations> = {

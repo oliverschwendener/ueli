@@ -1,5 +1,6 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { DateProvider } from "@Core/DateProvider";
+
 import type { Logger as LoggerInterface } from "./Contract";
 
 export class Logger implements LoggerInterface {

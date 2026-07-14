@@ -1,5 +1,6 @@
 import type { WebBrowser as WebBrowserDTO } from "@common/Core";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { WebBrowser } from "./Contract";
 import { ChromiumBrowserBookmarkRepository, FirefoxBookmarkRepository } from "./Utility";
 import { WebBrowserRegistry } from "./WebBrowserRegistry";

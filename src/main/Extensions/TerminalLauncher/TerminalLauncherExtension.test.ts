@@ -3,6 +3,7 @@ import type { SettingsManager } from "@Core/SettingsManager";
 import type { TerminalRegistry } from "@Core/Terminal";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
+
 import { TerminalLauncherExtension } from "./TerminalLauncherExtension";
 
 describe(TerminalLauncherExtension, () => {

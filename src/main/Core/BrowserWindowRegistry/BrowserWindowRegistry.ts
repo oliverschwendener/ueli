@@ -1,4 +1,5 @@
 import type { BrowserWindow } from "electron";
+
 import type { BrowserWindowRegistry as BrowserWindowRegistryInterface } from "./Contract";
 
 export class BrowserWindowRegistry implements BrowserWindowRegistryInterface {

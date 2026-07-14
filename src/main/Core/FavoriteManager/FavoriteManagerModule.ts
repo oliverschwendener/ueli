@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { FavoritesActionHandler } from "./ActionHandler";
 import { FavoriteManager } from "./FavoriteManager";
 

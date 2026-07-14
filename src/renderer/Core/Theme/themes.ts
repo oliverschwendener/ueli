@@ -1,4 +1,5 @@
 import { teamsDarkTheme, teamsLightTheme, webDarkTheme, webLightTheme } from "@fluentui/react-components";
+
 import type { ThemeMap } from "./ThemeMap";
 
 export const themeMap: ThemeMap = {

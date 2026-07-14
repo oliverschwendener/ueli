@@ -1,5 +1,6 @@
 import { use } from "i18next";
 import { initReactI18next } from "react-i18next";
+
 import { createResources } from "./createResources";
 import { getCoreResources } from "./getCoreResources";
 import { getExtensionResources } from "./getExtensionResources";

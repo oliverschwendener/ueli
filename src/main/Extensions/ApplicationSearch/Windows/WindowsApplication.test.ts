@@ -1,5 +1,6 @@
 import type { Image } from "@common/Core/Image";
 import { describe, expect, it } from "vitest";
+
 import { WindowsApplication } from "./WindowsApplication";
 
 describe(WindowsApplication, () => {

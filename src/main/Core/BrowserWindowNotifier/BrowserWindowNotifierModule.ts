@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { BrowserWindowNotifier } from "./BrowserWindowNotifier";
 
 export class BrowserWindowNotifierModule {

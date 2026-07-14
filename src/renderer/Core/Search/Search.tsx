@@ -1,10 +1,11 @@
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { KeyboardShortcut } from "@Core/Components";
 import { useRescanStatus, useSetting } from "@Core/Hooks";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
+
 import { BaseLayout } from "../BaseLayout";
 import { Footer } from "../Footer";
 import { ActionsMenu } from "./ActionsMenu";

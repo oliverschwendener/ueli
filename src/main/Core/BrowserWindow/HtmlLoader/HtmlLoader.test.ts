@@ -1,7 +1,9 @@
+import { join } from "path";
+
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { BrowserWindow } from "electron";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import { HtmlLoader } from "./HtmlLoader";
 
 describe(HtmlLoader, () => {

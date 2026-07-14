@@ -1,4 +1,5 @@
 import type { Tray } from "electron";
+
 import type { ContextMenuBuilder } from "./ContextMenuBuilder";
 import type { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
 import type { TrayCreator } from "./TrayCreator";

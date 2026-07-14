@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+
 import { getExtension } from "../Extensions";
 
 export const Extension = () => {

@@ -1,5 +1,6 @@
 import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
+
 import type { FileIconExtractor } from "./FileIconExtractor";
 
 export class GenericFileIconExtractor implements FileIconExtractor {

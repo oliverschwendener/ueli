@@ -3,6 +3,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Net } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { CurrencyConversion } from "./CurrencyConversion";
 import type { Rates } from "./Rates";
 

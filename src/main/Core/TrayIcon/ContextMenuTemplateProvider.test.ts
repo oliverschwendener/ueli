@@ -3,6 +3,7 @@ import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import type { MenuItemConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
 import { resources } from "./resources";
 

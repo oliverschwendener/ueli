@@ -1,6 +1,7 @@
 import type { OpenFileActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { OpenFileWorkflowActionHandler } from "./OpenFileWorkflowActionHandler";
 
 describe(OpenFileWorkflowActionHandler, () => {

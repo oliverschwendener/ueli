@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { useTranslation } from "react-i18next";
+
 import { HotKeyBinding } from "./HotkeyBinding";
 import { HotkeyEnabled } from "./HotkeyEnabled";
 import { WaylandWarning } from "./WaylandWarning";

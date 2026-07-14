@@ -5,6 +5,7 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import type { Settings } from "../Settings";
 import { usePowershellScripts } from "./usePowershellScripts";
 import { WindowsApplication } from "./WindowsApplication";

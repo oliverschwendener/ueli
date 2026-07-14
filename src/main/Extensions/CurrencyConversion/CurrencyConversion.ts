@@ -10,6 +10,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Net } from "electron";
+
 import { convert } from "./convert";
 import type { Rates } from "./Rates";
 import type { Settings } from "./Settings";

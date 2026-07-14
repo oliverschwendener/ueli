@@ -1,5 +1,6 @@
-import type { TerminalRegistry } from "@Core/Terminal";
 import type { OpenTerminalActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
+import type { TerminalRegistry } from "@Core/Terminal";
+
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 
 export class OpenTerminalWorkflowActionHandler implements WorkflowActionHandler {

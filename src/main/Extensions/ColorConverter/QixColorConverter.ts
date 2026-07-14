@@ -1,5 +1,6 @@
 import Color from "color";
 import type { ColorInstance } from "color";
+
 import type { ColorConversionResult } from "./ColorConversionResult";
 import type { ColorConverter } from "./ColorConverter";
 
