@@ -32,7 +32,7 @@
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.13",
         "@types/color": "^4.2.0",
-        "@types/node": "^25.0.9",
+        "@types/node": "^26.1.1",
         "@types/react": "^19.2.8",
         "@types/react-dom": "^19.2.3",
         "@types/react-router-dom": "^5.3.3",
