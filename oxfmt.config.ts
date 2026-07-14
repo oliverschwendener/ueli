@@ -6,4 +6,5 @@ export default defineConfig({
     sortImports: true,
     sortPackageJson: false,
     ignorePatterns: [],
+    endOfLine: "lf",
 });
