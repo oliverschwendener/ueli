@@ -1,4 +1,5 @@
 import Color from "color";
+import type { ColorInstance } from "color";
 import type { ColorConversionResult } from "./ColorConversionResult";
 import type { ColorConverter } from "./ColorConverter";
 
@@ -21,7 +22,7 @@ export class QixColorConverter implements ColorConverter {
         return this.extractColorFromString(value)?.rgb().string();
     }
 
-    private extractColorFromString(value: string): Color | undefined {
+    private extractColorFromString(value: string): ColorInstance | undefined {
         try {
             return Color(value);
         } catch (error) {
