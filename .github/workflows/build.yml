@@ -37,8 +37,8 @@ jobs:
             - name: Run linter
               run: npm run lint
 
-            - name: Run prettier
-              run: npm run prettier:check
+            - name: Run oxfmt
+              run: npm run oxfmt:check
 
             - name: Run tests
               run: npm run test

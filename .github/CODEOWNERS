@@ -1,12 +1,11 @@
 # General stuff
 
-.eslintignore @oliverschwendener
-.eslintrc.json @oliverschwendener
+.oxlintrc.json @oliverschwendener
 .gitattributes @oliverschwendener
 .github @oliverschwendener
 .gitignore @oliverschwendener
 .npmrc @oliverschwendener
-.prettierrc @oliverschwendener
+.oxfmtrc.json @oliverschwendener
 .vscode @oliverschwendener
 assets @oliverschwendener
 build @oliverschwendener
