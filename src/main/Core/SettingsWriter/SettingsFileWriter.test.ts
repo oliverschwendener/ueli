@@ -1,6 +1,8 @@
 import { existsSync, readFileSync, unlinkSync } from "fs";
 import { join } from "path";
+
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+
 import type { Settings } from "../Settings";
 import { SettingsFileWriter } from "./SettingsFileWriter";
 

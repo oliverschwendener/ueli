@@ -1,6 +1,7 @@
 import type { ActionHandlerRegistry } from "@Core/ActionHandler";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+
 import { CommandlineActionHandler } from "./ActionHandler";
 import { CommandlineUtilityModule } from "./CommandlineUtilityModule";
 import { NodeJsCommandlineUtility } from "./NodeJsCommandlineUtility";

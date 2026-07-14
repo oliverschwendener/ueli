@@ -1,4 +1,5 @@
 import fuzzysort from "fuzzysort";
+
 import type { InternalSearchFilter } from "./InternalSearchFilter";
 
 /**

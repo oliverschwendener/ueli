@@ -11,6 +11,7 @@ import {
     Window20Regular,
 } from "@fluentui/react-icons";
 import type { ReactElement } from "react";
+
 import { About } from "./About";
 import { Appearance } from "./Appearance";
 import { Debug } from "./Debug";

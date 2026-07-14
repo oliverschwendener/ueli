@@ -2,6 +2,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import { describe, expect, it, vi } from "vitest";
+
 import type { ColorConversionResult } from "./ColorConversionResult";
 import type { ColorConverter } from "./ColorConverter";
 import { ColorConverterExtension } from "./ColorConverterExtension";

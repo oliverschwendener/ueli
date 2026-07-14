@@ -1,4 +1,5 @@
 import type { SafeStorage } from "electron";
+
 import type { SafeStorageEncryption as SafeStorageEncryptionInterface } from "./Contract";
 
 export class SafeStorageEncryption implements SafeStorageEncryptionInterface {

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { DateProvider } from "./DateProvider";
 
 export class DateProviderModule {

@@ -1,5 +1,6 @@
 import type { Menu, MenuItemConstructorOptions, Tray } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import type { ContextMenuBuilder } from "./ContextMenuBuilder";
 import type { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
 import type { TrayCreator } from "./TrayCreator";

@@ -1,4 +1,5 @@
 import { writeFile } from "fs";
+
 import type { Settings } from "../Settings";
 import type { SettingsWriter } from "./Contract";
 

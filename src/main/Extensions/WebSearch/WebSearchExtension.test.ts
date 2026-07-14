@@ -1,5 +1,3 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { SettingsManager } from "@Core/SettingsManager";
 import {
     createEmptyInstantSearchResult,
     createInvokeExtensionAction,
@@ -8,7 +6,10 @@ import {
 } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import type { Suggestion } from "./Suggestion";
 import type { WebSearchEngine } from "./WebSearchEngine";
 import { WebSearchExtension } from "./WebSearchExtension";

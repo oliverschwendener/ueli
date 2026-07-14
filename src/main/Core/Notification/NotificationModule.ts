@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { Notification } from "./Notification";
 
 export class NotificationModule {

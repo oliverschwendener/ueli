@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { CustomSettingsFilePathResolver, DefaultSettingsFilePathResolver } from "./Resolver";
 import { CustomSettingsFilePathValidator } from "./Resolver/CustomSettingsFilePathValidator";
 

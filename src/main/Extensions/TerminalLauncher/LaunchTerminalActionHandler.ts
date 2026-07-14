@@ -1,6 +1,7 @@
+import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { TerminalRegistry } from "@Core/Terminal";
-import type { SearchResultItemAction } from "@common/Core";
+
 import type { ActionArgument } from "./ActionArgument";
 
 export class LaunchTerminalActionHandler implements ActionHandler {

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { MittEventEmitter } from "./MittEventEmitter";
 
 export class EventEmitterModule {

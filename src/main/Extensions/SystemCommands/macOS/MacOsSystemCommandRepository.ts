@@ -1,8 +1,9 @@
+import type { Image } from "@common/Core/Image";
+import type { Resources } from "@common/Core/Translator";
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Translator } from "@Core/Translator";
-import type { Image } from "@common/Core/Image";
-import type { Resources } from "@common/Core/Translator";
+
 import type { SystemCommand } from "../SystemCommand";
 import type { SystemCommandRepository } from "../SystemCommandRepository";
 import { MacOsSystemCommand } from "./MacOsSystemCommand";

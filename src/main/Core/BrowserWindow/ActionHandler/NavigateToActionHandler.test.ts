@@ -1,6 +1,7 @@
-import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { SearchResultItemAction } from "@common/Core";
+import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import { describe, expect, it, vi } from "vitest";
+
 import { NavigateToActionHandler } from "./NavigateToActionHandler";
 
 describe(NavigateToActionHandler, () => {

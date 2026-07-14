@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { EnvironmentVariableProvider } from "./EnvironmentVariableProvider";
 
 export class EnvironmentVariableProviderModule {

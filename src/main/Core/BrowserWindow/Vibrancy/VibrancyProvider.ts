@@ -1,4 +1,5 @@
 import type { SettingsManager } from "@Core/SettingsManager";
+
 import type { Vibrancy, BrowserWindowVibrancyProvider as VibrancyProviderInterface } from "../Contract";
 
 export class VibrancyProvider implements VibrancyProviderInterface {

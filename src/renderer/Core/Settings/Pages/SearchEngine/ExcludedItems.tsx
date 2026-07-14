@@ -1,8 +1,8 @@
+import { getImageUrl } from "@Core/getImageUrl";
 import { useSearchResultItems } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { ThemeContext } from "@Core/Theme";
-import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useContext, useState } from "react";

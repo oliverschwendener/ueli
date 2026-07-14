@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import { describe, expect, it, vi } from "vitest";
+
 import { MacOsTrayIconFilePathResolver } from "./MacOsTrayIconFilePathResolver";
 
 describe(MacOsTrayIconFilePathResolver, () => {

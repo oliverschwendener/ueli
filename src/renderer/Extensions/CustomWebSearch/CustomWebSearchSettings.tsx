@@ -18,6 +18,7 @@ import {
 import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { CustomWebSearchDialog } from "./CustomWebSearchDialog";
 
 const createCustomSearchEngineSetting = (): CustomSearchEngineSetting => ({

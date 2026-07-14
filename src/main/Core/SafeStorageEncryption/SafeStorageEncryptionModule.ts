@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { SafeStorageEncryption } from "./SafeStorageEncryption";
 
 export class SafeStorageEncryptionModule {

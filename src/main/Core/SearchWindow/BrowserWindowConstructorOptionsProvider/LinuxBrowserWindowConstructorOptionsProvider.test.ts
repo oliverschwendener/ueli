@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { LinuxBrowserWindowConstructorOptionsProvider } from "./LinuxBrowserWindowConstructorOptionsProvider";
 
 describe(LinuxBrowserWindowConstructorOptionsProvider, () => {

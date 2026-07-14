@@ -1,4 +1,5 @@
 import type { Image } from "@common/Core/Image";
+
 import type { FileImageGenerator as FileImageGeneratorInterface } from "./Contract";
 import type { FileIconExtractor } from "./FileIconExtractor";
 

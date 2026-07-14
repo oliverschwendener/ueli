@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { IniFileParser } from "./IniFileParser";
 
 export class IniFileParserModule {

@@ -1,7 +1,8 @@
 import { type Theme } from "@fluentui/react-theme";
 import { useEffect, useState, type ReactNode } from "react";
-import { ThemeContext } from "./ThemeContext";
+
 import { getFluentUiTheme } from "./getFluentUiTheme";
+import { ThemeContext } from "./ThemeContext";
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const initialShouldUseDarkColors = window.matchMedia("(prefers-color-scheme: dark)").matches;

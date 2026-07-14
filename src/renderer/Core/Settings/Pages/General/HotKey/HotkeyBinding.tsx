@@ -1,6 +1,6 @@
+import { isValidHotkey } from "@common/Core/Hotkey";
 import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
-import { isValidHotkey } from "@common/Core/Hotkey";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { InfoRegular } from "@fluentui/react-icons";
 import { useState } from "react";

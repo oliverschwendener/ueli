@@ -4,6 +4,7 @@ import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Dropdown, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import { availableCurrencies } from "./availableCurrencies";
 
 export const CurrencyConversionSettings = () => {

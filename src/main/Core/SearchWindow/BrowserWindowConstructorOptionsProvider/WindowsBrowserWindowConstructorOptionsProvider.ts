@@ -1,5 +1,6 @@
 import type { BrowserWindowBackgroundMaterialProvider } from "@Core/BrowserWindow";
 import type { BrowserWindowConstructorOptions } from "electron";
+
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 
 export class WindowsBrowserWindowConstructorOptionsProvider implements BrowserWindowConstructorOptionsProvider {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { DummyWebBrowser } from "../DummyWebBrowser";
 import { WebBrowserRegistry } from "./WebBrowserRegistry";
 

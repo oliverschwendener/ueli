@@ -1,5 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+
 import { AssetPathResolver } from "./AssetPathResolver";
 import { AssetPathResolverModule } from "./AssetPathResolverModule";
 

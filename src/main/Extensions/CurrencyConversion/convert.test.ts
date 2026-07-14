@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { convert } from "./convert";
 import type { Rates } from "./Rates";
 

@@ -1,4 +1,5 @@
 import { XMLBuilder } from "fast-xml-parser";
+
 import type { XmlBuilder as XmlBuilderInterface } from "./Contract";
 
 export class XmlBuilder implements XmlBuilderInterface {

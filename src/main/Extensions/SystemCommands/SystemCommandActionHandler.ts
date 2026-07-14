@@ -1,5 +1,6 @@
-import type { ActionHandler } from "@Core/ActionHandler";
 import type { SearchResultItemAction } from "@common/Core";
+import type { ActionHandler } from "@Core/ActionHandler";
+
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 
 export class SystemCommandActionHandler implements ActionHandler {

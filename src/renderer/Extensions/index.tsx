@@ -1,5 +1,6 @@
 import { useExtensionProps } from "@Core/Hooks";
 import type { ReactElement } from "react";
+
 import { ApplicationSearchSettings } from "./ApplicationSearch";
 import { Base64Conversion, Base64ConversionSettings } from "./Base64Conversion";
 import { BrowserBookmarksSettings } from "./BrowserBookmarks";

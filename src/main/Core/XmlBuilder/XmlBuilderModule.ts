@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { XmlBuilder } from "./XmlBuilder";
 
 export class XmlBuilderModule {

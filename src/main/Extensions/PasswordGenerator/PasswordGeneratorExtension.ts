@@ -1,6 +1,3 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
 import {
     createCopyToClipboardAction,
     createEmptyInstantSearchResult,
@@ -11,6 +8,10 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { PasswordGeneratorSettings as Settings } from "@common/Extensions/PasswordGenerator";
 import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
+
 import { PasswordGenerator } from "./PasswordGenerator";
 
 export class PasswordGeneratorExtension implements Extension {

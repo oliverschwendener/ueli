@@ -1,4 +1,5 @@
 import type { BrowserWindowConstructorOptions } from "electron";
+
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 
 export class LinuxBrowserWindowConstructorOptionsProvider implements BrowserWindowConstructorOptionsProvider {

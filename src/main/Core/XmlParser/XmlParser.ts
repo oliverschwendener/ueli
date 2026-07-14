@@ -1,4 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
+
 import type { XmlParser as XmlParserInterface } from "./Contract";
 
 export class XmlParser implements XmlParserInterface {

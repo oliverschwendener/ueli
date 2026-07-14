@@ -1,3 +1,5 @@
+import { basename, dirname } from "path";
+
 import type { OperatingSystem } from "@common/Core";
 import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
@@ -11,7 +13,6 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import { basename, dirname } from "path";
 
 export class SimpleFileSearchExtension implements Extension {
     public readonly id = "SimpleFileSearch";

@@ -1,7 +1,9 @@
+import { join } from "path";
+
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
 import type { App, Shell } from "electron";
-import { join } from "path";
+
 import type { AutostartManager } from "./AutostartManager";
 
 export class WindowsStoreAutostartManager implements AutostartManager {

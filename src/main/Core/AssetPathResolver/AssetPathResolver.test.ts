@@ -1,5 +1,7 @@
 import { join } from "path";
+
 import { describe, expect, it } from "vitest";
+
 import { AssetPathResolver } from "./AssetPathResolver";
 
 describe(AssetPathResolver, () => {

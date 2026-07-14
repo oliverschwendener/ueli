@@ -1,5 +1,6 @@
 import { version as uuidVersion } from "uuid";
 import { describe, expect, it } from "vitest";
+
 import { UuidGenerator } from "./UuidGenerator";
 
 describe(UuidGenerator, () => {

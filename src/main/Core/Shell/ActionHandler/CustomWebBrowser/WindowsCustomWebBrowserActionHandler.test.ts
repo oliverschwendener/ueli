@@ -1,6 +1,7 @@
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { WindowsCustomWebBrowserActionHandler } from "./WindowsCustomWebBrowserActionHandler";
 
 describe(WindowsCustomWebBrowserActionHandler, () => {

@@ -1,6 +1,7 @@
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { useTranslation } from "react-i18next";
+
 import { Autostart } from "./Autostart";
 import { CustomWebBrowser } from "./CustomWebBrowser";
 import { DockSettings } from "./DockSettings";

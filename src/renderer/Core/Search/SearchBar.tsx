@@ -2,6 +2,7 @@ import { ThemeContext } from "@Core/Theme";
 import { Input } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
 import { useContext, type ChangeEvent, type KeyboardEvent, type ReactElement, type RefObject } from "react";
+
 import type { SearchBarAppearance } from "./SearchBarAppearance";
 import type { SearchBarSize } from "./SearchBarSize";
 

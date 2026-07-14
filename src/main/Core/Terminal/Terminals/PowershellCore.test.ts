@@ -1,5 +1,6 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import { describe, expect, it, vi } from "vitest";
+
 import { PowershellCore } from "./PowershellCore";
 
 describe(PowershellCore, () => {

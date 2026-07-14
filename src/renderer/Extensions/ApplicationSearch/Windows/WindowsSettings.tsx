@@ -4,6 +4,7 @@ import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import { FileExtensions } from "./FileExtensions";
 import { Folders } from "./Folders";
 

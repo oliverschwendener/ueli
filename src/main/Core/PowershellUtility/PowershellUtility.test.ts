@@ -1,8 +1,10 @@
+import { join } from "path";
+
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { RandomStringProvider } from "@Core/RandomStringProvider";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import { PowershellUtility } from "./PowershellUtility";
 
 describe(PowershellUtility, () => {

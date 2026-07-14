@@ -1,6 +1,7 @@
 import type { OperatingSystem } from "@common/Core";
 import type { Terminal } from "@common/Core/Terminal";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { Terminal as TerminalContract } from "./Contract";
 import { TerminalRegistry } from "./TerminalRegistry";
 import { CommandPrompt, Iterm, MacOsTerminal, Powershell, PowershellCore, Wsl } from "./Terminals";
@@ -31,13 +32,13 @@ export class TerminalModule {
         ipcMain.on(
             "getAvailableTerminals",
             (event) =>
-                (event.returnValue = terminalRegistry
-                    .getAll()
-                    .map(({ terminalId, getAssetFileName, getTerminalName }): Terminal => ({
+                (event.returnValue = terminalRegistry.getAll().map(
+                    ({ terminalId, getAssetFileName, getTerminalName }): Terminal => ({
                         id: terminalId,
                         name: getTerminalName(),
                         assetFilePath: assetPathResolver.getModuleAssetPath("Terminal", getAssetFileName()),
-                    }))),
+                    }),
+                )),
         );
     }
 }

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { NativeThemeSource } from "./NativeThemeSource";
 
 export class NativeThemeModule {

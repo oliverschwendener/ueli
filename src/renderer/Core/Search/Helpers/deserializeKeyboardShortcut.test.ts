@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { deserializeKeyboardShortcut } from "./deserializeKeyboardShortcut";
 import type { KeyboardShortcut } from "./KeyboardShortcut";
 

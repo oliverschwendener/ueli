@@ -6,6 +6,7 @@ import type {
     SaveDialogOptions,
     SaveDialogReturnValue,
 } from "electron";
+
 import type { AboutUeli } from "./AboutUeli";
 import type { ExtensionInfo } from "./ExtensionInfo";
 import type { InstantSearchResultItems } from "./InstantSearchResultItems";

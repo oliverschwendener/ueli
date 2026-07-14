@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { CopyToClipboardActionHandler } from "./ActionHandler";
 
 export class ClipboardModule {

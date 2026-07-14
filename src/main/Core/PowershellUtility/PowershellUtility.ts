@@ -1,7 +1,9 @@
+import { join } from "path";
+
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { RandomStringProvider } from "@Core/RandomStringProvider";
-import { join } from "path";
+
 import type { PowershellUtility as PowershellUtilityInterface } from "./Contract";
 
 export class PowershellUtility implements PowershellUtilityInterface {

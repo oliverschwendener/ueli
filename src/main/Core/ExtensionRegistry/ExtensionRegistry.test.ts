@@ -1,5 +1,6 @@
 import type { Extension } from "@Core/Extension";
 import { describe, expect, it } from "vitest";
+
 import { ExtensionRegistry } from "./ExtensionRegistry";
 
 describe(ExtensionRegistry, () => {

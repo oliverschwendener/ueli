@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
 import type { ActionHandler } from "./Contract";
 

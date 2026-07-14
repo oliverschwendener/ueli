@@ -6,6 +6,7 @@ import {
     type SearchResultItem,
 } from "@common/Core";
 import type { Image } from "@common/Core/Image";
+
 import type { Application } from "../Application";
 
 export class WindowsApplication implements Application {

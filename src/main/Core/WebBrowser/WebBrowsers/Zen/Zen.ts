@@ -2,6 +2,7 @@ import { type OperatingSystem } from "@common/Core";
 import { type Image } from "@common/Core/Image";
 import { type AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FirefoxBookmarkRepository } from "@Core/WebBrowser/Utility";
+
 import type { WebBrowser, WebBrowserBookmark } from "../../Contract";
 
 export class Zen implements WebBrowser {

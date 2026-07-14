@@ -1,4 +1,5 @@
 import { join } from "path";
+
 import type { AssetPathResolver as AssetPathResolverInterface } from "./Contract";
 
 export class AssetPathResolver implements AssetPathResolverInterface {

@@ -1,6 +1,6 @@
+import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { PowershellUtility } from "@Core/PowershellUtility";
-import type { SearchResultItemAction } from "@common/Core";
 
 export class OpenAsAdministrator implements ActionHandler {
     public readonly id = "WindowsOpenAsAdministrator";

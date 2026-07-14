@@ -1,4 +1,5 @@
 import { webDarkTheme, webLightTheme } from "@fluentui/react-components";
+
 import { themeMap } from "./themes";
 
 export const getFluentUiTheme = (shouldUseDarkColors: boolean) => {

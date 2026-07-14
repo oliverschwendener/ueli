@@ -1,9 +1,10 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { Translator } from "@Core/Translator";
 import { createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
 import type { InvocationArgument, RowlandTextEditorSettings as Settings } from "@common/Extensions/RowlandTextEditor";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { Translator } from "@Core/Translator";
+
 import type { TextProcessor } from "./TextProcessor";
 
 export class RowlandTextEditorExtension implements Extension {

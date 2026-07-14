@@ -1,4 +1,5 @@
 import { getExtensionSettingKey } from "@common/Core/Extension";
+
 import { useSetting } from "./useSetting";
 
 export const useExtensionSetting = <Value>({

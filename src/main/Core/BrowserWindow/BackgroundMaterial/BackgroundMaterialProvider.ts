@@ -1,5 +1,6 @@
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { BrowserWindowConstructorOptions } from "electron";
+
 import type { BrowserWindowBackgroundMaterialProvider as BackgroundMaterialProviderInterface } from "../Contract";
 
 export class BackgroundMaterialProvider implements BackgroundMaterialProviderInterface {

@@ -1,4 +1,5 @@
 import { v4 as uuidv4, v6 as uuidv6, v7 as uuidv7 } from "uuid";
+
 import type { TokenFunction } from "./TokenFunction";
 
 export class UuidFunction implements TokenFunction {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { EverythingFileSearcher } from "./Windows/EverythingFileSearcher";
 
 describe(EverythingFileSearcher, () => {

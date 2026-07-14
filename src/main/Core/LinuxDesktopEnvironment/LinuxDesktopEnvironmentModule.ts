@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { LinuxDesktopEnvironmentResolver } from "./LinuxDesktopEnvironmentResolver";
 
 export class LinuxDesktopEnvironmentModule {

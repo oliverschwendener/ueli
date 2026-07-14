@@ -1,7 +1,9 @@
-import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { ContextMenuBuilder } from "./ContextMenuBuilder";
 import { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";
+import { resources } from "./resources";
 import { TrayCreator } from "./TrayCreator";
 import {
     LinuxTrayIconFilePathResolver,
@@ -10,7 +12,6 @@ import {
     type TrayIconFilePathResolver,
 } from "./TrayIconFilePathResolver";
 import { TrayIconManager } from "./TrayIconManager";
-import { resources } from "./resources";
 
 export class TrayIconModule {
     public static async bootstrap(moduleRegistry: UeliModuleRegistry) {

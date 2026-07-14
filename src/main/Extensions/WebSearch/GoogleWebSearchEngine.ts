@@ -1,4 +1,5 @@
 import type { Net } from "electron";
+
 import type { Suggestion } from "./Suggestion";
 import type { WebSearchEngine } from "./WebSearchEngine";
 

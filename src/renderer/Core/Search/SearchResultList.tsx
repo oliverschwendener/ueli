@@ -1,5 +1,6 @@
 import type { SearchResultItem } from "@common/Core";
 import type { RefObject } from "react";
+
 import { useSetting } from "../Hooks";
 import { SearchResultListItem } from "./SearchResultListItem";
 import type { SearchResultListLayout } from "./SearchResultListLayout";

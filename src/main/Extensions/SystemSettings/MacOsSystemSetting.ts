@@ -1,4 +1,5 @@
 import { createOpenFileAction, type SearchResultItem } from "@common/Core";
+
 import type { SystemSetting } from "./SystemSetting";
 
 export class MacOsSystemSetting implements SystemSetting {

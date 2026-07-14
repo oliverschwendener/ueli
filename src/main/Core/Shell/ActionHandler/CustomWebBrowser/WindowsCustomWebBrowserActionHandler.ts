@@ -1,5 +1,6 @@
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
+
 import type { CustomWebBrowserActionHandler } from "./CustomWebBrowserActionHandler";
 
 export class WindowsCustomWebBrowserActionHandler implements CustomWebBrowserActionHandler {

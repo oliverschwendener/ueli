@@ -1,6 +1,7 @@
 import type { OpenUrlActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { OpenUrlWorkflowActionHandler } from "./OpenUrlWorkflowActionHandler";
 
 describe(OpenUrlWorkflowActionHandler, () => {

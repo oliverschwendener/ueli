@@ -6,6 +6,7 @@ import {
     type SearchResultItemAction,
 } from "@common/Core";
 import { describe, expect, it } from "vitest";
+
 import { getActions } from "./getActions";
 
 describe(getActions, () => {

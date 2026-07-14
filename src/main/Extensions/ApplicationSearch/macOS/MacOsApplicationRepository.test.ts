@@ -3,6 +3,7 @@ import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import { describe, expect, it, vi } from "vitest";
+
 import type { Settings } from "../Settings";
 import { MacOsApplication } from "./MacOsApplication";
 import { MacOsApplicationRepository } from "./MacOsApplicationRepository";

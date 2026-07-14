@@ -1,5 +1,6 @@
 import { type AppIconFilePathResolver } from "@Core/AppIconFilePathResolver/Contract";
 import { Notification as ElectronNotification } from "electron";
+
 import { type Notification as NotificationInterface } from "./Contract";
 
 export class Notification implements NotificationInterface {

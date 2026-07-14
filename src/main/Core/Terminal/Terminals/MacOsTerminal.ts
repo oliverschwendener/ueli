@@ -1,4 +1,5 @@
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
+
 import type { Terminal } from "../Contract";
 
 export class MacOsTerminal implements Terminal {

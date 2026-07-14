@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { Logger } from "./Logger";
 
 export class LoggerModule {

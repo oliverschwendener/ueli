@@ -1,7 +1,9 @@
+import { join } from "path";
+
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import { join } from "path";
 import { describe, expect, it, vi } from "vitest";
+
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import { MacOsApplicationIconExtractor } from "./MacOsApplicationIconExtractor";
 

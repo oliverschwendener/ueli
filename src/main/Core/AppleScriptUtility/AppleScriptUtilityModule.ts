@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { AppleScriptUtility } from "./AppleScriptUtility";
 
 export class AppleScriptUtilityModule {

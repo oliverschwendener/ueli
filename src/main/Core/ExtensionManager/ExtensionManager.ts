@@ -1,8 +1,8 @@
+import { createEmptyInstantSearchResult, type InstantSearchResultItems } from "@common/Core";
 import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { Index, SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { createEmptyInstantSearchResult, type InstantSearchResultItems } from "@common/Core";
 
 export class ExtensionManager {
     public constructor(

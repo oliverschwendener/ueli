@@ -1,5 +1,6 @@
 import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { Translator } from "./Translator";
 
 describe(Translator, () => {

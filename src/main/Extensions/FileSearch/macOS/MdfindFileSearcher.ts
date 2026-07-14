@@ -1,4 +1,5 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
+
 import type { FileSearcher } from "../FileSearcher";
 
 export class MdfindFileSearcher implements FileSearcher {

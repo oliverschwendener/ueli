@@ -1,5 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
+
 import { SettingsWindowManager } from "./SettingsWindowManager";
 
 export class SettingsWindowModule {

@@ -1,6 +1,7 @@
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { BrowserWindowConstructorOptions } from "electron";
 import { describe, expect, it, vi } from "vitest";
+
 import { VibrancyProvider } from "./VibrancyProvider";
 
 describe(VibrancyProvider, () => {

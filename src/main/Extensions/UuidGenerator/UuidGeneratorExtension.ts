@@ -1,7 +1,3 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
-import type { Translator } from "@Core/Translator";
 import {
     createCopyToClipboardAction,
     createEmptyInstantSearchResult,
@@ -13,6 +9,11 @@ import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { Image } from "@common/Core/Image";
 import type { Resources, Translations } from "@common/Core/Translator";
 import type { UuidGeneratorSetting as Settings, UuidVersion } from "@common/Extensions/UuidGenerator";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
+
 import { UuidGenerator } from "./UuidGenerator";
 
 export class UuidGeneratorExtension implements Extension {

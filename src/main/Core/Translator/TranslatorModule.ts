@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { Translator } from "./Translator";
 
 export class TranslatorModule {

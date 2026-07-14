@@ -1,6 +1,7 @@
 import { XmlBuilder } from "@Core/XmlBuilder/XmlBuilder";
 import { XmlParser } from "@Core/XmlParser/XmlParser";
 import { describe, expect, it } from "vitest";
+
 import { QuickFormatter } from "./QuickFormatter";
 
 const quickFormatter = new QuickFormatter(new XmlBuilder(), new XmlParser());

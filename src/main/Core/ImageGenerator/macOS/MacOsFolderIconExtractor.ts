@@ -1,8 +1,10 @@
+import { join } from "path";
+
+import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { Image } from "@common/Core/Image";
 import type { App } from "electron";
-import { join } from "path";
+
 import type { FileIconExtractor } from "../FileIconExtractor";
 
 export class MacOsFolderIconExtractor implements FileIconExtractor {

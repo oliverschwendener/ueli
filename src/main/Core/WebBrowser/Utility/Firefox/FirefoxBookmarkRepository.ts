@@ -1,9 +1,11 @@
+import { join } from "path";
+
 import type { OperatingSystem } from "@common/Core";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
 import Database from "better-sqlite3";
 import type { App } from "electron";
-import { join } from "path";
+
 import type { DatabaseRow } from "./DatabaseRow";
 import { FirefoxBookmark } from "./FirefoxBookmark";
 

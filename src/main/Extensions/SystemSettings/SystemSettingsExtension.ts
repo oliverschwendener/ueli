@@ -1,7 +1,8 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import type { Image } from "@common/Core/Image";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 
 export class SystemSettingsExtension implements Extension {

@@ -1,5 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 import type { KeyboardEvent } from "react";
+
 import { keyboardEventMatchesKeyboardShortcut } from "./keyboardEventMatchesKeyboardShortcut";
 
 export const getSearchResultItemActionByKeyboardshortcut = (

@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+
 import type { TrayIconFilePathResolver } from "./TrayIconFilePathResolver";
 
 export class MacOsTrayIconFilePathResolver implements TrayIconFilePathResolver {

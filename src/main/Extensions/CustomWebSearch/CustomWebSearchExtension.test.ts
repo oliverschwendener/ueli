@@ -4,6 +4,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { UrlImageGenerator } from "@Core/ImageGenerator/UrlImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { CustomWebSearchExtension } from "./CustomWebSearchExtension";
 
 const getSearchEngineSettings = (searchEngineNames: string[]): CustomSearchEngineSetting[] => {

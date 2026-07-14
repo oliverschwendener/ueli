@@ -2,6 +2,7 @@ import type { Workflow, WorkflowAction } from "@common/Extensions/Workflow";
 import { Button, Checkbox, Field, Input } from "@fluentui/react-components";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { ActionCardList } from "./ActionCardList";
 import { NewAction } from "./NewAction";
 

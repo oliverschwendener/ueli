@@ -1,10 +1,11 @@
+import { join } from "path";
+
 import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { BrowserWindowHtmlLoader } from "@Core/BrowserWindow";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
 import type { EventEmitter } from "@Core/EventEmitter";
 import type { Translator } from "@Core/Translator";
 import { type App, BrowserWindow } from "electron";
-import { join } from "path";
 
 export class SettingsWindowManager {
     private static readonly SettingsWindowId = "settings";

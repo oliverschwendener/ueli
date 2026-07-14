@@ -1,6 +1,7 @@
 import { useSetting } from "@Core/Hooks";
 import { Dropdown, Option, Switch } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import { Setting } from "../Setting";
 import { SettingGroup } from "../SettingGroup";
 import { SettingGroupList } from "../SettingGroupList";

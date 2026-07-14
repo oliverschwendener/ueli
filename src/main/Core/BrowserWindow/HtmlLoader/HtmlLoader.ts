@@ -1,6 +1,8 @@
+import { join } from "path";
+
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { BrowserWindow } from "electron";
-import { join } from "path";
+
 import type { BrowserWindowHtmlLoader } from "../Contract";
 
 export class HtmlLoader implements BrowserWindowHtmlLoader {

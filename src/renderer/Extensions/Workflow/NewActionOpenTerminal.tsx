@@ -1,6 +1,7 @@
 import type { OpenTerminalActionArgs } from "@common/Extensions/Workflow";
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
 import { useTranslation } from "react-i18next";
+
 import type { NewActionTypeProps } from "./NewActionTypeProps";
 
 export const NewActionOpenTerminal = ({ args, setArgs }: NewActionTypeProps) => {

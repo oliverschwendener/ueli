@@ -1,5 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { NativeTheme } from "electron";
+
 import type { TrayIconFilePathResolver } from "./TrayIconFilePathResolver";
 
 export class LinuxTrayIconFilePathResolver implements TrayIconFilePathResolver {

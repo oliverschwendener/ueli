@@ -1,7 +1,9 @@
+import { join } from "path";
+
+import type { Image } from "@common/Core/Image";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { PowershellUtility } from "@Core/PowershellUtility";
-import type { Image } from "@common/Core/Image";
-import { join } from "path";
+
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";
 import { extractAssociatedFileIconPowershellScript } from "./powershellScripts";

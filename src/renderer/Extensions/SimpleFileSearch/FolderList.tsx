@@ -1,5 +1,6 @@
 import type { FolderSetting } from "@common/Extensions/SimpleFileSearch";
 import { tokens } from "@fluentui/react-components";
+
 import { FolderListItem } from "./FolderListItem";
 
 type FolderListProps = {

@@ -1,12 +1,13 @@
+import { homedir } from "os";
+import { basename, dirname, join, resolve } from "path";
+
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Translator } from "@Core/Translator";
 import type { XmlParser } from "@Core/XmlParser";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
-import { homedir } from "os";
-import { basename, dirname, join, resolve } from "path";
 
 interface JetBrainsToolboxRecent {
     name: string;

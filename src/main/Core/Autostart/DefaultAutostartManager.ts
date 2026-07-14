@@ -1,4 +1,5 @@
 import type { App } from "electron";
+
 import type { AutostartManager } from "./AutostartManager";
 
 export class DefaultAutostartManager implements AutostartManager {

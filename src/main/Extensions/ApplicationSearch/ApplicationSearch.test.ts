@@ -1,7 +1,8 @@
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { OperatingSystem, SearchResultItem } from "@common/Core";
 import { getExtensionSettingKey } from "@common/Core/Extension";
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import { describe, expect, it, vi } from "vitest";
+
 import type { Application } from "./Application";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";

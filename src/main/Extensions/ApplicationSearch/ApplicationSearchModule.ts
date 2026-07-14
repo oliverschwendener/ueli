@@ -1,14 +1,15 @@
+import type { OperatingSystem } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@common/Core";
+
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import type { ApplicationRepository } from "./ApplicationRepository";
 import { ApplicationSearch } from "./ApplicationSearch";
 import { LaunchDesktopFileActionHandler, LinuxApplicationRepository } from "./Linux";
+import { MacOsApplicationRepository } from "./macOS";
 import { Settings } from "./Settings";
 import { OpenAsAdministrator, WindowsApplicationRepository } from "./Windows";
-import { MacOsApplicationRepository } from "./macOS";
 
 export class ApplicationSearchModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {

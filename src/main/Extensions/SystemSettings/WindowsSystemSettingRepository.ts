@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+
 import type { SystemSetting } from "./SystemSetting";
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 import { WindowsSystemSetting } from "./WindowsSystemSetting";

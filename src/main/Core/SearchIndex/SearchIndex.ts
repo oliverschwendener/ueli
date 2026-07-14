@@ -1,6 +1,7 @@
+import type { SearchResultItem } from "@common/Core";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItem } from "@common/Core";
+
 import type { SearchIndex as SearchIndexInterface } from "./Contract";
 import type { SearchIndexFile } from "./Contract/SearchIndexFile";
 import type { Index } from "./Contract/SearchIndexStructure";

@@ -1,4 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
+
 import { MacOsSystemSetting } from "./MacOsSystemSetting";
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 

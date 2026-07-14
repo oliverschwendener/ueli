@@ -1,6 +1,7 @@
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { SettingsManager } from "@Core/SettingsManager";
 import { describe, expect, it, vi } from "vitest";
+
 import { MacOsCustomWebBrowserActionHandler } from "./MacOsCustomWebBrowserActionHandler";
 
 describe(MacOsCustomWebBrowserActionHandler, () => {

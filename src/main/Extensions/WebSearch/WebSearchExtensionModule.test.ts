@@ -1,5 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import { describe, expect, it, vi } from "vitest";
+
 import { DuckDuckGoWebSearchEngine } from "./DuckDuckGoWebSearchEngine";
 import { GoogleWebSearchEngine } from "./GoogleWebSearchEngine";
 import { WebSearchExtension } from "./WebSearchExtension";

@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { RandomStringProvider } from "./RandomStringProvider";
 
 export class RandomStringProviderModule {

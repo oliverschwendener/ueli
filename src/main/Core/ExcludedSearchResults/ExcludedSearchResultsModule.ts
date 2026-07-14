@@ -1,4 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import { ExcludeFromSearchResultsActionHandler } from "./ActionHandler";
 import { ExcludedSearchResults } from "./ExcludedSearchResults";
 

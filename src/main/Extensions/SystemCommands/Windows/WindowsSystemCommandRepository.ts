@@ -1,9 +1,10 @@
+import type { Image } from "@common/Core/Image";
+import type { Resources } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { Translator } from "@Core/Translator";
-import type { Image } from "@common/Core/Image";
-import type { Resources } from "@common/Core/Translator";
+
 import type { SystemCommand } from "../SystemCommand";
 import type { SystemCommandRepository } from "../SystemCommandRepository";
 import { WindowsSystemCommand } from "./WindowsSystemCommand";

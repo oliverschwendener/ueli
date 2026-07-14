@@ -1,6 +1,6 @@
-import { useExtensionSetting } from "@Core/Hooks";
 import type { ContextBridge } from "@common/Core";
 import type { UuidGeneratorSetting, UuidVersion } from "@common/Extensions/UuidGenerator";
+import { useExtensionSetting } from "@Core/Hooks";
 import { Checkbox, Dropdown, Input, Label, Option, ProgressBar, Textarea } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 

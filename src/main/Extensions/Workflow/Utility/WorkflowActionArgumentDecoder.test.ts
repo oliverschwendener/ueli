@@ -1,5 +1,6 @@
 import type { WorkflowAction } from "@common/Extensions/Workflow";
 import { describe, expect, it } from "vitest";
+
 import { WorkflowActionArgumentDecoder } from "./WorkflowActionArgumentDecoder";
 
 describe(WorkflowActionArgumentDecoder, () => {

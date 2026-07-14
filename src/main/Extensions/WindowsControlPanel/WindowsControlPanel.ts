@@ -1,8 +1,9 @@
+import type { OperatingSystem, SearchResultItem } from "@common/Core";
+import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver/Contract";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
-import type { OperatingSystem, SearchResultItem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
+
 import type { WindowsControlPanelItem } from "./WindowsControlPanelItem";
 import type { WindowsControlPanelItemRepository } from "./WindowsControlPanelItemRepositoryInterface";
 

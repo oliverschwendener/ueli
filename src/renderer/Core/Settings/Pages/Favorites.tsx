@@ -1,11 +1,12 @@
+import { getImageUrl } from "@Core/getImageUrl";
 import { useFavorites, useSearchResultItems } from "@Core/Hooks";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { ThemeContext } from "@Core/Theme";
-import { getImageUrl } from "@Core/getImageUrl";
 import { Badge, Button, Input, Text, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
+
 import { SettingGroup } from "../SettingGroup";
 
 export const Favorites = () => {

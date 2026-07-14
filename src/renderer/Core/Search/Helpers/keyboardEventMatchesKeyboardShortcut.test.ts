@@ -1,5 +1,6 @@
 import type { KeyboardEvent } from "react";
 import { describe, expect, it } from "vitest";
+
 import { keyboardEventMatchesKeyboardShortcut } from "./keyboardEventMatchesKeyboardShortcut";
 
 describe(keyboardEventMatchesKeyboardShortcut, () => {

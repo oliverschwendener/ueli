@@ -1,5 +1,6 @@
 import type { SearchResultItemAction } from "@common/Core";
 import { describe, expect, it } from "vitest";
+
 import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";
 
 describe(createLaunchDesktopFileAction, () => {

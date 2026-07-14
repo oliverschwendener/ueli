@@ -5,6 +5,7 @@ import { NavDivider, NavDrawer, NavDrawerBody, NavItem, NavSectionHeader } from 
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router";
+
 import type { SettingsPage } from "./Pages";
 
 type NavigationProps = {

@@ -1,4 +1,5 @@
 import type { KeyboardEvent } from "react";
+
 import { deserializeKeyboardShortcut } from "./deserializeKeyboardShortcut";
 
 export const keyboardEventMatchesKeyboardShortcut = (keyboardEvent: KeyboardEvent, keyboardShortcut: string) => {

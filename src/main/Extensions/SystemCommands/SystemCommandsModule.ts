@@ -1,14 +1,15 @@
-import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { OperatingSystem } from "@common/Core";
 import type { Resources, Translations } from "@common/Core/Translator";
+import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";
 import { LinuxSystemCommandRepository, linuxResources } from "./Linux";
+import { MacOsSystemCommandRepository, macOsResources } from "./macOS";
 import { SystemCommandActionHandler } from "./SystemCommandActionHandler";
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 import { SystemCommands } from "./SystemCommands";
 import { WindowsSystemCommandRepository, windowsResources } from "./Windows";
-import { MacOsSystemCommandRepository, macOsResources } from "./macOS";
 
 export class SystemCommandsModule implements ExtensionModule {
     public bootstrap(moduleRegistry: UeliModuleRegistry): ExtensionBootstrapResult {
