@@ -115,13 +115,13 @@ If you're using Visual Studio Code, you can start the debugger for the main proc
 - Check formatting
 
     ```
-    $ npm run oxfmt:check
+    $ npm run format:check
     ```
 
 - Format the code
 
     ```
-    $ npm run oxfmt:write
+    $ npm run format:write
     ```
 
 - Lint files

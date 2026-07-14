@@ -38,7 +38,7 @@ jobs:
               run: npm run lint
 
             - name: Run oxfmt
-              run: npm run oxfmt:check
+              run: npm run format:check
 
             - name: Run tests
               run: npm run test
