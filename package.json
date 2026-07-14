@@ -66,5 +66,10 @@
         "react-router": "^8.2.0",
         "sharp": "^0.35.3",
         "uuid": "^14.0.0"
+    },
+    "allowScripts": {
+        "better-sqlite3@12.11.1": true,
+        "electron-winstaller@5.4.0": true,
+        "fsevents@2.3.3": true
     }
 }
