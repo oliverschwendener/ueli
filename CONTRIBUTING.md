@@ -32,7 +32,7 @@ rejected.
 ### Coding style
 
 Please use [oxlint](.oxlintrc.json) to verify that your contribution matches our coding style. Additionally, we use
-[oxfmt](.oxfmtrc.json) to auto-format the code. All pull requests that don't match the coding style won't be accepted.
+[oxfmt](oxfmt.config.ts) to auto-format the code. All pull requests that don't match the coding style won't be accepted.
 
 ### Commit signing
 

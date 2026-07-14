@@ -5,7 +5,7 @@
 .github @oliverschwendener
 .gitignore @oliverschwendener
 .npmrc @oliverschwendener
-.oxfmtrc.json @oliverschwendener
+oxfmt.config.ts @oliverschwendener
 .vscode @oliverschwendener
 assets @oliverschwendener
 build @oliverschwendener
