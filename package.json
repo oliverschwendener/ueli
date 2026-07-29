@@ -40,7 +40,7 @@
         "electron": "^43.1.0",
         "electron-builder": "^26.6.0",
         "node-abi": "^4.26.0",
-        "oxfmt": "^0.59.0",
+        "oxfmt": "^0.61.0",
         "oxlint": "^1.74.0",
         "tree-kill": "^1.2.2",
         "typescript": "^7.0.2",
