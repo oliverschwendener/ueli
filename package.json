@@ -30,7 +30,7 @@
         "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
     },
     "devDependencies": {
-        "@types/better-sqlite3": "^7.6.13",
+        "@types/better-sqlite3": "^9.6.0",
         "@types/node": "^26.1.1",
         "@types/react": "^19.2.8",
         "@types/react-dom": "^19.2.3",
@@ -51,7 +51,7 @@
     "dependencies": {
         "@fluentui/react-components": "^9.72.9",
         "@fluentui/react-icons": "^2.0.316",
-        "better-sqlite3": "^12.8.0",
+        "better-sqlite3": "^13.0.3",
         "color": "^5.0.3",
         "fast-xml-parser": "^5.5.7",
         "fuse.js": "^7.1.0",
