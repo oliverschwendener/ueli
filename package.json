@@ -55,7 +55,7 @@
         "color": "^5.0.3",
         "fast-xml-parser": "^5.5.7",
         "fuse.js": "^7.1.0",
-        "fuzzysort": "^3.1.0",
+        "fuzzysort": "^4.0.2",
         "i18next": "^26.0.3",
         "mathjs": "^15.2.0",
         "mitt": "^3.0.1",
