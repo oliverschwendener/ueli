@@ -1,17 +1,21 @@
-import react from "@vitejs/plugin-react";
 import { join } from "path";
+
+import react from "@vitejs/plugin-react";
 import electron from "vite-plugin-electron";
 import { defineConfig } from "vitest/config";
-import pkg from "./package.json";
 
-const rendererRoot = join(__dirname, "src", "renderer");
-const rendererOutDir = join(__dirname, "dist-renderer");
+import pkg from "./package.json" with { type: "json" };
 
-const mainEntryPoint = join(__dirname, "src", "main", "index.ts");
-const mainOutDir = join(__dirname, "dist-main");
+const dirname = import.meta.dirname;
 
-const preloadEntryPoint = join(__dirname, "src", "preload", "index.ts");
-const preloadOutDir = join(__dirname, "dist-preload");
+const rendererRoot = join(dirname, "src", "renderer");
+const rendererOutDir = join(dirname, "dist-renderer");
+
+const mainEntryPoint = join(dirname, "src", "main", "index.ts");
+const mainOutDir = join(dirname, "dist-main");
+
+const preloadEntryPoint = join(dirname, "src", "preload", "index.ts");
+const preloadOutDir = join(dirname, "dist-preload");
 
 export default defineConfig(({ command }) => {
     const isServe = command === "serve";
@@ -22,8 +26,8 @@ export default defineConfig(({ command }) => {
         root: rendererRoot,
         resolve: {
             alias: {
-                "@common": join(__dirname, "src", "common"),
-                "@Core": join(__dirname, "src", "renderer", "Core"),
+                "@common": join(dirname, "src", "common"),
+                "@Core": join(dirname, "src", "renderer", "Core"),
             },
         },
         build: {
@@ -49,8 +53,8 @@ export default defineConfig(({ command }) => {
                     vite: {
                         resolve: {
                             alias: {
-                                "@common": join(__dirname, "src", "common"),
-                                "@Core": join(__dirname, "src", "main", "Core"),
+                                "@common": join(dirname, "src", "common"),
+                                "@Core": join(dirname, "src", "main", "Core"),
                             },
                         },
                         build: {
@@ -74,7 +78,7 @@ export default defineConfig(({ command }) => {
                     vite: {
                         resolve: {
                             alias: {
-                                "@common": join(__dirname, "src", "common"),
+                                "@common": join(dirname, "src", "common"),
                             },
                         },
                         build: {
@@ -102,7 +106,7 @@ export default defineConfig(({ command }) => {
                 exclude: ["**/index.ts", "**/*.test.ts"],
             },
             alias: {
-                "@Core": join(__dirname, "src", "main", "Core"),
+                "@Core": join(dirname, "src", "main", "Core"),
             },
         },
     };
