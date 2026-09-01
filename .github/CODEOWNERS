@@ -37,7 +37,7 @@ src/renderer/Extensions/ApplicationSearch/Linux @ke1v
 
 assets/Extensions/Base64Conversion @ChristopherSteiner
 docs/Extensions/Base64Conversion @ChristopherSteiner
-src/common/Extensions/Base64Conversion @ChristopherSteiner
+src/shared/Extensions/Base64Conversion @ChristopherSteiner
 src/main/Extensions/Base64Conversion @ChristopherSteiner
 src/renderer/Extensions/Base64Conversion @ChristopherSteiner
 
@@ -45,7 +45,7 @@ src/renderer/Extensions/Base64Conversion @ChristopherSteiner
 
 assets/Extensions/CustomWebSearch @NiewView
 docs/Extensions/CustomWebSearch @NiewView
-src/common/Extensions/CustomWebSearch @NiewView
+src/shared/Extensions/CustomWebSearch @NiewView
 src/main/Extensions/CustomWebSearch @NiewView
 src/renderer/Extensions/CustomWebSearch @NiewView
 
@@ -53,7 +53,7 @@ src/renderer/Extensions/CustomWebSearch @NiewView
 
 assets/Extensions/JetBrainsToolbox @scomans
 docs/Extensions/JetBrainsToolbox @scomans
-src/common/Extensions/JetBrainsToolbox @scomans
+src/shared/Extensions/JetBrainsToolbox @scomans
 src/main/Extensions/JetBrainsToolbox @scomans
 src/renderer/Extensions/JetBrainsToolbox @scomans
 
@@ -61,7 +61,7 @@ src/renderer/Extensions/JetBrainsToolbox @scomans
 
 assets/Extensions/PasswordGenerator @MarcoSennHaag
 docs/Extensions/PasswordGenerator @MarcoSennHaag
-src/common/Extensions/PasswordGenerator @MarcoSennHaag
+src/shared/Extensions/PasswordGenerator @MarcoSennHaag
 src/main/Extensions/PasswordGenerator @MarcoSennHaag
 src/renderer/Extensions/PasswordGenerator @MarcoSennHaag
 
@@ -69,7 +69,7 @@ src/renderer/Extensions/PasswordGenerator @MarcoSennHaag
 
 assets/Extensions/QuickFormatter @MarcoSennHaag
 docs/Extensions/QuickFormatter @MarcoSennHaag
-src/common/Extensions/QuickFormatter @MarcoSennHaag
+src/shared/Extensions/QuickFormatter @MarcoSennHaag
 src/main/Extensions/QuickFormatter @MarcoSennHaag
 src/renderer/Extensions/QuickFormatter @MarcoSennHaag
 
@@ -77,7 +77,7 @@ src/renderer/Extensions/QuickFormatter @MarcoSennHaag
 
 assets/Extensions/RowlandTextEditor @ChristopherSteiner
 docs/Extensions/RowlandTextEditor @ChristopherSteiner
-src/common/Extensions/RowlandTextEditor @ChristopherSteiner
+src/shared/Extensions/RowlandTextEditor @ChristopherSteiner
 src/main/Extensions/RowlandTextEditor @ChristopherSteiner
 src/renderer/Extensions/RowlandTextEditor @ChristopherSteiner
 
@@ -85,7 +85,7 @@ src/renderer/Extensions/RowlandTextEditor @ChristopherSteiner
 
 assets/Extensions/UuidGenerator @ChristopherSteiner
 docs/Extensions/UuidGenerator @ChristopherSteiner
-src/common/Extensions/UuidGenerator @ChristopherSteiner
+src/shared/Extensions/UuidGenerator @ChristopherSteiner
 src/main/Extensions/UuidGenerator @ChristopherSteiner
 src/renderer/Extensions/UuidGenerator @ChristopherSteiner
 
@@ -93,7 +93,7 @@ src/renderer/Extensions/UuidGenerator @ChristopherSteiner
 
 assets/Extensions/VSCode @IrishBruse
 docs/Extensions/VSCode @IrishBruse
-src/common/Extensions/VSCode @IrishBruse
+src/shared/Extensions/VSCode @IrishBruse
 src/main/Extensions/VSCode @IrishBruse
 src/renderer/Extensions/VSCode @IrishBruse
 
@@ -101,6 +101,6 @@ src/renderer/Extensions/VSCode @IrishBruse
 
 assets/Extensions/WindowsControlPanel @tkohlmeier
 docs/Extensions/WindowsControlPanel @tkohlmeier
-src/common/Extensions/WindowsControlPanel @tkohlmeier
+src/shared/Extensions/WindowsControlPanel @tkohlmeier
 src/main/Extensions/WindowsControlPanel @tkohlmeier
 src/renderer/Extensions/WindowsControlPanel @tkohlmeier
