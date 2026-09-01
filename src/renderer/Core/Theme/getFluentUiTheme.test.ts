@@ -3,6 +3,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { getFluentUiTheme } from "./getFluentUiTheme";
 
+vi.mock("@fluentui/react-components", () => ({
+    teamsDarkTheme: { name: "teams-dark" },
+    teamsLightTheme: { name: "teams-light" },
+    webDarkTheme: { name: "web-dark" },
+    webLightTheme: { name: "web-light" },
+}));
+
 const createWindowStub = ({ themeName }: { themeName: string }) => {
     vi.stubGlobal("window", {
         ContextBridge: {
