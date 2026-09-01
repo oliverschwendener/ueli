@@ -1,4 +1,4 @@
-import type { Image } from "@common/Core/Image";
+import type { Image } from "@shared/Core/Image";
 import { describe, expect, it } from "vitest";
 
 import { WindowsApplication } from "./WindowsApplication";

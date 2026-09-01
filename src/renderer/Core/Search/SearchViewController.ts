@@ -1,5 +1,5 @@
-import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@common/Core";
-import type { SearchEngineId } from "@common/Core/Search";
+import type { OperatingSystem, SearchResultItem, SearchResultItemAction } from "@shared/Core";
+import type { SearchEngineId } from "@shared/Core/Search";
 import { useRef, useState } from "react";
 
 import { getActions, getNextSearchResultItemId, getPreviousSearchResultItemId } from "./Helpers";

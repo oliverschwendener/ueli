@@ -1,4 +1,3 @@
-import type { UuidFormat, UuidVersion } from "@common/Extensions/UuidGenerator";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
@@ -23,6 +22,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, DismissRegular } from "@fluentui/react-icons";
+import type { UuidFormat, UuidVersion } from "@shared/Extensions/UuidGenerator";
 import { useTranslation } from "react-i18next";
 
 export const UuidGeneratorSettings = () => {

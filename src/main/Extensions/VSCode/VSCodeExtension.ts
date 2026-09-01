@@ -1,21 +1,21 @@
 import * as Path from "path";
 import * as Url from "url";
 
-import {
-    createEmptyInstantSearchResult,
-    type InstantSearchResultItems,
-    type OperatingSystem,
-    type SearchResultItem,
-} from "@common/Core";
-import type { Image } from "@common/Core/Image";
-import type { SearchEngineId } from "@common/Core/Search";
-import { searchFilter } from "@common/Core/Search/SearchFilter";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
+import {
+    createEmptyInstantSearchResult,
+    type InstantSearchResultItems,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@shared/Core";
+import type { Image } from "@shared/Core/Image";
+import type { SearchEngineId } from "@shared/Core/Search";
+import { searchFilter } from "@shared/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 
 import type { Settings } from "./Settings";

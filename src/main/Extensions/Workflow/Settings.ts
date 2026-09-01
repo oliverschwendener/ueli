@@ -1,4 +1,4 @@
-import type { Workflow } from "@common/Extensions/Workflow";
+import type { Workflow } from "@shared/Extensions/Workflow";
 
 export type Settings = {
     workflows: Workflow[];

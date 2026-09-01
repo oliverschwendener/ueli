@@ -4,18 +4,18 @@
         {
             "type": "process",
             "label": "Before Debug",
-            "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "command": "${workspaceFolder}/node_modules/.bin/electron-vite",
             "windows": {
-                "command": "${workspaceFolder}/node_modules/.bin/vite.cmd"
+                "command": "${workspaceFolder}/node_modules/.bin/electron-vite.cmd"
             },
             "args": ["build", "--sourcemap"]
         },
         {
             "type": "process",
             "label": "Build",
-            "command": "${workspaceFolder}/node_modules/.bin/vite",
+            "command": "${workspaceFolder}/node_modules/.bin/electron-vite",
             "windows": {
-                "command": "${workspaceFolder}/node_modules/.bin/vite.cmd"
+                "command": "${workspaceFolder}/node_modules/.bin/electron-vite.cmd"
             },
             "args": ["build"],
             "isBuildCommand": true

@@ -1,6 +1,6 @@
-import type { InstantSearchResultItems, SearchResultItem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
-import type { Resources, Translations } from "@common/Core/Translator";
+import type { InstantSearchResultItems, SearchResultItem } from "@shared/Core";
+import type { Image } from "@shared/Core/Image";
+import type { Resources, Translations } from "@shared/Core/Translator";
 
 /**
  * Represents an Extension. Implement this interface to create a custom Extension.

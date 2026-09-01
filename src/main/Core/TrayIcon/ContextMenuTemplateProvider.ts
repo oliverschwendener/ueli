@@ -1,7 +1,7 @@
-import type { Resources } from "@common/Core/Translator";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { UeliCommandInvoker } from "@Core/UeliCommand";
+import type { Resources } from "@shared/Core/Translator";
 import type { MenuItemConstructorOptions } from "electron";
 
 import type { TrayIconTranslations } from "./TrayIconTranslations";

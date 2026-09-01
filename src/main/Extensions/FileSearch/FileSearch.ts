@@ -1,20 +1,20 @@
 import { basename, dirname } from "path";
 
-import {
-    createInvokeExtensionAction,
-    createOpenFileAction,
-    type OperatingSystem,
-    type SearchResultItem,
-    type SearchResultItemAction,
-} from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import {
+    createInvokeExtensionAction,
+    createOpenFileAction,
+    type OperatingSystem,
+    type SearchResultItem,
+    type SearchResultItemAction,
+} from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
 import type { App } from "electron";
 
 import type { FileSearcher } from "./FileSearcher";

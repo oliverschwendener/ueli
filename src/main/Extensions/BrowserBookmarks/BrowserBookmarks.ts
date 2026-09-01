@@ -1,11 +1,3 @@
-import {
-    createCopyToClipboardAction,
-    createOpenUrlSearchResultAction,
-    type OperatingSystem,
-    type SearchResultItem,
-} from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
@@ -13,6 +5,14 @@ import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
 import type { WebBrowser, WebBrowserBookmark, WebBrowserRegistry } from "@Core/WebBrowser";
+import {
+    createCopyToClipboardAction,
+    createOpenUrlSearchResultAction,
+    type OperatingSystem,
+    type SearchResultItem,
+} from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
 
 type Settings = {
     browsers: string[];

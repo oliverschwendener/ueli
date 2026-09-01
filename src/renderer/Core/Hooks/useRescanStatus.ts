@@ -1,4 +1,4 @@
-import type { RescanStatus } from "@common/Core";
+import type { RescanStatus } from "@shared/Core";
 import type { IpcRendererEvent } from "electron";
 import { useEffect, useState } from "react";
 

@@ -1,4 +1,3 @@
-import { type SearchResultItemAction } from "@common/Core";
 import { KeyboardShortcut } from "@Core/Components";
 import {
     Button,
@@ -16,6 +15,7 @@ import {
     useToastController,
 } from "@fluentui/react-components";
 import { MoreVerticalFilled } from "@fluentui/react-icons";
+import { type SearchResultItemAction } from "@shared/Core";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 

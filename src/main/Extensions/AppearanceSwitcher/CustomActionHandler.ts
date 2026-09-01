@@ -1,7 +1,7 @@
-import type { OperatingSystem, SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { AppleScriptUtility } from "@Core/AppleScriptUtility";
 import type { PowershellUtility } from "@Core/PowershellUtility";
+import type { OperatingSystem, SearchResultItemAction } from "@shared/Core";
 import type { NativeTheme } from "electron";
 
 import type { SwitchTo } from "./SwitchTo";

@@ -1,4 +1,4 @@
-import type { OpenUrlActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
+import type { OpenUrlActionArgs, WorkflowAction } from "@shared/Extensions/Workflow";
 import type { Shell } from "electron";
 
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";

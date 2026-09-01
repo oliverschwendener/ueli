@@ -1,4 +1,4 @@
-import type { Resources } from "@common/Core/Translator";
+import type { Resources } from "@shared/Core/Translator";
 
 import type { TrayIconTranslations } from "./TrayIconTranslations";
 

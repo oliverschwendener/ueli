@@ -1,10 +1,10 @@
-import { createInvokeExtensionAction, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import { createInvokeExtensionAction, type SearchResultItem } from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
 import type { Net } from "electron";
 
 import type { ApiResponse, PostBody } from "./Api";

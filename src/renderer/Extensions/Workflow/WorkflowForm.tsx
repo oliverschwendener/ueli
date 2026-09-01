@@ -1,5 +1,5 @@
-import type { Workflow, WorkflowAction } from "@common/Extensions/Workflow";
 import { Button, Checkbox, Field, Input } from "@fluentui/react-components";
+import type { Workflow, WorkflowAction } from "@shared/Extensions/Workflow";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

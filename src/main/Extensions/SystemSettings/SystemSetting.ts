@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@shared/Core";
 
 export interface SystemSetting {
     toSearchResultItem(): SearchResultItem;

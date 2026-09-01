@@ -1,10 +1,10 @@
-import { createCopyToClipboardAction, type InstantSearchResultItems, type SearchResultItem } from "@common/Core";
-import type { Image } from "@common/Core/Image";
-import type { Resources, Translations } from "@common/Core/Translator";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import { createCopyToClipboardAction, type InstantSearchResultItems, type SearchResultItem } from "@shared/Core";
+import type { Image } from "@shared/Core/Image";
+import type { Resources, Translations } from "@shared/Core/Translator";
 
 import type { ColorConverter } from "./ColorConverter";
 import type { ColorPreviewGenerator } from "./ColorPreviewGenerator";

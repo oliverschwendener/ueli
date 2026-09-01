@@ -9,7 +9,7 @@ export class HtmlLoader implements BrowserWindowHtmlLoader {
     public constructor(private readonly environmentVariableProvider: EnvironmentVariableProvider) {}
 
     public async loadHtmlFile(browserWindow: BrowserWindow, fileName: string): Promise<void> {
-        const viteDevServerUrl = this.environmentVariableProvider.get("VITE_DEV_SERVER_URL");
+        const viteDevServerUrl = this.environmentVariableProvider.get("ELECTRON_RENDERER_URL");
 
         if (viteDevServerUrl) {
             await browserWindow.loadURL(`${viteDevServerUrl}/${fileName}`);

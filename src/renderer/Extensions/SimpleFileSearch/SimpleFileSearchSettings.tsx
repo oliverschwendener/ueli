@@ -1,9 +1,9 @@
-import type { FolderSetting, Settings } from "@common/Extensions/SimpleFileSearch";
 import { useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Button, tokens } from "@fluentui/react-components";
 import { AddRegular } from "@fluentui/react-icons";
+import type { FolderSetting, Settings } from "@shared/Extensions/SimpleFileSearch";
 import { useTranslation } from "react-i18next";
 
 import { EditDialog } from "./EditDialog";

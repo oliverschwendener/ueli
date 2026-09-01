@@ -1,6 +1,6 @@
-import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { PowershellUtility } from "@Core/PowershellUtility";
+import type { SearchResultItemAction } from "@shared/Core";
 
 /**
  * Action handler for executing a Powershell command.

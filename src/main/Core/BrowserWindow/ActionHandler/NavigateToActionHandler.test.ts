@@ -1,5 +1,5 @@
-import type { SearchResultItemAction } from "@common/Core";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
+import type { SearchResultItemAction } from "@shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import { NavigateToActionHandler } from "./NavigateToActionHandler";

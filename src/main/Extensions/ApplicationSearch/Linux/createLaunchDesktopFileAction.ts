@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@common/Core";
+import type { SearchResultItemAction } from "@shared/Core";
 
 export const createLaunchDesktopFileAction = ({
     filePath,

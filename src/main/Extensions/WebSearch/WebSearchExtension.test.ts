@@ -1,13 +1,13 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { SettingsManager } from "@Core/SettingsManager";
 import {
     createEmptyInstantSearchResult,
     createInvokeExtensionAction,
     createOpenUrlSearchResultAction,
     type SearchResultItem,
-} from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { SettingsManager } from "@Core/SettingsManager";
+} from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
 import { describe, expect, it, vi } from "vitest";
 
 import type { Suggestion } from "./Suggestion";

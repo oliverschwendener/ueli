@@ -1,5 +1,5 @@
-import type { ExecuteCommandActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { ExecuteCommandActionArgs, WorkflowAction } from "@shared/Extensions/Workflow";
 
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 

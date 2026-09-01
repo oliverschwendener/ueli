@@ -1,5 +1,5 @@
-import type { SearchResultItem } from "@common/Core";
 import { tokens } from "@fluentui/react-components";
+import type { SearchResultItem } from "@shared/Core";
 import { useEffect, useRef, useState, type RefObject } from "react";
 
 import { CompactSearchResultListItem } from "./CompactSearchResultListItem";

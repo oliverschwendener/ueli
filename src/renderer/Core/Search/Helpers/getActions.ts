@@ -4,7 +4,7 @@ import {
     createRemoveFromFavoritesAction,
     type SearchResultItem,
     type SearchResultItemAction,
-} from "@common/Core";
+} from "@shared/Core";
 
 export const getActions = (
     searchResultItem: SearchResultItem,

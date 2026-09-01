@@ -1,8 +1,8 @@
 import { join } from "path";
 
-import { getExtensionSettingKey } from "@common/Core/Extension";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { SettingsManager } from "@Core/SettingsManager";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
 import type { App } from "electron";
 
 export class Settings {

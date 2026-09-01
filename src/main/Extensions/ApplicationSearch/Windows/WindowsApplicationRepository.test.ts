@@ -1,9 +1,9 @@
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { PowershellUtility } from "@Core/PowershellUtility";
+import type { Image } from "@shared/Core/Image";
 import { describe, expect, it, vi } from "vitest";
 
 import type { Settings } from "../Settings";

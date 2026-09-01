@@ -3,8 +3,8 @@ import {
     createOpenFileAction,
     createShowItemInFileExplorerAction,
     type SearchResultItem,
-} from "@common/Core";
-import type { Image } from "@common/Core/Image";
+} from "@shared/Core";
+import type { Image } from "@shared/Core/Image";
 
 import type { Application } from "../Application";
 

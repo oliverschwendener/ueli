@@ -1,12 +1,12 @@
 import { extname } from "path";
 
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { IniFileParser } from "@Core/IniFileParser/";
 import type { Logger } from "@Core/Logger";
+import type { Image } from "@shared/Core/Image";
 
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";

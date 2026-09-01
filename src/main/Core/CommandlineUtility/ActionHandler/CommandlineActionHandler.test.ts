@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@common/Core";
+import type { SearchResultItemAction } from "@shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import type { CommandlineUtility } from "../Contract";

@@ -1,6 +1,6 @@
-import type { SearchResultItemAction } from "@common/Core";
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
+import type { SearchResultItemAction } from "@shared/Core";
 
 /**
  * Action handler for launching a `.desktop` file.

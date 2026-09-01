@@ -1,4 +1,4 @@
-import { createOpenFileAction, type SearchResultItem } from "@common/Core";
+import { createOpenFileAction, type SearchResultItem } from "@shared/Core";
 
 import type { SystemSetting } from "./SystemSetting";
 

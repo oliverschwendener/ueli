@@ -1,5 +1,5 @@
-import { isValidHotkey } from "@common/Core/Hotkey";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+import { isValidHotkey } from "@shared/Core/Hotkey";
 
 export class GlobalShortcutModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {

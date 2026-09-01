@@ -1,7 +1,7 @@
-import type { SearchResultItem } from "@common/Core";
 import { BasicSearch } from "@Core/Components";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { useExtensionSetting } from "@Core/Hooks";
+import type { SearchResultItem } from "@shared/Core";
 
 export const WebSearchExtension = (props: ExtensionProps) => {
     const { contextBridge } = props;

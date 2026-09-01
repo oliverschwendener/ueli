@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@shared/Core";
 import { useEffect, useState } from "react";
 
 export const useSearchResultItems = () => {

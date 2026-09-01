@@ -1,5 +1,5 @@
-import type { SearchResultItemAction } from "@common/Core";
 import type { PowershellUtility } from "@Core/PowershellUtility";
+import type { SearchResultItemAction } from "@shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import { OpenAsAdministrator } from "./OpenAsAdministrator";

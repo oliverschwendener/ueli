@@ -1,4 +1,3 @@
-import type { Workflow } from "@common/Extensions/Workflow";
 import { useExtensionSetting } from "@Core/Hooks";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
@@ -17,6 +16,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, EditRegular } from "@fluentui/react-icons";
+import type { Workflow } from "@shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 import { DeleteWorkflowButton } from "./DeleteWorkflowButton";

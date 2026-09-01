@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@common/Core";
+import type { SearchResultItem } from "@shared/Core";
 import { describe, expect, it } from "vitest";
 
 import { getPreviousSearchResultItemId } from "./getPreviousSearchResultItemId";

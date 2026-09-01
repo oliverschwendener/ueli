@@ -1,5 +1,5 @@
-import type { OperatingSystem } from "@common/Core";
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
+import type { OperatingSystem } from "@shared/Core";
 import type { App, BrowserWindow } from "electron";
 import { describe, expect, it, vi } from "vitest";
 

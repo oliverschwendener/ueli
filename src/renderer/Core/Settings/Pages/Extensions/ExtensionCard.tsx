@@ -1,4 +1,3 @@
-import type { ExtensionInfo } from "@common/Core";
 import { getImageUrl } from "@Core/getImageUrl";
 import {
     Button,
@@ -21,6 +20,7 @@ import {
     PowerFilled,
     SettingsRegular,
 } from "@fluentui/react-icons";
+import type { ExtensionInfo } from "@shared/Core";
 import { useTranslation } from "react-i18next";
 
 type ExtensionCardProps = {

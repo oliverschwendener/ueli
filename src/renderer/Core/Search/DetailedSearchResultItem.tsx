@@ -1,5 +1,5 @@
-import type { SearchResultItem } from "@common/Core";
 import { Text } from "@fluentui/react-components";
+import type { SearchResultItem } from "@shared/Core";
 
 import { SearchResultItemDescriptionBadge } from "./SearchResultItemDescriptionBadge";
 import { SearchResultItemImage } from "./SearchResultItemImage";

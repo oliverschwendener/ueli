@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": ".types/web",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "jsx": "react-jsx",
+        "isolatedModules": true,
+        "useDefineForClassFields": true,
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "@shared/*": ["./src/shared/*"],
+            "@Core/*": ["./src/renderer/Core/*"]
+        }
+    },
+    "include": ["src/renderer/**/*"],
+    "references": [{ "path": "./tsconfig.shared.json" }]
+}

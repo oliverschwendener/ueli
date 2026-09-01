@@ -1,6 +1,6 @@
-import { createEmptyInstantSearchResult } from "@common/Core";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
+import { createEmptyInstantSearchResult } from "@shared/Core";
 import type { Net } from "electron";
 import { describe, expect, it, vi } from "vitest";
 

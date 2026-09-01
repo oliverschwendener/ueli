@@ -1,4 +1,3 @@
-import type { Workflow } from "@common/Extensions/Workflow";
 import {
     Button,
     Dialog,
@@ -11,6 +10,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { DeleteRegular } from "@fluentui/react-icons";
+import type { Workflow } from "@shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 type DeleteWorkflowButtonProps = {

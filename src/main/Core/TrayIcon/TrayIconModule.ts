@@ -1,5 +1,5 @@
-import type { OperatingSystem } from "@common/Core";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
+import type { OperatingSystem } from "@shared/Core";
 
 import { ContextMenuBuilder } from "./ContextMenuBuilder";
 import { ContextMenuTemplateProvider } from "./ContextMenuTemplateProvider";

@@ -1,6 +1,6 @@
-import type { SearchResultItem } from "@common/Core";
-import { createCopyToClipboardAction, createShowItemInFileExplorerAction } from "@common/Core";
-import type { Image } from "@common/Core/Image";
+import type { SearchResultItem } from "@shared/Core";
+import { createCopyToClipboardAction, createShowItemInFileExplorerAction } from "@shared/Core";
+import type { Image } from "@shared/Core/Image";
 
 import type { Application } from "../Application";
 import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";

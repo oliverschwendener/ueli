@@ -1,4 +1,3 @@
-import type { SearchResultItemAction } from "@common/Core";
 import {
     Button,
     Dialog,
@@ -8,6 +7,7 @@ import {
     DialogSurface,
     DialogTitle,
 } from "@fluentui/react-components";
+import type { SearchResultItemAction } from "@shared/Core";
 import { useTranslation } from "react-i18next";
 
 type ConfirmationDialogProps = {

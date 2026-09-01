@@ -4,7 +4,7 @@ import {
     createRemoveFromFavoritesAction,
     type SearchResultItem,
     type SearchResultItemAction,
-} from "@common/Core";
+} from "@shared/Core";
 import { describe, expect, it } from "vitest";
 
 import { getActions } from "./getActions";

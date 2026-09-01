@@ -1,4 +1,4 @@
-import type { Resources } from "@common/Core/Translator";
+import type { Resources } from "@shared/Core/Translator";
 
 export type MacOsTranslations = {
     extensionName: string;

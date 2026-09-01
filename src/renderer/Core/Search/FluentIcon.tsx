@@ -1,4 +1,3 @@
-import type { FluentIcon as FluentIconString } from "@common/Core";
 import {
     AppsAddInRegular,
     ArrowClockwiseRegular,
@@ -17,6 +16,7 @@ import {
     ToggleMultipleRegular,
     WindowConsoleRegular,
 } from "@fluentui/react-icons";
+import type { FluentIcon as FluentIconString } from "@shared/Core";
 import type { ReactElement } from "react";
 
 export const FluentIcon = ({ icon, fontSize }: { fontSize?: number; icon: FluentIconString }) => {

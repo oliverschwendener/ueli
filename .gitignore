@@ -13,6 +13,7 @@ node_modules
 dist-main
 dist-preload
 dist-renderer
+.types
 release
 coverage
 *.local

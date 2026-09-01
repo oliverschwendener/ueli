@@ -1,4 +1,4 @@
-import type { ContextBridge } from "@common/Core";
+import type { ContextBridge } from "@shared/Core";
 import { contextBridge, ipcRenderer } from "electron";
 
 const contextBridgeImplementation: ContextBridge = {

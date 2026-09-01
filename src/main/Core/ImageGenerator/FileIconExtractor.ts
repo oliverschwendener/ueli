@@ -1,4 +1,4 @@
-import type { Image } from "@common/Core/Image";
+import type { Image } from "@shared/Core/Image";
 
 export interface FileIconExtractor {
     matchesFilePath: (filePath: string) => boolean;

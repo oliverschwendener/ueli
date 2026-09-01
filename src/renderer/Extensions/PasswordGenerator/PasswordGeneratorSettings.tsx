@@ -1,10 +1,10 @@
-import { PasswordGeneratorDefaultSymbols } from "@common/Extensions/PasswordGenerator";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { Button, Input, Switch, Tooltip } from "@fluentui/react-components";
 import { ArrowCounterclockwiseRegular } from "@fluentui/react-icons";
+import { PasswordGeneratorDefaultSymbols } from "@shared/Extensions/PasswordGenerator";
 import { useTranslation } from "react-i18next";
 
 export const PasswordGeneratorSettings = () => {

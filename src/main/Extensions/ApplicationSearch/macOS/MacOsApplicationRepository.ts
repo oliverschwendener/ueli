@@ -1,10 +1,10 @@
 import { dirname, parse } from "path";
 
-import type { Image } from "@common/Core/Image";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
+import type { Image } from "@shared/Core/Image";
 
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";

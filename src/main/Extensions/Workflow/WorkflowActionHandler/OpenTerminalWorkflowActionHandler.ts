@@ -1,5 +1,5 @@
-import type { OpenTerminalActionArgs, WorkflowAction } from "@common/Extensions/Workflow";
 import type { TerminalRegistry } from "@Core/Terminal";
+import type { OpenTerminalActionArgs, WorkflowAction } from "@shared/Extensions/Workflow";
 
 import type { WorkflowActionHandler } from "./WorkflowActionHandler";
 

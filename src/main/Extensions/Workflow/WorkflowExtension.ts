@@ -1,11 +1,11 @@
-import type { SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
-import type { Resources, Translations } from "@common/Core/Translator";
-import type { Workflow } from "@common/Extensions/Workflow";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
+import type { SearchResultItem } from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
+import type { Resources, Translations } from "@shared/Core/Translator";
+import type { Workflow } from "@shared/Extensions/Workflow";
 
 import type { Settings } from "./Settings";
 import { WorkflowActionArgumentEncoder } from "./Utility";

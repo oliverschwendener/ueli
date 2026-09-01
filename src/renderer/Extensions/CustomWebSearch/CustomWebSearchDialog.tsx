@@ -1,4 +1,3 @@
-import type { CustomSearchEngineSetting } from "@common/Extensions/CustomWebSearch";
 import {
     Button,
     Checkbox,
@@ -13,6 +12,7 @@ import {
     InfoLabel,
     Input,
 } from "@fluentui/react-components";
+import type { CustomSearchEngineSetting } from "@shared/Extensions/CustomWebSearch";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 

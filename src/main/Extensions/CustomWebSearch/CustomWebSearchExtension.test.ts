@@ -1,8 +1,8 @@
-import { createEmptyInstantSearchResult } from "@common/Core";
-import type { CustomSearchEngineSetting } from "@common/Extensions/CustomWebSearch";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { UrlImageGenerator } from "@Core/ImageGenerator/UrlImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
+import { createEmptyInstantSearchResult } from "@shared/Core";
+import type { CustomSearchEngineSetting } from "@shared/Extensions/CustomWebSearch";
 import { describe, expect, it, vi } from "vitest";
 
 import { CustomWebSearchExtension } from "./CustomWebSearchExtension";

@@ -1,7 +1,7 @@
-import type { ContextBridge } from "@common/Core";
-import type { UuidGeneratorSetting, UuidVersion } from "@common/Extensions/UuidGenerator";
 import { useExtensionSetting } from "@Core/Hooks";
 import { Checkbox, Dropdown, Input, Label, Option, ProgressBar, Textarea } from "@fluentui/react-components";
+import type { ContextBridge } from "@shared/Core";
+import type { UuidGeneratorSetting, UuidVersion } from "@shared/Extensions/UuidGenerator";
 import { useEffect, useState } from "react";
 
 type GeneratorProps = {

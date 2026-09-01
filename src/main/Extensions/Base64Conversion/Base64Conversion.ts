@@ -1,17 +1,17 @@
+import type { AssetPathResolver } from "@Core/AssetPathResolver";
+import type { Extension } from "@Core/Extension";
+import type { SettingsManager } from "@Core/SettingsManager";
+import type { Translator } from "@Core/Translator";
 import {
     createCopyToClipboardAction,
     createEmptyInstantSearchResult,
     createInvokeExtensionAction,
     type InstantSearchResultItems,
     type SearchResultItem,
-} from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
-import type { InvocationArgument, Base64ConversionSettings as Settings } from "@common/Extensions/Base64Conversion";
-import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { Extension } from "@Core/Extension";
-import type { SettingsManager } from "@Core/SettingsManager";
-import type { Translator } from "@Core/Translator";
+} from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
+import type { InvocationArgument, Base64ConversionSettings as Settings } from "@shared/Extensions/Base64Conversion";
 
 import { Base64Converter } from "./Base64Converter";
 import type { InvocationResult } from "./InvocationResult";

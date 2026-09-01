@@ -1,11 +1,5 @@
 import { basename, dirname } from "path";
 
-import type { OperatingSystem } from "@common/Core";
-import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@common/Core";
-import { getExtensionSettingKey } from "@common/Core/Extension";
-import type { Image } from "@common/Core/Image";
-import type { Resources, Translations } from "@common/Core/Translator";
-import type { FolderSetting, Settings } from "@common/Extensions/SimpleFileSearch";
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
@@ -13,6 +7,12 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
+import type { OperatingSystem } from "@shared/Core";
+import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@shared/Core";
+import { getExtensionSettingKey } from "@shared/Core/Extension";
+import type { Image } from "@shared/Core/Image";
+import type { Resources, Translations } from "@shared/Core/Translator";
+import type { FolderSetting, Settings } from "@shared/Extensions/SimpleFileSearch";
 
 export class SimpleFileSearchExtension implements Extension {
     public readonly id = "SimpleFileSearch";

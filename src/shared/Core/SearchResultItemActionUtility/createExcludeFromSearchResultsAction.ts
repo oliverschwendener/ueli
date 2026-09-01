@@ -1,0 +1,22 @@
+import type { SearchResultItemAction } from "@shared/Core";
+
+/**
+ * Creates an action to exclude the given SearchResultItem from the search results by its ID.
+ */
+export const createExcludeFromSearchResultsAction = ({
+    id,
+    keyboardShortcut,
+}: {
+    id: string;
+    keyboardShortcut?: string;
+}): SearchResultItemAction => ({
+    argument: id,
+    description: "Exclude from search results",
+    descriptionTranslation: {
+        key: "excludeFromSearchResults",
+        namespace: "searchResultItemAction",
+    },
+    handlerId: "excludeFromSearchResults",
+    fluentIcon: "EyeOffRegular",
+    keyboardShortcut,
+});
