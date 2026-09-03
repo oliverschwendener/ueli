@@ -1,4 +1,4 @@
-import type { Resources, Translations } from "@shared/Core/Translator";
+import type { Resources, Translations } from "@Shared/Core/Translator";
 
 import type { TFunction } from "./TFunction";
 

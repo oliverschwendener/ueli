@@ -6,9 +6,9 @@ import {
     createEmptyInstantSearchResult,
     type InstantSearchResultItems,
     type SearchResultItem,
-} from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
+} from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
 import type { Net } from "electron";
 
 import { convert } from "./convert";

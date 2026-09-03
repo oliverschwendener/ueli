@@ -1,5 +1,5 @@
 import type { Terminal, TerminalRegistry } from "@Core/Terminal";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import type { ActionArgument } from "./ActionArgument";

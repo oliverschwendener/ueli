@@ -6,7 +6,7 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { IniFileParser } from "@Core/IniFileParser/";
 import type { Logger } from "@Core/Logger";
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";

@@ -2,7 +2,7 @@ import { KeyboardShortcut } from "@Core/Components";
 import { useRescanStatus, useSetting } from "@Core/Hooks";
 import { Button, Divider, Text, tokens, Tooltip } from "@fluentui/react-components";
 import { Settings16Regular } from "@fluentui/react-icons";
-import type { OperatingSystem, SearchResultItem } from "@shared/Core";
+import type { OperatingSystem, SearchResultItem } from "@Shared/Core";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 

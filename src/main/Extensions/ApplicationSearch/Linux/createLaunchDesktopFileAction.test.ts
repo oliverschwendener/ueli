@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 import { createLaunchDesktopFileAction } from "./createLaunchDesktopFileAction";

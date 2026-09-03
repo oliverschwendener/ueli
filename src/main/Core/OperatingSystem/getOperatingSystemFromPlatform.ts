@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 
 export const getOperatingSystemFromPlatform = (platform: string): OperatingSystem => {
     const operatingSystemMap: Record<string, OperatingSystem> = {

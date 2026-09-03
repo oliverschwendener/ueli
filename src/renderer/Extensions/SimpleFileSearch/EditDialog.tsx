@@ -16,7 +16,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { FolderRegular } from "@fluentui/react-icons";
-import type { FolderSetting } from "@shared/Extensions/SimpleFileSearch";
+import type { FolderSetting } from "@Shared/Extensions/SimpleFileSearch";
 import { type ReactElement, useState } from "react";
 import { useTranslation } from "react-i18next";
 

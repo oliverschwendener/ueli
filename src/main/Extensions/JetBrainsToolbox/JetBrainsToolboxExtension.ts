@@ -6,8 +6,8 @@ import type { Extension } from "@Core/Extension";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { Translator } from "@Core/Translator";
 import type { XmlParser } from "@Core/XmlParser";
-import type { OperatingSystem, SearchResultItem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+import type { OperatingSystem, SearchResultItem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 interface JetBrainsToolboxRecent {
     name: string;

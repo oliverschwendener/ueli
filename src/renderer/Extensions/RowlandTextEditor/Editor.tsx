@@ -1,7 +1,7 @@
 import { useExtensionSetting } from "@Core/Hooks";
 import { Input, Label, ProgressBar, Textarea, tokens } from "@fluentui/react-components";
-import type { ContextBridge } from "@shared/Core";
-import type { InvocationArgument } from "@shared/Extensions/RowlandTextEditor";
+import type { ContextBridge } from "@Shared/Core";
+import type { InvocationArgument } from "@Shared/Extensions/RowlandTextEditor";
 import { useEffect, useRef, useState } from "react";
 
 type EditorProps = {

@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { TerminalRegistry } from "@Core/Terminal";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 
 import type { ActionArgument } from "./ActionArgument";
 

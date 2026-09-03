@@ -6,11 +6,11 @@ import {
     createEmptyInstantSearchResult,
     type InstantSearchResultItems,
     type SearchResultItem,
-} from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
-import type { PasswordGeneratorSettings as Settings } from "@shared/Extensions/PasswordGenerator";
-import { PasswordGeneratorDefaultSymbols } from "@shared/Extensions/PasswordGenerator";
+} from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
+import type { PasswordGeneratorSettings as Settings } from "@Shared/Extensions/PasswordGenerator";
+import { PasswordGeneratorDefaultSymbols } from "@Shared/Extensions/PasswordGenerator";
 
 import { PasswordGenerator } from "./PasswordGenerator";
 

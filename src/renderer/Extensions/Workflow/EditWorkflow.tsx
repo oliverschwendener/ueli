@@ -1,5 +1,5 @@
 import { Dialog, DialogBody, DialogContent, DialogSurface, DialogTrigger } from "@fluentui/react-components";
-import type { Workflow } from "@shared/Extensions/Workflow";
+import type { Workflow } from "@Shared/Extensions/Workflow";
 import { useState, type ReactElement } from "react";
 
 import { WorkflowForm } from "./WorkflowForm";

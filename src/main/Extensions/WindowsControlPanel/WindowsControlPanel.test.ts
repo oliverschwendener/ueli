@@ -1,6 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver/AssetPathResolver";
 import type { Translator } from "@Core/Translator";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import { WindowsControlPanel } from "./WindowsControlPanel";

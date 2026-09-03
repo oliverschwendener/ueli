@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 
 import type { SearchOptions } from "./SearchOptions";
 

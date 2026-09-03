@@ -15,7 +15,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, CheckmarkRegular, DismissRegular, EditRegular } from "@fluentui/react-icons";
-import type { CustomSearchEngineSetting, Settings } from "@shared/Extensions/CustomWebSearch";
+import type { CustomSearchEngineSetting, Settings } from "@Shared/Extensions/CustomWebSearch";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

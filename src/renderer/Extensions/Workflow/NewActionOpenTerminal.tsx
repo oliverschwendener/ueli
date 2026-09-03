@@ -1,5 +1,5 @@
 import { Dropdown, Field, Input, Option } from "@fluentui/react-components";
-import type { OpenTerminalActionArgs } from "@shared/Extensions/Workflow";
+import type { OpenTerminalActionArgs } from "@Shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 import type { NewActionTypeProps } from "./NewActionTypeProps";

@@ -8,8 +8,8 @@ import {
     type InstantSearchResultItems,
     type OperatingSystem,
     type SearchResultItem,
-} from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+} from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 import type { ActionArgument } from "./ActionArgument";
 import type { Settings } from "./Settings";

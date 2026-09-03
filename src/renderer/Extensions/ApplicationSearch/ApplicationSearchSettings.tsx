@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import type { ReactElement } from "react";
 
 import { LinuxSettings } from "./Linux";

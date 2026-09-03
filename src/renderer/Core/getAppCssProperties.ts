@@ -1,4 +1,4 @@
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import { type CSSProperties } from "react";
 
 const getMacOsCssProperties = ({ vibrancy }: { vibrancy: string }): CSSProperties => {

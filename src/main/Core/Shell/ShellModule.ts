@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import type { OpenExternalOptions } from "electron";
 
 import { OpenFilePathActionHandler, ShowItemInFileExplorerActionHandler, UrlActionHandler } from "./ActionHandler";

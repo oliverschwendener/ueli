@@ -16,7 +16,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, EditRegular } from "@fluentui/react-icons";
-import type { Workflow } from "@shared/Extensions/Workflow";
+import type { Workflow } from "@Shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 import { DeleteWorkflowButton } from "./DeleteWorkflowButton";

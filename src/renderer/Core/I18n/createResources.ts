@@ -1,4 +1,4 @@
-import type { Resources, Translations } from "@shared/Core/Translator";
+import type { Resources, Translations } from "@Shared/Core/Translator";
 import type { InitOptions } from "i18next";
 
 export const createResources = (

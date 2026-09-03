@@ -2,7 +2,7 @@ import { join } from "path";
 
 import type { EnvironmentVariableProvider } from "@Core/EnvironmentVariableProvider";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
 import type { App } from "electron";
 
 export class Settings {

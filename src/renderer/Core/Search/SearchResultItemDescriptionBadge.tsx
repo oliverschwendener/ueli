@@ -1,5 +1,5 @@
 import { Badge } from "@fluentui/react-components";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import { useTranslation } from "react-i18next";
 
 export const SearchResultItemDescriptionBadge = ({ searchResultItem }: { searchResultItem: SearchResultItem }) => {

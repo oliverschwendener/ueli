@@ -1,5 +1,5 @@
 import { Field, Input } from "@fluentui/react-components";
-import type { OpenUrlActionArgs } from "@shared/Extensions/Workflow";
+import type { OpenUrlActionArgs } from "@Shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 import type { NewActionTypeProps } from "./NewActionTypeProps";

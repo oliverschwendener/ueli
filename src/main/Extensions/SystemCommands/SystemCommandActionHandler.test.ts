@@ -1,4 +1,4 @@
-import type { SearchResultItem, SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItem, SearchResultItemAction } from "@Shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import { SystemCommandActionHandler } from "./SystemCommandActionHandler";

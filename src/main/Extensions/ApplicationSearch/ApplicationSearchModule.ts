@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";

@@ -1,9 +1,9 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
-import { createInvokeExtensionAction, type SearchResultItem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
-import type { InvocationArgument, RowlandTextEditorSettings as Settings } from "@shared/Extensions/RowlandTextEditor";
+import { createInvokeExtensionAction, type SearchResultItem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
+import type { InvocationArgument, RowlandTextEditorSettings as Settings } from "@Shared/Extensions/RowlandTextEditor";
 
 import type { TextProcessor } from "./TextProcessor";
 

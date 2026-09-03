@@ -1,4 +1,4 @@
-import type { InstantSearchResultItems } from "@shared/Core";
+import type { InstantSearchResultItems } from "@Shared/Core";
 
 export const createEmptyInstantSearchResult = (): InstantSearchResultItems => ({
     after: [],

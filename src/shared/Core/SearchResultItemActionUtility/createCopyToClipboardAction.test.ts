@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createCopyToClipboardAction } from "@shared/Core";
+import { type SearchResultItemAction, createCopyToClipboardAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createCopyToClipboardAction, () => {

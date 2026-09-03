@@ -7,7 +7,7 @@ import {
     DialogSurface,
     DialogTitle,
 } from "@fluentui/react-components";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import { useTranslation } from "react-i18next";
 
 type ConfirmationDialogProps = {

@@ -1,4 +1,4 @@
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 
 import type { WebBrowser, WebBrowserBookmark } from "./Contract";
 import { DummyWebBrowserBookmark } from "./DummyWebBrowserBookmark";

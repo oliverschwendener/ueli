@@ -12,10 +12,10 @@ import {
     type InstantSearchResultItems,
     type OperatingSystem,
     type SearchResultItem,
-} from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
-import type { SearchEngineId } from "@shared/Core/Search";
-import { searchFilter } from "@shared/Core/Search/SearchFilter";
+} from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
+import type { SearchEngineId } from "@Shared/Core/Search";
+import { searchFilter } from "@Shared/Core/Search/SearchFilter";
 import Database from "better-sqlite3";
 
 import type { Settings } from "./Settings";

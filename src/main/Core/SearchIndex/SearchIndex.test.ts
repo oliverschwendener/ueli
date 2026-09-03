@@ -1,6 +1,6 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import type { Index } from "./Contract";

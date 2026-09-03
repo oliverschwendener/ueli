@@ -10,7 +10,7 @@ import { SearchResultList } from "@Core/Search/SearchResultList";
 import type { SearchResultListLayout } from "@Core/Search/SearchResultListLayout";
 import { Button, Divider, Input, ProgressBar } from "@fluentui/react-components";
 import { ArrowLeftFilled, SearchRegular } from "@fluentui/react-icons";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";

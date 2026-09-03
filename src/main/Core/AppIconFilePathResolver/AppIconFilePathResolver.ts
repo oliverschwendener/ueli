@@ -1,5 +1,5 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import type { NativeTheme } from "electron";
 
 import type { AppIconFilePathResolver as AppIconFilePathResolverInterface } from "./Contract";

@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import type { Clipboard } from "electron";
 
 /**

@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 

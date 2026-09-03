@@ -1,7 +1,7 @@
 import { BasicSearch } from "@Core/Components";
 import type { ExtensionProps } from "@Core/ExtensionProps";
 import { useExtensionSetting } from "@Core/Hooks";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 
 import { MissingEverythingCliFilePath } from "./MissingEverythingCliFilePath";
 

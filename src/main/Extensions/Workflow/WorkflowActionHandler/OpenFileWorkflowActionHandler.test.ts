@@ -1,4 +1,4 @@
-import type { OpenFileActionArgs, WorkflowAction } from "@shared/Extensions/Workflow";
+import type { OpenFileActionArgs, WorkflowAction } from "@Shared/Extensions/Workflow";
 import type { Shell } from "electron";
 import { describe, expect, it, vi } from "vitest";
 

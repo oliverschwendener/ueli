@@ -2,7 +2,7 @@ import { join } from "path";
 
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";
 import type { FileIconExtractor } from "../FileIconExtractor";

@@ -1,5 +1,5 @@
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
-import type { RescanStatus } from "@shared/Core";
+import type { RescanStatus } from "@Shared/Core";
 
 export class RescanStatusManager {
     public constructor(

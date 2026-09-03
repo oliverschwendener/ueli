@@ -1,5 +1,5 @@
-import type { InstantSearchResultItems, SearchResultItem } from "@shared/Core";
-import { searchFilter, SearchResultItemFilter, type SearchEngineId } from "@shared/Core/Search";
+import type { InstantSearchResultItems, SearchResultItem } from "@Shared/Core";
+import { searchFilter, SearchResultItemFilter, type SearchEngineId } from "@Shared/Core/Search";
 
 export const getSearchResult = ({
     searchEngineId,

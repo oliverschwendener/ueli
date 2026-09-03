@@ -1,6 +1,6 @@
 import type { SettingsManager } from "@Core/SettingsManager";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Workflow } from "@shared/Extensions/Workflow";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Workflow } from "@Shared/Extensions/Workflow";
 
 export class WorkflowRepository {
     public constructor(private readonly settingsManager: SettingsManager) {}

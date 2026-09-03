@@ -1,6 +1,6 @@
 import { getImageUrl } from "@Core/getImageUrl";
 import { ThemeContext } from "@Core/Theme";
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import { useContext } from "react";
 
 type SearchResultItemImageProps = {

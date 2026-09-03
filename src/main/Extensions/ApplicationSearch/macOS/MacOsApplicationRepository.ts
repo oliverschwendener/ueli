@@ -4,7 +4,7 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 
 import type { Application } from "../Application";
 import type { ApplicationRepository } from "../ApplicationRepository";

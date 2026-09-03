@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { AboutUeli } from "@shared/Core";
+import type { AboutUeli } from "@Shared/Core";
 
 export class AboutUeliModule {
     public static bootstrap(moduleRegistry: UeliModuleRegistry) {

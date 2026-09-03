@@ -7,12 +7,12 @@ import type { FileImageGenerator } from "@Core/ImageGenerator";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
 import type { Translator } from "@Core/Translator";
-import type { OperatingSystem } from "@shared/Core";
-import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
-import type { Resources, Translations } from "@shared/Core/Translator";
-import type { FolderSetting, Settings } from "@shared/Extensions/SimpleFileSearch";
+import type { OperatingSystem } from "@Shared/Core";
+import { createOpenFileAction, createShowItemInFileExplorerAction, type SearchResultItem } from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
+import type { Resources, Translations } from "@Shared/Core/Translator";
+import type { FolderSetting, Settings } from "@Shared/Extensions/SimpleFileSearch";
 
 export class SimpleFileSearchExtension implements Extension {
     public readonly id = "SimpleFileSearch";

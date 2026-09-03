@@ -1,4 +1,4 @@
-import type { Resources } from "@shared/Core/Translator";
+import type { Resources } from "@Shared/Core/Translator";
 
 export type LinuxTranslations = {
     extensionName: string;

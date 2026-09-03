@@ -1,4 +1,4 @@
-import type { WorkflowAction } from "@shared/Extensions/Workflow";
+import type { WorkflowAction } from "@Shared/Extensions/Workflow";
 import { describe, expect, it } from "vitest";
 
 import { WorkflowActionArgumentEncoder } from "./WorkflowActionArgumentEncoder";

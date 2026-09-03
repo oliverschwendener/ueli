@@ -2,7 +2,7 @@ import { join } from "path";
 
 import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import Database from "better-sqlite3";
 import type { App } from "electron";
 

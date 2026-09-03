@@ -1,6 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@shared/Core";
-import type { Resources, Translations } from "@shared/Core/Translator";
+import type { OperatingSystem } from "@Shared/Core";
+import type { Resources, Translations } from "@Shared/Core/Translator";
 
 import type { ExtensionBootstrapResult } from "../ExtensionBootstrapResult";
 import type { ExtensionModule } from "../ExtensionModule";

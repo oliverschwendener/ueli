@@ -6,7 +6,7 @@ import type { FileSystemUtility } from "@Core/FileSystemUtility";
 import type { IniFileParser } from "@Core/IniFileParser";
 import type { LinuxDesktopEnvironment, LinuxDesktopEnvironmentResolver } from "@Core/LinuxDesktopEnvironment";
 import type { Logger } from "@Core/Logger";
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 import sharp from "sharp";
 
 import type { CacheFileNameGenerator } from "../CacheFileNameGenerator";

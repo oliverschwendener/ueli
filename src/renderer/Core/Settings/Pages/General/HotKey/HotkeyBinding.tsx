@@ -2,7 +2,7 @@ import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { Button, Field, Input, Tooltip } from "@fluentui/react-components";
 import { InfoRegular } from "@fluentui/react-icons";
-import { isValidHotkey } from "@shared/Core/Hotkey";
+import { isValidHotkey } from "@Shared/Core/Hotkey";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

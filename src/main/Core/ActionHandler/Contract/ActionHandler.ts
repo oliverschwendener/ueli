@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 
 /**
  * An ActionHandler is responsible for handling a SearchResultItemAction.

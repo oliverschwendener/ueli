@@ -1,4 +1,4 @@
-import type { PasswordGeneratorSettings } from "@shared/Extensions/PasswordGenerator";
+import type { PasswordGeneratorSettings } from "@Shared/Extensions/PasswordGenerator";
 
 export class PasswordGenerator {
     public static generatePassword(settings: PasswordGeneratorSettings): string {

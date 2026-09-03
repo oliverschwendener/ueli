@@ -15,7 +15,7 @@ import {
     useToastController,
 } from "@fluentui/react-components";
 import { MoreVerticalFilled } from "@fluentui/react-icons";
-import { type SearchResultItemAction } from "@shared/Core";
+import { type SearchResultItemAction } from "@Shared/Core";
 import { useEffect, type Ref } from "react";
 import { useTranslation } from "react-i18next";
 

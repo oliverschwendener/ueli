@@ -1,6 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
 import type { UeliCommandInvokedEvent } from "@Core/UeliCommand";
-import type { OperatingSystem, SearchResultItemAction } from "@shared/Core";
+import type { OperatingSystem, SearchResultItemAction } from "@Shared/Core";
 import { BrowserWindow } from "electron";
 
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";

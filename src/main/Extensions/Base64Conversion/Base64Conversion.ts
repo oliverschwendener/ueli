@@ -8,10 +8,10 @@ import {
     createInvokeExtensionAction,
     type InstantSearchResultItems,
     type SearchResultItem,
-} from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
-import type { InvocationArgument, Base64ConversionSettings as Settings } from "@shared/Extensions/Base64Conversion";
+} from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
+import type { InvocationArgument, Base64ConversionSettings as Settings } from "@Shared/Extensions/Base64Conversion";
 
 import { Base64Converter } from "./Base64Converter";
 import type { InvocationResult } from "./InvocationResult";

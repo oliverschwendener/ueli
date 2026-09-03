@@ -2,7 +2,7 @@ import { useSetting } from "@Core/Hooks";
 import { Setting } from "@Core/Settings/Setting";
 import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { Switch } from "@fluentui/react-components";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import { useTranslation } from "react-i18next";
 
 export const TrayIconSettings = () => {

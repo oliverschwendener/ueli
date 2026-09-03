@@ -7,9 +7,9 @@ import {
     createOpenUrlSearchResultAction,
     type InstantSearchResultItems,
     type SearchResultItem,
-} from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
+} from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
 
 import type { Settings } from "./Settings";
 import type { WebSearchEngine } from "./WebSearchEngine";

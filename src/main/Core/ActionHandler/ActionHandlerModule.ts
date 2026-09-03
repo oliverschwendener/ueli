@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 
 import { ActionHandlerRegistry } from "./ActionHandlerRegistry";
 

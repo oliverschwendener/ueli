@@ -2,10 +2,10 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { UrlImageGenerator } from "@Core/ImageGenerator";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
-import type { CustomSearchEngineSetting, Settings } from "@shared/Extensions/CustomWebSearch";
+import { createEmptyInstantSearchResult, type InstantSearchResultItems, type SearchResultItem } from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
+import type { CustomSearchEngineSetting, Settings } from "@Shared/Extensions/CustomWebSearch";
 
 export class CustomWebSearchExtension implements Extension {
     public readonly id = "CustomWebSearch";

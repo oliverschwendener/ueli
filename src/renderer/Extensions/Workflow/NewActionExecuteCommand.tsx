@@ -1,5 +1,5 @@
 import { Field, Input } from "@fluentui/react-components";
-import type { ExecuteCommandActionArgs } from "@shared/Extensions/Workflow";
+import type { ExecuteCommandActionArgs } from "@Shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 import type { NewActionTypeProps } from "./NewActionTypeProps";

@@ -9,10 +9,6 @@ const dirname = import.meta.dirname;
 
 const rendererRoot = join(dirname, "src", "renderer");
 
-const sharedAlias = {
-    "@shared": join(dirname, "src", "shared"),
-};
-
 export default defineConfig(({ command }) => {
     const isServe = command === "serve";
     const isBuild = command === "build";
@@ -22,7 +18,7 @@ export default defineConfig(({ command }) => {
         main: {
             resolve: {
                 alias: {
-                    ...sharedAlias,
+                    "@Shared": join(dirname, "src", "shared"),
                     "@Core": join(dirname, "src", "main", "Core"),
                 },
             },
@@ -37,7 +33,9 @@ export default defineConfig(({ command }) => {
         },
         preload: {
             resolve: {
-                alias: sharedAlias,
+                alias: {
+                    "@Shared": join(dirname, "src", "shared"),
+                },
             },
             build: {
                 sourcemap,
@@ -52,7 +50,7 @@ export default defineConfig(({ command }) => {
             root: rendererRoot,
             resolve: {
                 alias: {
-                    ...sharedAlias,
+                    "@Shared": join(dirname, "src", "shared"),
                     "@Core": join(dirname, "src", "renderer", "Core"),
                 },
             },

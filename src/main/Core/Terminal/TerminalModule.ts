@@ -1,6 +1,6 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@shared/Core";
-import type { Terminal } from "@shared/Core/Terminal";
+import type { OperatingSystem } from "@Shared/Core";
+import type { Terminal } from "@Shared/Core/Terminal";
 
 import type { Terminal as TerminalContract } from "./Contract";
 import { TerminalRegistry } from "./TerminalRegistry";

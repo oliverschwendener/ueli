@@ -1,7 +1,7 @@
 import { join } from "path";
 
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 
 import { CacheFileNameGenerator } from "./CacheFileNameGenerator";
 import { DuckDuckGoFaviconProvider, FaviconeFaviconProvider, GoogleFaviconProvider } from "./FaviconProvider";

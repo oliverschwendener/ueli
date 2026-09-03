@@ -1,4 +1,4 @@
-import type { FluentIcon, NavigateToArgument, SearchResultItemAction } from "@shared/Core";
+import type { FluentIcon, NavigateToArgument, SearchResultItemAction } from "@Shared/Core";
 
 /**
  * Creates an action to navigate to the given extension by its ID.

@@ -1,4 +1,4 @@
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 import type { KeyboardEvent } from "react";
 
 import { keyboardEventMatchesKeyboardShortcut } from "./keyboardEventMatchesKeyboardShortcut";

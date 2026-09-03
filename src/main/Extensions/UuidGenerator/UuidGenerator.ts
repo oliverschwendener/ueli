@@ -1,4 +1,4 @@
-import type { UuidFormat } from "@shared/Extensions/UuidGenerator";
+import type { UuidFormat } from "@Shared/Extensions/UuidGenerator";
 import { v4 as uuidv4, v6 as uuidv6, v7 as uuidv7, validate as uuidValidate } from "uuid";
 
 export class UuidGenerator {

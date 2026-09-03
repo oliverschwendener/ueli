@@ -20,7 +20,7 @@ import {
     PowerFilled,
     SettingsRegular,
 } from "@fluentui/react-icons";
-import type { ExtensionInfo } from "@shared/Core";
+import type { ExtensionInfo } from "@Shared/Core";
 import { useTranslation } from "react-i18next";
 
 type ExtensionCardProps = {

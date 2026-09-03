@@ -12,7 +12,7 @@ import {
     InfoLabel,
     Input,
 } from "@fluentui/react-components";
-import type { CustomSearchEngineSetting } from "@shared/Extensions/CustomWebSearch";
+import type { CustomSearchEngineSetting } from "@Shared/Extensions/CustomWebSearch";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 

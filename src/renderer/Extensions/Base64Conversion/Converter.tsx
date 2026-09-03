@@ -1,5 +1,5 @@
 import { Textarea } from "@fluentui/react-components";
-import type { InvocationArgument } from "@shared/Extensions/Base64Conversion";
+import type { InvocationArgument } from "@Shared/Extensions/Base64Conversion";
 import { useEffect, useState } from "react";
 
 type ConverterProps = {

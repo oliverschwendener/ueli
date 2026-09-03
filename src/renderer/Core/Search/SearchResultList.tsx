@@ -1,4 +1,4 @@
-import type { SearchResultItem } from "@shared/Core";
+import type { SearchResultItem } from "@Shared/Core";
 import type { RefObject } from "react";
 
 import { useSetting } from "../Hooks";

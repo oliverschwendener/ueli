@@ -1,5 +1,5 @@
 import { tokens } from "@fluentui/react-components";
-import type { FolderSetting } from "@shared/Extensions/SimpleFileSearch";
+import type { FolderSetting } from "@Shared/Extensions/SimpleFileSearch";
 
 import { FolderListItem } from "./FolderListItem";
 

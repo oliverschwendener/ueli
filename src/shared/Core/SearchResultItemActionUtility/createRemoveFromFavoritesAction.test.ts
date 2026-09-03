@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createRemoveFromFavoritesAction } from "@shared/Core";
+import { type SearchResultItemAction, createRemoveFromFavoritesAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createRemoveFromFavoritesAction, () => {

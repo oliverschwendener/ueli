@@ -9,7 +9,7 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            "@shared": join(dirname, "src", "shared"),
+            "@Shared": join(dirname, "src", "shared"),
             "@Core": join(dirname, "src", "main", "Core"),
         },
     },

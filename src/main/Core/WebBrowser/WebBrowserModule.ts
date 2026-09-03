@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { WebBrowser as WebBrowserDTO } from "@shared/Core";
+import type { WebBrowser as WebBrowserDTO } from "@Shared/Core";
 
 import type { WebBrowser } from "./Contract";
 import { ChromiumBrowserBookmarkRepository, FirefoxBookmarkRepository } from "./Utility";

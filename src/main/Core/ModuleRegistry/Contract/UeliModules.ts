@@ -36,7 +36,7 @@ import type { UeliCommandInvoker } from "@Core/UeliCommand";
 import type { WebBrowserRegistry } from "@Core/WebBrowser/Contract";
 import type { XmlBuilder } from "@Core/XmlBuilder";
 import type { XmlParser } from "@Core/XmlParser";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import type {
     App,
     Clipboard,

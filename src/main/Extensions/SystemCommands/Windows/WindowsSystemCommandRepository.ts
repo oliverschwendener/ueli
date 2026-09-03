@@ -2,8 +2,8 @@ import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { PowershellUtility } from "@Core/PowershellUtility";
 import type { Translator } from "@Core/Translator";
-import type { Image } from "@shared/Core/Image";
-import type { Resources } from "@shared/Core/Translator";
+import type { Image } from "@Shared/Core/Image";
+import type { Resources } from "@Shared/Core/Translator";
 
 import type { SystemCommand } from "../SystemCommand";
 import type { SystemCommandRepository } from "../SystemCommandRepository";

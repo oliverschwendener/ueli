@@ -1,4 +1,4 @@
-import type { Resources, Translations } from "@shared/Core/Translator";
+import type { Resources, Translations } from "@Shared/Core/Translator";
 
 export const getCoreResources = (): { namespace: string; resources: Resources<Translations> }[] => {
     return [

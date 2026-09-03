@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createOpenUrlSearchResultAction } from "@shared/Core";
+import { type SearchResultItemAction, createOpenUrlSearchResultAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createOpenUrlSearchResultAction, () => {

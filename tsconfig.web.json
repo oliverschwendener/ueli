@@ -8,7 +8,7 @@
         "useDefineForClassFields": true,
         "forceConsistentCasingInFileNames": true,
         "paths": {
-            "@shared/*": ["./src/shared/*"],
+            "@Shared/*": ["./src/shared/*"],
             "@Core/*": ["./src/renderer/Core/*"]
         }
     },

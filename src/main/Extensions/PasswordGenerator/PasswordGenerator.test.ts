@@ -1,5 +1,5 @@
-import type { PasswordGeneratorSettings } from "@shared/Extensions/PasswordGenerator";
-import { PasswordGeneratorDefaultSymbols } from "@shared/Extensions/PasswordGenerator";
+import type { PasswordGeneratorSettings } from "@Shared/Extensions/PasswordGenerator";
+import { PasswordGeneratorDefaultSymbols } from "@Shared/Extensions/PasswordGenerator";
 import { describe, expect, it } from "vitest";
 
 import { PasswordGenerator } from "./PasswordGenerator";

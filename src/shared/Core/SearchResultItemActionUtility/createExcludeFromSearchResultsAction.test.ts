@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createExcludeFromSearchResultsAction } from "@shared/Core";
+import { type SearchResultItemAction, createExcludeFromSearchResultsAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createExcludeFromSearchResultsAction, () => {

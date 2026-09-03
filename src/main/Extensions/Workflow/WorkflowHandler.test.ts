@@ -1,6 +1,6 @@
 import type { Logger } from "@Core/Logger";
-import type { SearchResultItemAction } from "@shared/Core";
-import type { WorkflowAction } from "@shared/Extensions/Workflow";
+import type { SearchResultItemAction } from "@Shared/Core";
+import type { WorkflowAction } from "@Shared/Extensions/Workflow";
 import { describe, expect, it, vi } from "vitest";
 
 import { WorkflowActionArgumentEncoder } from "./Utility";

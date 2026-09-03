@@ -3,7 +3,7 @@ import type { ExtensionRegistry } from "@Core/ExtensionRegistry";
 import type { Logger } from "@Core/Logger";
 import type { SearchIndex } from "@Core/SearchIndex";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { InstantSearchResultItems, SearchResultItem } from "@shared/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@Shared/Core";
 import { describe, expect, it, vi } from "vitest";
 
 import { ExtensionManager } from "./ExtensionManager";

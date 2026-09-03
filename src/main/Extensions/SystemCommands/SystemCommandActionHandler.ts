@@ -1,5 +1,5 @@
 import type { ActionHandler } from "@Core/ActionHandler";
-import type { SearchResultItemAction } from "@shared/Core";
+import type { SearchResultItemAction } from "@Shared/Core";
 
 import type { SystemCommandRepository } from "./SystemCommandRepository";
 

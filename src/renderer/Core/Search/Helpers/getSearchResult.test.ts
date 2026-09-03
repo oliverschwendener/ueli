@@ -1,4 +1,4 @@
-import type { InstantSearchResultItems, SearchResultItem } from "@shared/Core";
+import type { InstantSearchResultItems, SearchResultItem } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 import { getSearchResult } from "./getSearchResult";

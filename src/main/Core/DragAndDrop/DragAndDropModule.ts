@@ -1,5 +1,5 @@
 import type { UeliModuleRegistry } from "@Core/ModuleRegistry";
-import type { DragAndDrop } from "@shared/Core";
+import type { DragAndDrop } from "@Shared/Core";
 import { app } from "electron";
 
 export class DragAndDropModule {

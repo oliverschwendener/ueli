@@ -22,7 +22,7 @@ import {
     Tooltip,
 } from "@fluentui/react-components";
 import { AddRegular, DismissRegular } from "@fluentui/react-icons";
-import type { UuidFormat, UuidVersion } from "@shared/Extensions/UuidGenerator";
+import type { UuidFormat, UuidVersion } from "@Shared/Extensions/UuidGenerator";
 import { useTranslation } from "react-i18next";
 
 export const UuidGeneratorSettings = () => {

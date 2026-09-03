@@ -1,5 +1,5 @@
-import type { SearchResultItem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+import type { SearchResultItem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 import type { SystemCommand } from "../SystemCommand";
 

@@ -4,7 +4,7 @@
         "outDir": ".types/node",
         "types": ["node"],
         "paths": {
-            "@shared/*": ["./src/shared/*"],
+            "@Shared/*": ["./src/shared/*"],
             "@Core/*": ["./src/main/Core/*"]
         }
     },

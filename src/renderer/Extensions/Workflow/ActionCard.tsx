@@ -1,6 +1,6 @@
 import { Body1Strong, Button, Card, CardHeader, Tooltip } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
-import type { WorkflowAction } from "@shared/Extensions/Workflow";
+import type { WorkflowAction } from "@Shared/Extensions/Workflow";
 import { useTranslation } from "react-i18next";
 
 type ActionCardProps = {

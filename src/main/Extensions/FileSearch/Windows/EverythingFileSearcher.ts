@@ -3,7 +3,7 @@ import { normalize } from "path";
 import type { CommandlineUtility } from "@Core/CommandlineUtility";
 import type { Logger } from "@Core/Logger";
 import type { SettingsManager } from "@Core/SettingsManager";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
 
 import type { FileSearcher } from "../FileSearcher";
 

@@ -5,7 +5,7 @@ import { SettingGroup } from "@Core/Settings/SettingGroup";
 import { SettingGroupList } from "@Core/Settings/SettingGroupList";
 import { ThemeContext } from "@Core/Theme";
 import { Dropdown, Option } from "@fluentui/react-components";
-import type { WebBrowser } from "@shared/Core";
+import type { WebBrowser } from "@Shared/Core";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 

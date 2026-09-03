@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createAddToFavoritesAction } from "@shared/Core";
+import { type SearchResultItemAction, createAddToFavoritesAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createAddToFavoritesAction, () => {

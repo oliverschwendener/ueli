@@ -1,4 +1,4 @@
-import { getExtensionSettingKey } from "@shared/Core/Extension";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
 
 import { useSetting } from "./useSetting";
 

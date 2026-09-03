@@ -10,8 +10,8 @@ import {
     Option,
 } from "@fluentui/react-components";
 import { AddRegular } from "@fluentui/react-icons";
-import type { OperatingSystem } from "@shared/Core";
-import type { WorkflowAction } from "@shared/Extensions/Workflow";
+import type { OperatingSystem } from "@Shared/Core";
+import type { WorkflowAction } from "@Shared/Extensions/Workflow";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

@@ -1,5 +1,5 @@
 import type { BrowserWindowRegistry } from "@Core/BrowserWindowRegistry";
-import type { OperatingSystem } from "@shared/Core";
+import type { OperatingSystem } from "@Shared/Core";
 import type { App, BrowserWindow } from "electron";
 
 export class BrowserWindowToggler {

@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createShowItemInFileExplorerAction } from "@shared/Core";
+import { type SearchResultItemAction, createShowItemInFileExplorerAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createShowItemInFileExplorerAction, () => {

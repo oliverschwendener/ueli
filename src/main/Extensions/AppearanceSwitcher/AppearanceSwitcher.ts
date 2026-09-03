@@ -1,8 +1,8 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
 import type { Translator } from "@Core/Translator";
-import type { OperatingSystem, SearchResultItem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+import type { OperatingSystem, SearchResultItem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 export class AppearanceSwitcher implements Extension {
     public readonly id = "AppearanceSwitcher";

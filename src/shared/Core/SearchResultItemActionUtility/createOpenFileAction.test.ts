@@ -1,4 +1,4 @@
-import { type SearchResultItemAction, createOpenFileAction } from "@shared/Core";
+import { type SearchResultItemAction, createOpenFileAction } from "@Shared/Core";
 import { describe, expect, it } from "vitest";
 
 describe(createOpenFileAction, () => {

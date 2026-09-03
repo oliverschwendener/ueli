@@ -1,6 +1,6 @@
 import type { ActionHandler } from "@Core/ActionHandler";
 import type { BrowserWindowNotifier } from "@Core/BrowserWindowNotifier";
-import type { NavigateToArgument, SearchResultItemAction } from "@shared/Core";
+import type { NavigateToArgument, SearchResultItemAction } from "@Shared/Core";
 
 /**
  * Action handler for navigating to a specific path in the renderer process.

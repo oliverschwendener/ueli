@@ -1,7 +1,7 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
 import type { Extension } from "@Core/Extension";
-import type { OperatingSystem, SearchResultItem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+import type { OperatingSystem, SearchResultItem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 import type { SystemSettingRepository } from "./SystemSettingRepository";
 

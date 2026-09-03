@@ -1,6 +1,6 @@
 import type { AssetPathResolver } from "@Core/AssetPathResolver";
-import type { OperatingSystem } from "@shared/Core";
-import type { Image } from "@shared/Core/Image";
+import type { OperatingSystem } from "@Shared/Core";
+import type { Image } from "@Shared/Core/Image";
 
 import type { WebBrowser, WebBrowserBookmark } from "../../Contract";
 import type { FirefoxBookmarkRepository } from "../../Utility";

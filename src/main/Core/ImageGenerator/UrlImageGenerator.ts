@@ -1,5 +1,5 @@
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { Image } from "@shared/Core/Image";
+import type { Image } from "@Shared/Core/Image";
 
 import type { UrlImageGenerator as UrlImageGeneratorInterface } from "./Contract";
 import type { FaviconProvider } from "./FaviconProvider";

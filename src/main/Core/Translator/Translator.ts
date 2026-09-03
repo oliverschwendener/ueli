@@ -1,5 +1,5 @@
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { Resources, Translations } from "@shared/Core/Translator";
+import type { Resources, Translations } from "@Shared/Core/Translator";
 import { createInstance, type InitOptions } from "i18next";
 
 import type { TFunction, Translator as TranslatorInterface } from "./Contract";

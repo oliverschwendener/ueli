@@ -10,9 +10,9 @@ import {
     createOpenUrlSearchResultAction,
     type OperatingSystem,
     type SearchResultItem,
-} from "@shared/Core";
-import { getExtensionSettingKey } from "@shared/Core/Extension";
-import type { Image } from "@shared/Core/Image";
+} from "@Shared/Core";
+import { getExtensionSettingKey } from "@Shared/Core/Extension";
+import type { Image } from "@Shared/Core/Image";
 
 type Settings = {
     browsers: string[];
