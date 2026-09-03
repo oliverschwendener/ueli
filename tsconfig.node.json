@@ -8,6 +8,6 @@
             "@Core/*": ["./src/main/Core/*"]
         }
     },
-    "include": ["src/main/**/*", "src/preload/**/*", "electron.vite.config.ts", "vitest.config.ts", "package.json"],
+    "include": ["src/main/**/*", "src/preload/**/*", "electron.vite.config.ts", "vitest.config.mts", "package.json"],
     "references": [{ "path": "./tsconfig.shared.json" }]
 }

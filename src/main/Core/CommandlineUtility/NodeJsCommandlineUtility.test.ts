@@ -12,20 +12,21 @@ vi.mock("child_process", async (importOriginal) => {
     // eslint-disable-next-line @typescript-eslint/consistent-type-imports
     const original = await importOriginal<typeof import("child_process")>();
 
-    return {
-        ...original,
-        exec: (
-            command: string,
-            options?: { maxBuffer: number },
-            callback?: (_: Error | null, __: string, ___?: string) => void,
-        ) => {
-            execMock(command, options);
+    const exec = (
+        command: string,
+        options?: { maxBuffer: number },
+        callback?: (_: Error | null, __: string, ___?: string) => void,
+    ) => {
+        execMock(command, options);
 
-            if (callback) {
-                callback(error, stdout, stderr);
-            }
-        },
+        if (callback) {
+            callback(error, stdout, stderr);
+        }
     };
+
+    // `child_process` is a CJS module, so the named import in the module under test is resolved via the default
+    // export. It needs to be mocked as well, otherwise the real `exec` would be used.
+    return { ...original, exec, default: { ...original, exec } };
 });
 
 describe(NodeJsCommandlineUtility, () => {
