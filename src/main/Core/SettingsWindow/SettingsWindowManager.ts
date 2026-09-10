@@ -51,7 +51,7 @@ export class SettingsWindowManager {
             icon: this.appIconFilePathResolver.resolve(),
             title: this.getWindowTitle(),
             webPreferences: {
-                preload: join(__dirname, "..", "dist-preload", "index.js"),
+                preload: join(__dirname, "..", "preload", "index.js"),
                 spellcheck: false,
 
                 // The dev tools should only be available in development mode. Once the app is packaged, the dev tools

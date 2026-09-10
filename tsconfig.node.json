@@ -1,16 +1,17 @@
 {
+    "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "composite": true,
-        "module": "ESNext",
-        "noUnusedLocals": true,
+        "types": ["node"],
         "paths": {
             "@common/*": ["./src/common/*"],
             "@Core/*": ["./src/main/Core/*"]
-        },
-        "strict": true,
-        "resolveJsonModule": true,
-        "rootDir": "./src",
-        "skipLibCheck": true
-    }
+        }
+    },
+    "include": [
+        "src/main/**/*",
+        "src/preload/**/*",
+        "src/common/**/*",
+        "electron.vite.config.mts",
+        "vitest.config.mts"
+    ]
 }

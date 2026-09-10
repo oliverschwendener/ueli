@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "types": [],
+        "paths": {
+            "@common/*": ["./src/common/*"]
+        }
+    },
+    "include": ["src/common/**/*"]
+}

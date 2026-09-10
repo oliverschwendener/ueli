@@ -11,7 +11,7 @@ const baseConfig = {
         output: "release",
         buildResources: "build",
     },
-    files: ["dist-main/**/*.js", "dist-preload/index.js", "dist-renderer/**/*", "assets/**/*"],
+    files: ["out/**/*", "assets/**/*"],
     extraMetadata: {
         version: process.env.VITE_APP_VERSION,
     },

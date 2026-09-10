@@ -12,9 +12,7 @@
     "node": true
   },
   "ignorePatterns": [
-    "dist-main/",
-    "dist-preload/",
-    "dist-renderer/",
+    "out/",
     "node_modules/",
     "**/coverage/"
   ],

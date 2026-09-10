@@ -6,13 +6,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 
 .npmrc
 node_modules
-dist-main
-dist-preload
-dist-renderer
+out
 release
 coverage
 *.local

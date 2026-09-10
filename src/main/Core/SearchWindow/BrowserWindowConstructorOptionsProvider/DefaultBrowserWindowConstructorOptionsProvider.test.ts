@@ -30,7 +30,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
                 icon: "appIconFilePath",
                 webPreferences: {
                     spellcheck: false,
-                    preload: join(__dirname, "..", "dist-preload", "index.js"),
+                    preload: join(__dirname, "..", "preload", "index.js"),
                     allowRunningInsecureContent: false,
                     webSecurity: true,
                     devTools: false,

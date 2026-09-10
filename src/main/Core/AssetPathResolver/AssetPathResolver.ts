@@ -12,6 +12,6 @@ export class AssetPathResolver implements AssetPathResolverInterface {
     }
 
     private getAssetBasePath() {
-        return join(__dirname, "..", "assets");
+        return join(__dirname, "..", "..", "assets");
     }
 }

@@ -11,14 +11,18 @@ assets @oliverschwendener
 build @oliverschwendener
 docs @oliverschwendener
 electron-builder.config.js @oliverschwendener
+electron.vite.config.mts @oliverschwendener
 LICENSE @oliverschwendener
 package-lock.json @oliverschwendener
 package.json @oliverschwendener
 README.md @oliverschwendener
 src @oliverschwendener
+tsconfig.base.json @oliverschwendener
+tsconfig.common.json @oliverschwendener
+tsconfig.json @oliverschwendener
 tsconfig.node.json @oliverschwendener
-tsconfig.renderer.json @oliverschwendener
-vite.config.mts @oliverschwendener
+tsconfig.web.json @oliverschwendener
+vitest.config.mts @oliverschwendener
 
 # Core Modules
 

@@ -8,7 +8,7 @@ import { HtmlLoader } from "./HtmlLoader";
 
 describe(HtmlLoader, () => {
     describe(HtmlLoader.prototype.loadHtmlFile, () => {
-        it("should load the HTML file from the Vite dev server URL if it is available", async () => {
+        it("should load the HTML file from the renderer dev server URL if it is available", async () => {
             const getMock = vi.fn().mockReturnValue("http://localhost:3000");
             const loadURLMock = vi.fn();
 
@@ -22,7 +22,7 @@ describe(HtmlLoader, () => {
             expect(loadURLMock).toHaveBeenCalledWith("http://localhost:3000/index.html");
         });
 
-        it("should load the HTML file from the dist-renderer directory if the Vite dev server URL is not available", async () => {
+        it("should load the HTML file from the renderer directory if the renderer dev server URL is not available", async () => {
             const getMock = vi.fn().mockReturnValue(undefined);
             const loadFileMock = vi.fn();
 
@@ -33,7 +33,7 @@ describe(HtmlLoader, () => {
 
             await htmlLoader.loadHtmlFile(browserWindow, "index.html");
 
-            expect(loadFileMock).toHaveBeenCalledWith(expect.stringContaining(join("dist-renderer", "index.html")));
+            expect(loadFileMock).toHaveBeenCalledWith(expect.stringContaining(join("renderer", "index.html")));
         });
     });
 });

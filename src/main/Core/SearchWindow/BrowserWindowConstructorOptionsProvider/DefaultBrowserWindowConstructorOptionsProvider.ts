@@ -20,7 +20,7 @@ export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWi
             frame: false,
             show: this.settingsManager.getValue<boolean>("window.showOnStartup", true),
             webPreferences: {
-                preload: join(__dirname, "..", "dist-preload", "index.js"),
+                preload: join(__dirname, "..", "preload", "index.js"),
                 spellcheck: false,
 
                 // The dev tools should only be available in development mode. Once the app is packaged, the dev tools
