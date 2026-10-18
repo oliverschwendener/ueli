@@ -2,21 +2,22 @@ import { join } from "path";
 
 import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { App } from "electron";
+import type { App, Screen } from "electron";
 
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
-import { defaultWindowSize } from "./defaultWindowSize";
+import { getStartupWindowSize } from "./getStartupWindowSize";
 
 export class DefaultBrowserWindowConstructorOptionsProvider implements BrowserWindowConstructorOptionsProvider {
     public constructor(
         private readonly app: App,
         private readonly settingsManager: SettingsManager,
         private readonly appIconFilePathResolver: AppIconFilePathResolver,
+        private readonly screen: Screen,
     ) {}
 
     public get(): Electron.BrowserWindowConstructorOptions {
         return {
-            ...defaultWindowSize,
+            ...getStartupWindowSize(this.settingsManager, this.screen.getPrimaryDisplay().workAreaSize),
             frame: false,
             show: this.settingsManager.getValue<boolean>("window.showOnStartup", true),
             webPreferences: {
