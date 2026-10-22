@@ -1,5 +1,4 @@
 import { useScrollBar } from "@Core/Hooks";
-import { useI18n } from "@Core/I18n";
 import { ThemeContext } from "@Core/Theme";
 import { FluentProvider } from "@fluentui/react-components";
 import type { IpcRendererEvent } from "electron";
@@ -13,7 +12,6 @@ import { settingsPages } from "./Pages";
 export const Settings = () => {
     const { fluentUiTheme } = useContext(ThemeContext);
 
-    useI18n();
     useScrollBar({ fluentUiTheme });
 
     const navigate = useNavigate();

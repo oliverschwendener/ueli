@@ -7,7 +7,6 @@ import { Route, Routes, useNavigate } from "react-router";
 import { Extension } from "./Extension";
 import { getAppCssProperties } from "./getAppCssProperties";
 import { useExcludedSearchResultItems, useFavorites, useScrollBar, useSearchResultItems, useSetting } from "./Hooks";
-import { useI18n } from "./I18n";
 import { Search } from "./Search";
 import { ThemeContext } from "./Theme";
 
@@ -28,7 +27,6 @@ export const App = () => {
         vibrancy,
     });
 
-    useI18n();
     useScrollBar({ fluentUiTheme });
 
     const navigate = useNavigate();
