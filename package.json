@@ -38,7 +38,7 @@
         "electron-builder": "^26.6.0",
         "electron-vite": "^6.0.0-beta.1",
         "node-abi": "^4.26.0",
-        "oxfmt": "^0.73.0",
+        "oxfmt": "^0.74.0",
         "oxlint": "^1.74.0",
         "typescript": "^7.0.2",
         "vite": "^8.0.3",
