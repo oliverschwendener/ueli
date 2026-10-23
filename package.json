@@ -34,7 +34,7 @@
         "@types/react-router-dom": "^5.3.3",
         "@vitejs/plugin-react": "^6.0.1",
         "@vitest/coverage-v8": "^5.0.0",
-        "electron": "^44.1.0",
+        "electron": "^45.0.0",
         "electron-builder": "^26.6.0",
         "electron-vite": "^6.0.0-beta.1",
         "node-abi": "^4.26.0",
