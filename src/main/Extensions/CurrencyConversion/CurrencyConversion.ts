@@ -169,13 +169,48 @@ export class CurrencyConversion implements Extension {
     }
 
     private async setRate(currency: string): Promise<void> {
-        const response = await this.net.fetch(
-            `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${currency}.json`,
+        try {
+            const response = await this.net.fetch(
+                `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${currency}.json`,
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseJson = await response.json();
+
+            if (!responseJson[currency]) {
+                throw new Error(`No rates for ${currency}`);
+            }
+
+            this.rates[currency] = responseJson[currency];
+        } catch (error) {
+            await this.setRateFromFallback(currency, error);
+        }
+    }
+
+    /**
+     * Fallback when the primary source is unavailable: AllRatesToday's keyless endpoint
+     * (ECB reference rates, about 30 currencies, attribution: https://allratestoday.com).
+     * Currencies it does not cover keep their previous rates.
+     */
+    private async setRateFromFallback(currency: string, primaryError: unknown): Promise<void> {
+        const response = await this.net.fetch(`https://allratestoday.com/api/open/latest/${currency.toUpperCase()}`);
+
+        if (!response.ok) {
+            throw primaryError;
+        }
+
+        const responseJson: { rates?: Record<string, number> } = await response.json();
+
+        if (!responseJson.rates) {
+            throw primaryError;
+        }
+
+        this.rates[currency] = Object.fromEntries(
+            Object.entries(responseJson.rates).map(([code, rate]) => [code.toLowerCase(), rate]),
         );
-
-        const responseJson = await response.json();
-
-        this.rates[currency] = responseJson[currency];
     }
 
     private getDefaultTargetCurrency(): string {
