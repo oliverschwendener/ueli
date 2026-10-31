@@ -117,4 +117,46 @@ describe(CurrencyConversion, () => {
             testSuccessfulConversion({ expectedResult: "2.00 USD", userInput: "1 CHF", rates, defaultTarget: "usd" });
         });
     });
+
+    describe(CurrencyConversion.prototype.getSearchResultItems, () => {
+        const createCurrencyConversion = (fetchMock: ReturnType<typeof vi.fn>) =>
+            new CurrencyConversion(
+                <SettingsManager>{ getValue: () => ["chf"] },
+                <Net>{ fetch: (url: string) => fetchMock(url) },
+                <AssetPathResolver>{},
+            );
+
+        it("should use the primary source when it is available", async () => {
+            const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ chf: { usd: 2 } }) });
+            const currencyConversion = createCurrencyConversion(fetchMock);
+
+            await currencyConversion.getSearchResultItems();
+
+            expect(currencyConversion["rates"]).toEqual({ chf: { usd: 2 } });
+            expect(fetchMock).toHaveBeenCalledTimes(1);
+        });
+
+        it("should fall back to AllRatesToday when the primary source fails", async () => {
+            const fetchMock = vi
+                .fn()
+                .mockResolvedValueOnce({ ok: false, status: 503 })
+                .mockResolvedValueOnce({ ok: true, json: async () => ({ rates: { USD: 2, EUR: 0.5 } }) });
+            const currencyConversion = createCurrencyConversion(fetchMock);
+
+            await currencyConversion.getSearchResultItems();
+
+            expect(fetchMock).toHaveBeenLastCalledWith("https://allratestoday.com/api/open/latest/CHF");
+            expect(currencyConversion["rates"]).toEqual({ chf: { usd: 2, eur: 0.5 } });
+        });
+
+        it("should keep previous rates when both sources fail", async () => {
+            const fetchMock = vi.fn().mockRejectedValue(new Error("offline"));
+            const currencyConversion = createCurrencyConversion(fetchMock);
+            currencyConversion["rates"] = { chf: { usd: 1 } };
+
+            await currencyConversion.getSearchResultItems();
+
+            expect(currencyConversion["rates"]).toEqual({ chf: { usd: 1 } });
+        });
+    });
 });
