@@ -6,6 +6,7 @@ import { BrowserWindow } from "electron";
 import type { BrowserWindowConstructorOptionsProvider } from "./BrowserWindowConstructorOptionsProvider";
 import {
     DefaultBrowserWindowConstructorOptionsProvider,
+    getStartupWindowSize,
     LinuxBrowserWindowConstructorOptionsProvider,
     MacOsBrowserWindowConstructorOptionsProvider,
     WindowsBrowserWindowConstructorOptionsProvider,
@@ -24,6 +25,7 @@ export class SearchWindowModule {
         const ipcMain = moduleRegistry.get("IpcMain");
         const nativeTheme = moduleRegistry.get("NativeTheme");
         const operatingSystem = moduleRegistry.get("OperatingSystem");
+        const screen = moduleRegistry.get("Screen");
         const settingsManager = moduleRegistry.get("SettingsManager");
         const vibrancyProvider = moduleRegistry.get("BrowserWindowVibrancyProvider");
         const browserWindowRegistry = moduleRegistry.get("BrowserWindowRegistry");
@@ -33,6 +35,7 @@ export class SearchWindowModule {
             app,
             settingsManager,
             appIconFilePathResolver,
+            screen,
         ).get();
 
         const browserWindowConstructorOptionsProviders: Record<
@@ -128,6 +131,18 @@ export class SearchWindowModule {
         eventSubscriber.subscribe("settingUpdated[window.visibleOnAllWorkspaces]", ({ value }: { value: boolean }) => {
             searchWindow.setVisibleOnAllWorkspaces(value);
         });
+
+        // Only applies the configured startup size when its settings change; a manual resize is never written back.
+        const applyStartupWindowSize = () => {
+            const { workAreaSize } = screen.getDisplayMatching(searchWindow.getBounds());
+            const { width, height } = getStartupWindowSize(settingsManager, workAreaSize);
+            searchWindow.setSize(width, height);
+            searchWindow.center();
+        };
+
+        for (const key of ["window.useCustomSize", "window.startupWidth", "window.startupHeight"]) {
+            eventSubscriber.subscribe(`settingUpdated[${key}]`, applyStartupWindowSize);
+        }
 
         ipcMain.on("escapePressed", () => shouldHideWindowOnEscapePressed() && browserWindowToggler.hide());
         ipcMain.on("rescanExtensionsKeyboardShortcutPressed", () =>

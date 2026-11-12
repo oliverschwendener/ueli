@@ -2,11 +2,13 @@ import { join } from "path";
 
 import type { AppIconFilePathResolver } from "@Core/AppIconFilePathResolver";
 import type { SettingsManager } from "@Core/SettingsManager";
-import type { App, BrowserWindowConstructorOptions } from "electron";
+import type { App, BrowserWindowConstructorOptions, Display, Screen } from "electron";
 import { describe, expect, it, vi } from "vitest";
 
 import { DefaultBrowserWindowConstructorOptionsProvider } from "./DefaultBrowserWindowConstructorOptionsProvider";
 import { defaultWindowSize } from "./defaultWindowSize";
+
+const screen = <Screen>{ getPrimaryDisplay: () => <Display>{ workAreaSize: { width: 1366, height: 728 } } };
 
 describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
     describe(DefaultBrowserWindowConstructorOptionsProvider.prototype.get, () => {
@@ -20,7 +22,12 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
             };
 
             expect(
-                new DefaultBrowserWindowConstructorOptionsProvider(app, settingsManager, appIconFilePathResolver).get(),
+                new DefaultBrowserWindowConstructorOptionsProvider(
+                    app,
+                    settingsManager,
+                    appIconFilePathResolver,
+                    screen,
+                ).get(),
             ).toEqual(<BrowserWindowConstructorOptions>{
                 width: defaultWindowSize.width,
                 height: defaultWindowSize.height,
@@ -39,6 +46,30 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
 
             expect(getValueMock).toHaveBeenCalledWith("window.showOnStartup", true);
             expect(getValueMock).toHaveBeenCalledWith("window.alwaysOnTop", false);
+            expect(getValueMock).toHaveBeenCalledWith("window.useCustomSize", false);
+        });
+
+        it("should use the custom startup size, clamped to the primary display's work area", () => {
+            const settings: Record<string, unknown> = {
+                "window.useCustomSize": true,
+                "window.startupWidth": 900,
+                "window.startupHeight": 5000,
+            };
+
+            const app = <App>{ isPackaged: true };
+            const settingsManager = <SettingsManager>{
+                getValue: (key, defaultValue) => (key in settings ? settings[key] : defaultValue),
+            };
+            const appIconFilePathResolver = <AppIconFilePathResolver>{ resolve: () => "appIconFilePath" };
+
+            const { width, height } = new DefaultBrowserWindowConstructorOptionsProvider(
+                app,
+                settingsManager,
+                appIconFilePathResolver,
+                screen,
+            ).get();
+
+            expect({ width, height }).toEqual({ width: 900, height: 728 });
         });
 
         it("should allow insecure content and disable web security if app is not packaged", () => {
@@ -54,6 +85,7 @@ describe(DefaultBrowserWindowConstructorOptionsProvider, () => {
                 app,
                 settingsManager,
                 appIconFilePathResolver,
+                screen,
             ).get();
 
             expect(webPreferences?.webSecurity).toBe(false);
